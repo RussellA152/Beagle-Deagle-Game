@@ -1,14 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class GunWeapon : MonoBehaviour
+using UnityEngine.InputSystem;
+public abstract class GunWeapon : MonoBehaviour
 {
-    private float damage;
+    [SerializeField]
+    private GameObject player;
 
-    //private int 
+    private PlayerInput playerInput;
 
-    private int magSize;
+    [Range(0, 1000)]
+    public float damage;
 
-    private int maxAmmo;
+    [HideInInspector]
+    public int bulletsLoaded;
+
+    public int magazineSize;
+
+    public int maxAmmo;
+
+    public float bulletTravelDistance; // how far until this bullet despawns
+
+    public int penetrationCount; // how many enemies can this gun's bullet pass through?
+
+    public float totalReloadTime; // how long will this gun take to reload to full?
+
+    public Transform bulletSpawnPoint;
+
+    public GameObject bulletPrefab;
+
+    [HideInInspector]
+    public bool isReloading;
+
+    private void Start()
+    {
+        bulletsLoaded = magazineSize;
+        isReloading = false;
+
+        playerInput = player.GetComponent<PlayerInput>();
+    }
+
+    public virtual void Shoot()
+    {
+        if (bulletsLoaded <= 0f)
+        {
+            Debug.Log("RELOADING!");
+            Reload();
+        }   
+        else
+        {
+            Debug.Log("SHOOT!");
+            bulletsLoaded--;
+        }
+    }
+
+    
+
+    public abstract void Reload();
 }

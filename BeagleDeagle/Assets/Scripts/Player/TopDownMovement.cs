@@ -207,13 +207,13 @@ public class TopDownMovement : MonoBehaviour
 
     ///-///////////////////////////////////////////////////////////
     ///
-    public void OnFire(CallbackContext inputValue)
-    {
+    //public void OnFire(CallbackContext inputValue)
+    //{
 
-        Debug.LogFormat("firing");
-        //attackAnimator.SetBool("isAttacking", true);
+    //    Debug.LogFormat("firing");
+    //    //attackAnimator.SetBool("isAttacking", true);
 
-    }
+    //}
     #endregion
 
 

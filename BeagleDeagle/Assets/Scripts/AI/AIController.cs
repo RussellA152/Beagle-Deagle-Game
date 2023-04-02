@@ -18,6 +18,7 @@ public class AIController : MonoBehaviour
     [SerializeField]
     private AIAttack attackScript;
 
+    [SerializeField]
     private EnemyState state;
 
     [SerializeField]
@@ -42,28 +43,26 @@ public class AIController : MonoBehaviour
     enum EnemyState
     {
         // not moving towards player or anyone
-        idle,
+        Idle,
 
         // enemy is spawning behind barrier or from the ground
-        spawning,
+        Spawning,
 
         // moving towards player
-        chase,
+        Chase,
 
         // player is in enemy's attack range
-        attack,
+        Attack,
 
         // enemy was killed
-        death
+        Death
 
     }
 
     private void Start()
     {
-        state = EnemyState.idle;
+        state = EnemyState.Idle;
 
-        if(target != null)
-            agent.SetDestination(target.position);
 
     }
 
@@ -77,19 +76,19 @@ public class AIController : MonoBehaviour
 
         switch (state)
         {
-            case EnemyState.idle:
+            case EnemyState.Idle:
                 //Debug.Log("I am IDLE.");
                 OnIdle();
                 break;
-            case EnemyState.chase:
+            case EnemyState.Chase:
                 //Debug.Log("I am CHASING.");
                 OnChase();
                 break;
-            case EnemyState.attack:
+            case EnemyState.Attack:
                 //Debug.Log("I am ATTACKING.");
                 OnAttack();
                 break;
-            case EnemyState.death:
+            case EnemyState.Death:
                 //Debug.Log("I am DEAD.");
                 break;
         }
@@ -98,19 +97,19 @@ public class AIController : MonoBehaviour
     protected virtual void CheckState()
     {
         // if the enemy is not dead or currently spawning...
-        if(state != EnemyState.death || state != EnemyState.spawning)
+        if(state != EnemyState.Death || state != EnemyState.Spawning)
         {
             // in chase range, but not in attack range
             if (inChaseRange && !inAttackRange)
-                state = EnemyState.chase;
+                state = EnemyState.Chase;
 
             // in attack range
             else if (inChaseRange && inAttackRange)
-                state = EnemyState.attack;
+                state = EnemyState.Attack;
 
             // go idle if not in chase range and not in attack range
             else if (!inChaseRange && !inAttackRange)
-                state = EnemyState.idle;
+                state = EnemyState.Idle;
         }
     }
     protected virtual void OnIdle()
@@ -120,6 +119,9 @@ public class AIController : MonoBehaviour
     protected virtual void OnChase()
     {
         agent.isStopped = false;
+
+        if (target != null)
+            agent.SetDestination(target.position);
     }
 
     protected virtual void OnAttack()
