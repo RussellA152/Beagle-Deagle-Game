@@ -137,7 +137,7 @@ public class TopDownMovement : MonoBehaviour
 
     private void FlipWithLook(Vector2 direction)
     {
-        Debug.Log(direction);
+        //Debug.Log(direction);
 
         // if mouse cursor, or joystick is moving to the left of the player,
         // then turn their head to the right
