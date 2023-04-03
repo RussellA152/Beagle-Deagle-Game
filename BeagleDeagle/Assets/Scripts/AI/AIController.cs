@@ -10,7 +10,7 @@ using UnityEngine.AI;
 public class AIController : MonoBehaviour
 {
     [SerializeField]
-    private Transform target;
+    private Transform target; // who this enemy will chase and attack
 
     [SerializeField]
     private NavMeshAgent agent;
@@ -26,15 +26,16 @@ public class AIController : MonoBehaviour
     [SerializeField]
     private LayerMask chaseLayer; // what kind of layer does this enemy follow? (ex. Player)
 
-    [SerializeField] private bool inAttackRange; // is the player within this enemy's attack range?
-    [SerializeField] private bool inChaseRange; // is the player within this enemy's chase/follow range?
-
     [Header("Line of Sight Values")]
-    [SerializeField] private float attackRange;
-    [SerializeField] private float chaseRange;
+    [SerializeField] private float attackRange; // how close does this enemy need to be to its target to do an attack?
+    [SerializeField] private float chaseRange; // how close does this enemy need to be to its target to chase them?
+
+    private bool inAttackRange; // is the player within this enemy's attack range?
+    private bool inChaseRange; // is the player within this enemy's chase/follow range?
 
     private void Awake()
     {
+        // prevents AI from spawning with incorrect rotation with NavMeshPlus (2D navmesh asset)
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
@@ -58,11 +59,9 @@ public class AIController : MonoBehaviour
         Death
 
     }
-
     private void Start()
     {
         state = EnemyState.Idle;
-
 
     }
 

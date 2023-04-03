@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    private GunWeapon gun; // what gun did this bullet come from?
+
     [SerializeField]
     private float bulletSpeed = 15f;
 
@@ -27,6 +29,11 @@ public class Bullet : MonoBehaviour
     {
         if((whatDestroysBullet.value &  (1 << collision.gameObject.layer)) > 0){
             Debug.Log("HIT " + collision.gameObject.name);
+
+            // Make target take damage
+            collision.gameObject.GetComponent<Health>().ModifyHealth(-1 * gun.damage);
+
+            Destroy(this.gameObject);
         }
     }
     private void SetStraightVelocity()
@@ -36,5 +43,10 @@ public class Bullet : MonoBehaviour
     private void SetDestroyTime()
     {
         Destroy(this.gameObject, destroyTime);
+    }
+
+    public void SetGun(GunWeapon newGun)
+    {
+        gun = newGun;
     }
 }

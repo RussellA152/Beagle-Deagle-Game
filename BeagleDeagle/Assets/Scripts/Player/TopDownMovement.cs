@@ -14,6 +14,9 @@ public class TopDownMovement : MonoBehaviour
     [SerializeField]
     private PlayerInput playerInput;
 
+    [Header("Movement Speed")]
+    public float moveSpeed = 1f;
+
     [Header("Body Parts")]
     [SerializeField] private Transform body;
     [SerializeField] private Transform head;
@@ -32,7 +35,6 @@ public class TopDownMovement : MonoBehaviour
     [SerializeField]
     private SpriteRenderer headSr;
 
-    public float moveSpeed = 1f;
     [Range(0, 1)]
     public float collisionOffset = 0.05f;
 

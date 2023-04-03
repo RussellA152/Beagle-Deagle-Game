@@ -6,32 +6,27 @@ using static UnityEngine.InputSystem.InputAction;
 
 public abstract class GunWeapon : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject player;
-
-    private PlayerInput playerInput;
-
     [Range(0, 1000)]
     public float damage;
 
-    [Header("Fire Rate")]
+    [Header("Fire Rate (Bullets Per Second)")]
     public float fireRate; // The number of bullets fired per second
 
     [Header("Ammo")]
-    public int magazineSize;
+    public int magazineSize; // how much ammo can this weapon hold for its total magazine?
     [HideInInspector]
-    public int ammoInReserve;
+    public int bulletsShot; // how much ammo has the player shot since the last reload or refill?
     [HideInInspector]
-    public int bulletsShot;
+    public int bulletsLoaded; // how much ammo is currently in the magazine?
     [HideInInspector]
-    public int bulletsLoaded;
-    public int maxAmmoInReserve;
+    public int ammoInReserve; // how much ammo is currently in capacity?
+    public int maxAmmoInReserve; // how much ammo can this weapon hold for total capacity?
     public float totalReloadTime; // how long will this gun take to reload to full?
 
-    [Header("Bullet")]
+    [Header("Bullet Logic")]
     public float bulletTravelDistance; // how far until this bullet despawns
-    public Transform bulletSpawnPoint;
-    public GameObject bulletPrefab;
+    public Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
+    public Bullet bullet; // what bullet is spawned when shooting?
 
     [Header("Penetration")]
     public int penetrationCount; // how many enemies can this gun's bullet pass through?
@@ -49,44 +44,49 @@ public abstract class GunWeapon : MonoBehaviour
         ammoInReserve = maxAmmoInReserve;
         isReloading = false;
 
-        playerInput = player.GetComponent<PlayerInput>();
+    }
+
+    private void Update()
+    {
+        if (shooting > 0)
+            Fire();
+    }
+    public abstract void Fire();
+
+    public virtual void SpawnBullet()
+    {
+        // Kind of unoptimized?
+        GameObject bulletInst = Instantiate(bullet.gameObject, bulletSpawnPoint.position, this.transform.rotation);
+        bulletInst.GetComponent<Bullet>().SetGun(this);
+
+        bulletsShot++;
+        bulletsLoaded--;
     }
 
     public void OnFire(CallbackContext context)
     {
         shooting = context.ReadValue<float>();
 
-        if(shooting > 0)
-            FireRate();
-
     }
-    public virtual void Shoot()
+    #region Reloading
+
+    public virtual bool CheckIfCanShoot()
     {
-        // if player has no ammo in reserve, force them to reload
+        // if player has no ammo in reserve... force them to reload, then return false
         if (bulletsLoaded <= 0f)
         {
             Debug.Log("RELOADING!");
             Reload();
+            return false;
         }
-
+        // otherwise if they are not reloading, allow them to shoot
         else if (!isReloading)
         {
-            Debug.Log("SHOOT!");
-
-            SpawnBullet();
-            bulletsShot++;
-            bulletsLoaded--;
+            return true;
         }
+
+        return false;
     }
-    public abstract void FireRate();
-
-    public virtual void SpawnBullet()
-    {
-        GameObject bulletInst = Instantiate(bulletPrefab, bulletSpawnPoint.position, this.transform.rotation);
-    }
-
-
-    #region Reloading
     public void Reload()
     {
         // dont' reload if player doesn't have ammo in reserve

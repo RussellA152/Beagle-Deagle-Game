@@ -183,18 +183,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab98b2af6a0a8d42a990c32d6912dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   damage: 200
-  fireRate: 80
+  fireRate: 5
   magazineSize: 8
-  ammoInReserve: 0
   bulletsShot: 0
   bulletsLoaded: 0
+  ammoInReserve: 0
   maxAmmoInReserve: 56
   totalReloadTime: 1.5
   bulletTravelDistance: 0
   bulletSpawnPoint: {fileID: 3172216759311910775}
-  bulletPrefab: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
+  bullet: {fileID: 8164879991046117915, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   penetrationCount: 0
   isReloading: 0
 --- !u!1 &3172216759311910772

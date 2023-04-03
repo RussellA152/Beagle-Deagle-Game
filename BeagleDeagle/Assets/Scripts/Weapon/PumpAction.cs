@@ -6,38 +6,41 @@ public class PumpAction : GunWeapon
 {
     public bool commitToReload;
 
-    public override void FireRate()
+    public override void Fire()
     {
         throw new System.NotImplementedException();
     }
 
-    public override void Shoot()
+    public override bool CheckIfCanShoot()
     {
         // if player has no ammo in reserve, force them to reload
         if (bulletsLoaded <= 0f)
         {
             Debug.Log("RELOADING!");
             Reload();
+
+            return false;
         }
         // if this weapon doesn't need to commit to a reload, then let the player shoot
         else if (!commitToReload && bulletsLoaded >= 0)
         {
             Debug.Log("SHOOT!");
 
-            //CancelReload();
+            CancelReload();
 
             SpawnBullet();
-            bulletsShot++;
-            bulletsLoaded--;
+
+            return true;
         }
-        else if (commitToReload && !isReloading)
+        else if (!isReloading)
         {
             Debug.Log("SHOOT!");
 
             SpawnBullet();
-            bulletsShot++;
-            bulletsLoaded--;
+
+            return true;
         }
+        return false;
     }
 
     public void CancelReload()

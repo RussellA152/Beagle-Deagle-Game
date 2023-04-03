@@ -6,8 +6,8 @@ public abstract class Health: MonoBehaviour
 {
     private float currentHealth;
 
-    [SerializeField]
-    private float maxHealth;
+    [Range(0f, 2500f)]
+    [SerializeField] private float maxHealth;
 
     private void OnEnable()
     {
@@ -30,5 +30,6 @@ public abstract class Health: MonoBehaviour
     // do something when this entity dies
     public virtual void OnDeath() {
         Debug.Log(this.gameObject.name + " has died!");
+        Destroy(this.gameObject);
     }
 }
