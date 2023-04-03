@@ -4,24 +4,18 @@ using UnityEngine;
 
 public class SemiAuto : GunWeapon
 {
-    public override void Reload()
-    {
-        if (!isReloading)
-            StartCoroutine(WaitReload());
-    }
+    private float lastFireTime = 0f;
 
-    public override void Shoot()
-    {
-        base.Shoot();
 
-        GameObject bulletInst = Instantiate(bulletPrefab, bulletSpawnPoint.position, this.transform.rotation);
-    }
-
-    IEnumerator WaitReload()
+    public override void FireRate()
     {
-        isReloading = true;
-        yield return new WaitForSeconds(totalReloadTime);
-        bulletsLoaded = magazineSize;
-        isReloading = false;
+        if (Time.time - lastFireTime > 1f / fireRate)
+        {
+            // Fire the gun
+            base.Shoot();
+
+            lastFireTime = Time.time;
+
+        }
     }
 }
