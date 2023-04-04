@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5313635083943124194}
   - component: {fileID: 5313635083943124198}
+  - component: {fileID: 3238474014219297874}
   - component: {fileID: 5313635083943124193}
   - component: {fileID: 5313635083943124196}
   - component: {fileID: 5313635083943124192}
@@ -101,7 +102,7 @@ GameObject:
   - component: {fileID: 5313635083943124199}
   m_Layer: 7
   m_Name: Character
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,6 +145,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3238474014219297874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313635083943124204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679de42d612e9fa4896eecdc534800a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5313635083943124193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,14 +170,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5313635083943124195}
-  playerInput: {fileID: 5313635083943124192}
+  moveSpeed: 10
   body: {fileID: 5313635084664649029}
   head: {fileID: 5313635084907708359}
   weapon: {fileID: 5313635084010504988}
   bodySr: {fileID: 5313635084664649082}
   tailSr: {fileID: 5313635083331269459}
   headSr: {fileID: 5313635084907708356}
-  moveSpeed: 10
   collisionOffset: 0.05
   movementFilter:
     useTriggers: 0
@@ -306,6 +318,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: eb87b7ca-d615-4b44-bdb4-f818a4443800
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dd3f9eae-da28-4218-b284-c4d22b96e2e4
+    m_ActionName: Player/Reload[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

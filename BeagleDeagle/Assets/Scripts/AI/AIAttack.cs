@@ -8,6 +8,7 @@ public class AIAttack : MonoBehaviour
     [SerializeField]
     private float cooldown;
 
+    [SerializeField]
     private bool canAttack = true;
 
     //private bool attackStarted = false;

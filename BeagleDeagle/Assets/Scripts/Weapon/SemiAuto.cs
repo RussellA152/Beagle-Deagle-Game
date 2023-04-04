@@ -9,14 +9,11 @@ public class SemiAuto : GunWeapon
 
     public override void Fire()
     {
-        if (CheckIfCanShoot())
+        if (Time.time - lastFireTime > 1f / fireRate)
         {
-            if (Time.time - lastFireTime > 1f / fireRate)
-            {
-                base.SpawnBullet();
-                lastFireTime = Time.time;
+            base.SpawnBullet();
+            lastFireTime = Time.time;
 
-            }
         }
         
     }

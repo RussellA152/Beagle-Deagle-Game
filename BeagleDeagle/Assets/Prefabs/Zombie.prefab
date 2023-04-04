@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.2890511, g: 0.6886792, b: 0, a: 1}
+  m_Color: {r: 0.07203404, g: 0.6901961, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -112,10 +112,8 @@ MonoBehaviour:
   chaseLayer:
     serializedVersion: 2
     m_Bits: 128
-  inAttackRange: 0
-  inChaseRange: 0
   attackRange: 2.5
-  chaseRange: 15
+  chaseRange: 150
 --- !u!114 &3711592478197892583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 1.5
+  canAttack: 1
 --- !u!114 &3711592478197892578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +151,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

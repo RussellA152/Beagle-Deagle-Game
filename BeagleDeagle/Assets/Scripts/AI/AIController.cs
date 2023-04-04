@@ -9,7 +9,7 @@ using UnityEngine.AI;
 /// </summary>
 public class AIController : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField] // TEMPORARY, WILL NEED A DIFFERENT WAY TO REFERENCE THE PLAYER *
     private Transform target; // who this enemy will chase and attack
 
     [SerializeField]

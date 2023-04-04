@@ -6,8 +6,10 @@ using static UnityEngine.InputSystem.InputAction;
 
 public abstract class GunWeapon : MonoBehaviour
 {
+    private PlayerInput playerInput;
+
     [Range(0, 1000)]
-    public float damage;
+    public float damagePerHit;
 
     [Header("Fire Rate (Bullets Per Second)")]
     public float fireRate; // The number of bullets fired per second
@@ -24,11 +26,11 @@ public abstract class GunWeapon : MonoBehaviour
     public float totalReloadTime; // how long will this gun take to reload to full?
 
     [Header("Bullet Logic")]
-    public float bulletTravelDistance; // how far until this bullet despawns
     public Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
     public Bullet bullet; // what bullet is spawned when shooting?
 
     [Header("Penetration")]
+    [Range(1f,50f)]
     public int penetrationCount; // how many enemies can this gun's bullet pass through?
 
 
@@ -37,6 +39,7 @@ public abstract class GunWeapon : MonoBehaviour
     [HideInInspector]
     public bool isReloading;
 
+
     private void Start()
     {
         bulletsShot = 0;
@@ -44,13 +47,28 @@ public abstract class GunWeapon : MonoBehaviour
         ammoInReserve = maxAmmoInReserve;
         isReloading = false;
 
+
+        playerInput = PlayerManager.instance.GetPlayerInput();
+
+        // TEMPORARILY HERE
+        playerInput.actions["Fire"].performed += OnFire;
+        playerInput.actions["Reload"].performed += OnReload;
+
+    }
+
+    private void OnDisable()
+    {
+        playerInput.actions["Fire"].performed -= OnFire;
+        playerInput.actions["Reload"].performed -= OnReload;
     }
 
     private void Update()
     {
-        if (shooting > 0)
+        // if player is holding down "fire" button, then attempt to shoot
+        if (shooting > 0 && CheckIfCanShoot())
             Fire();
     }
+
     public abstract void Fire();
 
     public virtual void SpawnBullet()
@@ -67,6 +85,13 @@ public abstract class GunWeapon : MonoBehaviour
     {
         shooting = context.ReadValue<float>();
 
+    }
+    private void OnDrawGizmos()
+    {
+        // draws a green ray so its easier to aim (debugging purposes)
+        Gizmos.color = Color.green;
+        Vector3 direction = transform.TransformDirection(Vector2.right) * 6;
+        Gizmos.DrawRay(bulletSpawnPoint.position, direction);
     }
     #region Reloading
 
@@ -86,6 +111,10 @@ public abstract class GunWeapon : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void OnReload(CallbackContext context) {
+        Reload();
     }
     public void Reload()
     {

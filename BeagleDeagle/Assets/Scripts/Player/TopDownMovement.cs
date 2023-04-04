@@ -11,7 +11,7 @@ public class TopDownMovement : MonoBehaviour
     [Header("Required Components")]
     [SerializeField]
     private Rigidbody2D rb;
-    [SerializeField]
+
     private PlayerInput playerInput;
 
     [Header("Movement Speed")]
@@ -46,6 +46,8 @@ public class TopDownMovement : MonoBehaviour
     ///
     void Start()
     {
+        playerInput = PlayerManager.instance.GetPlayerInput();
+
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -115,7 +117,6 @@ public class TopDownMovement : MonoBehaviour
             // Rotate towards w/ stick movement
             float zRotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             weapon.rotation = Quaternion.Euler(0f, 0f, zRotation);
-            //Flip(direction, weapon.gameObject.GetComponentInChildren<SpriteRenderer>());
         }
 
 

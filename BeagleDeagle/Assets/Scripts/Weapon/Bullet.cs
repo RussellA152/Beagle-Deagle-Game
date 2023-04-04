@@ -18,8 +18,12 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private LayerMask whatDestroysBullet;
 
+    private int amountPenetrated; // how many enemies has this bullet penetrated through?
+
+
     private void Start()
-    {  
+    {
+        amountPenetrated = 0;
         SetDestroyTime();
         SetStraightVelocity();
     }
@@ -31,15 +35,27 @@ public class Bullet : MonoBehaviour
             Debug.Log("HIT " + collision.gameObject.name);
 
             // Make target take damage
-            collision.gameObject.GetComponent<Health>().ModifyHealth(-1 * gun.damage);
+            collision.gameObject.GetComponent<Health>().ModifyHealth(-1 * gun.damagePerHit);
 
-            Destroy(this.gameObject);
+            Penetrate();
         }
+    }
+    private void Penetrate()
+    {
+        amountPenetrated++;
+
+        // if this bullet has penetrated through too many enemies, then destroy it
+        if (amountPenetrated >= gun.penetrationCount)
+            Destroy(this.gameObject);
+
     }
     private void SetStraightVelocity()
     {
         rb.velocity = transform.right * bulletSpeed;
     }
+
+    // TEMPORARY
+    // WILL PROBABLY OBJECT POOL THIS AT SOME POINT
     private void SetDestroyTime()
     {
         Destroy(this.gameObject, destroyTime);
