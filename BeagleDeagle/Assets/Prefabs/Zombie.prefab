@@ -105,6 +105,7 @@ MonoBehaviour:
   target: {fileID: 0}
   agent: {fileID: 3711592478197892577}
   attackScript: {fileID: 3711592478197892583}
+  healthScript: {fileID: 3711592478197892578}
   state: 0
   attackLayer:
     serializedVersion: 2

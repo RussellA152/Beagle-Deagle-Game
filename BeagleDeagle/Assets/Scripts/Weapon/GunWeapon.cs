@@ -34,7 +34,9 @@ public abstract class GunWeapon : MonoBehaviour
     public int penetrationCount; // how many enemies can this gun's bullet pass through?
 
 
-    private float shooting;
+    private float shootInput; // input for shooting
+
+    public bool actuallyShooting; // is the player shooting (i.e, not idle or reloading or just moving)
 
     [HideInInspector]
     public bool isReloading;
@@ -50,7 +52,7 @@ public abstract class GunWeapon : MonoBehaviour
 
         playerInput = PlayerManager.instance.GetPlayerInput();
 
-        // TEMPORARILY HERE
+        //// TEMPORARILY HERE
         playerInput.actions["Fire"].performed += OnFire;
         playerInput.actions["Reload"].performed += OnReload;
 
@@ -65,8 +67,10 @@ public abstract class GunWeapon : MonoBehaviour
     private void Update()
     {
         // if player is holding down "fire" button, then attempt to shoot
-        if (shooting > 0 && CheckIfCanShoot())
+        if (shootInput > 0 && CheckIfCanShoot())
             Fire();
+        else
+            actuallyShooting = false;
     }
 
     public abstract void Fire();
@@ -83,7 +87,7 @@ public abstract class GunWeapon : MonoBehaviour
 
     public void OnFire(CallbackContext context)
     {
-        shooting = context.ReadValue<float>();
+        shootInput = context.ReadValue<float>();
 
     }
     private void OnDrawGizmos()
@@ -107,6 +111,7 @@ public abstract class GunWeapon : MonoBehaviour
         // otherwise if they are not reloading, allow them to shoot
         else if (!isReloading)
         {
+            actuallyShooting = true;
             return true;
         }
 
@@ -129,6 +134,7 @@ public abstract class GunWeapon : MonoBehaviour
 
     public virtual IEnumerator WaitReload()
     {
+        actuallyShooting = false;
         isReloading = true;
 
         yield return new WaitForSeconds(totalReloadTime);

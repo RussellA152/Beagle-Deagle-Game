@@ -19,6 +19,9 @@ public class AIController : MonoBehaviour
     private AIAttack attackScript;
 
     [SerializeField]
+    private Health healthScript;
+
+    [SerializeField]
     private EnemyState state;
 
     [SerializeField]
@@ -55,6 +58,8 @@ public class AIController : MonoBehaviour
         // player is in enemy's attack range
         Attack,
 
+        Stunned,
+
         // enemy was killed
         Death
 
@@ -88,13 +93,21 @@ public class AIController : MonoBehaviour
                 OnAttack();
                 break;
             case EnemyState.Death:
-                //Debug.Log("I am DEAD.");
+                Destroy(this.gameObject);
+                Debug.Log("I am DEAD.");
                 break;
         }
     }
 
     protected virtual void CheckState()
     {
+        if (healthScript.IsDead())
+        {
+            state = EnemyState.Death;
+            return;
+        }
+            
+
         // if the enemy is not dead or currently spawning...
         if(state != EnemyState.Death || state != EnemyState.Spawning)
         {
