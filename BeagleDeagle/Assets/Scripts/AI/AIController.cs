@@ -68,6 +68,8 @@ public class AIController : MonoBehaviour
     {
         state = EnemyState.Idle;
 
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+
     }
 
     private void Update()
