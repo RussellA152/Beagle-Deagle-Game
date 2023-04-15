@@ -13,7 +13,7 @@ public class WaveAction
 
     public float delay;
 
-    public GameObject prefab; // should make this a list *
+    public GameObject prefab;
 
     public int amount_per_spawn;
 
@@ -75,10 +75,8 @@ public class WaveGenerator : MonoBehaviour
                     {
                         for (int i = 0; i < A.amount_per_spawn; i++)
                         {
-                            // make this retrieve an off-screen location
-
                             // update the x & z values depending on the specific boundaries of your scene
-                            Vector2 randomizePosition = new Vector3(Random.Range(lowestRangeX, highestRangeX), Random.Range(lowestRangeY, highestRangeY));
+                            Vector2 randomizePosition = offScreenSpawnerScript.PickRandomLocationOnMap();
 
                             // update the y values depending on how much you want the prafabs to randomly rotate
                             //Quaternion randomizeRotation = Quaternion.Euler(0, Random.Range(lowestRangeY, highestRangeY), 0);

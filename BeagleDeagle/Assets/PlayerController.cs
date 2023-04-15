@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
         // player is shooting or using their weapon in general
         Attacking,
 
+        // player is currently using their ultimate ability
+        Ulting,
+
         // enemy was killed
         Death
 

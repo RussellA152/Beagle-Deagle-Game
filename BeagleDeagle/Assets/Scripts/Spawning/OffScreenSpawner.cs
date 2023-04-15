@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 // This script will calculate the boundaries of the screen and spawn enemies slightly off-screen
 // The point is to have enemies walk into the scene, without the player seeing the enemies spawn
@@ -8,14 +9,13 @@ public class OffScreenSpawner : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform;
 
-    
-    [SerializeField] private int amountSpawned; // amount of enemies spawned 
-    [Range(4, 150)]
-    [SerializeField] private int maxAmountOfSpawn; // max amount of enemies this spawner can create TEMPORARY
+    [SerializeField]
+    private NavMeshSurface2d mapSurface;
 
-    [SerializeField] private float timeUntilSpawn; // the time until spawning begins
-    [SerializeField] private float timeBetweenSpawn; // the time between each enemy spawn
-    [SerializeField] private GameObject enemyToSpawn; // the enemy to spawn in
+    [SerializeField]
+    private Vector2 surfaceVerticalBounds;
+    [SerializeField]
+    private Vector2 surfaceHorizontalBounds;
 
     [Header("X Offsets")]
     [SerializeField] private float minimumXScreenOffset; // the minimum offset added to the right or left screen boundaries
@@ -55,18 +55,11 @@ public class OffScreenSpawner : MonoBehaviour
         // bottomBounds is initialized to the -screenBounds.y when the game starts
         bottomBounds = -screenBounds.y;
 
-
-        // does not check when enemy was killed * TEMPORARY
-        //if(amountSpawned < maxAmountOfSpawn - 4)
-        //{
-        //    InvokeRepeating(nameof(SpawnEnemyOnTop), timeUntilSpawn, timeBetweenSpawn);
-        //    InvokeRepeating(nameof(SpawnEnemyOnBottom), timeUntilSpawn, timeBetweenSpawn);
-        //    InvokeRepeating(nameof(SpawnEnemyOnRight), timeUntilSpawn, timeBetweenSpawn);
-        //    InvokeRepeating(nameof(SpawnEnemyOnLeft), timeUntilSpawn, timeBetweenSpawn);
-        //}
+        surfaceVerticalBounds = new Vector2(mapSurface.navMeshData.sourceBounds.extents.z, -1 * mapSurface.navMeshData.sourceBounds.extents.z);
+        surfaceHorizontalBounds = new Vector2(mapSurface.navMeshData.sourceBounds.extents.x, -1 * mapSurface.navMeshData.sourceBounds.extents.x);
     }
 
-    void SpawnEnemyOnTop()
+    private Vector2 SpawnEnemyOnTop()
     {
         // generate a random position anywhere on the x axis of the off-screen (left, right, or center)
         float randomXPosition = Random.Range(leftBounds, rightBounds);
@@ -77,13 +70,10 @@ public class OffScreenSpawner : MonoBehaviour
         // combine the two positions into a vector3
         Vector3 newPosition = new Vector3(randomXPosition, randomYPosition);
 
-        // spawn the enemy at the newPosition
-        Instantiate(enemyToSpawn, newPosition, Quaternion.identity);
-
-        amountSpawned++;
+        return newPosition;
     }
 
-    void SpawnEnemyOnBottom()
+    private Vector2 SpawnEnemyOnBottom()
     {
         // generate a random position anywhere on the x axis of the off-screen (left, right, or center)
         float randomXPosition = Random.Range(leftBounds, rightBounds);
@@ -94,13 +84,10 @@ public class OffScreenSpawner : MonoBehaviour
         // combine the two positions into a vector3
         Vector3 newPosition = new Vector3(randomXPosition, randomYPosition);
 
-        // spawn the enemy at the newPosition
-        Instantiate(enemyToSpawn, newPosition, Quaternion.identity);
-
-        amountSpawned++;
+        return newPosition;
     }
 
-    void SpawnEnemyOnRight()
+    private Vector2 SpawnEnemyOnRight()
     {
         // generate a random position on the right portion of the off-screen
         float randomXPosition = Random.Range(rightBounds + minimumXScreenOffset, rightBounds + maximumXScreenOffset);
@@ -111,13 +98,10 @@ public class OffScreenSpawner : MonoBehaviour
         // combine the two positions into a vector3
         Vector3 newPosition = new Vector3(randomXPosition, randomYPosition);
 
-        // spawn the enemy at the newPosition
-        Instantiate(enemyToSpawn, newPosition, Quaternion.identity);
-
-        amountSpawned++;
+        return newPosition;
     }
 
-    void SpawnEnemyOnLeft()
+    private Vector2 SpawnEnemyOnLeft()
     {
         // generate a random position on the left portion of the off-screen
         float randomXPosition = Random.Range(leftBounds - minimumXScreenOffset, leftBounds - maximumXScreenOffset);
@@ -128,11 +112,44 @@ public class OffScreenSpawner : MonoBehaviour
         // combine the two positions into a vector3
         Vector3 newPosition = new Vector3(randomXPosition, randomYPosition);
 
-        // spawn the enemy at the newPosition
-        Instantiate(enemyToSpawn, newPosition, Quaternion.identity);
-
-        amountSpawned++;
+        return newPosition;
     }
+
+    public Vector2 PickRandomLocationOnMap()
+    {
+        Vector2 randomLocation = Vector2.zero;
+
+        // pick a random number from 1-4
+        int randomChoice = Random.Range(1, 5);
+
+        // A value of 1 means return a spawn location at the top of the offscreen
+        // 2 means return a spawn location at the bottom of the offscreen
+        // 3 means return a spawn location at the right of the offscreen
+        // 4 means return a spawn location at the left of the offscreen
+        switch (randomChoice)
+        {
+            case 1:
+                randomLocation = SpawnEnemyOnTop();
+                break;
+            case 2:
+                randomLocation = SpawnEnemyOnBottom();
+                break;
+            case 3:
+                randomLocation = SpawnEnemyOnRight();
+                break;
+            case 4:
+                randomLocation = SpawnEnemyOnLeft();
+                break;
+        }
+        return randomLocation;
+    }
+
+    public void CheckIfValidSpawnLocation()
+    {
+
+    }
+
+
 
     // Update is called once per frame
     void Update()
@@ -145,13 +162,13 @@ public class OffScreenSpawner : MonoBehaviour
         // Think of it like this as well... if the player is moving far to the right, then the left and right boundaries of the camera
         // must also move right, meaning the leftBound and rightBound values would become larger
 
-        if(amountSpawned < maxAmountOfSpawn)
-        {
-            SpawnEnemyOnTop();
-            SpawnEnemyOnLeft();
-            SpawnEnemyOnRight();
-            SpawnEnemyOnBottom();
-        }
+        //if(amountSpawned < maxAmountOfSpawn)
+        //{
+        //    SpawnEnemyOnTop();
+        //    SpawnEnemyOnLeft();
+        //    SpawnEnemyOnRight();
+        //    SpawnEnemyOnBottom();
+        //}
 
         if (playerTransform.position.x >= 0)
         {
