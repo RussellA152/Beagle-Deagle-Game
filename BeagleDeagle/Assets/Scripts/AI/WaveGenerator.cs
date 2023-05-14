@@ -15,7 +15,7 @@ public class WaveAction
 
     public GameObject prefab;
 
-    public int amount_per_spawn;
+    public int amountToSpawn;
 
     public string message;
 }
@@ -46,12 +46,14 @@ public class WaveGenerator : MonoBehaviour
     public Wave CurrentWave { get { return m_CurrentWave; } }
     private float m_DelayFactor = 1.0f;
 
-    public float lowestRangeX = 0.0f; // minimum spawn area on x axis
-    public float highestRangeX = 50.0f; // maximum spawn area on x axis
+    //public float lowestRangeX = 0.0f; // minimum spawn area on x axis
+    //public float highestRangeX = 50.0f; // maximum spawn area on x axis
+
     //public float lowestRangeZ = 50.0f; // minimum spawn area on z axis
     //public float highestRangeZ = 50.0f; // maximum spawn area on z axis
-    public float lowestRangeY = 0.0f; // minimum prefab rotation on y axis
-    public float highestRangeY = 50.0f; // maximum prefab rotation on z axis
+
+    //public float lowestRangeY = 0.0f; // minimum prefab rotation on y axis
+    //public float highestRangeY = 50.0f; // maximum prefab rotation on z axis
 
 
 
@@ -71,9 +73,9 @@ public class WaveGenerator : MonoBehaviour
                     {
                         textElement.text = A.message;  // print the message to a Text Mesh Pro Element on a Canvas
                     }
-                    if (A.prefab != null && A.amount_per_spawn > 0)
+                    if (A.prefab != null && A.amountToSpawn > 0)
                     {
-                        for (int i = 0; i < A.amount_per_spawn; i++)
+                        for (int i = 0; i < A.amountToSpawn; i++)
                         {
                             // update the x & z values depending on the specific boundaries of your scene
                             Vector2 randomizePosition = offScreenSpawnerScript.PickRandomLocationOnMap();
