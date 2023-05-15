@@ -5,11 +5,15 @@ using UnityEngine.AI;
 
 // This script will calculate the boundaries of the screen and spawn enemies slightly off-screen
 // The point is to have enemies walk into the scene, without the player seeing the enemies spawn
-// This type of spawning is MEANT for big open fields, it probably won't function properly for really really small maps or in-door maps
 public class OffScreenSpawner : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform;
 
+    [Header("Camera Bounds (NEED TO SCALE SCALE WITH MAP SIZE)")]
+    [SerializeField]
+    private Vector3 screenBounds = new Vector2(17, 17); // this is the boundaries of the camera, (17,17) is a good value, but this value NEEDS TO BE LOWER if the map is too small
+
+    [Header("The Map of This Level")]
     [SerializeField]
     private NavMeshSurface2d mapSurface;
 
@@ -23,16 +27,15 @@ public class OffScreenSpawner : MonoBehaviour
     [SerializeField]
     private float surfaceRightBoundary; // the right boundary of the navmesh surface
 
-    [Header("X Screen Offsets")]
+    [Header("X Enemy Spawning Offsets")]
+    // These offsets are applied to the location that the enemy spawns at
+    // This is so that enemies do not spawn at the exact location of each other
     [SerializeField] private float minimumXScreenOffset; // the minimum offset ADDED to the right or left screen boundaries
     [SerializeField] private float maximumXScreenOffset; // the maximum offset ADDED to the right or left screen boundaries
 
-    [Header("Y Screen Offsets")]
+    [Header("Y Enemy Spawning Offsets")]
     [SerializeField] private float minimumYScreenOffset; // the minimum offset ADDED to the top or bottom screen boundaries
     [SerializeField] private float maximumYScreenOffset; // the maximum offset ADDED to the top or bottom screen boundaries
-
-    [SerializeField]
-    private bool allowSpawningOffMap = false; // should enemies be allowed to spawn outside of the boundaries of the map?
 
 
     private float rightBounds; // starting point for the right portion of the off-screen
@@ -40,33 +43,10 @@ public class OffScreenSpawner : MonoBehaviour
     private float leftBounds; // starting point for the left portion of the off-screen
     private float bottomBounds; // starting point for the bottom portion of the off-screen
 
-    private Vector3 screenBounds; // the boundaries of the screen/camera
-
-    [SerializeField]
-    private bool playerCloseToLeftBoundary;
-    [SerializeField]
-    private bool playerCloseToRightBoundary;
-    [SerializeField]
-    private bool playerCloseToTopBoundary;
-    [SerializeField]
-    private bool playerCloseToBottomBoundary;
-
-
 
     // Start is called before the first frame update
     void Start()
     {
-
-
-        // calculates screen boundaries (this is so that we can spawn enemies off screen)
-        // when the player's transform position is at (0,0)...
-        // the rightBounds start at 26, and the leftBounds start at -26
-        // the topBounds start at 15, and the bottomBounds start at -15
-
-        // HARD-CODED VERSION (Camera is about X = 15, and Y = 15)
-        // CHANGE THIS VALUE TO BE HIGHER OR LOWER IF CAMERA IS ZOOMED IN OR OUT
-        screenBounds = new Vector2(17, 17);
-
         // rightBounds is initialized to the screenBounds.x when the game starts
         rightBounds = screenBounds.x;
         // leftBounds is initialized to the -screenBounds.x when the game starts
@@ -92,18 +72,9 @@ public class OffScreenSpawner : MonoBehaviour
         // generate a random position on the top portion of the off-screen
         float randomYPosition = Random.Range(topBounds + minimumYScreenOffset, topBounds + maximumYScreenOffset);
 
-        //if (randomYPosition > surfaceTopBoundary)
-        //{
-        //    return SpawnEnemyOnBottom();
-        //    //randomYPosition = surfaceTopBoundary - maximumYScreenOffset;
-        //}
-        //else if (randomXPosition < surfaceLeftBoundary)
-        //    return SpawnEnemyOnRight();
-        //else if (randomXPosition > surfaceRightBoundary)
-        //    return SpawnEnemyOnLeft();
 
         // combine the two positions into a vector3
-        Vector3 newPosition = new Vector2(randomXPosition, randomYPosition);
+        Vector3 newPosition = CheckIfValidSpawnLocation(randomXPosition, randomYPosition);
 
         return newPosition;
     }
@@ -116,8 +87,9 @@ public class OffScreenSpawner : MonoBehaviour
         // generate a random position on the bottom portion of the off-screen
         float randomYPosition = Random.Range(bottomBounds - maximumYScreenOffset, bottomBounds - minimumYScreenOffset);
 
-        // combine the two positions into a vector3
-        Vector3 newPosition = new Vector2(randomXPosition, randomYPosition);
+
+        // combine the two positions into a vector2
+        Vector3 newPosition = CheckIfValidSpawnLocation(randomXPosition, randomYPosition);
 
         return newPosition;
     }
@@ -132,23 +104,22 @@ public class OffScreenSpawner : MonoBehaviour
         float randomYPosition = Random.Range(bottomBounds, topBounds);
 
         // combine the two positions into a vector3
-        Vector3 newPosition = new Vector2(randomXPosition, randomYPosition);
+        Vector3 newPosition = CheckIfValidSpawnLocation(randomXPosition, randomYPosition);
 
         return newPosition;
     }
 
     private Vector2 SpawnEnemyOnLeft()
     {
-
         // generate a random position on the left portion of the off-screen
         float randomXPosition = Random.Range(leftBounds - minimumXScreenOffset, leftBounds - maximumXScreenOffset);
 
         // generate a random position anywhere on the y axis of the off-screen (top, bottom, or center)
         float randomYPosition = Random.Range(bottomBounds, topBounds);
 
-        // combine the two positions into a vector3
-        Vector3 newPosition = new Vector2(randomXPosition, randomYPosition);
 
+        // combine the two positions into a vector3
+        Vector3 newPosition = CheckIfValidSpawnLocation(randomXPosition, randomYPosition);//new Vector3(randomXPosition, randomYPosition);
 
         return newPosition;
     }
@@ -157,61 +128,62 @@ public class OffScreenSpawner : MonoBehaviour
     {
         Vector2 randomLocation = Vector2.zero;
 
-
         // pick a random number from 1-4
-        int randomChoice = Random.Range(1,5);
+        int randomChoice = Random.Range(1, 5);
 
         // A value of 1 means return a spawn location at the top of the offscreen
         // 2 means return a spawn location at the bottom of the offscreen
         // 3 means return a spawn location at the right of the offscreen
         // 4 means return a spawn location at the left of the offscreen
-
-
         switch (randomChoice)
         {
             case 1:
                 randomLocation = SpawnEnemyOnTop();
-
-                if (playerCloseToTopBoundary)
-                {
-                    randomLocation = SpawnEnemyOnBottom();
-
-                }
-                    
-
                 break;
             case 2:
                 randomLocation = SpawnEnemyOnBottom();
-
-                if (playerCloseToBottomBoundary)
-                {
-                    randomLocation = SpawnEnemyOnTop();
-                }
-                    
                 break;
             case 3:
                 randomLocation = SpawnEnemyOnRight();
-
-                if (playerCloseToRightBoundary)
-                {
-                    randomLocation = SpawnEnemyOnLeft();
-                }
-                    
                 break;
             case 4:
                 randomLocation = SpawnEnemyOnLeft();
-
-                if (playerCloseToLeftBoundary)
-                {
-                    randomLocation = SpawnEnemyOnRight();
-                }
-                    
                 break;
         }
         return randomLocation;
     }
 
-    private void UpdateScreenBounds()
+    /// <summary>
+    /// Take in an X position and Y position, then check if those values are outside of the map.
+    /// If so, then call a function that will generate a new X and Y position that will not be outside of the map.
+    /// * This will cause a stack overflow if the map is too small! So, adjust the screen boundaries and spawning offsets if the map should be small. *
+    /// </summary>
+    /// <param name="randomXPosition"></param>
+    /// <param name="randomYPosition"></param>
+    /// <returns></returns>
+    public Vector2 CheckIfValidSpawnLocation(float randomXPosition, float randomYPosition)
+    {
+        // if spawning location's Y value is below the map, then generate a position above the player
+        if (randomYPosition < surfaceBottomBoundary)
+            return SpawnEnemyOnTop();
+
+        else if (randomXPosition < surfaceLeftBoundary)
+            return SpawnEnemyOnRight();
+
+        else if (randomXPosition > surfaceRightBoundary)
+            return SpawnEnemyOnLeft();
+
+        else if (randomYPosition > surfaceTopBoundary)
+            return SpawnEnemyOnBottom();
+
+        return new Vector2(randomXPosition, randomYPosition);
+
+    }
+
+
+
+    // Update is called once per frame
+    void Update()
     {
         // Because the player is moving all around, the boundaries of the screen must update relative to their position
 
@@ -242,67 +214,5 @@ public class OffScreenSpawner : MonoBehaviour
             leftBounds = -1 * (screenBounds.x - playerTransform.position.x);
             bottomBounds = -1 * (screenBounds.y - playerTransform.position.y);
         }
-
-    }
-
-    // Checking if the player is close to the boundaries of the map
-    private void CheckPlayerProximityToBoundaries()
-    {
-        if (playerTransform.position.x <= surfaceLeftBoundary + maximumXScreenOffset)
-        {
-            playerCloseToLeftBoundary = true;
-        }
-
-        else
-        {
-            playerCloseToLeftBoundary = false;
-
-        }
-            
-
-        if (playerTransform.position.x >= surfaceRightBoundary - maximumXScreenOffset)
-        {
-            playerCloseToRightBoundary = true;
-
-        }
-
-        else
-        {
-            playerCloseToRightBoundary = false;
-
-        }
-            
-
-        if (playerTransform.position.y >= surfaceTopBoundary - maximumYScreenOffset)
-        {
-            playerCloseToTopBoundary = true;
-        }
-            
-        else
-        {
-            playerCloseToTopBoundary = false;
-
-        }
-            
-
-        if (playerTransform.position.y <= surfaceBottomBoundary + maximumYScreenOffset)
-        {
-            playerCloseToBottomBoundary = true;
-        }
-            
-        else
-        {
-            playerCloseToBottomBoundary = false;
-  
-        }
-            
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        UpdateScreenBounds();
-
-        CheckPlayerProximityToBoundaries();
     }
 }
