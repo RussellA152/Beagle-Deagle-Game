@@ -4,38 +4,27 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public abstract class GunWeapon : MonoBehaviour
+public abstract class GunWeapon : MonoBehaviour, IWeapon
 {
     private PlayerInput playerInput;
 
-    [Range(0, 1000)]
-    public float damagePerHit;
+    public GunData weaponData;
 
-    [Header("Fire Rate (Bullets Per Second)")]
-    public float fireRate; // The number of bullets fired per second
-
-    [Header("Ammo")]
-    public int magazineSize; // how much ammo can this weapon hold for its total magazine?
     [HideInInspector]
     public int bulletsShot; // how much ammo has the player shot since the last reload or refill?
     [HideInInspector]
     public int bulletsLoaded; // how much ammo is currently in the magazine?
+
     [HideInInspector]
     public int ammoInReserve; // how much ammo is currently in capacity?
-    public int maxAmmoInReserve; // how much ammo can this weapon hold for total capacity?
-    public float totalReloadTime; // how long will this gun take to reload to full?
 
     [Header("Bullet Logic")]
     public Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
-    public Bullet bullet; // what bullet is spawned when shooting?
-
-    [Header("Penetration")]
-    [Range(1f,50f)]
-    public int penetrationCount; // how many enemies can this gun's bullet pass through?
 
 
     private float shootInput; // input for shooting
 
+    [HideInInspector]
     public bool actuallyShooting; // is the player shooting (i.e, not idle or reloading or just moving)
 
     [HideInInspector]
@@ -45,17 +34,21 @@ public abstract class GunWeapon : MonoBehaviour
     private void Start()
     {
         bulletsShot = 0;
-        bulletsLoaded = magazineSize;
-        ammoInReserve = maxAmmoInReserve;
+        bulletsLoaded = weaponData.magazineSize;
+        ammoInReserve = weaponData.maxAmmoInReserve;
         isReloading = false;
 
 
         playerInput = PlayerManager.instance.GetPlayerInput();
 
-        //// TEMPORARILY HERE
         playerInput.actions["Fire"].performed += OnFire;
         playerInput.actions["Reload"].performed += OnReload;
 
+    }
+
+    private void OnEnable()
+    {
+        UpdateWeaponData(weaponData);
     }
 
     private void OnDisable()
@@ -75,11 +68,25 @@ public abstract class GunWeapon : MonoBehaviour
 
     public abstract void Fire();
 
+    // When upgrading a weapon, pass in a new GunData scriptable Object
+    // Ex. if a pistol goes from Level 1, to Level 2, you can call this function and pass in "Pistol Level 2" gun data
+    // and the gun will start to use Level 2 values.
+    protected virtual void UpdateWeaponData(GunData scriptableObject)
+    {
+        weaponData = scriptableObject;
+
+        bulletsLoaded = weaponData.magazineSize;
+        ammoInReserve = weaponData.maxAmmoInReserve;
+
+    }
+
     public virtual void SpawnBullet()
     {
         // Kind of unoptimized?
-        GameObject bulletInst = Instantiate(bullet.gameObject, bulletSpawnPoint.position, this.transform.rotation);
-        bulletInst.GetComponent<Bullet>().SetGun(this);
+        GameObject bulletInst = Instantiate(weaponData.bullet.gameObject, bulletSpawnPoint.position, this.transform.rotation);
+
+        // give the instaniated bullet the current scriptable object of this weapon
+        bulletInst.GetComponent<Bullet>().UpdateWeaponData(weaponData);
 
         bulletsShot++;
         bulletsLoaded--;
@@ -125,7 +132,7 @@ public abstract class GunWeapon : MonoBehaviour
     {
         // dont' reload if player doesn't have ammo in reserve
         // or, if the player has a full magazine clip
-        if (ammoInReserve == 0 || bulletsLoaded == magazineSize)
+        if (ammoInReserve == 0 || bulletsLoaded == weaponData.magazineSize)
             return;
 
         if (!isReloading)
@@ -137,7 +144,7 @@ public abstract class GunWeapon : MonoBehaviour
         actuallyShooting = false;
         isReloading = true;
 
-        yield return new WaitForSeconds(totalReloadTime);
+        yield return new WaitForSeconds(weaponData.totalReloadTime);
 
         RefillAmmo();
 
@@ -167,9 +174,15 @@ public abstract class GunWeapon : MonoBehaviour
     // Gives player full ammo
     public void FullAmmo()
     {
-        ammoInReserve = maxAmmoInReserve;
-        bulletsLoaded = magazineSize;
+        ammoInReserve = weaponData.maxAmmoInReserve;
+        bulletsLoaded = weaponData.magazineSize;
         bulletsShot = 0;
     }
+
+    public void Attack()
+    {
+        throw new System.NotImplementedException();
+    }
+
     #endregion
 }

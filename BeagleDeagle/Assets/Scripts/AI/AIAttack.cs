@@ -11,7 +11,11 @@ public class AIAttack : MonoBehaviour
     [SerializeField]
     private bool canAttack = true;
 
-    //private bool attackStarted = false;
+    private void OnEnable()
+    {
+        canAttack = true;
+    }
+
 
     public virtual void Attack(Transform target)
     {

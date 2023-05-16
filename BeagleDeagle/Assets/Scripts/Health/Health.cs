@@ -19,7 +19,6 @@ public abstract class Health: MonoBehaviour
     // add or subtract from health count
     public void ModifyHealth(float amount)
     {
-        Debug.Log("Damage?");
         // if this health modification will exceed the max potential health, then just set the current health to max
         if (currentHealth + amount > maxHealth)
         {

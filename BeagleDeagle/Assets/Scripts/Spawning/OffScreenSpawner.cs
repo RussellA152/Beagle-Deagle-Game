@@ -17,14 +17,10 @@ public class OffScreenSpawner : MonoBehaviour
     [SerializeField]
     private NavMeshSurface2d mapSurface;
 
-    [Header("Boundaries of Map")]
-    [SerializeField]
+    [Header("Boundaries of the Map")]
     private float surfaceTopBoundary; // the top boundary of the navmesh surface (i.e the walkable area for enemies)
-    [SerializeField]
     private float surfaceBottomBoundary; // the bottom boundary of the navmesh surface
-    [SerializeField]
     private float surfaceLeftBoundary; // the left boundary of the navmesh surface
-    [SerializeField]
     private float surfaceRightBoundary; // the right boundary of the navmesh surface
 
     [Header("X Enemy Spawning Offsets")]
@@ -43,14 +39,15 @@ public class OffScreenSpawner : MonoBehaviour
     private float leftBounds; // starting point for the left portion of the off-screen
     private float bottomBounds; // starting point for the bottom portion of the off-screen
 
-    [SerializeField]
     private bool playerCloseToLeftBoundary;
-    [SerializeField]
     private bool playerCloseToRightBoundary;
-    [SerializeField]
     private bool playerCloseToTopBoundary;
-    [SerializeField]
     private bool playerCloseToBottomBoundary;
+
+    private int topSpawnValue = 1; // if a value of 1 is chosen by the random number generated, then spawn the enemy above the player
+    private int bottomSpawnValue = 2; // if a value of 2 is chosen by the random number generated, then spawn the enemy below the player
+    private int rightSpawnValue = 3; // if a value of 3 is chosen by the random number generated, then spawn the enemy to the right of the player
+    private int leftSpawnValue = 4; // if a value of 4 is chosen by the random number generated, then spawn the enemy to the left of the player
 
 
     // Start is called before the first frame update
@@ -81,8 +78,10 @@ public class OffScreenSpawner : MonoBehaviour
         // generate a random position on the top portion of the off-screen
         float randomYPosition = Random.Range(topBounds + minimumYScreenOffset, topBounds + maximumYScreenOffset);
 
+        // prevent X value from being less than surface left boundary and greater than surface right boundary
         randomXPosition = Mathf.Clamp(randomXPosition, surfaceLeftBoundary, surfaceRightBoundary);
 
+        // prevent Y value from being less than surface bottom boundary and greater than surface top boundary
         randomYPosition = Mathf.Clamp(randomYPosition, surfaceBottomBoundary,surfaceTopBoundary);
 
         return new Vector2(randomXPosition, randomYPosition);
@@ -139,7 +138,6 @@ public class OffScreenSpawner : MonoBehaviour
         Vector2 randomLocation = Vector2.zero;
 
         // pick a random number from 1-4
-        //int randomChoice = Random.Range(1, 5);
         int randomChoice = GenerateRandomChoice();
 
         // A value of 1 means return a spawn location at the top of the offscreen
@@ -166,68 +164,90 @@ public class OffScreenSpawner : MonoBehaviour
         }
         return randomLocation;
     }
-
+    /// <summary>
+    /// Generate a random number indicating which direction from the player, an enemy is allowed to spawn at (Ex. Above the player). 
+    /// Depending on the proximity of the player to a boundary(s) of the map, enemies may not be allowed to spawn at certain angles.
+    /// For example, if the player is too close to the top and right boundaries of the map, enemies are only allowed to spawn to the left and below the player.
+    /// If the player is close to all map boundaries (can only happen if the map is too small), then enemies are not allowed to spawn at all and a debug statment will
+    /// be printed to the console.
+    /// </summary>
+    /// <returns></returns>
     private int GenerateRandomChoice()
     {
         int randomChoice = 0;
         int subRandomChoice = 0;
+
+        // if player is close to the top of the map
         if (playerCloseToTopBoundary)
         {
+            // if player is close to top-left of the map
+            // then only allow enemies to spawn below or to the right of the player
             if (playerCloseToLeftBoundary)
             {
                 subRandomChoice = Random.Range(1, 3);
 
                 if (subRandomChoice == 1)
-                    randomChoice = 2;
+                    randomChoice = bottomSpawnValue;
                 else
-                    randomChoice = 3;
+                    randomChoice = rightSpawnValue;
             }
+            // if player is close to top-right of the map
+            // then only allow enemies to spawn below or to the left of the player
             else if (playerCloseToRightBoundary)
             {
                 subRandomChoice = Random.Range(1, 3);
 
                 if (subRandomChoice == 1)
-                    randomChoice = 2;
+                    randomChoice = bottomSpawnValue;
                 else
-                    randomChoice = 4;
+                    randomChoice = leftSpawnValue;
             }
+            // otherwise, allow enemies to spawn below, to the right, or left of the player
             else
             {
                 randomChoice = Random.Range(2, 5);
             }
         }
+        // if player is close to the bottom of the map
         else if (playerCloseToBottomBoundary)
         {
+            // if player is close to bottom-left of the map
+            // then only allow enemies to spawn above or to the right of the player
             if (playerCloseToLeftBoundary)
             {
                 subRandomChoice = Random.Range(1, 3);
 
                 if (subRandomChoice == 1)
-                    randomChoice = 1;
+                    randomChoice = topSpawnValue;
                 else
-                    randomChoice = 3;
+                    randomChoice = rightSpawnValue;
             }
+            // if player is close to bottom-right of the map
+            // then only allow enemies to spawn above or to the left of the player
             else if (playerCloseToRightBoundary)
             {
                 subRandomChoice = Random.Range(1, 3);
 
                 if (subRandomChoice == 1)
-                    randomChoice = 1;
+                    randomChoice = topSpawnValue;
                 else
-                    randomChoice = 4;
+                    randomChoice = leftSpawnValue;
             }
+            // otherwise, only allow enemies to spawn above, to the right or left of the player
             else
             {
                 subRandomChoice = Random.Range(1, 4);
 
                 if (subRandomChoice == 1)
-                    randomChoice = 1;
+                    randomChoice = topSpawnValue;
                 else if(subRandomChoice == 2)
-                    randomChoice = 3;
+                    randomChoice = rightSpawnValue;
                 else if (subRandomChoice == 3)
-                    randomChoice = 4;
+                    randomChoice = leftSpawnValue;
             }
         }
+        // if player is close to right side of the map
+        // then only allow enemies to spawn above, below, or to the left of the player
         else if (playerCloseToRightBoundary)
         {
             subRandomChoice = Random.Range(1, 4);
@@ -239,6 +259,8 @@ public class OffScreenSpawner : MonoBehaviour
             else if (subRandomChoice == 3)
                 randomChoice = 4;
         }
+        // if the player is close to the left side of the map
+        // then only allow enemies to spawn above, below, or to the right of the player
         else if (playerCloseToLeftBoundary)
         {
             subRandomChoice = Random.Range(1, 4);
@@ -250,12 +272,15 @@ public class OffScreenSpawner : MonoBehaviour
             else if (subRandomChoice == 3)
                 randomChoice = 3;
         }
+        // if the player is close to all boundaries of the map (can happen if map is too small)
+        // then return a value 0, which indicates that an enemy could not spawn
         else if(playerCloseToTopBoundary && playerCloseToBottomBoundary && playerCloseToLeftBoundary && playerCloseToRightBoundary)
         {
             Debug.Log("Player is close to all corners! Map is too small!");
             return 0;
         }
-
+        // if player is not close to any boundaries
+        // then allow enemies to spawn at any direction (above, below, to the right and left, of the player)
         else
         {
             randomChoice = Random.Range(1, 5);
@@ -320,10 +345,8 @@ public class OffScreenSpawner : MonoBehaviour
 
     }
 
-
-
-    // Update is called once per frame
-    void Update()
+    // Update camera/screen boundaries while player is moving
+    private void UpdateScreenBoundaries()
     {
         // Because the player is moving all around, the boundaries of the screen must update relative to their position
 
@@ -354,6 +377,14 @@ public class OffScreenSpawner : MonoBehaviour
             leftBounds = -1 * (screenBounds.x - playerTransform.position.x);
             bottomBounds = -1 * (screenBounds.y - playerTransform.position.y);
         }
+    }
+
+
+
+    // Update is called once per frame
+    void Update()
+    {
+        UpdateScreenBoundaries();
 
         CheckPlayerProximityToBoundaries();
     }

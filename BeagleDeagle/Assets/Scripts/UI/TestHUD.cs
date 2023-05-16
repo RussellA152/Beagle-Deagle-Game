@@ -18,6 +18,11 @@ public class TestHUD : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI maxAmmoText;
 
+    private void Start()
+    {
+        
+    }
+
     private void Update()
     {
         ammoMagText.text = weapon.bulletsLoaded.ToString();

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private GunWeapon gun; // what gun did this bullet come from?
+    //private GunWeapon gun; // what gun did this bullet come from?
+
+    private GunData weaponData;
 
     [SerializeField]
     private float bulletSpeed = 15f;
@@ -35,7 +37,7 @@ public class Bullet : MonoBehaviour
             Debug.Log("HIT " + collision.gameObject.name);
 
             // Make target take damage
-            collision.gameObject.GetComponent<Health>().ModifyHealth(-1 * gun.damagePerHit);
+            collision.gameObject.GetComponent<Health>().ModifyHealth(-1 * weaponData.damagePerHit);
 
             Penetrate();
         }
@@ -45,13 +47,21 @@ public class Bullet : MonoBehaviour
         amountPenetrated++;
 
         // if this bullet has penetrated through too many enemies, then destroy it
-        if (amountPenetrated >= gun.penetrationCount)
+        if (amountPenetrated >= weaponData.penetrationCount)
             Destroy(this.gameObject);
 
     }
     private void SetStraightVelocity()
     {
         rb.velocity = transform.right * bulletSpeed;
+    }
+
+    // When a weapon has been upgraded, the gun will tell this bullet to change its scriptable Object to the same one that the gun has.
+    // Ex. When a pistol goes from level 1 to level 2, this bullet will use "Pistol Level 2" data
+    public void UpdateWeaponData(GunData scriptableObject)
+    {
+        weaponData = scriptableObject;
+
     }
 
     // TEMPORARY
@@ -61,8 +71,4 @@ public class Bullet : MonoBehaviour
         Destroy(this.gameObject, destroyTime);
     }
 
-    public void SetGun(GunWeapon newGun)
-    {
-        gun = newGun;
-    }
 }

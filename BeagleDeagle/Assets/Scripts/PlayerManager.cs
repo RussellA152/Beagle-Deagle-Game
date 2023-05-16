@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class PlayerManager : MonoBehaviour
     private PlayerInput playerInput;
 
     private GameObject player;
+
+    //private IWeapon playerCurrentWeapon;
 
     [TagSelector] public string playerTag;
     
@@ -27,8 +30,21 @@ public class PlayerManager : MonoBehaviour
 
         // Find the player in the scene
         player = GameObject.FindGameObjectWithTag(playerTag);
+
         playerInput = player.GetComponent<PlayerInput>();
+
+        //playerCurrentWeapon = player.GetComponentInChildren<IWeapon>();
     }
+
+    public GameObject GetPlayer()
+    {
+        return player;
+    }
+
+    //public IWeapon GetPlayerWeapon()
+    //{
+    //    return playerCurrentWeapon;
+    //}
 
     public PlayerInput GetPlayerInput()
     {

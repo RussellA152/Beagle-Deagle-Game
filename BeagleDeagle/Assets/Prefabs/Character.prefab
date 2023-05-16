@@ -160,7 +160,7 @@ MonoBehaviour:
   state: 0
   movementScript: {fileID: 5313635083943124193}
   healthScript: {fileID: 5313635083943124196}
-  weaponEquipped: {fileID: 3736749750956549350}
+  weaponEquipped: {fileID: 0}
 --- !u!114 &5313635083943124193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,7 +408,6 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3736749750956549348}
   - {fileID: 5313635084574825236}
   m_Father: {fileID: 5313635083943124194}
   m_RootOrder: 2
@@ -579,7 +578,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5313635084010504988}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5313635084574825237
 SpriteRenderer:
@@ -803,76 +802,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &2296378741377850049
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 5313635084010504988}
-    m_Modifications:
-    - target: {fileID: 3172216759253909026, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-      propertyPath: m_Name
-      value: Test Gun
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.288
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.38
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
---- !u!4 &3736749750956549348 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3172216759253909029, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-  m_PrefabInstance: {fileID: 2296378741377850049}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3736749750956549350 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3172216759253909031, guid: c3d6fe0bfa2d3ba49b99652ac1042e70, type: 3}
-  m_PrefabInstance: {fileID: 2296378741377850049}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ab98b2af6a0a8d42a990c32d6912dcc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

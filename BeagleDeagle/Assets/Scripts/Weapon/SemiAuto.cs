@@ -6,10 +6,9 @@ public class SemiAuto : GunWeapon
 {
     private float lastFireTime = 0f;
 
-
     public override void Fire()
     {
-        if (Time.time - lastFireTime > 1f / fireRate)
+        if (Time.time - lastFireTime > 1f / weaponData.fireRate)
         {
             base.SpawnBullet();
             lastFireTime = Time.time;
