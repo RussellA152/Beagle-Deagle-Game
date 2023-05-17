@@ -13,7 +13,8 @@ public class PlayerManager : MonoBehaviour
 
     private GameObject player;
 
-    //private IWeapon playerCurrentWeapon;
+    [SerializeField]
+    private GunData currentWeaponData;
 
     [TagSelector] public string playerTag;
     
@@ -32,8 +33,6 @@ public class PlayerManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag(playerTag);
 
         playerInput = player.GetComponent<PlayerInput>();
-
-        //playerCurrentWeapon = player.GetComponentInChildren<IWeapon>();
     }
 
     public GameObject GetPlayer()
@@ -41,10 +40,10 @@ public class PlayerManager : MonoBehaviour
         return player;
     }
 
-    //public IWeapon GetPlayerWeapon()
-    //{
-    //    return playerCurrentWeapon;
-    //}
+    public GunData GetPlayerWeaponData()
+    {
+        return currentWeaponData;
+    }
 
     public PlayerInput GetPlayerInput()
     {

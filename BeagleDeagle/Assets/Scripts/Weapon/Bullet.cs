@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IPoolable
 {
     //private GunWeapon gun; // what gun did this bullet come from?
 
     private GunData weaponData;
+
+    [SerializeField]
+    private int poolKey;
 
     [SerializeField]
     private float bulletSpeed = 15f;
@@ -22,12 +25,22 @@ public class Bullet : MonoBehaviour
 
     private int amountPenetrated; // how many enemies has this bullet penetrated through?
 
+    // return the pool key (anything that is IPoolable, must have a pool key)
+    public int PoolKey => poolKey;
 
-    private void Start()
+    private void OnEnable()
     {
         amountPenetrated = 0;
-        SetDestroyTime();
+
+        StartCoroutine(DisableAfterTime());
+
         SetStraightVelocity();
+    }
+
+    private void OnDisable()
+    {
+        // stop all coroutines when this bullet has been disabled
+        StopAllCoroutines();
     }
 
 
@@ -48,7 +61,9 @@ public class Bullet : MonoBehaviour
 
         // if this bullet has penetrated through too many enemies, then destroy it
         if (amountPenetrated >= weaponData.penetrationCount)
-            Destroy(this.gameObject);
+        {
+            gameObject.SetActive(false);
+        }
 
     }
     private void SetStraightVelocity()
@@ -64,11 +79,10 @@ public class Bullet : MonoBehaviour
 
     }
 
-    // TEMPORARY
-    // WILL PROBABLY OBJECT POOL THIS AT SOME POINT
-    private void SetDestroyTime()
+    IEnumerator DisableAfterTime()
     {
-        Destroy(this.gameObject, destroyTime);
+        yield return new WaitForSeconds(destroyTime);
+        gameObject.SetActive(false);
     }
 
 }

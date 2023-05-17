@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public abstract class GunWeapon : MonoBehaviour, IWeapon
+public abstract class GunWeapon : MonoBehaviour
 {
     private PlayerInput playerInput;
 
@@ -82,14 +82,27 @@ public abstract class GunWeapon : MonoBehaviour, IWeapon
 
     public virtual void SpawnBullet()
     {
-        // Kind of unoptimized?
-        GameObject bulletInst = Instantiate(weaponData.bullet.gameObject, bulletSpawnPoint.position, this.transform.rotation);
+        // fetch a bullet from object pooler
+        GameObject bullet = ObjectPooler.instance.GetPooledObject(weaponData.bullet.PoolKey);
+        if(bullet != null)
+        {
+            // set the position to be at the barrel of the gun
+            bullet.transform.position = bulletSpawnPoint.position;
+            bullet.transform.rotation = this.transform.rotation;
 
-        // give the instaniated bullet the current scriptable object of this weapon
-        bulletInst.GetComponent<Bullet>().UpdateWeaponData(weaponData);
+            // give the instaniated bullet the current scriptable object of this weapon
+            bullet.GetComponent<Bullet>().UpdateWeaponData(weaponData);
 
-        bulletsShot++;
-        bulletsLoaded--;
+            bullet.SetActive(true);
+
+            bulletsShot++;
+            bulletsLoaded--;
+        }
+        else
+        {
+            Debug.Log("Could not retrieve a bullet from object pool!");
+        }
+        
     }
 
     public void OnFire(CallbackContext context)
@@ -177,11 +190,6 @@ public abstract class GunWeapon : MonoBehaviour, IWeapon
         ammoInReserve = weaponData.maxAmmoInReserve;
         bulletsLoaded = weaponData.magazineSize;
         bulletsShot = 0;
-    }
-
-    public void Attack()
-    {
-        throw new System.NotImplementedException();
     }
 
     #endregion

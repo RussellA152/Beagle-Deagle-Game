@@ -6,6 +6,9 @@ using UnityEngine.AI;
 public class AIAttack : MonoBehaviour
 {
     [SerializeField]
+    private int damage;
+
+    [SerializeField]
     private float cooldown;
 
     [SerializeField]
@@ -23,7 +26,7 @@ public class AIAttack : MonoBehaviour
 
         if (canAttack)
         {
-            target.GetComponent<Health>().ModifyHealth(-50f);
+            target.GetComponent<Health>().ModifyHealth(damage);
             StartCoroutine(AttackCooldown());
         }
             

@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460dd298d8e60ff4084e3952071a492d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 50
   cooldown: 1.5
   canAttack: 1
 --- !u!114 &3711592478197892578
@@ -141,7 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db53577188b32941a633f33e5026826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
   maxHealth: 100
 --- !u!195 &3711592478197892577
 NavMeshAgent:

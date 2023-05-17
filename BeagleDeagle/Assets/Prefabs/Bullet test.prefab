@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bddf96d50ca1b94a8408e38c0dd9010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 1905a7de05d3ee2489483ed2c4696d65, type: 2}
+  poolKey: 100
   bulletSpeed: 110
   destroyTime: 3
   rb: {fileID: 7698205712678738710}

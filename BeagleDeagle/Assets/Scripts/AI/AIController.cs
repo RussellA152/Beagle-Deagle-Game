@@ -7,8 +7,11 @@ using UnityEngine.AI;
 /// Basic Movement and Attack for an AI with one attack and only following.
 /// Override OnAttack() and OnChase() functions to make more complex attacks and movement.
 /// </summary>
-public class AIController : MonoBehaviour
+public class AIController : MonoBehaviour, IPoolable
 {
+    [SerializeField]
+    private int poolKey;
+
     [SerializeField] // TEMPORARY, WILL NEED A DIFFERENT WAY TO REFERENCE THE PLAYER *
     private Transform target; // who this enemy will chase and attack
 
@@ -35,6 +38,8 @@ public class AIController : MonoBehaviour
 
     private bool inAttackRange; // is the player within this enemy's attack range?
     private bool inChaseRange; // is the player within this enemy's chase/follow range?
+
+    public int PoolKey => poolKey;
 
     private void Awake()
     {
@@ -83,20 +88,16 @@ public class AIController : MonoBehaviour
         switch (state)
         {
             case EnemyState.Idle:
-                //Debug.Log("I am IDLE.");
                 OnIdle();
                 break;
             case EnemyState.Chase:
-                //Debug.Log("I am CHASING.");
                 OnChase();
                 break;
             case EnemyState.Attack:
-                //Debug.Log("I am ATTACKING.");
                 OnAttack();
                 break;
             case EnemyState.Death:
-                Destroy(this.gameObject);
-                Debug.Log("I am DEAD.");
+                OnDeath();  
                 break;
         }
     }
@@ -146,7 +147,9 @@ public class AIController : MonoBehaviour
     }
 
     protected virtual void OnDeath(){
+        gameObject.SetActive(false);
 
+        Debug.Log("I am DEAD.");
     }
 
     private void OnDrawGizmosSelected()
