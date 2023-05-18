@@ -15,8 +15,8 @@ public abstract class GunWeapon : MonoBehaviour
     [HideInInspector]
     public int bulletsLoaded; // how much ammo is currently in the magazine?
 
-    [HideInInspector]
-    public int ammoInReserve; // how much ammo is currently in capacity?
+    //[HideInInspector]
+    //public int ammoInReserve; // how much ammo is currently in capacity?
 
     [Header("Bullet Logic")]
     public Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
@@ -35,7 +35,7 @@ public abstract class GunWeapon : MonoBehaviour
     {
         bulletsShot = 0;
         bulletsLoaded = weaponData.magazineSize;
-        ammoInReserve = weaponData.maxAmmoInReserve;
+        //ammoInReserve = weaponData.maxAmmoInReserve;
         isReloading = false;
 
 
@@ -76,7 +76,7 @@ public abstract class GunWeapon : MonoBehaviour
         weaponData = scriptableObject;
 
         bulletsLoaded = weaponData.magazineSize;
-        ammoInReserve = weaponData.maxAmmoInReserve;
+        //ammoInReserve = weaponData.maxAmmoInReserve;
 
     }
 
@@ -145,8 +145,8 @@ public abstract class GunWeapon : MonoBehaviour
     {
         // dont' reload if player doesn't have ammo in reserve
         // or, if the player has a full magazine clip
-        if (ammoInReserve == 0 || bulletsLoaded == weaponData.magazineSize)
-            return;
+        //if (ammoInReserve == 0 || bulletsLoaded == weaponData.magazineSize)
+        //    return;
 
         if (!isReloading)
             StartCoroutine(WaitReload());
@@ -168,29 +168,32 @@ public abstract class GunWeapon : MonoBehaviour
     // This way of refilling ammo should work for all weapons except for pump shotguns
     public virtual void RefillAmmo()
     {
+        bulletsLoaded += bulletsShot;
+        bulletsShot = 0;
+
         // has ammo in reserve after reloading (ex. 7/56 ammo to 8/55 ammo)
-        if((ammoInReserve - bulletsShot) > 0)
-        {
-            ammoInReserve -= bulletsShot;
-            bulletsLoaded += bulletsShot;
-            bulletsShot = 0;
-        }
-        // does not have ammo in reserve after reloading (ex. 6/2 to 8/0)
-        else if((ammoInReserve - bulletsShot) <= 0)
-        {
-            bulletsLoaded += ammoInReserve;
-            ammoInReserve = 0;
-            bulletsShot = 0;
-        }
+        //if((ammoInReserve - bulletsShot) > 0)
+        //{
+        //    ammoInReserve -= bulletsShot;
+        //    bulletsLoaded += bulletsShot;
+        //    bulletsShot = 0;
+        //}
+        //// does not have ammo in reserve after reloading (ex. 6/2 to 8/0)
+        //else if((ammoInReserve - bulletsShot) <= 0)
+        //{
+        //    bulletsLoaded += ammoInReserve;
+        //    ammoInReserve = 0;
+        //    bulletsShot = 0;
+        //}
     }
 
     // Gives player full ammo
-    public void FullAmmo()
-    {
-        ammoInReserve = weaponData.maxAmmoInReserve;
-        bulletsLoaded = weaponData.magazineSize;
-        bulletsShot = 0;
-    }
+    //public void FullAmmo()
+    //{
+    //    ammoInReserve = weaponData.maxAmmoInReserve;
+    //    bulletsLoaded = weaponData.magazineSize;
+    //    bulletsShot = 0;
+    //}
 
     #endregion
 }

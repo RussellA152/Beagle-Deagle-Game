@@ -22,8 +22,6 @@ public class AIAttack : MonoBehaviour
 
     public virtual void Attack(Transform target)
     {
-        //Debug.Log("SWIPE AT TARGET!");
-
         if (canAttack)
         {
             target.GetComponent<Health>().ModifyHealth(damage);
@@ -34,13 +32,11 @@ public class AIAttack : MonoBehaviour
 
     IEnumerator AttackCooldown()
     {
-        //attackStarted = true;
         canAttack = false;
         Debug.Log("SWIPE AT TARGET!");
 
         yield return new WaitForSeconds(cooldown);
 
-        //attackStarted = false;
         canAttack = true;
     }
 }

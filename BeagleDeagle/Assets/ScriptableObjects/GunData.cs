@@ -16,7 +16,7 @@ public class GunData : ScriptableObject
     [Header("Ammo")]
     public int magazineSize; // how much ammo can this weapon hold for its total magazine?
 
-    public int maxAmmoInReserve; // how much ammo can this weapon hold for total capacity?
+    //public int maxAmmoInReserve; // how much ammo can this weapon hold for total capacity?
     public float totalReloadTime; // how long will this gun take to reload to full?
 
     [Header("Bullet Logic")]

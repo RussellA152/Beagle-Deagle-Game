@@ -26,7 +26,7 @@ public class TestHUD : MonoBehaviour
     private void Update()
     {
         ammoMagText.text = weapon.bulletsLoaded.ToString();
-        maxAmmoText.text = weapon.ammoInReserve.ToString();
+        //maxAmmoText.text = weapon.ammoInReserve.ToString();
     }
 
 
