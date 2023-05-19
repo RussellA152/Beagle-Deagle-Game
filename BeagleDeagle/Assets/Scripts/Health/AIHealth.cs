@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIHealth : Health
+public class AIHealth : Health, IDataUpdatable<EnemyData>
 {
     [SerializeField]
     private EnemyData enemyScriptableObject;
@@ -34,5 +34,9 @@ public class AIHealth : Health
             currentHealth += amount;
         }
 
+    }
+    public void UpdateConfiguration(EnemyData scriptableObject)
+    {
+        enemyScriptableObject = scriptableObject;
     }
 }

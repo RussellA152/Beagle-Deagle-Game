@@ -187,7 +187,6 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: fe6ef67b3ee6de944957c9fe4af3300a, type: 2}
   bulletsShot: 0
   bulletsLoaded: 0
-  ammoInReserve: 0
   bulletSpawnPoint: {fileID: 3172216759311910775}
   actuallyShooting: 0
   isReloading: 0
@@ -215,7 +214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3172216759311910772}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.5, y: 0.406, z: 0}
+  m_LocalPosition: {x: 6.79, y: 0.406, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -21,4 +21,10 @@ MonoBehaviour:
     enemyData: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
     enemiesPerSpawn: 1
     miniDuration: 10
-  duration: 0
+  - name: Slow Zombie Horde
+    delayBetweenSpawn: 1.5
+    prefab: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
+    enemyData: {fileID: 11400000, guid: 3fd98ea09a4f9ac499b42822b16f32f5, type: 2}
+    enemiesPerSpawn: 1
+    miniDuration: 10
+  duration: 10

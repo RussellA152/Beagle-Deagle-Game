@@ -12,9 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afeebaedf6382ff4990f5b951391ed8d, type: 3}
   m_Name: Regular Zombie
   m_EditorClassIdentifier: 
+  animatorController: {fileID: 0}
   maxHealth: 100
-  movementSpeed: 3
+  movementSpeed: 5
   attackDamage: 50
   attackCooldown: 1.5
   attackRange: 2.5
   chaseRange: 150
+  attackLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  chaseLayer:
+    serializedVersion: 2
+    m_Bits: 128

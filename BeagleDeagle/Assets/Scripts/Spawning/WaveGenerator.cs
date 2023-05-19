@@ -104,6 +104,17 @@ public class WaveGenerator : MonoBehaviour
                     GameObject newEnemy = ObjectPooler.instance.GetPooledObject(enemyPoolKey);
                     newEnemy.transform.position = randomizePosition;
 
+                    // Pass in the EnemyData scriptable object to the newly spawned enemy
+                    IDataUpdatable<EnemyData>[] dataToUpdate = newEnemy.GetComponents<IDataUpdatable<EnemyData>>();
+                    
+                    // For all scripts (within the enemy) that need their stats to be updated...
+                    // call the function that takes in a scriptable object and updates values
+                    // Ex. We're telling this enemy to set their maxHealth and attackDamage stats
+                    foreach(IDataUpdatable<EnemyData> data in dataToUpdate)
+                    {
+                        data.UpdateConfiguration(A.enemyData);
+                    }
+
                     newEnemy.SetActive(true);
                 }
             }

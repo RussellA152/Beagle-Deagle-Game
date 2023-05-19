@@ -82,10 +82,6 @@ public class ObjectPooler : MonoBehaviour
                 {
                     return itemRequested.pooled[i];
                 }
-                else
-                {
-                    Debug.Log("FAILED TO RETURN OBJECT!");
-                }
             }
 
             // if the pool is allowed to expand, then instaniate a new item and add it to the pool

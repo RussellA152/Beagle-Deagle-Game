@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIAttack : MonoBehaviour
+public class AIAttack : MonoBehaviour, IDataUpdatable<EnemyData>
 {
     [SerializeField]
     private EnemyData enemyScriptableObject;
@@ -34,5 +34,10 @@ public class AIAttack : MonoBehaviour
         yield return new WaitForSeconds(enemyScriptableObject.attackCooldown);
 
         canAttack = true;
+    }
+
+    public void UpdateConfiguration(EnemyData scriptableObject)
+    {
+        enemyScriptableObject = scriptableObject;
     }
 }

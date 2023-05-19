@@ -8,6 +8,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewEnemy", menuName = "ScriptableObjects/EnemyData")]
 public class EnemyData : ScriptableObject
 {
+    public RuntimeAnimatorController animatorController;
+
     [Range(1f, 2500f)]
     public float maxHealth;
 
@@ -22,7 +24,9 @@ public class EnemyData : ScriptableObject
     public float attackRange; // how close does this enemy need to be to its target to do an attack?
     public float chaseRange; // how close does this enemy need to be to its target to chase them?
 
+    [Header("Who to Attack?")]
     public LayerMask attackLayer; // what kind of layer does this enemy attack? (ex. Player)
+    [Header("Who to Chase?")]
     public LayerMask chaseLayer; // what kind of layer does this enemy follow? (ex. Player)
 
 }

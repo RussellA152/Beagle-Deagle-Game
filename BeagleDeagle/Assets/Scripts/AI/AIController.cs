@@ -7,7 +7,7 @@ using UnityEngine.AI;
 /// Basic Movement and Attack for an AI with one attack and only following.
 /// Override OnAttack() and OnChase() functions to make more complex attacks and movement.
 /// </summary>
-public class AIController : MonoBehaviour, IPoolable
+public class AIController : MonoBehaviour, IPoolable, IDataUpdatable<EnemyData>
 {
     [SerializeField]
     private int poolKey;
@@ -72,10 +72,25 @@ public class AIController : MonoBehaviour, IPoolable
 
     }
 
-    private void OnEnable()
-    {
-        agent.speed = enemyScriptableObject.movementSpeed;
-    }
+    //private void OnEnable()
+    //{
+    //    EnemyDataManager.instance.onEnemySpawn += UpdateEnemyConfiguration;
+
+    //}
+
+    //private void OnDisable()
+    //{
+    //    EnemyDataManager.instance.onEnemySpawn -= UpdateEnemyConfiguration;
+    //}
+
+    //public void UpdateEnemyConfiguration(EnemyData scriptableObject)
+    //{
+    //    Debug.Log("Am I receiving the data?   " + scriptableObject);
+    //    enemyScriptableObject = scriptableObject;
+    //    agent.speed = enemyScriptableObject.movementSpeed;
+
+    //    EnemyDataManager.instance.onEnemySpawn -= UpdateEnemyConfiguration;
+    //}
 
     private void Update()
     {
@@ -163,4 +178,8 @@ public class AIController : MonoBehaviour, IPoolable
         Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.chaseRange);
     }
 
+    public void UpdateConfiguration(EnemyData scriptableObject)
+    {
+        enemyScriptableObject = scriptableObject;
+    }
 }
