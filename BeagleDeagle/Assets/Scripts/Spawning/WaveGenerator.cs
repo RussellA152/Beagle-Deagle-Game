@@ -4,39 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using System.Linq;
-using Random = UnityEngine.Random;
-
-[Serializable]
-public class WaveAction
-{
-    public string name;
-
-    public float delayBetweenSpawn; // what is the time between each enemy spawn (ex. 0.5 seconds between each zombie spawn)
-
-    public GameObject prefab; // the enemy to spawn
-
-    public EnemyData enemyData;
-
-    public int enemiesPerSpawn; // how many enemies will spawn at once (ex. 1 zombie at a time, or 2 at the same time)
-
-    public float miniDuration; // how long does this mini wave occur for? (in seconds)
-
-}
-
-[Serializable]
-public class Wave
-{
-    public string name;
-
-    [NonReorderable]
-    public List<WaveAction> actions;
-
-    public string message; // this string will be displayed on the screen when this mini wave begins
-
-    [HideInInspector]
-    public float duration; // the duration of the wave is the maxmimum value in the mini waves
-
-}
 
 public class WaveGenerator : MonoBehaviour
 {
@@ -46,11 +13,11 @@ public class WaveGenerator : MonoBehaviour
 
     public float difficultyFactor = 0.9f;
 
-    [NonReorderable]
-    public List<Wave> waves;
+    public List<WaveData> waves;
+    //public List<Wave> waves;
 
-    private Wave m_CurrentWave;
-    public Wave CurrentWave { get { return m_CurrentWave; } }
+    private WaveData m_CurrentWave;
+    public WaveData CurrentWave { get { return m_CurrentWave; } }
 
     private float m_DelayFactor = 1.0f;
 
@@ -64,12 +31,12 @@ public class WaveGenerator : MonoBehaviour
         while (!wavesCompleted)
         {
             // for each wave...
-            foreach (Wave W in waves)
+            foreach (WaveData W in waves)
             {
                 // Set the duration of the wave to be the HIGHEST duration of all mini waves
                 // Ex. if we have three mini waves: 1 Bat every 2 seconds for 10 seconds, 1 Skeleton every 2 seconds for 5 seconds
                 // Then the duration of the wave should be 10 seconds to accomodate for all mini waves
-                W.duration = W.actions.Max(v => v.miniDuration);
+                W.duration = W.miniWaves.Max(v => v.miniDuration);
 
                 // if there is currently a wave ongoing, don't start a new wave yet
                 if (W != m_CurrentWave && m_CurrentWave.duration > 0)
@@ -85,7 +52,7 @@ public class WaveGenerator : MonoBehaviour
                 }
 
                 // for each mini wave in that wave...
-                foreach (WaveAction A in W.actions)
+                foreach (MiniWave A in W.miniWaves)
                 {
                     m_CurrentWave = W;
                     // Start spawning those enemies for that mini wave
@@ -109,7 +76,7 @@ public class WaveGenerator : MonoBehaviour
         Debug.Log("GAME DONE!");
     }
 
-    IEnumerator StartMiniWave(WaveAction A)
+    IEnumerator StartMiniWave(MiniWave A)
     {
         float startTime = Time.time;
         float elapsedTime = 0f;

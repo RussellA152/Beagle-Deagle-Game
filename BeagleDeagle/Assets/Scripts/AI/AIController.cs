@@ -30,12 +30,6 @@ public class AIController : MonoBehaviour, IPoolable
     [SerializeField]
     private EnemyState state;
 
-    [SerializeField]
-    private LayerMask attackLayer; // what kind of layer does this enemy attack? (ex. Player)
-    [SerializeField]
-    private LayerMask chaseLayer; // what kind of layer does this enemy follow? (ex. Player)
-
-
     private bool inAttackRange; // is the player within this enemy's attack range?
     private bool inChaseRange; // is the player within this enemy's chase/follow range?
 
@@ -63,6 +57,7 @@ public class AIController : MonoBehaviour, IPoolable
         // player is in enemy's attack range
         Attack,
 
+        // enemy was stunned and cannot move
         Stunned,
 
         // enemy was killed
@@ -84,8 +79,8 @@ public class AIController : MonoBehaviour, IPoolable
 
     private void Update()
     {
-        inAttackRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.attackRange, attackLayer);
-        inChaseRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.chaseRange, chaseLayer);
+        inAttackRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.attackRange, enemyScriptableObject.attackLayer);
+        inChaseRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.chaseRange, enemyScriptableObject.chaseLayer);
 
 
         CheckState();
