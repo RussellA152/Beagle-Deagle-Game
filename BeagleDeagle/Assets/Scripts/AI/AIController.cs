@@ -12,6 +12,9 @@ public class AIController : MonoBehaviour, IPoolable
     [SerializeField]
     private int poolKey;
 
+    [SerializeField]
+    private EnemyData enemyScriptableObject;
+
     [SerializeField] // TEMPORARY, WILL NEED A DIFFERENT WAY TO REFERENCE THE PLAYER *
     private Transform target; // who this enemy will chase and attack
 
@@ -22,7 +25,7 @@ public class AIController : MonoBehaviour, IPoolable
     private AIAttack attackScript;
 
     [SerializeField]
-    private Health healthScript;
+    private AIHealth healthScript;
 
     [SerializeField]
     private EnemyState state;
@@ -32,9 +35,6 @@ public class AIController : MonoBehaviour, IPoolable
     [SerializeField]
     private LayerMask chaseLayer; // what kind of layer does this enemy follow? (ex. Player)
 
-    [Header("Line of Sight Values")]
-    [SerializeField] private float attackRange; // how close does this enemy need to be to its target to do an attack?
-    [SerializeField] private float chaseRange; // how close does this enemy need to be to its target to chase them?
 
     private bool inAttackRange; // is the player within this enemy's attack range?
     private bool inChaseRange; // is the player within this enemy's chase/follow range?
@@ -77,10 +77,15 @@ public class AIController : MonoBehaviour, IPoolable
 
     }
 
+    private void OnEnable()
+    {
+        agent.speed = enemyScriptableObject.movementSpeed;
+    }
+
     private void Update()
     {
-        inAttackRange = Physics2D.OverlapCircle(transform.position, attackRange, attackLayer);
-        inChaseRange = Physics2D.OverlapCircle(transform.position, chaseRange, chaseLayer);
+        inAttackRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.attackRange, attackLayer);
+        inChaseRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.chaseRange, chaseLayer);
 
 
         CheckState();
@@ -156,11 +161,11 @@ public class AIController : MonoBehaviour, IPoolable
     {
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.attackRange);
 
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, chaseRange);
+        Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.chaseRange);
     }
 
 }

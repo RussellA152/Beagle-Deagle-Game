@@ -13,14 +13,13 @@ public class WaveAction
 
     public float delayBetweenSpawn; // what is the time between each enemy spawn (ex. 0.5 seconds between each zombie spawn)
 
-    public GameObject prefab; // the enemy to spawn 
+    public GameObject prefab; // the enemy to spawn
+
+    public EnemyData enemyData;
 
     public int enemiesPerSpawn; // how many enemies will spawn at once (ex. 1 zombie at a time, or 2 at the same time)
 
     public float miniDuration; // how long does this mini wave occur for? (in seconds)
-
-    public string message; // this string will be displayed on the screen when this mini wave begins
-
 
 }
 
@@ -32,12 +31,12 @@ public class Wave
     [NonReorderable]
     public List<WaveAction> actions;
 
+    public string message; // this string will be displayed on the screen when this mini wave begins
+
     [HideInInspector]
     public float duration; // the duration of the wave is the maxmimum value in the mini waves
 
 }
-
-
 
 public class WaveGenerator : MonoBehaviour
 {
@@ -51,8 +50,8 @@ public class WaveGenerator : MonoBehaviour
     public List<Wave> waves;
 
     private Wave m_CurrentWave;
-
     public Wave CurrentWave { get { return m_CurrentWave; } }
+
     private float m_DelayFactor = 1.0f;
 
     private bool wavesCompleted = false;
@@ -79,6 +78,12 @@ public class WaveGenerator : MonoBehaviour
                     yield return new WaitForSeconds(m_CurrentWave.duration);
                 }
 
+                // only print a message to the screen if the message isn't blank
+                if (W.message != "")
+                {
+                    textElement.text = W.message;  // print the message to a Text Mesh Pro Element on a Canvas
+                }
+
                 // for each mini wave in that wave...
                 foreach (WaveAction A in W.actions)
                 {
@@ -92,11 +97,12 @@ public class WaveGenerator : MonoBehaviour
                 //{
                 //    // after all mini waves are finished, give the player some downtime
                 //    yield return new WaitForSeconds(m_CurrentWave.downTime);
-                //}
-                wavesCompleted = true;
+                //}  
+                
                 yield return null;  // prevents crash if all delays are 0
             }
-            
+            wavesCompleted = true;
+
             m_DelayFactor *= difficultyFactor;
             yield return null;  // prevents crash if all delays are 0
         }
@@ -108,11 +114,6 @@ public class WaveGenerator : MonoBehaviour
         float startTime = Time.time;
         float elapsedTime = 0f;
 
-        // only print a message to the screen if the message isn't blank
-        if (A.message != "")
-        {
-            textElement.text = A.message;  // print the message to a Text Mesh Pro Element on a Canvas
-        }
         // while this mini wave's still has duration left
         while (elapsedTime < A.miniDuration)
         {
@@ -135,6 +136,7 @@ public class WaveGenerator : MonoBehaviour
                     // fetch an enemy from the object pool and place them at the random position
                     GameObject newEnemy = ObjectPooler.instance.GetPooledObject(enemyPoolKey);
                     newEnemy.transform.position = randomizePosition;
+
                     newEnemy.SetActive(true);
                 }
             }

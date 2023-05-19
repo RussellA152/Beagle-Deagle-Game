@@ -6,12 +6,8 @@ using UnityEngine.AI;
 public class AIAttack : MonoBehaviour
 {
     [SerializeField]
-    private int damage;
+    private EnemyData enemyScriptableObject;
 
-    [SerializeField]
-    private float cooldown;
-
-    [SerializeField]
     private bool canAttack = true;
 
     private void OnEnable()
@@ -24,7 +20,7 @@ public class AIAttack : MonoBehaviour
     {
         if (canAttack)
         {
-            target.GetComponent<Health>().ModifyHealth(damage);
+            target.GetComponent<Health>().ModifyHealth(enemyScriptableObject.attackDamage);
             StartCoroutine(AttackCooldown());
         }
             
@@ -35,7 +31,7 @@ public class AIAttack : MonoBehaviour
         canAttack = false;
         Debug.Log("SWIPE AT TARGET!");
 
-        yield return new WaitForSeconds(cooldown);
+        yield return new WaitForSeconds(enemyScriptableObject.attackCooldown);
 
         canAttack = true;
     }
