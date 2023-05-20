@@ -27,4 +27,10 @@ MonoBehaviour:
     enemyData: {fileID: 11400000, guid: 3fd98ea09a4f9ac499b42822b16f32f5, type: 2}
     enemiesPerSpawn: 1
     miniDuration: 10
+  - name: Projectile Zombie Horde
+    delayBetweenSpawn: 1.5
+    prefab: {fileID: 3711592478197892634, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+    enemyData: {fileID: 11400000, guid: 17ec48660538d1548b6cb75719102a7a, type: 2}
+    enemiesPerSpawn: 1
+    miniDuration: 10
   duration: 10

@@ -4,7 +4,7 @@ using UnityEngine;
 
 // We can use ScriptableObjects for data about our weapons.
 // This is useful for our weapon upgrades since we can specify new damage or ammo values for the upgraded version
-[CreateAssetMenu(fileName = "NewGun", menuName = "ScriptableObjects/GunData")]
+[CreateAssetMenu(fileName = "NewGun", menuName = "ScriptableObjects/GunData/Automatic")]
 public class GunData : ScriptableObject
 {
     [Range(0, 1000)]

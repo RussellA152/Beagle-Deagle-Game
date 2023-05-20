@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private TopDownMovement movementScript;
 
     [SerializeField]
-    private PlayerHealth healthScript;
+    private Health healthScript;
 
     [SerializeField]
     private GunWeapon weaponEquipped;

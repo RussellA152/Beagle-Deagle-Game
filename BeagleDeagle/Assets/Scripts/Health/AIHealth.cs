@@ -35,8 +35,9 @@ public class AIHealth : Health, IDataUpdatable<EnemyData>
         }
 
     }
-    public void UpdateConfiguration(EnemyData scriptableObject)
+    public void UpdateScriptableObject(EnemyData scriptableObject)
     {
         enemyScriptableObject = scriptableObject;
     }
+
 }

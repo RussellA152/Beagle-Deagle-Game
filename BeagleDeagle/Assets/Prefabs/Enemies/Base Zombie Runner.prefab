@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3711592478197892580}
   - component: {fileID: 3711592478197892581}
-  - component: {fileID: 3711592478197892582}
+  - component: {fileID: 508925504358572946}
   - component: {fileID: 3711592478197892583}
   - component: {fileID: 3711592478197892578}
   - component: {fileID: 3711592478197892577}
@@ -90,7 +90,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3711592478197892582
+--- !u!114 &508925504358572946
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3711592478197892634}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 968a56f5072417f4da59e1592e29aa82, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a6358ef6244754468e2e1d78e6d0369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   poolKey: 10
@@ -109,12 +109,6 @@ MonoBehaviour:
   attackScript: {fileID: 3711592478197892583}
   healthScript: {fileID: 3711592478197892578}
   state: 0
-  attackLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  chaseLayer:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!114 &3711592478197892583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +122,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScriptableObject: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
-  canAttack: 1
 --- !u!114 &3711592478197892578
 MonoBehaviour:
   m_ObjectHideFlags: 0

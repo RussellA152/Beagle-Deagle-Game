@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public abstract class GunWeapon : MonoBehaviour
+public abstract class GunWeapon : MonoBehaviour, IDataUpdatable<GunData>
 {
     private PlayerInput playerInput;
 
@@ -185,6 +185,11 @@ public abstract class GunWeapon : MonoBehaviour
         //    ammoInReserve = 0;
         //    bulletsShot = 0;
         //}
+    }
+
+    public void UpdateScriptableObject(GunData scriptableObject)
+    {
+        throw new System.NotImplementedException();
     }
 
     // Gives player full ammo

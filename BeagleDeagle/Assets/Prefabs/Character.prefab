@@ -94,9 +94,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5313635083943124194}
   - component: {fileID: 5313635083943124198}
+  - component: {fileID: 4009384282933879284}
   - component: {fileID: 3238474014219297874}
   - component: {fileID: 5313635083943124193}
-  - component: {fileID: 5313635083943124196}
   - component: {fileID: 5313635083943124192}
   - component: {fileID: 5313635083943124195}
   - component: {fileID: 5313635083943124199}
@@ -145,6 +145,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4009384282933879284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313635083943124204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12470981c55cc544e9bdbe9161267220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 2500
 --- !u!114 &3238474014219297874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   movementScript: {fileID: 5313635083943124193}
-  healthScript: {fileID: 5313635083943124196}
+  healthScript: {fileID: 4009384282933879284}
   weaponEquipped: {fileID: 0}
 --- !u!114 &5313635083943124193
 MonoBehaviour:
@@ -196,20 +209,6 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
---- !u!114 &5313635083943124196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313635083943124204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cdb9cacd2bbf9c42a6731b0e5b9d878, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 2500
 --- !u!114 &5313635083943124192
 MonoBehaviour:
   m_ObjectHideFlags: 0

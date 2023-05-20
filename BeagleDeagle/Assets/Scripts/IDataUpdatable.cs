@@ -7,7 +7,8 @@ using UnityEngine;
 // Or, an enemy might change its data to go from a regular zombie, to a slow fat zombie.
 public interface IDataUpdatable<T> where T : ScriptableObject
 {
-    void UpdateConfiguration(T scriptableObject);
+    public void UpdateScriptableObject(T scriptableObject);
+
 }
 
 

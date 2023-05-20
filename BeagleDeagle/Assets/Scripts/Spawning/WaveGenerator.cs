@@ -112,7 +112,7 @@ public class WaveGenerator : MonoBehaviour
                     // Ex. We're telling this enemy to set their maxHealth and attackDamage stats
                     foreach(IDataUpdatable<EnemyData> data in dataToUpdate)
                     {
-                        data.UpdateConfiguration(A.enemyData);
+                        data.UpdateScriptableObject(A.enemyData);
                     }
 
                     newEnemy.SetActive(true);
