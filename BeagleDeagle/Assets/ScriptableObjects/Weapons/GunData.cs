@@ -22,6 +22,9 @@ public class GunData : ScriptableObject
     [Header("Bullet Logic")]
     public Bullet bullet; // what bullet is spawned when shooting?
 
+    public float spreadX; // spread of bullet in X direction
+    public float spreadY; // spread of bullet in Y direction
+
     [Header("Penetration")]
     [Range(1f, 50f)]
     public int penetrationCount; // how many enemies can this gun's bullet pass through?

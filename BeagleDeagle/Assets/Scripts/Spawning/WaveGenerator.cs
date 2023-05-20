@@ -7,14 +7,13 @@ using System.Linq;
 
 public class WaveGenerator : MonoBehaviour
 {
-    public OffScreenSpawner offScreenSpawnerScript;
+    public WaveBeginEventSO waveBegan;
 
-    public TMP_Text textElement; // printing the messages on Text Mesh Pro Element
+    public OffScreenSpawner offScreenSpawnerScript;
 
     public float difficultyFactor = 0.9f;
 
     public List<WaveData> waves;
-    //public List<Wave> waves;
 
     private WaveData m_CurrentWave;
     public WaveData CurrentWave { get { return m_CurrentWave; } }
@@ -24,12 +23,14 @@ public class WaveGenerator : MonoBehaviour
     private bool wavesCompleted = false;
 
 
+
     IEnumerator StartWaves()
     {
         m_DelayFactor = 1.0f;
 
         while (!wavesCompleted)
         {
+
             // for each wave...
             foreach (WaveData W in waves)
             {
@@ -48,11 +49,12 @@ public class WaveGenerator : MonoBehaviour
                 // only print a message to the screen if the message isn't blank
                 if (W.message != "")
                 {
-                    textElement.text = W.message;  // print the message to a Text Mesh Pro Element on a Canvas
+                    //textElement.text = W.message;  // print the message to a Text Mesh Pro Element on a Canvas
+                    waveBegan.InvokeEvent(W.message);
                 }
 
                 // for each mini wave in that wave...
-                foreach (MiniWave A in W.miniWaves)
+                foreach (MiniWaveData A in W.miniWaves)
                 {
                     m_CurrentWave = W;
                     // Start spawning those enemies for that mini wave
@@ -65,7 +67,7 @@ public class WaveGenerator : MonoBehaviour
                 //    // after all mini waves are finished, give the player some downtime
                 //    yield return new WaitForSeconds(m_CurrentWave.downTime);
                 //}  
-                
+
                 yield return null;  // prevents crash if all delays are 0
             }
             wavesCompleted = true;
@@ -76,7 +78,7 @@ public class WaveGenerator : MonoBehaviour
         Debug.Log("GAME DONE!");
     }
 
-    IEnumerator StartMiniWave(MiniWave A)
+    IEnumerator StartMiniWave(MiniWaveData A)
     {
         float startTime = Time.time;
         float elapsedTime = 0f;
@@ -98,12 +100,14 @@ public class WaveGenerator : MonoBehaviour
                 for (int i = 0; i < A.enemiesPerSpawn; i++)
                 {
                     // update the x & z values depending on the specific boundaries of your scene
-                    Vector2 randomizePosition = offScreenSpawnerScript.PickRandomLocationOnMap();
+                    Vector2 randomPosition = offScreenSpawnerScript.PickRandomLocationOnMap();
 
                     // fetch an enemy from the object pool and place them at the random position
                     GameObject newEnemy = ObjectPooler.instance.GetPooledObject(enemyPoolKey);
-                    newEnemy.transform.position = randomizePosition;
 
+                    newEnemy.transform.position = randomPosition;
+
+                    // fetch all scripts that implement IEnemyDataUpdatable (i.e Attack script, Health script, and Controller script)
                     // Pass in the EnemyData scriptable object to the newly spawned enemy
                     IEnemyDataUpdatable[] dataToUpdate = newEnemy.GetComponents<IEnemyDataUpdatable>();
 
@@ -134,7 +138,7 @@ public class WaveGenerator : MonoBehaviour
             // update elapsed time
             elapsedTime = Time.time - startTime;
         }
-        
+
     }
 
     void Start()
@@ -143,5 +147,7 @@ public class WaveGenerator : MonoBehaviour
         m_CurrentWave = waves[0];
 
         StartCoroutine(StartWaves());
+
+        
     }
 }

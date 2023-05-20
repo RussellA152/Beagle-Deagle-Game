@@ -25,4 +25,4 @@ MonoBehaviour:
   chaseLayer:
     serializedVersion: 2
     m_Bits: 128
-  projectileSpeed: 15
+  projectileSpeed: 30

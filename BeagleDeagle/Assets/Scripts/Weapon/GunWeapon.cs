@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public abstract class GunWeapon<T> : MonoBehaviour
+public abstract class GunWeapon<T> : MonoBehaviour, IGunDataUpdatable where T : GunData
 {
     private PlayerInput playerInput;
 
-    public GunData weaponData;
+    public T weaponData;
 
     [HideInInspector]
     public int bulletsShot; // how much ammo has the player shot since the last reload or refill?
@@ -73,7 +73,7 @@ public abstract class GunWeapon<T> : MonoBehaviour
     // and the gun will start to use Level 2 values.
     protected virtual void UpdateWeaponData(GunData scriptableObject)
     {
-        weaponData = scriptableObject;
+        weaponData = (T) scriptableObject;
 
         bulletsLoaded = weaponData.magazineSize;
         //ammoInReserve = weaponData.maxAmmoInReserve;
@@ -82,8 +82,11 @@ public abstract class GunWeapon<T> : MonoBehaviour
 
     public virtual void SpawnBullet()
     {
+        GameObject bullet;
+
         // fetch a bullet from object pooler
-        GameObject bullet = ObjectPooler.instance.GetPooledObject(weaponData.bullet.PoolKey);
+        bullet = ObjectPooler.instance.GetPooledObject(weaponData.bullet.PoolKey);
+
         if(bullet != null)
         {
             // set the position to be at the barrel of the gun
@@ -187,11 +190,10 @@ public abstract class GunWeapon<T> : MonoBehaviour
         //}
     }
 
-    //public void UpdateScriptableObject(T scriptableObject)
-    //{
-    //    weaponData = scriptableObject;
-    //}
-
+    public void UpdateScriptableObject(GunData scriptableObject)
+    {
+        weaponData = scriptableObject as T;
+    }
 
     // Gives player full ammo
     //public void FullAmmo()

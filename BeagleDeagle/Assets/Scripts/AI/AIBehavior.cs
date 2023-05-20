@@ -7,12 +7,12 @@ using UnityEngine.AI;
 /// Basic Movement and Attack for an AI with one attack and only following.
 /// Override OnAttack() and OnChase() functions to make more complex attacks and movement.
 /// </summary>
-public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdatable
+public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdatable where T: EnemyData
 {
     [SerializeField]
     private int poolKey;
 
-    public EnemyData enemyScriptableObject;
+    public T enemyScriptableObject;
 
     [SerializeField] // TEMPORARY, WILL NEED A DIFFERENT WAY TO REFERENCE THE PLAYER *
     private Transform target; // who this enemy will chase and attack
@@ -81,6 +81,8 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
 
     private void Update()
     {
+        agent.speed = enemyScriptableObject.movementSpeed;
+
         inAttackRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.attackRange, enemyScriptableObject.attackLayer);
         inChaseRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.chaseRange, enemyScriptableObject.chaseLayer);
 
@@ -166,15 +168,16 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.chaseRange);
     }
 
-    //public virtual void UpdateScriptableObject( scriptableObject)
-    //{
-    //    enemyScriptableObject = scriptableObject;
-    //    Debug.Log("I RECEIVED! " + scriptableObject.name);
-    //}
-
-    public virtual void UpdateScriptableObject(global::EnemyData scriptableObject)
+    public virtual void UpdateScriptableObject(EnemyData scriptableObject)
     {
-        enemyScriptableObject = scriptableObject;
-        Debug.Log("I RECEIVED! " + scriptableObject.name);
+        if (scriptableObject is T)
+        {
+            enemyScriptableObject = scriptableObject as T;
+        }
+        else
+        {
+            Debug.Log("ERROR WHEN UPDATING SCRIPTABLE OBJECT! PREFAB DID NOT UPDATE ITS SCRIPTABLE OBJECT");
+        }
+
     }
 }

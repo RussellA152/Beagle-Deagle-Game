@@ -13,24 +13,9 @@ MonoBehaviour:
   m_Name: Wave 1
   m_EditorClassIdentifier: 
   name: Wave 1
-  message: A horde of zombies!
+  message: Wave 1 is happening!
   miniWaves:
-  - name: Regular Zombie Horde
-    delayBetweenSpawn: 0.5
-    prefab: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-    enemyData: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
-    enemiesPerSpawn: 1
-    miniDuration: 10
-  - name: Slow Zombie Horde
-    delayBetweenSpawn: 1.5
-    prefab: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-    enemyData: {fileID: 11400000, guid: 3fd98ea09a4f9ac499b42822b16f32f5, type: 2}
-    enemiesPerSpawn: 1
-    miniDuration: 10
-  - name: Projectile Zombie Horde
-    delayBetweenSpawn: 1.5
-    prefab: {fileID: 3711592478197892634, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
-    enemyData: {fileID: 11400000, guid: d97f4e9283956124cb59f55f59a122be, type: 2}
-    enemiesPerSpawn: 1
-    miniDuration: 10
-  duration: 10
+  - {fileID: 11400000, guid: 9ed244d995db1e24387998584b27b181, type: 2}
+  - {fileID: 11400000, guid: 9ed244d995db1e24387998584b27b181, type: 2}
+  - {fileID: 11400000, guid: 9ed244d995db1e24387998584b27b181, type: 2}
+  duration: 0

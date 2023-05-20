@@ -10,6 +10,9 @@ using UnityEngine.UI;
 public class TestHUD : MonoBehaviour
 {
     [SerializeField]
+    private WaveBeginEventSO wavesBegan;
+
+    [SerializeField]
     private GunWeapon<GunData> weapon;
 
     [SerializeField]
@@ -17,6 +20,26 @@ public class TestHUD : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI maxAmmoText;
+
+    [SerializeField]
+    private TextMeshProUGUI waveMessageText;
+
+    private void OnEnable()
+    {
+        wavesBegan.changeHUDTextEvent.AddListener(UpdateHudText);
+
+        //wavesBegan.changeHUDTextEvent.AddListener(UpdateAmmoText);
+    }
+
+    public void UpdateHudText(string newText)
+    {
+        waveMessageText.text = newText;
+    }
+
+    public void UpdateAmmoText(string newText)
+    {
+        ammoMagText.text = newText;
+    }
 
     private void Update()
     {
