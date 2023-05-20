@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private Health healthScript;
 
     [SerializeField]
-    private GunWeapon weaponEquipped;
+    private GunWeapon<GunData> weaponEquipped;
 
     // states that an enemy can be in
     enum PlayerState
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     {
         state = PlayerState.Idle;
 
-        weaponEquipped = GetComponentInChildren<GunWeapon>();
+        weaponEquipped = GetComponentInChildren<GunWeapon<GunData>>();
 
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIHealth : Health, IDataUpdatable<EnemyData>
+public class AIHealth : Health, IEnemyDataUpdatable
 {
     [SerializeField]
     private EnemyData enemyScriptableObject;

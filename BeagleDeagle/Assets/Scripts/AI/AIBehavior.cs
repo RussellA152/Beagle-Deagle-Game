@@ -7,12 +7,12 @@ using UnityEngine.AI;
 /// Basic Movement and Attack for an AI with one attack and only following.
 /// Override OnAttack() and OnChase() functions to make more complex attacks and movement.
 /// </summary>
-public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IDataUpdatable<T> where T : EnemyData
+public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdatable
 {
     [SerializeField]
     private int poolKey;
 
-    public T enemyScriptableObject;
+    public EnemyData enemyScriptableObject;
 
     [SerializeField] // TEMPORARY, WILL NEED A DIFFERENT WAY TO REFERENCE THE PLAYER *
     private Transform target; // who this enemy will chase and attack
@@ -166,9 +166,15 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IDataUpdatable<T
         Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.chaseRange);
     }
 
-    public virtual void UpdateScriptableObject(T scriptableObject)
+    //public virtual void UpdateScriptableObject( scriptableObject)
+    //{
+    //    enemyScriptableObject = scriptableObject;
+    //    Debug.Log("I RECEIVED! " + scriptableObject.name);
+    //}
+
+    public virtual void UpdateScriptableObject(global::EnemyData scriptableObject)
     {
         enemyScriptableObject = scriptableObject;
-
+        Debug.Log("I RECEIVED! " + scriptableObject.name);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIAttack : MonoBehaviour, IDataUpdatable<EnemyData>
+public class AIAttack : MonoBehaviour, IEnemyDataUpdatable
 {
     [SerializeField]
     private EnemyData enemyScriptableObject;

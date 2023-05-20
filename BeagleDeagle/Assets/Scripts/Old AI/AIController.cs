@@ -7,7 +7,7 @@ using UnityEngine.AI;
 /// Basic Movement and Attack for an AI with one attack and only following.
 /// Override OnAttack() and OnChase() functions to make more complex attacks and movement.
 /// </summary>
-public class AIController : MonoBehaviour, IPoolable, IDataUpdatable<EnemyData> 
+public class AIController : MonoBehaviour, IPoolable, IEnemyDataUpdatable
 {
     [SerializeField]
     private int poolKey;

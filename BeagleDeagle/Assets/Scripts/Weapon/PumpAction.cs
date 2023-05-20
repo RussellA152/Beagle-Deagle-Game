@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PumpAction : GunWeapon
+public class PumpAction : GunWeapon<GunData>
 {
     public bool commitToReload;
 

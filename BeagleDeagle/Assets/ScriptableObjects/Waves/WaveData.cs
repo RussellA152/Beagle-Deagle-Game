@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 // We can use ScriptableObjects for data about our weapons.
 // This is useful for our weapon upgrades since we can specify new damage or ammo values for the upgraded version
-[CreateAssetMenu(fileName = "NewWave", menuName = "ScriptableObjects/WaveData")]
+[CreateAssetMenu(fileName = "NewWave", menuName = "ScriptableObjects/WaveData/Wave")]
 public class WaveData : ScriptableObject
 {
     public string name;

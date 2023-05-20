@@ -10,18 +10,13 @@ using UnityEngine.UI;
 public class TestHUD : MonoBehaviour
 {
     [SerializeField]
-    private GunWeapon weapon;
+    private GunWeapon<GunData> weapon;
 
     [SerializeField]
     private TextMeshProUGUI ammoMagText;
 
     [SerializeField]
     private TextMeshProUGUI maxAmmoText;
-
-    private void Start()
-    {
-        
-    }
 
     private void Update()
     {

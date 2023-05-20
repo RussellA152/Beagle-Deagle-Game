@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Automatic : GunWeapon
+public class Automatic : GunWeapon<GunData>
 {
     private float lastFireTime = 0f;
 
