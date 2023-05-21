@@ -6,6 +6,10 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class TopDownMovement : MonoBehaviour
 {
+
+    [SerializeField]
+    private PlayerData playerData;
+
     public Vector2 movementInput { get; private set; }
     Vector2 rotationInput;
     [Header("Required Components")]
@@ -14,8 +18,7 @@ public class TopDownMovement : MonoBehaviour
 
     private PlayerInput playerInput;
 
-    [Header("Movement Speed")]
-    public float moveSpeed = 1f;
+    private float moveSpeed;
 
     [Header("Body Parts")]
     [SerializeField] private Transform body;
@@ -49,6 +52,9 @@ public class TopDownMovement : MonoBehaviour
         playerInput = PlayerManager.instance.GetPlayerInput();
 
         rb = GetComponent<Rigidbody2D>();
+
+        moveSpeed = playerData.movementSpeed;
+
     }
 
     ///-///////////////////////////////////////////////////////////

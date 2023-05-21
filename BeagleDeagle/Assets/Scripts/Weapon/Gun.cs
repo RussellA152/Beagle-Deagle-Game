@@ -76,6 +76,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
     public void ShootGun()
     {
+        weaponData.bulletSpawnPoint = bulletSpawnPoint;
+
         GameObject bullet;
 
         // fetch a bullet from object pooler
@@ -84,12 +86,12 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
         Debug.Log("SPAWN A BULLET!");
 
         if (bullet != null)
-        {
-            // set the position to be at the barrel of the gun
-            //bullet.transform.position = bulletSpawnPoint.position;
-            bullet.transform.rotation = this.transform.rotation;
+        {  
 
             Bullet projectile = bullet.GetComponent<Bullet>();
+
+            // Resetting rotation before applying spread
+            //projectile.transform.rotation = bulletSpawnPoint.rotation;
 
             // pass that bullet into the weaponData's fire function
             weaponData.Fire(projectile);

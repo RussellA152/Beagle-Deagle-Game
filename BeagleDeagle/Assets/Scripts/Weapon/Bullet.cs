@@ -25,6 +25,8 @@ public class Bullet : MonoBehaviour, IPoolable
     // return the pool key (anything that is IPoolable, must have a pool key)
     public int PoolKey => poolKey;
 
+    private Vector3 defaultRotation = new Vector3(0f, 0f, -90f);
+
     private void OnEnable()
     {
         amountPenetrated = 0;
@@ -36,6 +38,9 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private void OnDisable()
     {
+        // Resetting rotation before applying spread
+        transform.rotation = Quaternion.Euler(defaultRotation);
+
         // stop all coroutines when this bullet has been disabled
         StopAllCoroutines();
     }

@@ -134,8 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db53577188b32941a633f33e5026826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  enemyScriptableObject: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
+  characterData: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
 --- !u!195 &3711592478197892577
 NavMeshAgent:
   m_ObjectHideFlags: 0

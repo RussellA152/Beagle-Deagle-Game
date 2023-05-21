@@ -7,13 +7,13 @@ public class Health : MonoBehaviour, IHealth
     protected float currentHealth;
     protected bool isDead;
 
-    [Range(0f, 2500f)]
-    [SerializeField] protected float maxHealth;
+    [SerializeField]
+    protected CharacterData characterData;
 
     protected virtual void OnEnable()
     {
         isDead = false;
-        currentHealth = maxHealth;
+        currentHealth = characterData.maxHealth;
     }
 
     public virtual float GetCurrentHealth()
@@ -23,16 +23,16 @@ public class Health : MonoBehaviour, IHealth
 
     public virtual float GetMaxHealth()
     {
-        return maxHealth;
+        return characterData.maxHealth;
     }
 
     // add or subtract from health count
     public virtual void ModifyHealth(float amount)
     {
         // if this health modification will exceed the max potential health, then just set the current health to max
-        if (currentHealth + amount > maxHealth)
+        if (currentHealth + amount > characterData.maxHealth)
         {
-            currentHealth = maxHealth;
+            currentHealth = characterData.maxHealth;
         }
 
         // if this health modification will drop the health to 0 or below, then call OnDeath()

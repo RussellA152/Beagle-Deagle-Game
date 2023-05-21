@@ -25,12 +25,14 @@ public abstract class GunData : ScriptableObject
     public ProjectileData bulletData; // what data will this bullet use?
 
     [Header("Weapon Spread")]
-    public float spreadX; // spread of bullet in X direction
-    public float spreadY; // spread of bullet in Y direction
+    [Range(0f, 20f)]
+    public float spread; // spread of bullet in X direction
 
     [Header("Penetration")]
     [Range(1f, 50f)]
     public int penetrationCount; // how many enemies can this gun's bullet pass through?
+
+    #region hiddenProperties
 
     [HideInInspector]
     public int bulletsShot; // how much ammo has the player shot since the last reload or refill?
@@ -48,6 +50,8 @@ public abstract class GunData : ScriptableObject
 
     [HideInInspector]
     public bool isReloading;
+
+    #endregion
 
 
     public virtual void OnEnable()
@@ -91,12 +95,12 @@ public abstract class GunData : ScriptableObject
 
         if (bullet != null)
         {
+
             // set the position to be at the barrel of the gun
             bullet.transform.position = spawnPoint.position;
-            //bullet.transform.rotation = this.transform.rotation;
-
-            // give the instaniated bullet the current scriptable object of this weapon
-            //bullet.GetComponent<Bullet>().UpdateWeaponData(weaponData);
+            
+            // Apply the spread to the bullet's rotation
+            bullet.transform.rotation = CalculateWeaponSpread(spawnPoint.rotation);
 
             bullet.gameObject.SetActive(true);
 
@@ -104,6 +108,15 @@ public abstract class GunData : ScriptableObject
             bulletsLoaded--;
         }
 
+    }
+
+    // very simple weapon spread, just add a random offset to the bullet's Y position
+    public virtual Quaternion CalculateWeaponSpread(Quaternion spawnPointRotation)
+    {
+        // Calculate the spread angle
+        float spreadAngle = Random.Range(-spread, spread);
+
+        return Quaternion.Euler(0f, 0f, spreadAngle) * spawnPointRotation;
     }
 
     #region Reloading

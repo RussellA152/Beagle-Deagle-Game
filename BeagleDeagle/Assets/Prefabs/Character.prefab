@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12470981c55cc544e9bdbe9161267220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2500
+  characterData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
 --- !u!114 &3238474014219297874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,8 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b349a021fc7a72a4b809632e17656f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
   rb: {fileID: 5313635083943124195}
-  moveSpeed: 10
   body: {fileID: 5313635084664649029}
   head: {fileID: 5313635084907708359}
   weapon: {fileID: 5313635084010504988}
