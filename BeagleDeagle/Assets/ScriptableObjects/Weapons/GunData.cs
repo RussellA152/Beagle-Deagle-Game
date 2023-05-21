@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// We can use ScriptableObjects for data about our weapons.
-// This is useful for our weapon upgrades since we can specify new damage or ammo values for the upgraded version
-[CreateAssetMenu(fileName = "NewGun", menuName = "ScriptableObjects/GunData/Automatic")]
-public class GunData : ScriptableObject
+[CreateAssetMenu(fileName = "NewWeapon", menuName = "ScriptableObjects/Weapon")]
+public abstract class GunData : ScriptableObject
 {
+    public Sprite sprite;
+
+    [Header("Damage")]
     [Range(0, 1000)]
     public float damagePerHit;
 
@@ -19,9 +20,11 @@ public class GunData : ScriptableObject
     //public int maxAmmoInReserve; // how much ammo can this weapon hold for total capacity?
     public float totalReloadTime; // how long will this gun take to reload to full?
 
-    [Header("Bullet Logic")]
-    public Bullet bullet; // what bullet is spawned when shooting?
+    [Header("Bullet To Shoot")]
+    public GameObject bullet; // what bullet is spawned when shooting?
+    public ProjectileData bulletData; // what data will this bullet use?
 
+    [Header("Weapon Spread")]
     public float spreadX; // spread of bullet in X direction
     public float spreadY; // spread of bullet in Y direction
 
@@ -29,4 +32,106 @@ public class GunData : ScriptableObject
     [Range(1f, 50f)]
     public int penetrationCount; // how many enemies can this gun's bullet pass through?
 
+    [HideInInspector]
+    public int bulletsShot; // how much ammo has the player shot since the last reload or refill?
+    [HideInInspector]
+    public int bulletsLoaded; // how much ammo is currently in the magazine?
+
+    [HideInInspector]
+    public Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
+
+    //[HideInInspector]
+    //public int ammoInReserve; // how much ammo is currently in capacity?
+
+    [HideInInspector]
+    public bool actuallyShooting; // is the player shooting (i.e, not idle or reloading or just moving)
+
+    [HideInInspector]
+    public bool isReloading;
+
+
+    public virtual void OnEnable()
+    {
+        // always reset these values OnEnable because scriptable object data can persist *
+        bulletsShot = 0;
+        bulletsLoaded = magazineSize;
+        isReloading = false;
+        actuallyShooting = false;
+
+        //ammoInReserve = weaponData.maxAmmoInReserve;
+    }
+
+
+    public abstract void Fire(Bullet bullet);
+
+    public abstract bool CheckIfCanFire();
+
+
+    public virtual bool CheckAmmo()
+    {
+        // if player has no ammo in reserve... force them to reload, then return false
+        if (bulletsLoaded <= 0f)
+        {
+            Debug.Log("RELOADING!");
+            return false;
+        }
+        // otherwise if they are not reloading, allow them to shoot
+        else if (!isReloading && CheckIfCanFire())
+        {
+
+            actuallyShooting = true;
+            return true;
+        }
+
+        return false;
+    }
+
+    public virtual void SpawnBullet(Bullet bullet, Transform spawnPoint)
+    {
+
+        if (bullet != null)
+        {
+            // set the position to be at the barrel of the gun
+            bullet.transform.position = spawnPoint.position;
+            //bullet.transform.rotation = this.transform.rotation;
+
+            // give the instaniated bullet the current scriptable object of this weapon
+            //bullet.GetComponent<Bullet>().UpdateWeaponData(weaponData);
+
+            bullet.gameObject.SetActive(true);
+
+            bulletsShot++;
+            bulletsLoaded--;
+        }
+
+    }
+
+    #region Reloading
+    public virtual IEnumerator WaitReload()
+    {
+        actuallyShooting = false;
+        isReloading = true;
+
+        yield return new WaitForSeconds(totalReloadTime);
+
+        RefillAmmo();
+
+        isReloading = false;
+    }
+
+    public virtual void RefillAmmo()
+    {
+        bulletsLoaded += bulletsShot;
+        bulletsShot = 0;
+    }
+
+    // Gives player full ammo
+    //public void FullAmmo()
+    //{
+    //    ammoInReserve = weaponData.maxAmmoInReserve;
+    //    bulletsLoaded = weaponData.magazineSize;
+    //    bulletsShot = 0;
+    //}
+
+    #endregion
 }

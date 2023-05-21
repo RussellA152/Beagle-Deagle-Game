@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2109b6e7d0cc82a4b9930663f6f65a0d, type: 3}
+  m_Name: Desert Eagle 1
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  damagePerHit: 100
+  fireRate: 3
+  magazineSize: 8
+  totalReloadTime: 1.5
+  bullet: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
+  bulletData: {fileID: 11400000, guid: b09a69db01fe5e149b338ea65d81f7c9, type: 2}
+  spreadX: 5
+  spreadY: 5
+  penetrationCount: 3
+  bulletsShot: 0
+  bulletsLoaded: 8
+  bulletSpawnPoint: {fileID: 0}
+  actuallyShooting: 0
+  isReloading: 0

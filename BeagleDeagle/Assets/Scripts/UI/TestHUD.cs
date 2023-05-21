@@ -13,7 +13,8 @@ public class TestHUD : MonoBehaviour
     private WaveBeginEventSO wavesBegan;
 
     [SerializeField]
-    private GunWeapon<GunData> weapon;
+    //private GunWeapon<GunData> weapon;
+    private GunData weaponData;
 
     [SerializeField]
     private TextMeshProUGUI ammoMagText;
@@ -43,7 +44,8 @@ public class TestHUD : MonoBehaviour
 
     private void Update()
     {
-        ammoMagText.text = weapon.bulletsLoaded.ToString();
+        //ammoMagText.text = weapon.bulletsLoaded.ToString();
+        ammoMagText.text = weaponData.bulletsLoaded.ToString();
         //maxAmmoText.text = weapon.ammoInReserve.ToString();
     }
 
