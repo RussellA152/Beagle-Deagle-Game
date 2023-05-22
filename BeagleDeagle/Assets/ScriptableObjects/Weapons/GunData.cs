@@ -42,6 +42,8 @@ public abstract class GunData : ScriptableObject
     [HideInInspector]
     public Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
 
+    //public float lastTimeShot;
+
     //[HideInInspector]
     //public int ammoInReserve; // how much ammo is currently in capacity?
 
@@ -95,6 +97,7 @@ public abstract class GunData : ScriptableObject
 
         if (bullet != null)
         {
+            //lastTimeShot = 0f;
 
             // set the position to be at the barrel of the gun
             bullet.transform.position = spawnPoint.position;

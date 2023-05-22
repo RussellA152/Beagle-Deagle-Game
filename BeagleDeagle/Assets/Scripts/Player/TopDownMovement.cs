@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public class TopDownMovement : MonoBehaviour
+public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 {
 
     [SerializeField]
@@ -213,6 +213,17 @@ public class TopDownMovement : MonoBehaviour
         movementInput = inputValue.ReadValue<Vector2>();
     }
 
+    public void UpdateScriptableObject(PlayerData scriptableObject)
+    {
+        playerData = scriptableObject;
+
+        moveSpeed = scriptableObject.movementSpeed;
+    }
+
+    public void ModifyMovementSpeed(float amount)
+    {
+        moveSpeed += amount;
+    }
 
     ///-///////////////////////////////////////////////////////////
     ///

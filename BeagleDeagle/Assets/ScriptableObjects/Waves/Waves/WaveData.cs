@@ -19,21 +19,4 @@ public class WaveData : ScriptableObject
     public float duration; // the duration of the wave is the maxmimum value in the mini waves
 }
 
-//[Serializable]
-//public class MiniWave
-//{
-//    public string name;
-
-//    public float delayBetweenSpawn; // what is the time between each enemy spawn (ex. 0.5 seconds between each zombie spawn)
-
-//    public GameObject prefab; // the enemy to spawn
-
-//    public EnemyData enemyData; // the scriptable object to give to that enemy
-
-//    public int enemiesPerSpawn; // how many enemies will spawn at once (ex. 1 zombie at a time, or 2 at the same time)
-
-//    public float miniDuration; // how long does this mini wave occur for? (in seconds)
-
-//}
-
 

@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewPlayer", menuName = "ScriptableObjects/CharacterData/PlayerData")]
 public class PlayerData : CharacterData
 {
-    
+
 }

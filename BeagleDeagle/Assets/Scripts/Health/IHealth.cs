@@ -11,6 +11,8 @@ public interface IHealth
     // add or subtract from health count
     public void ModifyHealth(float amount);
 
+    public void ModifyMaxHealth(float amount);
+
     // do something when this entity dies
     public bool IsDead();
 }

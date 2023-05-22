@@ -20,7 +20,7 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable
     {
         if (canAttack)
         {
-            target.GetComponent<Health>().ModifyHealth(enemyScriptableObject.attackDamage);
+            target.GetComponent<PlayerHealth>().ModifyHealth(enemyScriptableObject.attackDamage);
             StartCoroutine(AttackCooldown());
         }
             

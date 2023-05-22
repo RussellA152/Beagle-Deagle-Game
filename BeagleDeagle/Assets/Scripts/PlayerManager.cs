@@ -13,9 +13,6 @@ public class PlayerManager : MonoBehaviour
 
     private GameObject player;
 
-    //[SerializeField]
-    //private GunWeapon<GunData> currentWeapon;
-
     [SerializeField]
     private GunData currentWeaponData;
 

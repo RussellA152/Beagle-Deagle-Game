@@ -94,9 +94,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5313635083943124194}
   - component: {fileID: 5313635083943124198}
-  - component: {fileID: 4009384282933879284}
   - component: {fileID: 3238474014219297874}
+  - component: {fileID: 2912267811165790606}
   - component: {fileID: 5313635083943124193}
+  - component: {fileID: 5084828282012666581}
   - component: {fileID: 5313635083943124192}
   - component: {fileID: 5313635083943124195}
   - component: {fileID: 5313635083943124199}
@@ -145,19 +146,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4009384282933879284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313635083943124204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12470981c55cc544e9bdbe9161267220, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
 --- !u!114 &3238474014219297874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,9 +159,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   movementScript: {fileID: 5313635083943124193}
-  healthScript: {fileID: 4009384282933879284}
-  weaponEquipped: {fileID: 0}
+  healthScript: {fileID: 2912267811165790606}
+  currentPlayerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
+  playerAbilitiesScript: {fileID: 5084828282012666581}
+  currentWeaponData: {fileID: 0}
+--- !u!114 &2912267811165790606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313635083943124204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cdb9cacd2bbf9c42a6731b0e5b9d878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  playerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
 --- !u!114 &5313635083943124193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +214,21 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+--- !u!114 &5084828282012666581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313635083943124204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d0a44d2e108b74db70259a60eea40c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  passives:
+  - {fileID: 11400000, guid: 05c221c08f911334ba6af2abfddb31cb, type: 2}
+  - {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}
 --- !u!114 &5313635083943124192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,6 +346,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: dd3f9eae-da28-4218-b284-c4d22b96e2e4
     m_ActionName: Player/Reload[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0b837552-443a-49f0-8174-8482e055af6a
+    m_ActionName: Player/Utility[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f1461120-ecb1-46fb-bf3f-63e63c7649e1
+    m_ActionName: Player/Ultimate[/Keyboard/q]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

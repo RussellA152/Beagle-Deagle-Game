@@ -16,5 +16,4 @@ public class CharacterData : ScriptableObject
     [Range(0f, 50f)]
     public float movementSpeed;
 
-
 }

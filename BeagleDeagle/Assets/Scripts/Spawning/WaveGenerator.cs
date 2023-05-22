@@ -75,7 +75,7 @@ public class WaveGenerator : MonoBehaviour
             m_DelayFactor *= difficultyFactor;
             yield return null;  // prevents crash if all delays are 0
         }
-        Debug.Log("GAME DONE!");
+        Debug.Log("WAVES SETUP COMPLETE!");
     }
 
     IEnumerator StartMiniWave(MiniWaveData A)

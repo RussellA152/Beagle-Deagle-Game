@@ -8,17 +8,27 @@ public class PlayerController : MonoBehaviour
     private PlayerState state;
 
     [SerializeField]
+    private PlayerEventSO playerEvents;
+
+    [SerializeField]
     private TopDownMovement movementScript;
 
     [SerializeField]
-    private Health healthScript;
+    private PlayerHealth healthScript;
+
+    [SerializeField]
+    private PlayerData currentPlayerData;
+
+    [SerializeField]
+    private Abilities playerAbilitiesScript;
+
 
     [SerializeField]
     //private GunWeapon<GunData> weaponEquipped;
-    private GunData weaponEquipped;
+    private GunData currentWeaponData;
 
     // states that an enemy can be in
-    enum PlayerState
+    public enum PlayerState
     {
         // not moving
         Idle,
@@ -41,19 +51,29 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
+
         state = PlayerState.Idle;
 
-        //weaponEquipped = GetComponentInChildren<GunWeapon<GunData>>();
-        //weaponEquipped = GetComponentInChildren<Weapon>();
-        weaponEquipped = GetComponentInChildren<Gun>().weaponData;
+        currentWeaponData = GetComponentInChildren<Gun>().weaponData;
+
+        playerEvents.InvokeNewWeaponEvent(currentWeaponData);
+
+        playerEvents.InvokeNewStatsEvent(currentPlayerData);
+
+
+        healthScript.InitializeHealth();
+
+        //playerAbilitiesScript.ActivatePassive();
+
+        playerAbilitiesScript.ActivateAllPassives();
 
     }
 
     private void Update()
     {
+
         if (CheckIfDead())
             state = PlayerState.Death;
-
 
         switch (state)
         {
@@ -78,6 +98,8 @@ public class PlayerController : MonoBehaviour
                     state = PlayerState.Moving;
                 break;
             case PlayerState.Attacking:
+                
+
                 if (CheckIfIdle())
                     state = PlayerState.Idle;
                 if (CheckIfMoving() && !CheckIfAttacking())
@@ -104,7 +126,7 @@ public class PlayerController : MonoBehaviour
     private bool CheckIfAttacking()
     {
         // checking if the player is attacking with their weapon
-        return weaponEquipped.actuallyShooting;
+        return currentWeaponData.actuallyShooting;
     }
 
     private bool CheckIfDead()

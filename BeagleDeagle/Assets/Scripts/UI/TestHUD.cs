@@ -13,6 +13,9 @@ public class TestHUD : MonoBehaviour
     private WaveBeginEventSO wavesBegan;
 
     [SerializeField]
+    private PlayerEventSO playerEvents;
+
+    [SerializeField]
     //private GunWeapon<GunData> weapon;
     private GunData weaponData;
 
@@ -25,11 +28,39 @@ public class TestHUD : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI waveMessageText;
 
+    [SerializeField]
+    private TextMeshProUGUI currentHealthText;
+
+    [SerializeField]
+    private TextMeshProUGUI maxHealthText;
+
+
     private void OnEnable()
     {
-        wavesBegan.changeHUDTextEvent.AddListener(UpdateHudText);
+        wavesBegan.changeHUDTextEvent += UpdateHudText;
 
-        //wavesBegan.changeHUDTextEvent.AddListener(UpdateAmmoText);
+        playerEvents.currentHealthChangedEvent += UpdateCurrentHealthText;
+
+        playerEvents.maxHealthChangedEvent += UpdateMaxHealthText;
+    }
+
+    private void OnDisable()
+    {
+        wavesBegan.changeHUDTextEvent -= UpdateHudText;
+
+        playerEvents.currentHealthChangedEvent -= UpdateCurrentHealthText;
+
+        playerEvents.maxHealthChangedEvent -= UpdateMaxHealthText;
+    }
+
+    public void UpdateCurrentHealthText(float currentHealth)
+    {
+        currentHealthText.text = currentHealth.ToString();
+    }
+
+    public void UpdateMaxHealthText(float maxHealth)
+    {
+        maxHealthText.text = maxHealth.ToString();
     }
 
     public void UpdateHudText(string newText)

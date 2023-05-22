@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: AK-47 Data
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 17fa84703485d314b8d6b5216987d4b1, type: 3}
-  damagePerHit: 15
-  fireRate: 12
-  magazineSize: 45
+  damagePerHit: 90
+  fireRate: 6
+  magazineSize: 30
   totalReloadTime: 3
   bullet: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   bulletData: {fileID: 11400000, guid: b09a69db01fe5e149b338ea65d81f7c9, type: 2}
-  spreadX: 5
-  spreadY: 5
+  spread: 4
   penetrationCount: 1
-  bulletsShot: 45
-  bulletsLoaded: 0
+  bulletsShot: 40
+  bulletsLoaded: 5
   bulletSpawnPoint: {fileID: 0}
+  lastTimeShot: 0.71176934
   actuallyShooting: 0
-  isReloading: 1
+  isReloading: 0

@@ -19,6 +19,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
     private IPoolable bulletPool;
 
+    private float lastTimeShot;
+
 
     private void Start()
     {
@@ -42,7 +44,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
     private void Update()
     {
-        if(weaponData.bulletsLoaded <= 0f)
+        lastTimeShot += Time.deltaTime;
+
+        if (weaponData.bulletsLoaded <= 0f)
         {
             Reload();
             return;
@@ -86,12 +90,11 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
         Debug.Log("SPAWN A BULLET!");
 
         if (bullet != null)
-        {  
+        {
+            // Player has shot their gun, so reset lastTimeShot to 0 seconds
+            lastTimeShot = 0f;
 
             Bullet projectile = bullet.GetComponent<Bullet>();
-
-            // Resetting rotation before applying spread
-            //projectile.transform.rotation = bulletSpawnPoint.rotation;
 
             // pass that bullet into the weaponData's fire function
             weaponData.Fire(projectile);
@@ -112,5 +115,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
         bulletPool = weaponData.bullet.GetComponent<IPoolable>();
 
         spriteRenderer.sprite = weaponData.sprite;
+    }
+
+    public float ReturnLastTimeShot()
+    {
+        return lastTimeShot;
     }
 }

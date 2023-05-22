@@ -134,7 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db53577188b32941a633f33e5026826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterData: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  enemyData: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
 --- !u!195 &3711592478197892577
 NavMeshAgent:
   m_ObjectHideFlags: 0
