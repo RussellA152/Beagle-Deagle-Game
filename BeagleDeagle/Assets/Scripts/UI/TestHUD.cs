@@ -16,8 +16,10 @@ public class TestHUD : MonoBehaviour
     private PlayerEventSO playerEvents;
 
     [SerializeField]
-    //private GunWeapon<GunData> weapon;
     private GunData weaponData;
+
+    [SerializeField]
+    private UtilityAbilityData utilityData;
 
     [SerializeField]
     private TextMeshProUGUI ammoMagText;
@@ -34,6 +36,12 @@ public class TestHUD : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI maxHealthText;
 
+    [SerializeField]
+    private TextMeshProUGUI utilityNameText;
+
+    [SerializeField]
+    private TextMeshProUGUI utilityUsesText;
+
 
     private void OnEnable()
     {
@@ -42,6 +50,8 @@ public class TestHUD : MonoBehaviour
         playerEvents.currentHealthChangedEvent += UpdateCurrentHealthText;
 
         playerEvents.maxHealthChangedEvent += UpdateMaxHealthText;
+
+        playerEvents.playerUtilityUsesUpdatedEvent += UpdateUtilityUsesText;
     }
 
     private void OnDisable()
@@ -73,10 +83,18 @@ public class TestHUD : MonoBehaviour
         ammoMagText.text = newText;
     }
 
+    public void UpdateUtilityUsesText(int uses)
+    {
+        utilityUsesText.text = uses.ToString();
+    }
+
     private void Update()
     {
         //ammoMagText.text = weapon.bulletsLoaded.ToString();
         ammoMagText.text = weaponData.bulletsLoaded.ToString();
+        utilityNameText.text = utilityData.name;
+
+        //utilityUsesText.text = utilityData.uses.ToString();
         //maxAmmoText.text = weapon.ammoInReserve.ToString();
     }
 

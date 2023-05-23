@@ -98,6 +98,7 @@ public abstract class GunData : ScriptableObject
         if (bullet != null)
         {
             //lastTimeShot = 0f;
+            bullet.UpdateProjectileData(bulletData);
 
             // set the position to be at the barrel of the gun
             bullet.transform.position = spawnPoint.position;

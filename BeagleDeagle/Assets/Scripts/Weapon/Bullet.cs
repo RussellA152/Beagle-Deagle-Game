@@ -11,14 +11,12 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private GunData weaponData;
 
+
     [SerializeField]
     private int poolKey;
 
     [SerializeField]
     private Rigidbody2D rb;
-
-    [SerializeField]
-    private LayerMask whatDestroysBullet;
 
     private int amountPenetrated; // how many enemies has this bullet penetrated through?
 
@@ -48,12 +46,13 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if ((whatDestroysBullet.value & (1 << collision.gameObject.layer)) > 0)
+        if ((projectileData.whatDestroysBullet.value & (1 << collision.gameObject.layer)) > 0)
         {
-            Debug.Log("HIT " + collision.gameObject.name);
+            Debug.Log("BULLET HIT " + collision.gameObject.name);
 
             // Make target take damage
             collision.gameObject.GetComponent<IHealth>().ModifyHealth(-1 * weaponData.damagePerHit);
+
 
             Penetrate();
         }
@@ -75,6 +74,11 @@ public class Bullet : MonoBehaviour, IPoolable
     public void UpdateWeaponData(GunData scriptableObject)
     {
         weaponData = scriptableObject;
+    }
+
+    public void UpdateProjectileData(ProjectileData scriptableObject)
+    {
+        projectileData = scriptableObject;
 
     }
 

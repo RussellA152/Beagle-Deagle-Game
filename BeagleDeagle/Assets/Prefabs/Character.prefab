@@ -226,9 +226,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d0a44d2e108b74db70259a60eea40c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   passives:
   - {fileID: 11400000, guid: 05c221c08f911334ba6af2abfddb31cb, type: 2}
   - {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}
+  utility: {fileID: 11400000, guid: 2ae24b0ad22356d43b0a4f479c67cc1d, type: 2}
 --- !u!114 &5313635083943124192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,19 +289,7 @@ MonoBehaviour:
     m_ActionId: 74f5c63c-35e2-468f-bb85-8ab0a51e2494
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SemiAuto, Assembly-CSharp
-        m_MethodName: Shoot
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: ad75f010-fcfd-427c-9a86-8ef51cde4cf2
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -347,7 +337,19 @@ MonoBehaviour:
     m_ActionId: dd3f9eae-da28-4218-b284-c4d22b96e2e4
     m_ActionName: Player/Reload[/Keyboard/r]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5084828282012666581}
+        m_TargetAssemblyTypeName: Abilities, Assembly-CSharp
+        m_MethodName: ActivateUtility
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 0b837552-443a-49f0-8174-8482e055af6a
     m_ActionName: Player/Utility[/Keyboard/e]
   - m_PersistentCalls:

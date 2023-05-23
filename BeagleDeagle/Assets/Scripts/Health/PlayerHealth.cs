@@ -85,7 +85,14 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
     public void UpdateScriptableObject(PlayerData scriptableObject)
     {
         playerData = scriptableObject;
-        maxHealth = scriptableObject.maxHealth;
+
+        // to account for any items that affect the local maxHealth, and giving the player new data
+        // For example, if we started off with 500 maxHealth, and retrieved an item that gave us an extra 250 health, we now have 750 maxHealth
+        // But what if we decided to give the player a new set of health and movement speed (new PlayerData), we need to account for extra health from items
+        // Likely won't happen since we might not have augments that will need to change PlayerData
+        float difference = maxHealth - playerData.maxHealth;
+
+        maxHealth = scriptableObject.maxHealth + difference;
 
     }
 }
