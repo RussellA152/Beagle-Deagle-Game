@@ -8,7 +8,7 @@ public abstract class GunData : ScriptableObject
     public Sprite sprite;
 
     [Header("Damage")]
-    [Range(0, 1000)]
+    [Range(0, 1000f)]
     public float damagePerHit;
 
     [Header("Fire Rate (Bullets Per Second)")]
@@ -26,7 +26,7 @@ public abstract class GunData : ScriptableObject
 
     [Header("Weapon Spread")]
     [Range(0f, 20f)]
-    public float spread; // spread of bullet in X direction
+    public float bulletSpread; // spread of bullet in X direction
 
     [Header("Penetration")]
     [Range(1f, 50f)]
@@ -68,7 +68,7 @@ public abstract class GunData : ScriptableObject
     }
 
 
-    public abstract void Fire(Bullet bullet);
+    public abstract void Fire(Bullet bullet, float fireRate, float spread);
 
     public abstract bool CheckIfCanFire();
 
@@ -92,7 +92,7 @@ public abstract class GunData : ScriptableObject
         return false;
     }
 
-    public virtual void SpawnBullet(Bullet bullet, Transform spawnPoint)
+    public virtual void SpawnBullet(Bullet bullet, Transform spawnPoint, float spread)
     {
 
         if (bullet != null)
@@ -104,7 +104,7 @@ public abstract class GunData : ScriptableObject
             bullet.transform.position = spawnPoint.position;
             
             // Apply the spread to the bullet's rotation
-            bullet.transform.rotation = CalculateWeaponSpread(spawnPoint.rotation);
+            bullet.transform.rotation = CalculateWeaponSpread(spawnPoint.rotation, spread);
 
             bullet.gameObject.SetActive(true);
 
@@ -115,7 +115,7 @@ public abstract class GunData : ScriptableObject
     }
 
     // very simple weapon spread, just add a random offset to the bullet's Y position
-    public virtual Quaternion CalculateWeaponSpread(Quaternion spawnPointRotation)
+    public virtual Quaternion CalculateWeaponSpread(Quaternion spawnPointRotation, float spread)
     {
         // Calculate the spread angle
         float spreadAngle = Random.Range(-spread, spread);
@@ -124,12 +124,12 @@ public abstract class GunData : ScriptableObject
     }
 
     #region Reloading
-    public virtual IEnumerator WaitReload()
+    public virtual IEnumerator WaitReload(float reloadTime)
     {
         actuallyShooting = false;
         isReloading = true;
 
-        yield return new WaitForSeconds(totalReloadTime);
+        yield return new WaitForSeconds(reloadTime);
 
         RefillAmmo();
 

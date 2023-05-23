@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewThrowable", menuName = "ScriptableObjects/Throwable/SmokeBomb")]
 public class SmokeBomb : ThrowableData
 {
+    public float testValue;
+
     [Range(0f,-50f)]
     [SerializeField]
     private float slowAmount; // how much to slow an enemy by?
@@ -20,39 +22,39 @@ public class SmokeBomb : ThrowableData
         
     }
 
-    public override void SpecialAbility(Vector2 position)
-    {
-        Collider2D collider = Physics2D.OverlapCircle(position, radius, layersToHit);
+    //public override void SpecialAbility(Vector2 position)
+    //{
+    //    //Collider2D collider = Physics2D.OverlapCircle(position, radius, layersToHit);
 
-        IMovable movableObject = collider.GetComponent<IMovable>();
+    //    //IMovable movableObject = collider.GetComponent<IMovable>();
 
-        if(movableObject != null)
-        {
-            Debug.Log("SLOW DOWN Character!");
-            movableObject.ModifyMovementSpeed(-slowAmount);
-        }
-        //Collider2D[] colliders = Physics2D.OverlapCircleAll(position, radius, layersToHit);
+    //    //if(movableObject != null)
+    //    //{
+    //    //    Debug.Log("SLOW DOWN Character!");
+    //    //    movableObject.ModifyMovementSpeed(-slowAmount);
+    //    //}
+    //    //Collider2D[] colliders = Physics2D.OverlapCircleAll(position, radius, layersToHit);
 
-        //foreach(Collider2D collider in colliders)
-        //{
-        //    IMovable movableObject = collider.GetComponent<IMovable>();
+    //    //foreach(Collider2D collider in colliders)
+    //    //{
+    //    //    IMovable movableObject = collider.GetComponent<IMovable>();
 
-        //    if(movableObject != null)
-        //    {
-        //        Debug.Log("SLOW DOWN Character!");
-        //        movableObject.ModifyMovementSpeed(slowAmount);
-        //    }
-        //}
-    }
+    //    //    if(movableObject != null)
+    //    //    {
+    //    //        Debug.Log("SLOW DOWN Character!");
+    //    //        movableObject.ModifyMovementSpeed(slowAmount);
+    //    //    }
+    //    //}
+    //}
 
-    public override void OnTriggerExit(Collider2D collider)
-    {
-        IMovable movableObject = collider.GetComponent<IMovable>();
+    //public override void OnTriggerExit(Collider2D collider)
+    //{
+    //    //IMovable movableObject = collider.GetComponent<IMovable>();
 
-        if (movableObject != null)
-        {
-            Debug.Log("Revert Speed to character!");
-            movableObject.ModifyMovementSpeed(slowAmount);
-        }
-    }
+    //    //if (movableObject != null)
+    //    //{
+    //    //    Debug.Log("Revert Speed to character!");
+    //    //    movableObject.ModifyMovementSpeed(slowAmount);
+    //    //}
+    //}
 }

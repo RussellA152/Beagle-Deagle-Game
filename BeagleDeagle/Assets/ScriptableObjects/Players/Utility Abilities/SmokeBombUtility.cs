@@ -17,6 +17,6 @@ public class SmokeBombUtility : UtilityAbilityData
     public override void ActivateUtility(GameObject player)
     {
         Instantiate(prefab, player.transform.position + offset, Quaternion.identity);
-        prefab.GetComponent<Throwable>().UpdateThrowableData(smokeBombData);
+        //prefab.GetComponent<Throwable>().UpdateThrowableData(smokeBombData);
     }
 }

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3711592478197892577}
   - component: {fileID: 3711592478197892576}
   - component: {fileID: 3711592478197892579}
+  - component: {fileID: 7521638371316340890}
   m_Layer: 8
   m_Name: Base Projectile Zombie
   m_TagString: Untagged
@@ -204,3 +205,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7521638371316340890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711592478197892634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e08ad0020a31d43b69d5ea6060aeeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

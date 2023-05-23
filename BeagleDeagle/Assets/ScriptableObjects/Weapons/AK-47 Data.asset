@@ -19,11 +19,10 @@ MonoBehaviour:
   totalReloadTime: 3
   bullet: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   bulletData: {fileID: 11400000, guid: b09a69db01fe5e149b338ea65d81f7c9, type: 2}
-  spread: 4
+  bulletSpread: 5
   penetrationCount: 1
-  bulletsShot: 40
-  bulletsLoaded: 5
+  bulletsShot: 0
+  bulletsLoaded: 30
   bulletSpawnPoint: {fileID: 0}
-  lastTimeShot: 0.71176934
   actuallyShooting: 0
   isReloading: 0

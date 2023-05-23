@@ -13,8 +13,7 @@ public abstract class ThrowableData : ScriptableObject
     public float destroyTime = 3f;
 
 
+    //public abstract void SpecialAbility(Vector2 position);
 
-    public abstract void SpecialAbility(Vector2 position);
-
-    public abstract void OnTriggerExit();
+    //public abstract void OnTriggerExit(Collider2D collider);
 }

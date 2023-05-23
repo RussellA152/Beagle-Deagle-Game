@@ -21,6 +21,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
     private float lastTimeShot;
 
+    private float fireRate; // local version of GunData scriptable object's "fireRate"
+    private float bulletSpread; // local version of GunData scriptable object's "bulletSpread"
+    private float reloadTime; // local version of GunData scriptable object's "totalReloadTime"
+
 
     private void Start()
     {
@@ -70,7 +74,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
     public void Reload() {
         if (!weaponData.isReloading)
-            StartCoroutine(weaponData.WaitReload());
+            StartCoroutine(weaponData.WaitReload(reloadTime));
     }
 
     public void OnReload(CallbackContext context)
@@ -97,7 +101,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
             Bullet projectile = bullet.GetComponent<Bullet>();
 
             // pass that bullet into the weaponData's fire function
-            weaponData.Fire(projectile);
+            weaponData.Fire(projectile, fireRate, bulletSpread);
 
             projectile.UpdateWeaponData(weaponData);
         }
@@ -110,11 +114,16 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
     public void UpdateScriptableObject(GunData scriptableObject)
     {
         weaponData.bulletSpawnPoint = bulletSpawnPoint;
+
         weaponData = scriptableObject;
 
         bulletPool = weaponData.bullet.GetComponent<IPoolable>();
 
         spriteRenderer.sprite = weaponData.sprite;
+
+        reloadTime = scriptableObject.totalReloadTime;
+        fireRate = scriptableObject.fireRate;
+        bulletSpread = scriptableObject.bulletSpread;
     }
 
     public float ReturnLastTimeShot()

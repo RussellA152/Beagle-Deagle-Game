@@ -12,9 +12,9 @@ public class AutomaticGun : GunData
         base.OnEnable();
         lastFireTime = 0f;
     }
-    public override void Fire(Bullet bullet)
+    public override void Fire(Bullet bullet, float fireRate, float spread)
     {
-        SpawnBullet(bullet, bulletSpawnPoint);
+        SpawnBullet(bullet, bulletSpawnPoint, spread);
         lastFireTime = Time.time;
 
 
