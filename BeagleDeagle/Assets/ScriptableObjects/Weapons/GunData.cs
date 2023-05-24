@@ -42,8 +42,6 @@ public abstract class GunData : ScriptableObject
     [HideInInspector]
     public Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
 
-    //public float lastTimeShot;
-
     //[HideInInspector]
     //public int ammoInReserve; // how much ammo is currently in capacity?
 
@@ -68,9 +66,9 @@ public abstract class GunData : ScriptableObject
     }
 
 
-    public abstract void Fire(Bullet bullet, float fireRate, float spread);
+    public abstract void Fire(Bullet bullet, float spread);
 
-    public abstract bool CheckIfCanFire();
+    public abstract bool CheckIfCanFire(float fireRate);
 
 
     public virtual bool CheckAmmo()
@@ -82,7 +80,7 @@ public abstract class GunData : ScriptableObject
             return false;
         }
         // otherwise if they are not reloading, allow them to shoot
-        else if (!isReloading && CheckIfCanFire())
+        else if (!isReloading)
         {
 
             actuallyShooting = true;
@@ -94,23 +92,18 @@ public abstract class GunData : ScriptableObject
 
     public virtual void SpawnBullet(Bullet bullet, Transform spawnPoint, float spread)
     {
+        bullet.UpdateProjectileData(bulletData);
 
-        if (bullet != null)
-        {
-            //lastTimeShot = 0f;
-            bullet.UpdateProjectileData(bulletData);
+        // set the position to be at the barrel of the gun
+        bullet.transform.position = spawnPoint.position;
 
-            // set the position to be at the barrel of the gun
-            bullet.transform.position = spawnPoint.position;
-            
-            // Apply the spread to the bullet's rotation
-            bullet.transform.rotation = CalculateWeaponSpread(spawnPoint.rotation, spread);
+        // Apply the spread to the bullet's rotation
+        bullet.transform.rotation = CalculateWeaponSpread(spawnPoint.rotation, spread);
 
-            bullet.gameObject.SetActive(true);
+        bullet.gameObject.SetActive(true);
 
-            bulletsShot++;
-            bulletsLoaded--;
-        }
+        bulletsShot++;
+        bulletsLoaded--;
 
     }
 

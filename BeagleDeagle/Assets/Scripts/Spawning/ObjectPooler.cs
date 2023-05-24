@@ -27,10 +27,6 @@ public class ObjectPooler : MonoBehaviour
     [NonReorderable]
     public List<ObjectPoolItem> itemsToPool;
 
-    //[NonReorderable]
-    //public List<GameObject> pooledObjects;
-
-
     void Awake()
     {
         instance = this;

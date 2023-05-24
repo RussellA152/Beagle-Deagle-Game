@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
+public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable
 {
-
+    [SerializeField]
+    private PlayerEventSO playerEvents;
+    
     [SerializeField]
     private PlayerData playerData;
+
+    private IPlayerStatModifier playerStatModifierScript;
 
     public Vector2 movementInput { get; private set; }
     Vector2 rotationInput;
@@ -16,9 +20,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     [SerializeField]
     private Rigidbody2D rb;
 
-    private PlayerInput playerInput;
-
-    private float moveSpeed;
+    //private float moveSpeed;
 
     [Header("Body Parts")]
     [SerializeField] private Transform body;
@@ -45,16 +47,19 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
-    ///-///////////////////////////////////////////////////////////
-    ///
+    private void Awake()
+    {
+        playerEvents.givePlayerStatModifierScriptEvent += UpdatePlayerStatsModifierScript;
+    }
+
     void Start()
     {
-        playerInput = PlayerManager.instance.GetPlayerInput();
-
         rb = GetComponent<Rigidbody2D>();
+    }
 
-        moveSpeed = playerData.movementSpeed;
-
+    private void OnDestroy()
+    {
+        playerEvents.givePlayerStatModifierScriptEvent -= UpdatePlayerStatsModifierScript;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -62,7 +67,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     private void Update()
     {
         UpdateMovementAnimation();
-
 
         //if (weapon.rotation.z >= Quaternion.Euler(0f, 0f, 90f).z || weapon.rotation.z <= Quaternion.Euler(0f,0f,-90f).z)
         //{
@@ -79,12 +83,12 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         if (movementInput != Vector2.zero)
         {
             //The number of objects we can collide with if we go in this direction
-            int count = rb.Cast(movementInput, movementFilter, castCollisions, moveSpeed * Time.fixedDeltaTime + collisionOffset);
+            int count = rb.Cast(movementInput, movementFilter, castCollisions, (playerData.movementSpeed * playerStatModifierScript.GetMovementSpeedModifier()) * Time.fixedDeltaTime + collisionOffset);
 
             //if nothing is in the way, move our character
             if (count == 0)
             {
-                rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
+                rb.MovePosition(rb.position + movementInput * (playerData.movementSpeed * playerStatModifierScript.GetMovementSpeedModifier()) * Time.fixedDeltaTime);
             }
 
         }
@@ -216,24 +220,13 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     public void UpdateScriptableObject(PlayerData scriptableObject)
     {
         playerData = scriptableObject;
-
-        moveSpeed = scriptableObject.movementSpeed;
     }
 
-    public void ModifyMovementSpeed(float amount)
+    public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
     {
-        moveSpeed += amount;
+        playerStatModifierScript = modifierScript;
     }
 
-    ///-///////////////////////////////////////////////////////////
-    ///
-    //public void OnFire(CallbackContext inputValue)
-    //{
-
-    //    Debug.LogFormat("firing");
-    //    //attackAnimator.SetBool("isAttacking", true);
-
-    //}
     #endregion
 
 

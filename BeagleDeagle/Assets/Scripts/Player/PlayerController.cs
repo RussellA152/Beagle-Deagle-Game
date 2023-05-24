@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -9,6 +10,12 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private PlayerEventSO playerEvents;
+
+    [SerializeField]
+    private PlayerInput playerInput;
+
+    [SerializeField]
+    private PlayerStatModifier playerStatModifierScript;
 
     [SerializeField]
     private TopDownMovement movementScript;
@@ -49,23 +56,28 @@ public class PlayerController : MonoBehaviour
         Death
 
     }
+
+    private void OnEnable()
+    {
+        currentWeaponData = GetComponentInChildren<Gun>().weaponData;
+
+        playerEvents.InvokeGivePlayerStatModifierScript(playerStatModifierScript);
+        playerEvents.InvokeGivePlayerInputComponentEvent(playerInput);
+        Debug.Log("Call event system!");
+    }
+
+
     private void Start()
     {
-
         state = PlayerState.Idle;
-
-        currentWeaponData = GetComponentInChildren<Gun>().weaponData;
+      
+        playerAbilitiesScript.ActivateAllPassives();
 
         playerEvents.InvokeNewWeaponEvent(currentWeaponData);
 
-        playerEvents.InvokeNewStatsEvent(currentPlayerData);
-
+        playerEvents.InvokeNewStatsEvent(currentPlayerData);  
 
         healthScript.InitializeHealth();
-
-        //playerAbilitiesScript.ActivatePassive();
-
-        playerAbilitiesScript.ActivateAllPassives();
 
     }
 

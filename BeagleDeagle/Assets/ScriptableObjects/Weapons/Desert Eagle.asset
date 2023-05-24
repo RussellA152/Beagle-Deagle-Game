@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   damagePerHit: 150
-  fireRate: 3
+  fireRate: 6
   magazineSize: 8
   totalReloadTime: 1.5
   bullet: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   bulletData: {fileID: 11400000, guid: b09a69db01fe5e149b338ea65d81f7c9, type: 2}
-  spread: 5
+  bulletSpread: 2
   penetrationCount: 2
-  bulletsShot: 6
-  bulletsLoaded: 2
+  bulletsShot: 41
+  bulletsLoaded: 109
   bulletSpawnPoint: {fileID: 0}
   actuallyShooting: 0
   isReloading: 0

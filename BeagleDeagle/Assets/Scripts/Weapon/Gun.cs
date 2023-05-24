@@ -6,11 +6,17 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class Gun : MonoBehaviour, IGunDataUpdatable
 {
+    [SerializeField]
+    private PlayerEventSO playerEvents;
+
+    private IPlayerStatModifier playerStatModifierScript;
+
     private PlayerInput playerInput;
 
     public GunData weaponData;
 
-    [SerializeField] private Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
+    [SerializeField] 
+    private Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
 
     [SerializeField]
     private SpriteRenderer spriteRenderer;
@@ -21,29 +27,26 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
     private float lastTimeShot;
 
-    private float fireRate; // local version of GunData scriptable object's "fireRate"
-    private float bulletSpread; // local version of GunData scriptable object's "bulletSpread"
-    private float reloadTime; // local version of GunData scriptable object's "totalReloadTime"
-
-
-    private void Start()
+    private void Awake()
     {
-        playerInput = PlayerManager.instance.GetPlayerInput();
-
-        playerInput.actions["Fire"].performed += OnFire;
-        playerInput.actions["Reload"].performed += OnReload;
-
+        playerEvents.givePlayerStatModifierScriptEvent += UpdatePlayerStatsModifierScript;
+        playerEvents.givePlayerInputComponentEvent += SetPlayerInput;
     }
 
     private void OnEnable()
     {
         UpdateScriptableObject(weaponData);
     }
-
-    private void OnDisable()
+    private void Start()
     {
-        playerInput.actions["Fire"].performed -= OnFire;
-        playerInput.actions["Reload"].performed -= OnReload;
+        playerInput.actions["Fire"].performed += OnFire;
+        playerInput.actions["Reload"].performed += OnReload;
+    }
+
+    private void OnDestroy()
+    {
+        playerEvents.givePlayerStatModifierScriptEvent -= UpdatePlayerStatsModifierScript;
+        playerEvents.givePlayerInputComponentEvent -= SetPlayerInput;
     }
 
     private void Update()
@@ -57,7 +60,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
         }
 
         // if player is holding down "fire" button, then attempt to shoot
-        if (shootInput > 0 && weaponData.CheckAmmo())
+        if (shootInput > 0 && weaponData.CheckAmmo() && weaponData.CheckIfCanFire(weaponData.fireRate * playerStatModifierScript.GetAttackSpeedModifier()))
         {
             ShootGun();
         }
@@ -73,8 +76,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
     }
 
     public void Reload() {
+        // If the gun is not already reloading, begin a coroutine for the reload
         if (!weaponData.isReloading)
-            StartCoroutine(weaponData.WaitReload(reloadTime));
+            // The duration of the reload is the gunData's reloadTime * a reload speed modifier (this takes into account any items that affect the reload speed)
+            StartCoroutine(weaponData.WaitReload(weaponData.totalReloadTime * playerStatModifierScript.GetWeaponReloadSpeedModifier()));
     }
 
     public void OnReload(CallbackContext context)
@@ -91,8 +96,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
         // fetch a bullet from object pooler
         bullet = ObjectPooler.instance.GetPooledObject(bulletPool.PoolKey);
 
-        Debug.Log("SPAWN A BULLET!");
-
         if (bullet != null)
         {
             // Player has shot their gun, so reset lastTimeShot to 0 seconds
@@ -100,10 +103,14 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
             Bullet projectile = bullet.GetComponent<Bullet>();
 
-            // pass that bullet into the weaponData's fire function
-            weaponData.Fire(projectile, fireRate, bulletSpread);
-
             projectile.UpdateWeaponData(weaponData);
+
+            projectile.UpdatePlayerStatsModifierScript(playerStatModifierScript);
+
+            // pass that bullet into the weaponData's fire function
+            weaponData.Fire(projectile, weaponData.bulletSpread * playerStatModifierScript.GetWeaponSpreadModifier());
+
+            
         }
         else
         {
@@ -120,10 +127,16 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
         bulletPool = weaponData.bullet.GetComponent<IPoolable>();
 
         spriteRenderer.sprite = weaponData.sprite;
+    }
 
-        reloadTime = scriptableObject.totalReloadTime;
-        fireRate = scriptableObject.fireRate;
-        bulletSpread = scriptableObject.bulletSpread;
+    public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
+    {
+       playerStatModifierScript = modifierScript;
+    }
+
+    public void SetPlayerInput(PlayerInput inputComponent)
+    {
+        playerInput = inputComponent;
     }
 
     public float ReturnLastTimeShot()

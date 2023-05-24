@@ -161,6 +161,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  playerInput: {fileID: 5313635083943124192}
+  playerComponentSO: {fileID: 11400000, guid: 80ec77a7d40103145b2eb3a11b5d6016, type: 2}
+  playerStatModifierScript: {fileID: -1143221857870714615}
   movementScript: {fileID: 5313635083943124193}
   healthScript: {fileID: 2912267811165790606}
   currentPlayerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
@@ -178,6 +181,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7721644329fa1a24781eddef5ac4c52a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealthModifer: 1
+  movementSpeedModifier: 1
+  weaponDamageModifer: 1
+  weaponPenetrationCountModifier: 0
+  weaponSpreadModifier: 1
+  weaponMagazineModifer: 1
+  weaponFireRateModifier: 1
+  weaponReloadSpeedModifier: 1
+  utilityCooldownModifier: 1
+  utilityUsesModifier: 0
 --- !u!114 &2912267811165790606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  playerComponentSO: {fileID: 11400000, guid: 80ec77a7d40103145b2eb3a11b5d6016, type: 2}
   playerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
 --- !u!114 &5313635083943124193
 MonoBehaviour:
@@ -204,6 +218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b349a021fc7a72a4b809632e17656f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  playerComponentSO: {fileID: 11400000, guid: 80ec77a7d40103145b2eb3a11b5d6016, type: 2}
   playerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
   rb: {fileID: 5313635083943124195}
   body: {fileID: 5313635084664649029}
@@ -240,6 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  playerComponentSO: {fileID: 11400000, guid: 80ec77a7d40103145b2eb3a11b5d6016, type: 2}
   passives:
   - {fileID: 11400000, guid: 05c221c08f911334ba6af2abfddb31cb, type: 2}
   - {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}

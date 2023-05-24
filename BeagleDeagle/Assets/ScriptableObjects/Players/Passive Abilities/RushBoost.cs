@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewPassive", menuName = "ScriptableObjects/Ability/Passive/RushBoost")]
 public class RushBoost : PassiveAbilityData
 {
-    [Range(0f, 10f)]
+    [Range(0f, 1f)]
     [SerializeField]
-    private float speedBoost;
+    private float speedBoost; // how much faster (%) should the player start running?
 
     [Range(0f, 10f)]
     [SerializeField]
@@ -15,9 +15,7 @@ public class RushBoost : PassiveAbilityData
 
     private bool speedIncreased;
 
-    //private GunData currentWeaponData;
-
-    private IMovable playerMovementScript;
+    private IModifier modifierScript;
 
     private Gun gunScript;
 
@@ -37,8 +35,8 @@ public class RushBoost : PassiveAbilityData
             gunScript = player.GetComponentInChildren<Gun>();
 
         // fetch movement script and cache it
-        if (playerMovementScript == null)
-            playerMovementScript = player.GetComponent<IMovable>();
+        if (modifierScript == null)
+            modifierScript = player.GetComponent<IModifier>();
 
         // if player doesn't currently have speed boost, and they haven't shot their gun in a while..
         // then give player a small speed increase
@@ -46,7 +44,7 @@ public class RushBoost : PassiveAbilityData
         {
             speedIncreased = true;
 
-            playerMovementScript.ModifyMovementSpeed(speedBoost);
+            modifierScript.ModifyMovementSpeedModifier(speedBoost);
            
         }
         // otherwise, if the player did receive a speed increase, and they started shooting...
@@ -55,7 +53,7 @@ public class RushBoost : PassiveAbilityData
         {
             speedIncreased = false;
 
-            playerMovementScript.ModifyMovementSpeed(-speedBoost);
+            modifierScript.ModifyMovementSpeedModifier(-speedBoost);
         }
     }
     //public void UpdateScriptableObject(GunData scriptableObject)

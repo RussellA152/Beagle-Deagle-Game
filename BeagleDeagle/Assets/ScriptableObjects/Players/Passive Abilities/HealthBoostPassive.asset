@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fdbf6fe2d5308145bc63a8a37d6c0c4, type: 3}
   m_Name: HealthBoostPassive
   m_EditorClassIdentifier: 
-  increaseAmount: 250
+  activationType: 0
+  increaseAmount: 0.5

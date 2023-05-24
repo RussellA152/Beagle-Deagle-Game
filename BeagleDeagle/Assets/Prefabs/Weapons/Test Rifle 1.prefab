@@ -184,6 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf595dbafa854b0498949f5c14f31bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  playerComponentSO: {fileID: 11400000, guid: 80ec77a7d40103145b2eb3a11b5d6016, type: 2}
   weaponData: {fileID: 11400000, guid: 13a42fb4f1b892d4db540aad15586b89, type: 2}
   bulletSpawnPoint: {fileID: 3172216759311910775}
   spriteRenderer: {fileID: 3172216759253909028}

@@ -21,10 +21,10 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
         return currentHealth;
     }
 
-    public virtual float GetMaxHealth()
-    {
-        return enemyData.maxHealth;
-    }
+    //public virtual float GetMaxHealth()
+    //{
+    //    return enemyData.maxHealth;
+    //}
 
     // add or subtract from health count
     public virtual void ModifyHealth(float amount)
@@ -49,10 +49,10 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
 
     }
 
-    public virtual void ModifyMaxHealth(float amount)
-    {
-        //enemyData.maxHealth += amount;
-    }
+    //public virtual void ModifyMaxHealth(float amount)
+    //{
+    //    //enemyData.maxHealth += amount;
+    //}
 
     // do something when this entity dies
     public bool IsDead()

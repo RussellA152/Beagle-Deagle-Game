@@ -16,12 +16,6 @@ public class TestHUD : MonoBehaviour
     private PlayerEventSO playerEvents;
 
     [SerializeField]
-    private GunData weaponData;
-
-    [SerializeField]
-    private UtilityAbilityData utilityData;
-
-    [SerializeField]
     private TextMeshProUGUI ammoMagText;
 
     [SerializeField]
@@ -52,6 +46,11 @@ public class TestHUD : MonoBehaviour
         playerEvents.maxHealthChangedEvent += UpdateMaxHealthText;
 
         playerEvents.playerUtilityUsesUpdatedEvent += UpdateUtilityUsesText;
+
+        playerEvents.playerUtilityNameChangeEvent += UpdateUtilityNameText;
+
+        playerEvents.playerAmmoHUDUpdateEvent += UpdateAmmoText;
+
     }
 
     private void OnDisable()
@@ -61,6 +60,12 @@ public class TestHUD : MonoBehaviour
         playerEvents.currentHealthChangedEvent -= UpdateCurrentHealthText;
 
         playerEvents.maxHealthChangedEvent -= UpdateMaxHealthText;
+
+        playerEvents.playerUtilityUsesUpdatedEvent -= UpdateUtilityUsesText;
+
+        playerEvents.playerUtilityNameChangeEvent -= UpdateUtilityNameText;
+
+        playerEvents.playerAmmoHUDUpdateEvent -= UpdateAmmoText;
     }
 
     public void UpdateCurrentHealthText(float currentHealth)
@@ -78,9 +83,9 @@ public class TestHUD : MonoBehaviour
         waveMessageText.text = newText;
     }
 
-    public void UpdateAmmoText(string newText)
+    public void UpdateAmmoText(int bulletsLoaded)
     {
-        ammoMagText.text = newText;
+        ammoMagText.text = bulletsLoaded.ToString();
     }
 
     public void UpdateUtilityUsesText(int uses)
@@ -88,16 +93,9 @@ public class TestHUD : MonoBehaviour
         utilityUsesText.text = uses.ToString();
     }
 
-    private void Update()
+    public void UpdateUtilityNameText(string name)
     {
-        //ammoMagText.text = weapon.bulletsLoaded.ToString();
-        ammoMagText.text = weaponData.bulletsLoaded.ToString();
-        utilityNameText.text = utilityData.name;
-
-        //utilityUsesText.text = utilityData.uses.ToString();
-        //maxAmmoText.text = weapon.ammoInReserve.ToString();
+        utilityNameText.text = name;
     }
-
-
 
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RushBoost
   m_EditorClassIdentifier: 
   activationType: 1
-  speedBoost: 6
+  speedBoost: 0.5
   minimumTimeRequired: 2.5

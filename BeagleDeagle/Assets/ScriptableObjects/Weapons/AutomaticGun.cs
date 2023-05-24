@@ -12,7 +12,7 @@ public class AutomaticGun : GunData
         base.OnEnable();
         lastFireTime = 0f;
     }
-    public override void Fire(Bullet bullet, float fireRate, float spread)
+    public override void Fire(Bullet bullet, float spread)
     {
         SpawnBullet(bullet, bulletSpawnPoint, spread);
         lastFireTime = Time.time;
@@ -20,7 +20,7 @@ public class AutomaticGun : GunData
 
     }
 
-    public override bool CheckIfCanFire()
+    public override bool CheckIfCanFire(float fireRate)
     {
         if (Time.time - lastFireTime > 1f / fireRate)
         {
