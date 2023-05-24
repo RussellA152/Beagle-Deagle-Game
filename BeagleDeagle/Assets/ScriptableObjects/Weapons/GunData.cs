@@ -62,11 +62,12 @@ public abstract class GunData : ScriptableObject
         isReloading = false;
         actuallyShooting = false;
 
+
         //ammoInReserve = weaponData.maxAmmoInReserve;
     }
 
 
-    public abstract void Fire(Bullet bullet, float spread);
+    public abstract void Fire(Bullet bullet);
 
     public abstract bool CheckIfCanFire(float fireRate);
 
@@ -90,15 +91,8 @@ public abstract class GunData : ScriptableObject
         return false;
     }
 
-    public virtual void SpawnBullet(Bullet bullet, Transform spawnPoint, float spread)
+    public virtual void SpawnBullet(Bullet bullet)
     {
-        bullet.UpdateProjectileData(bulletData);
-
-        // set the position to be at the barrel of the gun
-        bullet.transform.position = spawnPoint.position;
-
-        // Apply the spread to the bullet's rotation
-        bullet.transform.rotation = CalculateWeaponSpread(spawnPoint.rotation, spread);
 
         bullet.gameObject.SetActive(true);
 

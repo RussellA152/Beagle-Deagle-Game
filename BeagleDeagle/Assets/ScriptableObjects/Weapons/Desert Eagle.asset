@@ -21,8 +21,8 @@ MonoBehaviour:
   bulletData: {fileID: 11400000, guid: b09a69db01fe5e149b338ea65d81f7c9, type: 2}
   bulletSpread: 2
   penetrationCount: 2
-  bulletsShot: 41
-  bulletsLoaded: 109
+  bulletsShot: 8
+  bulletsLoaded: 0
   bulletSpawnPoint: {fileID: 0}
   actuallyShooting: 0
-  isReloading: 0
+  isReloading: 1

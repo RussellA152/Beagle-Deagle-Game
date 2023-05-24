@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &470457800 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5313635084010504988, guid: 95e57430ce08c2f44ba2a53104bf6e2c, type: 3}
-  m_PrefabInstance: {fileID: 1993905678}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &656232942
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,67 +188,6 @@ MonoBehaviour:
     shouldExpand: 0
     pooled: []
     poolKey: 0
---- !u!1001 &909419737
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 470457800}
-    m_Modifications:
-    - target: {fileID: 3172216759253909026, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_Name
-      value: Test Rifle 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.1179997
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.1450002
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7358910972957582640, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: weaponData
-      value: 
-      objectReference: {fileID: 11400000, guid: 13a42fb4f1b892d4db540aad15586b89, type: 2}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
 --- !u!1 &1512511680
 GameObject:
   m_ObjectHideFlags: 0

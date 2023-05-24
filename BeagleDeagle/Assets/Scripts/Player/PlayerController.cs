@@ -62,22 +62,20 @@ public class PlayerController : MonoBehaviour
         currentWeaponData = GetComponentInChildren<Gun>().weaponData;
 
         playerEvents.InvokeGivePlayerStatModifierScript(playerStatModifierScript);
-        playerEvents.InvokeGivePlayerInputComponentEvent(playerInput);
-        Debug.Log("Call event system!");
+
+        playerEvents.InvokeNewWeaponEvent(currentWeaponData);
+
+        playerEvents.InvokeNewStatsEvent(currentPlayerData);
     }
 
 
     private void Start()
     {
         state = PlayerState.Idle;
-      
-        playerAbilitiesScript.ActivateAllPassives();
 
-        playerEvents.InvokeNewWeaponEvent(currentWeaponData);
+        //playerAbilitiesScript.ActivateAllPassives();         
 
-        playerEvents.InvokeNewStatsEvent(currentPlayerData);  
-
-        healthScript.InitializeHealth();
+        //healthScript.InitializeHealth();
 
     }
 
@@ -138,7 +136,16 @@ public class PlayerController : MonoBehaviour
     private bool CheckIfAttacking()
     {
         // checking if the player is attacking with their weapon
-        return currentWeaponData.actuallyShooting;
+        if(currentWeaponData == null)
+        {
+            Debug.Log("WEAPON MISSING!");
+            return false;
+        }
+        else
+        {
+            return currentWeaponData.actuallyShooting;
+        }
+        
     }
 
     private bool CheckIfDead()

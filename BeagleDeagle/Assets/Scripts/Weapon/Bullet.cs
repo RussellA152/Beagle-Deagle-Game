@@ -7,8 +7,7 @@ public class Bullet : MonoBehaviour, IPoolable
     [SerializeField]
     private PlayerEventSO playerEvents;
 
-    //private GunWeapon gun; // what gun did this bullet come from?
-    private IPlayerStatModifier playerStatModifierScript;
+    private IPlayerStatModifier playerStatModifierScript; // the player's modifier script (Will receive reference from the gun that shot this bullet, because bullet are instaniated during the game, not before)
 
     [SerializeField]
     private ProjectileData projectileData;
@@ -17,6 +16,7 @@ public class Bullet : MonoBehaviour, IPoolable
 
     [SerializeField]
     private int poolKey;
+    public int PoolKey => poolKey; // return the pool key (anything that is IPoolable, must have a pool key)
 
     [SerializeField]
     private Rigidbody2D rb;
@@ -24,9 +24,6 @@ public class Bullet : MonoBehaviour, IPoolable
     private Vector3 defaultRotation = new Vector3(0f, 0f, -90f);
 
     private int amountPenetrated; // how many enemies has this bullet penetrated through?
-
-    // return the pool key (anything that is IPoolable, must have a pool key)
-    public int PoolKey => poolKey;
 
     private void OnEnable()
     {

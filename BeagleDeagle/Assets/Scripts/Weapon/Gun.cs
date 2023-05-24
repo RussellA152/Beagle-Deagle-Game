@@ -30,23 +30,17 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
     private void Awake()
     {
         playerEvents.givePlayerStatModifierScriptEvent += UpdatePlayerStatsModifierScript;
-        playerEvents.givePlayerInputComponentEvent += SetPlayerInput;
     }
 
     private void OnEnable()
     {
         UpdateScriptableObject(weaponData);
-    }
-    private void Start()
-    {
-        playerInput.actions["Fire"].performed += OnFire;
-        playerInput.actions["Reload"].performed += OnReload;
+        
     }
 
     private void OnDestroy()
     {
         playerEvents.givePlayerStatModifierScriptEvent -= UpdatePlayerStatsModifierScript;
-        playerEvents.givePlayerInputComponentEvent -= SetPlayerInput;
     }
 
     private void Update()
@@ -103,12 +97,22 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
             Bullet projectile = bullet.GetComponent<Bullet>();
 
+            // Giving the bullet this gun's damage and spread
             projectile.UpdateWeaponData(weaponData);
-
+            // Giving the bullet its data (for the 'destroyTime' variable and 'trajectory' method)
+            projectile.UpdateProjectileData(weaponData.bulletData);
+            // Give the bullet the player's modifier script (this is so that the bullet can take into account any extra damage the player received from items)
+            // We pass the reference here, instead of inside the bullet's Awake() method because bullets are pooled and disabled at the start of the game
             projectile.UpdatePlayerStatsModifierScript(playerStatModifierScript);
 
+            // set the position to be at the barrel of the gun
+            bullet.transform.position = bulletSpawnPoint.position;
+
+            // Apply the spread to the bullet's rotation
+            bullet.transform.rotation = weaponData.CalculateWeaponSpread(bulletSpawnPoint.rotation, weaponData.bulletSpread * playerStatModifierScript.GetWeaponSpreadModifier());
+
             // pass that bullet into the weaponData's fire function
-            weaponData.Fire(projectile, weaponData.bulletSpread * playerStatModifierScript.GetWeaponSpreadModifier());
+            weaponData.Fire(projectile);
 
             
         }

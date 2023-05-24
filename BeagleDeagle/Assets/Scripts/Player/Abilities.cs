@@ -33,6 +33,8 @@ public class Abilities : MonoBehaviour
 
     private void Start()
     {
+        ActivateAllPassives();
+
         playerEvents.InvokeUtilityUsesUpdatedEvent(utilityUses + playerStatModifierScript.GetUtilityUsesModifier());
         playerEvents.InvokeUtilityNameUpdatedEvent(utility.name);
     }
