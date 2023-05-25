@@ -2,26 +2,30 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// A series of significant events caused by player actions. Some including when the player's health changes, obtains an upgrade to their gun,
+/// uses their abilities, or shoots their weapon.
+/// </summary>
 [CreateAssetMenu(menuName = "GameEvent/PlayerEvents")]
 public class PlayerEventSO : ScriptableObject
 {
-    public event Action<IPlayerStatModifier> givePlayerStatModifierScriptEvent;
+    public event Action<IPlayerStatModifier> givePlayerStatModifierScriptEvent; // pass a reference to the player's modifier script (could be useful for gameObjects that need reference, but not attached to player)
 
-    public event Action<PlayerInput> givePlayerInputComponentEvent;
+    public event Action<PlayerInput> givePlayerInputComponentEvent; // pass a reference to the player's PlayerInput component (could be useful for gameObjects that need reference, but not attached to player)
 
-    public event Action<float> currentHealthChangedEvent;
+    public event Action<float> currentHealthChangedEvent; // pass a reference to the player's current Health (used by HUD)
 
-    public event Action<float> maxHealthChangedEvent;
+    public event Action<float> maxHealthChangedEvent; // pass a reference to the player's max Health (used by HUD)
 
-    public event Action<GunData> playerObtainedNewWeaponEvent;
+    public event Action<GunData> playerObtainedNewWeaponEvent; // pass a reference to the player's current weapon data
 
-    public event Action<PlayerData> playerObtainedNewStatsEvent;
+    public event Action<PlayerData> playerObtainedNewStatsEvent; // pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
 
-    public event Action<int> playerAmmoHUDUpdateEvent;
+    public event Action<int> playerAmmoHUDUpdateEvent; // pass a reference to the player's current ammo loaded (invoked when the player shoots a bullet)
 
-    public event Action<int> playerUtilityUsesUpdatedEvent;
+    public event Action<int> playerUtilityUsesUpdatedEvent; // pass a reference to the player's utility uses (invoked when the player uses their utility ability)
 
-    public event Action<string> playerUtilityNameChangeEvent;
+    public event Action<string> playerUtilityNameChangeEvent; // pass a reference to the name of the player's utility ability (invoked when the player obtains a new utility ability. Mainly for debugging)
 
     // When the player's max health changes
     // Pass around the max health value to whoever needs it (ex. HUD needs to display max health at all times)

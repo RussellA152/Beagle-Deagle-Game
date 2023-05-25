@@ -27,6 +27,9 @@ public class ObjectPooler : MonoBehaviour
     [NonReorderable]
     public List<ObjectPoolItem> itemsToPool;
 
+    private object lockObject = new object(); // Create a private lock object for synchronization
+
+
     void Awake()
     {
         instance = this;
@@ -61,67 +64,39 @@ public class ObjectPooler : MonoBehaviour
     {
         ObjectPoolItem itemRequested = null;
 
-        // first, find the object that is being requested (ex. a bullet)
+        // First, find the object that is being requested (e.g., a bullet)
         foreach (ObjectPoolItem item in itemsToPool)
         {
             if (key == item.poolKey)
+            {
                 itemRequested = item;
+                break;
+            }
         }
 
-        if(itemRequested != null)
+        lock (lockObject) // Lock the critical section to ensure exclusive access
         {
-            // iterate through all of the pooled objects for that specific items
-            for (int i = 0; i < itemRequested.pooled.Count; i++)
+            if (itemRequested != null)
             {
-                // fetch the first object that is disabled in the scene
-                if (!itemRequested.pooled[i].activeInHierarchy)
+                // Iterate through all of the pooled objects for that specific item
+                for (int i = 0; i < itemRequested.pooled.Count; i++)
                 {
-                    return itemRequested.pooled[i];
+                    if (!itemRequested.pooled[i].activeInHierarchy)
+                    {
+                        return itemRequested.pooled[i];
+                    }
+                }
+
+                if (itemRequested.shouldExpand)
+                {
+                    GameObject obj = Instantiate(itemRequested.objectToPool);
+                    obj.SetActive(false);
+                    itemRequested.pooled.Add(obj);
+                    return obj;
                 }
             }
-
-            // if the pool is allowed to expand, then instaniate a new item and add it to the pool
-            if (itemRequested.shouldExpand)
-            {
-                GameObject obj = Instantiate(itemRequested.objectToPool);
-                obj.SetActive(false);
-                itemRequested.pooled.Add(obj);
-                return obj;
-            }   
         }
 
         return null;
-
-
-        //for (int i = 0; i < pooledObjects.Count; i++)
-        //{
-        //    // checking if the pooled object is disabled in the inspector
-        //    // AND if the pool key is the same as the one being passed in
-        //    // This iterates through the entire pooled objects list....
-
-
-        //    if (!pooledObjects[i].activeInHierarchy && pooledObjects[i].GetComponent<IPoolable>().PoolKey == key)
-        //    {
-        //        return pooledObjects[i];
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("FAILED TO RETURN OBJECT");
-        //    }
-        //}
-        //foreach (ObjectPoolItem item in itemsToPool)
-        //{
-        //    if (item.objectToPool.GetComponent<IPoolable>().PoolKey == key)
-        //    {
-        //        if (item.shouldExpand)
-        //        {
-        //            GameObject obj = (GameObject)Instantiate(item.objectToPool);
-        //            obj.SetActive(false);
-        //            //pooledObjects.Add(obj);
-        //            return obj;
-        //        }
-        //    }
-        //}
-        //return null;
     }
 }

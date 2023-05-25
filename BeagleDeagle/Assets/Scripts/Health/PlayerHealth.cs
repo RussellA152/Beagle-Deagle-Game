@@ -25,6 +25,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
     {
         playerEvents.givePlayerStatModifierScriptEvent -= UpdatePlayerStatsModifierScript;
     }
+
     private void Start()
     {
         InitializeHealth();

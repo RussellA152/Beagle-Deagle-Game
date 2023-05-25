@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Gun : MonoBehaviour, IGunDataUpdatable
@@ -10,8 +9,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
     private PlayerEventSO playerEvents;
 
     private IPlayerStatModifier playerStatModifierScript;
-
-    private PlayerInput playerInput;
 
     public GunData weaponData;
 
@@ -29,6 +26,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
     private void Awake()
     {
+        // Retrieve a reference to the PlayerStatModifier script when it gets enabled
         playerEvents.givePlayerStatModifierScriptEvent += UpdatePlayerStatsModifierScript;
     }
 
@@ -47,13 +45,15 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
     {
         lastTimeShot += Time.deltaTime;
 
+        // If the player has no ammo loaded into their weapon, begin reloading
         if (weaponData.bulletsLoaded <= 0f)
         {
             Reload();
             return;
         }
 
-        // if player is holding down "fire" button, then attempt to shoot
+        // If player is holding down "fire" button, then attempt to shoot
+        // Also check that the gun's fire rate is ready to shoot
         if (shootInput > 0 && weaponData.CheckAmmo() && weaponData.CheckIfCanFire(weaponData.fireRate * playerStatModifierScript.GetAttackSpeedModifier()))
         {
             ShootGun();
@@ -76,18 +76,21 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
             StartCoroutine(weaponData.WaitReload(weaponData.totalReloadTime * playerStatModifierScript.GetWeaponReloadSpeedModifier()));
     }
 
+    // Call reload function when the player presses the reload key
     public void OnReload(CallbackContext context)
     {
         Reload();
     }
 
+    // Fetch a bullet from object pooler, then pass it into the GunData's Fire() method so it can shoot it
     public void ShootGun()
     {
+        // The bullet will spawn at the barrel of the gun
         weaponData.bulletSpawnPoint = bulletSpawnPoint;
 
         GameObject bullet;
 
-        // fetch a bullet from object pooler
+        // Fetch a bullet from object pooler
         bullet = ObjectPooler.instance.GetPooledObject(bulletPool.PoolKey);
 
         if (bullet != null)
@@ -97,23 +100,22 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
             Bullet projectile = bullet.GetComponent<Bullet>();
 
-            // Giving the bullet this gun's damage and spread
-            projectile.UpdateWeaponData(weaponData);
+            // Pass in the damage and penetration values of this gun, to the bullet being shot
+            // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
+            projectile.UpdateWeaponValues(weaponData.damagePerHit * playerStatModifierScript.GetDamageModifier(), weaponData.penetrationCount * playerStatModifierScript.GetPenetrationCountModifier());
+
             // Giving the bullet its data (for the 'destroyTime' variable and 'trajectory' method)
             projectile.UpdateProjectileData(weaponData.bulletData);
-            // Give the bullet the player's modifier script (this is so that the bullet can take into account any extra damage the player received from items)
-            // We pass the reference here, instead of inside the bullet's Awake() method because bullets are pooled and disabled at the start of the game
-            projectile.UpdatePlayerStatsModifierScript(playerStatModifierScript);
+       
 
-            // set the position to be at the barrel of the gun
+            // Set the position to be at the barrel of the gun
             bullet.transform.position = bulletSpawnPoint.position;
 
             // Apply the spread to the bullet's rotation
             bullet.transform.rotation = weaponData.CalculateWeaponSpread(bulletSpawnPoint.rotation, weaponData.bulletSpread * playerStatModifierScript.GetWeaponSpreadModifier());
 
-            // pass that bullet into the weaponData's fire function
+            // Pass that bullet into the weaponData's fire function
             weaponData.Fire(projectile);
-
             
         }
         else
@@ -122,6 +124,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
         }
     }
 
+    // Update the GunData scriptable object to a new one.
+    // This can change many stats like damage, penetration, fireRate, appearance (sprite), and more.
     public void UpdateScriptableObject(GunData scriptableObject)
     {
         weaponData.bulletSpawnPoint = bulletSpawnPoint;
@@ -136,11 +140,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
     public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
     {
        playerStatModifierScript = modifierScript;
-    }
-
-    public void SetPlayerInput(PlayerInput inputComponent)
-    {
-        playerInput = inputComponent;
     }
 
     public float ReturnLastTimeShot()

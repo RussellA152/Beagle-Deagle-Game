@@ -42,9 +42,6 @@ public abstract class GunData : ScriptableObject
     [HideInInspector]
     public Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
 
-    //[HideInInspector]
-    //public int ammoInReserve; // how much ammo is currently in capacity?
-
     [HideInInspector]
     public bool actuallyShooting; // is the player shooting (i.e, not idle or reloading or just moving)
 
@@ -56,14 +53,11 @@ public abstract class GunData : ScriptableObject
 
     public virtual void OnEnable()
     {
-        // always reset these values OnEnable because scriptable object data can persist *
+        // Always reset these values OnEnable because scriptable object data can persist *
         bulletsShot = 0;
         bulletsLoaded = magazineSize;
         isReloading = false;
         actuallyShooting = false;
-
-
-        //ammoInReserve = weaponData.maxAmmoInReserve;
     }
 
 
@@ -90,6 +84,7 @@ public abstract class GunData : ScriptableObject
 
         return false;
     }
+
 
     public virtual void SpawnBullet(Bullet bullet)
     {
@@ -123,19 +118,13 @@ public abstract class GunData : ScriptableObject
         isReloading = false;
     }
 
+    // When the gun is done reloading, refill all the ammo
+    // For pump-action shotguns, we might only refill 1 bullet at a time
     public virtual void RefillAmmo()
     {
         bulletsLoaded += bulletsShot;
         bulletsShot = 0;
     }
-
-    // Gives player full ammo
-    //public void FullAmmo()
-    //{
-    //    ammoInReserve = weaponData.maxAmmoInReserve;
-    //    bulletsLoaded = weaponData.magazineSize;
-    //    bulletsShot = 0;
-    //}
 
     #endregion
 }
