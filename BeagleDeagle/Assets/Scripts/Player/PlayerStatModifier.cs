@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class PlayerStatModifier : MonoBehaviour, IPlayerStatModifier
 {
+    [SerializeField]
+    private PlayerHealth playerHealthScript;
+
+    [SerializeField]
+    private Abilities abilityScript;
+
     [Header("Health & Movement Speed Modifiers (%)")]
     [SerializeField]
-    private float maxHealthModifer = 1f;// how much extra max health (%) does the player have?
+    private float maxHealthModifier = 1f;// how much extra max health (%) does the player have?
     [SerializeField]
     private float movementSpeedModifier = 1f;// how much extra speed (%) does the player have? *(lower percentages means the player moves slower than usual!)*
 
     [Header("Weapon Stat Modifiers")]
     [SerializeField]
-    private float weaponDamageModifer = 1f; // how much extra damage (%) does the player's weapon do?
+    private float weaponDamageModifier = 1f; // how much extra damage (%) does the player's weapon do?
     [SerializeField]
     private int weaponPenetrationCountModifier = 0; // how much extra penetration (int) does the player's gun do?
     [SerializeField]
     private float weaponSpreadModifier = 1f;// how much more or less spread (%) does the player's weapon have when it shoots?
     [SerializeField]
-    private float weaponMagazineModifer = 1f;// how much more or less bullets (%) can the player's gun shoot?
+    private float weaponMagazineModifier = 1f;// how much more or less bullets (%) can the player's gun shoot?
     [SerializeField]
     private float weaponFireRateModifier = 1f; // how much faster or slower (%) can the player's gun shoot?
     [SerializeField]
@@ -30,20 +36,33 @@ public class PlayerStatModifier : MonoBehaviour, IPlayerStatModifier
     [SerializeField]
     private int utilityUsesModifier = 0; // how many more or less times (int) can the player activate their utility ability?
 
+    //private void Start()
+    //{
+    //    Invoke("IncreaseRandom", 3f);
+    //}
+
+    //private void IncreaseRandom()
+    //{
+    //    Debug.Log("Increase! DEBUG");
+    //    ModifyUtilityUsesModifier(3);
+    //}
+
     // Setter methods for modifiers
-    public void ModifyDamageModifer(float amount)
+    public void ModifyDamageModifier(float amount)
     {
-        weaponDamageModifer += amount;
+        weaponDamageModifier += amount;
     }
 
     public void ModifyMagazineSizeModfier(float amount)
     {
-        weaponMagazineModifer += amount;
+        weaponMagazineModifier += amount;
     }
 
     public void ModifyMaxHealthModifier(float amount)
     {
-        maxHealthModifer += amount;
+        maxHealthModifier += amount;
+        // call function in health script to invoke event system
+        playerHealthScript.MaxHealthWasModified();
     }
 
     public void ModifyPenetrationCountModifier(int amount)
@@ -67,9 +86,10 @@ public class PlayerStatModifier : MonoBehaviour, IPlayerStatModifier
         utilityCooldownModifier += amount;
     }
 
-    public void ModifyUtilityUsesModifer(int amount)
+    public void ModifyUtilityUsesModifier(int amount)
     {
         utilityUsesModifier += amount;
+        //abilityScript.UtilityUsesModified();
     }
 
     public void ModifyWeaponReloadSpeedModifier(float amount)
@@ -90,12 +110,12 @@ public class PlayerStatModifier : MonoBehaviour, IPlayerStatModifier
 
     public float GetMaxHealthModifier()
     {
-        return maxHealthModifer;
+        return maxHealthModifier;
     }
 
     public float GetDamageModifier()
     {
-        return weaponDamageModifer;
+        return weaponDamageModifier;
     }
     public float GetAttackSpeedModifier()
     {
@@ -114,7 +134,7 @@ public class PlayerStatModifier : MonoBehaviour, IPlayerStatModifier
 
     public float GetMagazineSizeModifier()
     {
-        return weaponMagazineModifer;
+        return weaponMagazineModifier;
     }
 
     public int GetPenetrationCountModifier()

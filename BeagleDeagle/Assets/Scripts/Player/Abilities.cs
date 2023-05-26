@@ -9,8 +9,6 @@ public class Abilities : MonoBehaviour
     [SerializeField]
     private PlayerEventSO playerEvents;
 
-    private IPlayerStatModifier playerStatModifierScript;
-
     // a list of the player's passive abilities
     [SerializeField]
     private List<PassiveAbilityData> passives = new List<PassiveAbilityData>();
@@ -18,12 +16,16 @@ public class Abilities : MonoBehaviour
     [SerializeField]
     private UtilityAbilityData utility;
 
-    private int utilityUses;
+    [SerializeField, NonReorderable]
+    private List<UtilityCooldownModifier> utilityCooldownModifiers = new List<UtilityCooldownModifier>();
 
-    private void Awake()
-    {
-        playerEvents.givePlayerStatModifierScriptEvent += UpdatePlayerStatsModifierScript;
-    }
+    [SerializeField, NonReorderable]
+    private List<UtilityUsesModifier> utilityUsesModifiers = new List<UtilityUsesModifier>();
+
+    private int utilityUses;
+    private int bonusUtilityUses;
+
+    private float bonusUtilityCooldown;
 
     private void OnEnable()
     {
@@ -34,14 +36,8 @@ public class Abilities : MonoBehaviour
     private void Start()
     {
         ActivateAllPassives();
-
-        playerEvents.InvokeUtilityUsesUpdatedEvent(utilityUses + playerStatModifierScript.GetUtilityUsesModifier());
+        UtilityUsesModified();
         playerEvents.InvokeUtilityNameUpdatedEvent(utility.name);
-    }
-
-    private void OnDestroy()
-    {
-        playerEvents.givePlayerStatModifierScriptEvent -= UpdatePlayerStatsModifierScript;
     }
 
     public void ActivateAllPassives()
@@ -71,7 +67,7 @@ public class Abilities : MonoBehaviour
         {
             // If player has uses left on their utility ability, let them activate it 
             // We also take into account any items that upgraded the number of uses on their utility ability
-            if ((utilityUses + playerStatModifierScript.GetUtilityUsesModifier()) > 0)
+            if ((utilityUses + bonusUtilityUses) > 0)
             {
                 Debug.Log("Activate utility!");
 
@@ -79,7 +75,7 @@ public class Abilities : MonoBehaviour
 
                 utility.ActivateUtility(gameObject);
 
-                playerEvents.InvokeUtilityUsesUpdatedEvent(utilityUses + playerStatModifierScript.GetUtilityUsesModifier());
+                UtilityUsesModified();
 
                 StartCoroutine(StartUtilityCooldown());
             }
@@ -87,9 +83,9 @@ public class Abilities : MonoBehaviour
         
     }
 
-    public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
+    public void UtilityUsesModified()
     {
-        playerStatModifierScript = modifierScript;
+        playerEvents.InvokeUtilityUsesUpdatedEvent(utilityUses + bonusUtilityUses);
     }
 
     IEnumerator StartUtilityCooldown()
@@ -97,12 +93,36 @@ public class Abilities : MonoBehaviour
         // Start the cooldown that comes from the Utility scriptable object.
         // We start a coroutine within another coroutine so that we don't have to modify the
         // uses variable within the Utility scriptable object
-        yield return new WaitForSeconds(utility.cooldown * playerStatModifierScript.GetUtilityCooldownModifier());
+        yield return new WaitForSeconds(utility.cooldown * bonusUtilityCooldown);
 
         utilityUses++;
 
-        playerEvents.InvokeUtilityUsesUpdatedEvent(utilityUses + playerStatModifierScript.GetUtilityUsesModifier());
+        UtilityUsesModified();
 
+    }
+
+    public void RegisterUtilityCooldownModifier(UtilityCooldownModifier modifierToAdd)
+    {
+        utilityCooldownModifiers.Add(modifierToAdd);
+        bonusUtilityCooldown += modifierToAdd.bonusUtilityCooldown;
+    }
+
+    public void DeregisterUtilityCooldownModifier(UtilityCooldownModifier modifierToRemove)
+    {
+        utilityCooldownModifiers.Remove(modifierToRemove);
+        bonusUtilityCooldown -= modifierToRemove.bonusUtilityCooldown;
+    }
+
+    public void RegisterUtilityUsesModifier(UtilityUsesModifier modifierToAdd)
+    {
+        utilityUsesModifiers.Add(modifierToAdd);
+        bonusUtilityUses += modifierToAdd.bonusUtilityUses;
+    }
+
+    public void DeregisterUtilityUsesModifier(UtilityUsesModifier modifierToRemove)
+    {
+        utilityUsesModifiers.Remove(modifierToRemove);
+        bonusUtilityUses -= modifierToRemove.bonusUtilityUses;
     }
 }
 

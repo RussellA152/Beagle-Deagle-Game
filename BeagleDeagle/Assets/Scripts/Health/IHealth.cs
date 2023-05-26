@@ -6,12 +6,12 @@ public interface IHealth
 {
     public float GetCurrentHealth();
 
-    //public float GetMaxHealth();
-
     // add or subtract from health count
     public void ModifyHealth(float amount);
 
-    //public void ModifyMaxHealth(float amount);
+    public void AddMaxHealthModifier(MaxHealthModifier modifierToAdd);
+
+    public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove);
 
     // do something when this entity dies
     public bool IsDead();

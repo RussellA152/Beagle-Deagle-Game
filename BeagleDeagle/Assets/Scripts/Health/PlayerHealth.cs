@@ -7,7 +7,9 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
     [SerializeField]
     private PlayerEventSO playerEvents;
 
-    private IPlayerStatModifier playerStatModifierScript;
+    //private IPlayerStatModifier playerStatModifierScript;
+
+    private float bonusMaxHealth = 1f;
 
     private float currentHealth;
     //private float maxHealth; // we make a local variable in here so that we don't affect original SO data
@@ -16,29 +18,29 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
     [SerializeField]
     private PlayerData playerData;
 
-    private void Awake()
-    {
-        playerEvents.givePlayerStatModifierScriptEvent += UpdatePlayerStatsModifierScript;
-    }
-
-    private void OnDestroy()
-    {
-        playerEvents.givePlayerStatModifierScriptEvent -= UpdatePlayerStatsModifierScript;
-    }
+    [SerializeField, NonReorderable]
+    private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>();
 
     private void Start()
     {
         InitializeHealth();
+       
     }
 
     public void InitializeHealth()
     {
         isDead = false;
 
-        currentHealth = playerData.maxHealth * playerStatModifierScript.GetMaxHealthModifier();
+        currentHealth = playerData.maxHealth * bonusMaxHealth;
 
         playerEvents.InvokeCurrentHealthEvent(currentHealth);
-        playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * playerStatModifierScript.GetMaxHealthModifier());
+
+        playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * bonusMaxHealth);
+
+        //currentHealth = playerData.maxHealth * playerStatModifierScript.GetMaxHealthModifier();
+
+        //playerEvents.InvokeCurrentHealthEvent(currentHealth);
+        //playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * playerStatModifierScript.GetMaxHealthModifier());
     }
 
     public virtual float GetCurrentHealth()
@@ -51,9 +53,9 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
     {
         // If this health modification will exceed the max potential health, then just set the current health to max.
         // We add the maxHealth by the playerStat's modifier just in case the player has any items that affect their max health (Ex. Health upgrade passive)
-        if (currentHealth + amount > playerData.maxHealth * playerStatModifierScript.GetMaxHealthModifier())
+        if (currentHealth + amount > playerData.maxHealth * bonusMaxHealth)
         {
-            currentHealth = playerData.maxHealth * playerStatModifierScript.GetMaxHealthModifier();
+            currentHealth = playerData.maxHealth * bonusMaxHealth;
             playerEvents.InvokeCurrentHealthEvent(currentHealth);
         }
 
@@ -73,6 +75,12 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
 
     }
 
+    public void MaxHealthWasModified()
+    {
+        playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * bonusMaxHealth);
+        //invoke max health event
+    }
+
     // do something when this entity dies
     public bool IsDead()
     {
@@ -85,8 +93,20 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
 
     }
 
-    public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
+    //public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
+    //{
+    //    playerStatModifierScript = modifierScript;
+    //}
+
+    public void AddMaxHealthModifier(MaxHealthModifier modifierToAdd)
     {
-        playerStatModifierScript = modifierScript;
+        maxHealthModifiers.Add(modifierToAdd);
+        bonusMaxHealth += modifierToAdd.bonusMaxHealth;
+    }
+
+    public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
+    {
+        maxHealthModifiers.Remove(modifierToRemove);
+        bonusMaxHealth -= modifierToRemove.bonusMaxHealth;
     }
 }

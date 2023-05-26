@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2109b6e7d0cc82a4b9930663f6f65a0d, type: 3}
   m_Name: Desert Eagle 1
   m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   sprite: {fileID: 0}
   damagePerHit: 100
   fireRate: 3
@@ -19,8 +20,7 @@ MonoBehaviour:
   totalReloadTime: 1.5
   bullet: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   bulletData: {fileID: 11400000, guid: b09a69db01fe5e149b338ea65d81f7c9, type: 2}
-  spreadX: 5
-  spreadY: 5
+  bulletSpread: 0
   penetrationCount: 3
   bulletsShot: 0
   bulletsLoaded: 8

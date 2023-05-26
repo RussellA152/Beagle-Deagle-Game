@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 5313635083943124194}
   - component: {fileID: 5313635083943124198}
   - component: {fileID: 3238474014219297874}
-  - component: {fileID: -1143221857870714615}
   - component: {fileID: 2912267811165790606}
   - component: {fileID: 5313635083943124193}
   - component: {fileID: 5084828282012666581}
@@ -162,34 +161,11 @@ MonoBehaviour:
   state: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerInput: {fileID: 5313635083943124192}
-  playerStatModifierScript: {fileID: -1143221857870714615}
   movementScript: {fileID: 5313635083943124193}
   healthScript: {fileID: 2912267811165790606}
   currentPlayerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
   playerAbilitiesScript: {fileID: 5084828282012666581}
   currentWeaponData: {fileID: 0}
---- !u!114 &-1143221857870714615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5313635083943124204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7721644329fa1a24781eddef5ac4c52a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealthModifer: 1
-  movementSpeedModifier: 1
-  weaponDamageModifer: 1
-  weaponPenetrationCountModifier: 0
-  weaponSpreadModifier: 1
-  weaponMagazineModifer: 1
-  weaponFireRateModifier: 1
-  weaponReloadSpeedModifier: 1
-  utilityCooldownModifier: 1
-  utilityUsesModifier: 0
 --- !u!114 &2912267811165790606
 MonoBehaviour:
   m_ObjectHideFlags: 0

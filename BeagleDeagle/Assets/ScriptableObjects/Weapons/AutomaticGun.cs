@@ -7,7 +7,7 @@ public class AutomaticGun : GunData
 {
     private float lastFireTime;
 
-    public override void OnEnable()
+    public  void OnEnable()
     {
         base.OnEnable();
         lastFireTime = 0f;

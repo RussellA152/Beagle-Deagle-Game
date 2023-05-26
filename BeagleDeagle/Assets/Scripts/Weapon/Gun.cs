@@ -24,21 +24,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
     private float lastTimeShot;
 
-    private void Awake()
-    {
-        // Retrieve a reference to the PlayerStatModifier script when it gets enabled
-        playerEvents.givePlayerStatModifierScriptEvent += UpdatePlayerStatsModifierScript;
-    }
-
     private void OnEnable()
     {
         UpdateScriptableObject(weaponData);
         
-    }
-
-    private void OnDestroy()
-    {
-        playerEvents.givePlayerStatModifierScriptEvent -= UpdatePlayerStatsModifierScript;
     }
 
     private void Update()
@@ -107,7 +96,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
             // Giving the bullet its data (for the 'destroyTime' variable and 'trajectory' method)
             projectile.UpdateProjectileData(weaponData.bulletData);
        
-
             // Set the position to be at the barrel of the gun
             bullet.transform.position = bulletSpawnPoint.position;
 
@@ -141,7 +129,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
     {
        playerStatModifierScript = modifierScript;
     }
-
     public float ReturnLastTimeShot()
     {
         return lastTimeShot;

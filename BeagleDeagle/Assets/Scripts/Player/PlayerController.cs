@@ -15,9 +15,6 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
 
     [SerializeField]
-    private PlayerStatModifier playerStatModifierScript;
-
-    [SerializeField]
     private TopDownMovement movementScript;
 
     [SerializeField]
@@ -61,8 +58,6 @@ public class PlayerController : MonoBehaviour
     {
         currentWeaponData = GetComponentInChildren<Gun>().weaponData;
 
-        playerEvents.InvokeGivePlayerStatModifierScript(playerStatModifierScript);
-
         playerEvents.InvokeNewWeaponEvent(currentWeaponData);
 
         playerEvents.InvokeNewStatsEvent(currentPlayerData);
@@ -72,10 +67,6 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         state = PlayerState.Idle;
-
-        //playerAbilitiesScript.ActivateAllPassives();         
-
-        //healthScript.InitializeHealth();
 
     }
 

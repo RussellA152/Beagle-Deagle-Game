@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable
+public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 {
     [SerializeField]
     private PlayerEventSO playerEvents;
@@ -12,7 +12,10 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable
     [SerializeField]
     private PlayerData playerData;
 
-    private IPlayerStatModifier playerStatModifierScript;
+    [SerializeField, NonReorderable]
+    private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>();
+
+    private float bonusSpeed = 1;
 
     public Vector2 movementInput { get; private set; }
     Vector2 rotationInput;
@@ -47,20 +50,20 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable
 
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
-    private void Awake()
-    {
-        playerEvents.givePlayerStatModifierScriptEvent += UpdatePlayerStatsModifierScript;
-    }
+    //private void Awake()
+    //{
+    //    playerEvents.givePlayerStatModifierScriptEvent += UpdatePlayerStatsModifierScript;
+    //}
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void OnDestroy()
-    {
-        playerEvents.givePlayerStatModifierScriptEvent -= UpdatePlayerStatsModifierScript;
-    }
+    //private void OnDestroy()
+    //{
+    //    playerEvents.givePlayerStatModifierScriptEvent -= UpdatePlayerStatsModifierScript;
+    //}
 
     ///-///////////////////////////////////////////////////////////
     ///
@@ -83,12 +86,12 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable
         if (movementInput != Vector2.zero)
         {
             //The number of objects we can collide with if we go in this direction
-            int count = rb.Cast(movementInput, movementFilter, castCollisions, (playerData.movementSpeed * playerStatModifierScript.GetMovementSpeedModifier()) * Time.fixedDeltaTime + collisionOffset);
+            int count = rb.Cast(movementInput, movementFilter, castCollisions, (playerData.movementSpeed * bonusSpeed) * Time.fixedDeltaTime + collisionOffset);
 
             //if nothing is in the way, move our character
             if (count == 0)
             {
-                rb.MovePosition(rb.position + movementInput * (playerData.movementSpeed * playerStatModifierScript.GetMovementSpeedModifier()) * Time.fixedDeltaTime);
+                rb.MovePosition(rb.position + movementInput * (playerData.movementSpeed * bonusSpeed) * Time.fixedDeltaTime);
             }
 
         }
@@ -222,9 +225,21 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable
         playerData = scriptableObject;
     }
 
-    public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
+    //public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
+    //{
+    //    playerStatModifierScript = modifierScript;
+    //}
+
+    public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
     {
-        playerStatModifierScript = modifierScript;
+        movementSpeedModifiers.Add(modifierToAdd);
+        bonusSpeed += modifierToAdd.bonusMovementSpeed;
+    }
+
+    public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
+    {
+        movementSpeedModifiers.Remove(modifierToRemove);
+        bonusSpeed -= modifierToRemove.bonusMovementSpeed;
     }
 
     #endregion

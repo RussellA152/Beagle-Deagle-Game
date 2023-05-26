@@ -81,19 +81,16 @@ public abstract class GunData : ScriptableObject
             actuallyShooting = true;
             return true;
         }
-
         return false;
     }
 
 
     public virtual void SpawnBullet(Bullet bullet)
     {
-
         bullet.gameObject.SetActive(true);
 
         bulletsShot++;
         bulletsLoaded--;
-
     }
 
     // very simple weapon spread, just add a random offset to the bullet's Y position

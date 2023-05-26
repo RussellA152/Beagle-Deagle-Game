@@ -49,7 +49,7 @@ public class TestHUD : MonoBehaviour
 
         playerEvents.playerUtilityNameChangeEvent += UpdateUtilityNameText;
 
-        playerEvents.playerAmmoHUDUpdateEvent += UpdateAmmoText;
+        playerEvents.playerBulletsLoadedChangedEvent += UpdateAmmoText;
 
     }
 
@@ -65,7 +65,7 @@ public class TestHUD : MonoBehaviour
 
         playerEvents.playerUtilityNameChangeEvent -= UpdateUtilityNameText;
 
-        playerEvents.playerAmmoHUDUpdateEvent -= UpdateAmmoText;
+        playerEvents.playerBulletsLoadedChangedEvent -= UpdateAmmoText;
     }
 
     public void UpdateCurrentHealthText(float currentHealth)

@@ -11,7 +11,7 @@ public class PlayerEventSO : ScriptableObject
 {
     public event Action<IPlayerStatModifier> givePlayerStatModifierScriptEvent; // pass a reference to the player's modifier script (could be useful for gameObjects that need reference, but not attached to player)
 
-    public event Action<PlayerInput> givePlayerInputComponentEvent; // pass a reference to the player's PlayerInput component (could be useful for gameObjects that need reference, but not attached to player)
+    //public event Action<PlayerInput> givePlayerInputComponentEvent; // pass a reference to the player's PlayerInput component (could be useful for gameObjects that need reference, but not attached to player)
 
     public event Action<float> currentHealthChangedEvent; // pass a reference to the player's current Health (used by HUD)
 
@@ -21,7 +21,7 @@ public class PlayerEventSO : ScriptableObject
 
     public event Action<PlayerData> playerObtainedNewStatsEvent; // pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
 
-    public event Action<int> playerAmmoHUDUpdateEvent; // pass a reference to the player's current ammo loaded (invoked when the player shoots a bullet)
+    public event Action<int> playerBulletsLoadedChangedEvent; // pass a reference to the player's current ammo loaded (invoked when the player's ammo changes)
 
     public event Action<int> playerUtilityUsesUpdatedEvent; // pass a reference to the player's utility uses (invoked when the player uses their utility ability)
 
@@ -66,9 +66,9 @@ public class PlayerEventSO : ScriptableObject
 
     public void InvokeUpdateAmmoLoadedText(int ammoLoaded)
     {
-        if(playerAmmoHUDUpdateEvent != null)
+        if(playerBulletsLoadedChangedEvent != null)
         {
-            playerAmmoHUDUpdateEvent(ammoLoaded);
+            playerBulletsLoadedChangedEvent(ammoLoaded);
         }
     }
 
@@ -97,12 +97,12 @@ public class PlayerEventSO : ScriptableObject
         }
     }
 
-    public void InvokeGivePlayerInputComponentEvent(PlayerInput inputComponent)
-    {
-        if(givePlayerInputComponentEvent != null)
-        {
-            givePlayerInputComponentEvent(inputComponent);
-        }
-    }
+    //public void InvokeGivePlayerInputComponentEvent(PlayerInput inputComponent)
+    //{
+    //    if(givePlayerInputComponentEvent != null)
+    //    {
+    //        givePlayerInputComponentEvent(inputComponent);
+    //    }
+    //}
 
 }

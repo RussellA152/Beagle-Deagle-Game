@@ -12,7 +12,7 @@ public class AIStatModifier : MonoBehaviour, IEnemyStatModifier
     private float damageModifer; // how much extra damage (%) does the AI's attacks do?
     private float attackSpeedModifier; // how much faster or slower (%) can this AI attack? (in terms of cooldowns)
 
-    public void ModifyDamageModifer(float amount)
+    public void ModifyDamageModifier(float amount)
     {
         damageModifer += amount;
     }

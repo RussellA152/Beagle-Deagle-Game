@@ -99,8 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 099133a98b628b64480047b9829f7be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  projectileData: {fileID: 11400000, guid: 1d21ff3f1f7e19d4fa1bfde9beb52009, type: 2}
+  projectileData: {fileID: 11400000, guid: b09a69db01fe5e149b338ea65d81f7c9, type: 2}
   poolKey: 100
   rb: {fileID: 7698205712678738710}
 --- !u!70 &8164879991046117892

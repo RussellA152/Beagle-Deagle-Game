@@ -49,11 +49,6 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
 
     }
 
-    //public virtual void ModifyMaxHealth(float amount)
-    //{
-    //    //enemyData.maxHealth += amount;
-    //}
-
     // do something when this entity dies
     public bool IsDead()
     {
@@ -65,4 +60,13 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
         enemyData = scriptableObject;
     }
 
+    public void AddMaxHealthModifier(MaxHealthModifier modifierToAdd)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
+    {
+        throw new System.NotImplementedException();
+    }
 }

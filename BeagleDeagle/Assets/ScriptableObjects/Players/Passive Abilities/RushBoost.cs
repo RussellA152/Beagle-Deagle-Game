@@ -15,7 +15,9 @@ public class RushBoost : PassiveAbilityData
 
     private bool speedIncreased;
 
-    private IModifier modifierScript;
+    private IMovable movementScript;
+
+    private MovementSpeedModifier movementSpeedModifier;
 
     private Gun gunScript;
 
@@ -24,7 +26,7 @@ public class RushBoost : PassiveAbilityData
     {
         speedIncreased = false;
 
-        //playerEvents.playerObtainedNewWeaponEvent += UpdateScriptableObject;
+        movementSpeedModifier = new MovementSpeedModifier(speedBoost);
 
     }
 
@@ -35,8 +37,8 @@ public class RushBoost : PassiveAbilityData
             gunScript = player.GetComponentInChildren<Gun>();
 
         // fetch movement script and cache it
-        if (modifierScript == null)
-            modifierScript = player.GetComponent<IModifier>();
+        if (movementScript == null)
+            movementScript = player.GetComponent<IMovable>();
 
         // if player doesn't currently have speed boost, and they haven't shot their gun in a while..
         // then give player a small speed increase
@@ -44,7 +46,7 @@ public class RushBoost : PassiveAbilityData
         {
             speedIncreased = true;
 
-            modifierScript.ModifyMovementSpeedModifier(speedBoost);
+            movementScript.AddMovementSpeedModifier(movementSpeedModifier);
            
         }
         // otherwise, if the player did receive a speed increase, and they started shooting...
@@ -53,11 +55,7 @@ public class RushBoost : PassiveAbilityData
         {
             speedIncreased = false;
 
-            modifierScript.ModifyMovementSpeedModifier(-speedBoost);
+            movementScript.RemoveMovementSpeedModifier(movementSpeedModifier);
         }
     }
-    //public void UpdateScriptableObject(GunData scriptableObject)
-    //{
-    //    currentWeaponData = scriptableObject;
-    //}
 }

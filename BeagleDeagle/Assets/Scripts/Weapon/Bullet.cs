@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour, IPoolable
 {
-    [SerializeField]
     private ProjectileData projectileData;
 
     [SerializeField]
@@ -27,13 +26,15 @@ public class Bullet : MonoBehaviour, IPoolable
     {   
         // Reset number of penetration
         amountPenetrated = 0;
-        
-        // Start time for this bullet to disable
-        StartCoroutine(DisableAfterTime());
 
-        // Apply the trajectory of this bullet (We probably could do this inside of the gameobject that spawns it?)
-        projectileData.ApplyTrajectory(rb, transform);
+        if(projectileData != null)
+        {
+            // Start time for this bullet to disable
+            StartCoroutine(DisableAfterTime());
 
+            // Apply the trajectory of this bullet (We probably could do this inside of the gameobject that spawns it?)
+            projectileData.ApplyTrajectory(rb, transform);
+        }
     }
 
     private void OnDisable()
@@ -81,7 +82,7 @@ public class Bullet : MonoBehaviour, IPoolable
         penetrationCount = penetration;
     }
 
-    // Update the bullet with its scriptable object (contains trajectory logic and any special ability e.g, Incinerating on hit)
+    // Update the bullet with its scriptable object (Contains trajectory logic and any special ability. e.g, Incinerating on hit)
     public void UpdateProjectileData(ProjectileData scriptableObject)
     {
         projectileData = scriptableObject;
