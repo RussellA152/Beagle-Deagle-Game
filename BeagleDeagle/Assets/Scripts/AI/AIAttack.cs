@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIAttack : MonoBehaviour, IEnemyDataUpdatable
+public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
 {
     [SerializeField]
     private EnemyData enemyScriptableObject;
@@ -11,13 +11,19 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable
     [SerializeField, NonReorderable]
     private List<DamageModifier> damageModifiers = new List<DamageModifier>(); // a list of damage modifiers applied to the enemy's attack damage
 
-    private float bonusDamage; // a bonus percentage applied to the enemy's attack damage
+    private float bonusDamage = 1f; // a bonus percentage applied to the enemy's attack damage
 
     private bool canAttack = true;
 
     private void OnEnable()
     {
         canAttack = true;
+    }
+
+    private void OnDisable()
+    {
+        // reset any modifiers on the enemy's damage
+        bonusDamage = 1f;
     }
 
 

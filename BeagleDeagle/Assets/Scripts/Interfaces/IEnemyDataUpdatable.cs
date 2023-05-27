@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEnemyDataUpdatable: IDataUpdatable<EnemyData>, IDamager
+public interface IEnemyDataUpdatable: IDataUpdatable<EnemyData>
 {
 
 }

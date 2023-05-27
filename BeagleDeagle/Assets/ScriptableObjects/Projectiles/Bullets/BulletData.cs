@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewProjectile", menuName = "ScriptableObjects/Projectile/RegularBullet")]
-public class ProjectileData : ScriptableObject
+public class BulletData : ScriptableObject
 {
     public LayerMask whatDestroysBullet;
 

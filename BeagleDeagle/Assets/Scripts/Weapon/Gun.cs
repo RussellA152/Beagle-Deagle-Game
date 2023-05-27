@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-public class Gun : MonoBehaviour, IGunDataUpdatable
+public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 {
     [SerializeField]
     private PlayerEventSO playerEvents;

@@ -22,7 +22,7 @@ public abstract class GunData : ScriptableObject
 
     [Header("Bullet To Shoot")]
     public GameObject bullet; // what bullet is spawned when shooting?
-    public ProjectileData bulletData; // what data will this bullet use?
+    public BulletData bulletData; // what data will this bullet use?
 
     [Header("Weapon Spread")]
     [Range(0f, 20f)]

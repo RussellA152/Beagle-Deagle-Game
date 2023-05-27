@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// Basic Movement and Attack for an AI with one attack and only following.
+/// Responsible for executing code based on enemy states. States include: Idle, Chasing, Attack, Stunned, and Death
 /// Override OnAttack() and OnChase() functions to make more complex attacks and movement.
 /// </summary>
-public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdatable where T: EnemyData
+public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemyDataUpdatable where T: EnemyData
 {
     [SerializeField]
     private int poolKey;
@@ -33,6 +33,11 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     private bool inChaseRange; // is the player within this enemy's chase/follow range?
 
     public int PoolKey => poolKey;
+
+    [SerializeField, NonReorderable]
+    private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>(); // a list of modifiers being applied to this enemy's movement speed 
+
+    private float bonusSpeed = 1f;
 
     private void Awake()
     {
@@ -75,8 +80,14 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     {
         state = EnemyState.Idle;
 
-        agent.speed = enemyScriptableObject.movementSpeed;
+        agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
 
+    }
+
+    private void OnDisable()
+    {
+        // reset any movement speed modifiers on the enemy
+        bonusSpeed = 1f;
     }
 
     private void Update()
@@ -157,17 +168,6 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         Debug.Log("I am DEAD.");
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.attackRange);
-
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.chaseRange);
-    }
-
     public virtual void UpdateScriptableObject(EnemyData scriptableObject)
     {
         if (scriptableObject is T)
@@ -179,5 +179,30 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
             Debug.Log("ERROR WHEN UPDATING SCRIPTABLE OBJECT! PREFAB DID NOT UPDATE ITS SCRIPTABLE OBJECT");
         }
 
+    }
+
+    public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
+    {
+        bonusSpeed += modifierToAdd.bonusMovementSpeed;
+
+        agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
+    }
+
+    public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
+    {
+        bonusSpeed += modifierToRemove.bonusMovementSpeed;
+
+        agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.attackRange);
+
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.chaseRange);
     }
 }

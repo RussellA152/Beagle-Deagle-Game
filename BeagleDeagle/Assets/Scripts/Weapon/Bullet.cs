@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour, IPoolable
 {
-    private ProjectileData projectileData;
+    private BulletData bulletData;
 
     [SerializeField]
     private int poolKey;
@@ -27,13 +27,13 @@ public class Bullet : MonoBehaviour, IPoolable
         // Reset number of penetration
         amountPenetrated = 0;
 
-        if(projectileData != null)
+        if(bulletData != null)
         {
             // Start time for this bullet to disable
             StartCoroutine(DisableAfterTime());
 
             // Apply the trajectory of this bullet (We probably could do this inside of the gameobject that spawns it?)
-            projectileData.ApplyTrajectory(rb, transform);
+            bulletData.ApplyTrajectory(rb, transform);
         }
     }
 
@@ -51,7 +51,7 @@ public class Bullet : MonoBehaviour, IPoolable
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // If this bullet hits what its allowed to damage
-        if ((projectileData.whatDestroysBullet.value & (1 << collision.gameObject.layer)) > 0)
+        if ((bulletData.whatDestroysBullet.value & (1 << collision.gameObject.layer)) > 0)
         {
             Debug.Log("BULLET HIT " + collision.gameObject.name);
 
@@ -83,15 +83,15 @@ public class Bullet : MonoBehaviour, IPoolable
     }
 
     // Update the bullet with its scriptable object (Contains trajectory logic and any special ability. e.g, Incinerating on hit)
-    public void UpdateProjectileData(ProjectileData scriptableObject)
+    public void UpdateProjectileData(BulletData scriptableObject)
     {
-        projectileData = scriptableObject;
+        bulletData = scriptableObject;
     }
 
     // If this bullet exists for too long, disable it
     IEnumerator DisableAfterTime()
     {
-        yield return new WaitForSeconds(projectileData.destroyTime);
+        yield return new WaitForSeconds(bulletData.destroyTime);
         gameObject.SetActive(false);
     }
 

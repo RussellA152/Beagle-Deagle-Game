@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewThrowable", menuName = "ScriptableObjects/Throwable/SmokeBomb")]
-public class SmokeBomb : ThrowableData
+[CreateAssetMenu(fileName = "NewGrenade", menuName = "ScriptableObjects/Grenade/SmokeGrenade")]
+public class SmokeGrenade : GrenadeData
 {
     public float testValue;
 
@@ -16,10 +16,24 @@ public class SmokeBomb : ThrowableData
 
     [SerializeField]
     private LayerMask layersToHit;
-
     private void OnEnable()
     {
-        
+
+    }
+
+    public override void Explode()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnAreaEnter()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnAreaExit()
+    {
+        throw new System.NotImplementedException();
     }
 
     //public override void SpecialAbility(Vector2 position)

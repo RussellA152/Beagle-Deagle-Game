@@ -13,7 +13,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     private PlayerData playerData;
 
     [SerializeField, NonReorderable]
-    private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>();
+    private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>(); // a list of modifiers being applied to the player's movement speed 
 
     private float bonusSpeed = 1;
 
