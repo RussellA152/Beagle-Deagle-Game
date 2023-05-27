@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
 
     //private IPlayerStatModifier playerStatModifierScript;
 
-    private float bonusMaxHealth = 1f;
+    private float bonusMaxHealth = 1f; // a bonus percentage applied to the player's max health (Ex. 500 max health * 120%, would mean 120% extra max health)
 
     private float currentHealth;
     //private float maxHealth; // we make a local variable in here so that we don't affect original SO data
@@ -19,7 +19,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
     private PlayerData playerData;
 
     [SerializeField, NonReorderable]
-    private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>();
+    private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
 
     private void Start()
     {

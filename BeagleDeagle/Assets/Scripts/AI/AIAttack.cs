@@ -8,6 +8,11 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable
     [SerializeField]
     private EnemyData enemyScriptableObject;
 
+    [SerializeField, NonReorderable]
+    private List<DamageModifier> damageModifiers = new List<DamageModifier>(); // a list of damage modifiers applied to the enemy's attack damage
+
+    private float bonusDamage; // a bonus percentage applied to the enemy's attack damage
+
     private bool canAttack = true;
 
     private void OnEnable()
@@ -20,7 +25,7 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable
     {
         if (canAttack)
         {
-            target.GetComponent<PlayerHealth>().ModifyHealth(enemyScriptableObject.attackDamage);
+            target.GetComponent<PlayerHealth>().ModifyHealth(enemyScriptableObject.attackDamage * bonusDamage);
             StartCoroutine(AttackCooldown());
         }
             
@@ -41,4 +46,15 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable
         enemyScriptableObject = scriptableObject;
     }
 
+    public void AddDamageModifier(DamageModifier modifierToAdd)
+    {
+        damageModifiers.Add(modifierToAdd);
+        bonusDamage += modifierToAdd.bonusDamage;
+    }
+
+    public void RemoveDamageModifier(DamageModifier modifierToRemove)
+    {
+        damageModifiers.Remove(modifierToRemove);
+        bonusDamage -= modifierToRemove.bonusDamage;
+    }
 }

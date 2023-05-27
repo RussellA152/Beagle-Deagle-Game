@@ -180,6 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
+  maxHealthModifiers: []
 --- !u!114 &5313635083943124193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
+  movementSpeedModifiers: []
   rb: {fileID: 5313635083943124195}
   body: {fileID: 5313635084664649029}
   head: {fileID: 5313635084907708359}
@@ -231,8 +233,9 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   passives:
   - {fileID: 11400000, guid: 05c221c08f911334ba6af2abfddb31cb, type: 2}
-  - {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}
   utility: {fileID: 11400000, guid: 2ae24b0ad22356d43b0a4f479c67cc1d, type: 2}
+  utilityCooldownModifiers: []
+  utilityUsesModifiers: []
 --- !u!114 &5313635083943124192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +295,7 @@ MonoBehaviour:
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3557466876830861077}
+      - m_Target: {fileID: 5673304368955972411}
         m_TargetAssemblyTypeName: Gun, Assembly-CSharp
         m_MethodName: OnFire
         m_Mode: 0
@@ -348,7 +351,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3557466876830861077}
+      - m_Target: {fileID: 5673304368955972411}
         m_TargetAssemblyTypeName: Gun, Assembly-CSharp
         m_MethodName: OnReload
         m_Mode: 0
@@ -463,7 +466,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8897786410358676480}
+  - {fileID: 332774463098060846}
   - {fileID: 5313635084574825236}
   m_Father: {fileID: 5313635083943124194}
   m_RootOrder: 2
@@ -858,7 +861,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &6304674220767224357
+--- !u!1001 &2926137758354685451
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -867,7 +870,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3172216759253909026, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
       propertyPath: m_Name
-      value: Test Rifle 1
+      value: Player Gun
       objectReference: {fileID: 0}
     - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
       propertyPath: m_RootOrder
@@ -915,10 +918,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
---- !u!114 &3557466876830861077 stripped
+--- !u!4 &332774463098060846 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
+  m_PrefabInstance: {fileID: 2926137758354685451}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5673304368955972411 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7358910972957582640, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-  m_PrefabInstance: {fileID: 6304674220767224357}
+  m_PrefabInstance: {fileID: 2926137758354685451}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -926,8 +934,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf595dbafa854b0498949f5c14f31bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &8897786410358676480 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-  m_PrefabInstance: {fileID: 6304674220767224357}
-  m_PrefabAsset: {fileID: 0}

@@ -48,6 +48,8 @@ public abstract class GunData : ScriptableObject
     [HideInInspector]
     public bool isReloading;
 
+    protected int bulletPoolKey;
+
     #endregion
 
 
@@ -58,12 +60,14 @@ public abstract class GunData : ScriptableObject
         bulletsLoaded = magazineSize;
         isReloading = false;
         actuallyShooting = false;
+
+        bulletPoolKey = bullet.GetComponent<IPoolable>().PoolKey;
     }
 
 
-    public abstract void Fire(Bullet bullet);
+    public abstract int Fire(ObjectPooler bulletPool, float damageModifier, float spreadModifier, int penetrationModifier);
 
-    public abstract bool CheckIfCanFire(float fireRate);
+    public abstract bool CheckIfCanFire(float fireRateModifier);
 
 
     public virtual bool CheckAmmo()
@@ -85,30 +89,22 @@ public abstract class GunData : ScriptableObject
     }
 
 
-    public virtual void SpawnBullet(Bullet bullet)
-    {
-        bullet.gameObject.SetActive(true);
-
-        bulletsShot++;
-        bulletsLoaded--;
-    }
-
     // very simple weapon spread, just add a random offset to the bullet's Y position
-    public virtual Quaternion CalculateWeaponSpread(Quaternion spawnPointRotation, float spread)
+    public virtual Quaternion CalculateWeaponSpread(Quaternion spawnPointRotation, float spreadModifier)
     {
         // Calculate the spread angle
-        float spreadAngle = Random.Range(-spread, spread);
+        float spreadAngle = Random.Range(-bulletSpread * spreadModifier, bulletSpread * spreadModifier);
 
         return Quaternion.Euler(0f, 0f, spreadAngle) * spawnPointRotation;
     }
 
     #region Reloading
-    public virtual IEnumerator WaitReload(float reloadTime)
+    public virtual IEnumerator WaitReload(float reloadTimeModifier)
     {
         actuallyShooting = false;
         isReloading = true;
 
-        yield return new WaitForSeconds(reloadTime);
+        yield return new WaitForSeconds(totalReloadTime * reloadTimeModifier);
 
         RefillAmmo();
 

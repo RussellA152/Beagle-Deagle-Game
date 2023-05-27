@@ -8,7 +8,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
     [SerializeField]
     private PlayerEventSO playerEvents;
 
-    private IPlayerStatModifier playerStatModifierScript;
+    //private IPlayerStatModifier playerStatModifierScript;
 
     public GunData weaponData;
 
@@ -20,9 +20,34 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
     private float shootInput; // input for shooting
 
-    private IPoolable bulletPool;
+    //private IPoolable bulletPool;
 
     private float lastTimeShot;
+
+    [SerializeField, NonReorderable]
+    private List<DamageModifier> damageModifiers = new List<DamageModifier>(); // a bonus percentage applied to the gun's damage
+    [SerializeField, NonReorderable]
+    private List<PenetrationModifier> penetrationModifiers = new List<PenetrationModifier>();
+    [SerializeField, NonReorderable]
+    private List<SpreadModifier> spreadModifiers = new List<SpreadModifier>();
+    [SerializeField, NonReorderable]
+    private List<FireRateModifier> fireRateModifiers = new List<FireRateModifier>();
+    [SerializeField, NonReorderable]
+    private List<ReloadSpeedModifier> reloadSpeedModifiers = new List<ReloadSpeedModifier>();
+    [SerializeField, NonReorderable]
+    private List<AmmoLoadModifier> ammoLoadModifiers = new List<AmmoLoadModifier>();
+
+    private float bonusDamage = 1f;
+    private int bonusPenetration = 0;
+    private float bonusSpread = 1f;
+    private float bonusFireRate = 1f;
+    private float bonusReloadSpeed = 1f;
+    private float bonusAmmoLoad = 1f;
+
+    private void Start()
+    {
+        playerEvents.InvokeUpdateAmmoLoadedText(weaponData.bulletsLoaded);
+    }
 
     private void OnEnable()
     {
@@ -35,17 +60,18 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
         lastTimeShot += Time.deltaTime;
 
         // If the player has no ammo loaded into their weapon, begin reloading
-        if (weaponData.bulletsLoaded <= 0f)
+        // If the gun is not already reloading, begin a coroutine for the reload
+        if (weaponData.bulletsLoaded <= 0f && !weaponData.isReloading)
         {
-            Reload();
+            StartCoroutine(Reload());
             return;
         }
 
         // If player is holding down "fire" button, then attempt to shoot
         // Also check that the gun's fire rate is ready to shoot
-        if (shootInput > 0 && weaponData.CheckAmmo() && weaponData.CheckIfCanFire(weaponData.fireRate * playerStatModifierScript.GetAttackSpeedModifier()))
+        if (shootInput > 0 && weaponData.CheckAmmo() && weaponData.CheckIfCanFire(bonusFireRate))
         {
-            ShootGun();
+            Attack();
         }
         else
         {
@@ -58,79 +84,139 @@ public class Gun : MonoBehaviour, IGunDataUpdatable
 
     }
 
-    public void Reload() {
-        // If the gun is not already reloading, begin a coroutine for the reload
-        if (!weaponData.isReloading)
-            // The duration of the reload is the gunData's reloadTime * a reload speed modifier (this takes into account any items that affect the reload speed)
-            StartCoroutine(weaponData.WaitReload(weaponData.totalReloadTime * playerStatModifierScript.GetWeaponReloadSpeedModifier()));
+    public IEnumerator Reload()
+    {
+        // Wait until reload is finished
+        yield return StartCoroutine(weaponData.WaitReload(bonusReloadSpeed));
+
+        // Then call event that ammo has changed
+        playerEvents.InvokeUpdateAmmoLoadedText(weaponData.bulletsLoaded);
     }
 
     // Call reload function when the player presses the reload key
     public void OnReload(CallbackContext context)
     {
-        Reload();
+        StartCoroutine(Reload());
     }
 
     // Fetch a bullet from object pooler, then pass it into the GunData's Fire() method so it can shoot it
-    public void ShootGun()
+    public void Attack()
     {
         // The bullet will spawn at the barrel of the gun
         weaponData.bulletSpawnPoint = bulletSpawnPoint;
 
-        GameObject bullet;
+        // Player has shot their gun, so reset lastTimeShot to 0 seconds
+        lastTimeShot = 0f;
 
-        // Fetch a bullet from object pooler
-        bullet = ObjectPooler.instance.GetPooledObject(bulletPool.PoolKey);
+        int ammoLoaded = weaponData.Fire(ObjectPooler.instance, bonusDamage, bonusSpread, bonusPenetration);
 
-        if (bullet != null)
-        {
-            // Player has shot their gun, so reset lastTimeShot to 0 seconds
-            lastTimeShot = 0f;
-
-            Bullet projectile = bullet.GetComponent<Bullet>();
-
-            // Pass in the damage and penetration values of this gun, to the bullet being shot
-            // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
-            projectile.UpdateWeaponValues(weaponData.damagePerHit * playerStatModifierScript.GetDamageModifier(), weaponData.penetrationCount * playerStatModifierScript.GetPenetrationCountModifier());
-
-            // Giving the bullet its data (for the 'destroyTime' variable and 'trajectory' method)
-            projectile.UpdateProjectileData(weaponData.bulletData);
-       
-            // Set the position to be at the barrel of the gun
-            bullet.transform.position = bulletSpawnPoint.position;
-
-            // Apply the spread to the bullet's rotation
-            bullet.transform.rotation = weaponData.CalculateWeaponSpread(bulletSpawnPoint.rotation, weaponData.bulletSpread * playerStatModifierScript.GetWeaponSpreadModifier());
-
-            // Pass that bullet into the weaponData's fire function
-            weaponData.Fire(projectile);
-            
-        }
-        else
-        {
-            Debug.Log("Could not retrieve a bullet from object pool!");
-        }
+        playerEvents.InvokeUpdateAmmoLoadedText(ammoLoaded);
     }
 
     // Update the GunData scriptable object to a new one.
     // This can change many stats like damage, penetration, fireRate, appearance (sprite), and more.
     public void UpdateScriptableObject(GunData scriptableObject)
     {
+
         weaponData.bulletSpawnPoint = bulletSpawnPoint;
 
         weaponData = scriptableObject;
 
-        bulletPool = weaponData.bullet.GetComponent<IPoolable>();
+        //bulletPool = weaponData.bullet.GetComponent<IPoolable>();
+
+        weaponData.bulletsLoaded = Mathf.RoundToInt(weaponData.bulletsLoaded * bonusAmmoLoad);
 
         spriteRenderer.sprite = weaponData.sprite;
     }
 
-    public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
-    {
-       playerStatModifierScript = modifierScript;
-    }
+    //public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
+    //{
+    //playerStatModifierScript = modifierScript;
+    //}
+
     public float ReturnLastTimeShot()
     {
         return lastTimeShot;
     }
+
+    #region StatModifiers
+    public void AddDamageModifier(DamageModifier modifierToAdd)
+    {
+        damageModifiers.Add(modifierToAdd);
+        bonusDamage += modifierToAdd.bonusDamage;
+    }
+
+    public void RemoveDamageModifier(DamageModifier modifierToRemove)
+    {
+        damageModifiers.Remove(modifierToRemove);
+        bonusDamage -= modifierToRemove.bonusDamage;
+    }
+
+    public void AddPenetrationModifier(PenetrationModifier modifierToAdd)
+    {
+        penetrationModifiers.Add(modifierToAdd);
+        bonusPenetration += modifierToAdd.bonusPenetration;
+    }
+
+    public void RemovePenetrationModifier(PenetrationModifier modifierToRemove)
+    {
+        penetrationModifiers.Remove(modifierToRemove);
+        bonusPenetration -= modifierToRemove.bonusPenetration;
+    }
+
+    public void AddSpreadModifierModifier(SpreadModifier modifierToAdd)
+    {
+        spreadModifiers.Add(modifierToAdd);
+        bonusSpread += modifierToAdd.bonusSpread;
+    }
+
+    public void RemoveSpreadModifier(SpreadModifier modifierToRemove)
+    {
+        spreadModifiers.Remove(modifierToRemove);
+        bonusSpread -= modifierToRemove.bonusSpread;
+    }
+
+    public void AddFireRateModifier(FireRateModifier modifierToAdd)
+    {
+        fireRateModifiers.Add(modifierToAdd);
+        bonusFireRate += modifierToAdd.bonusFireRate;
+    }
+
+    public void RemoveFireRateModifier(FireRateModifier modifierToRemove)
+    {
+        fireRateModifiers.Remove(modifierToRemove);
+        bonusFireRate -= modifierToRemove.bonusFireRate;
+    }
+
+    public void AddReloadSpeedModifier(ReloadSpeedModifier modifierToAdd)
+    {
+        reloadSpeedModifiers.Add(modifierToAdd);
+        bonusReloadSpeed += modifierToAdd.bonusReloadSpeed;
+    }
+
+    public void RemoveReloadSpeedModifier(ReloadSpeedModifier modifierToRemove)
+    {
+        reloadSpeedModifiers.Remove(modifierToRemove);
+        bonusReloadSpeed-= modifierToRemove.bonusReloadSpeed;
+    }
+
+    public void AddAmmoLoadModifier(AmmoLoadModifier modifierToAdd)
+    {
+        ammoLoadModifiers.Add(modifierToAdd);
+        bonusAmmoLoad += modifierToAdd.bonusAmmoLoad;
+
+        // Give player's weapon this bonus ammo load (this is because bulletsLoaded is only inside of the SO)
+        // Refill the player's weapon before applying new ammo load
+        weaponData.RefillAmmo();
+        weaponData.bulletsLoaded = Mathf.RoundToInt(weaponData.bulletsLoaded * bonusAmmoLoad);
+        playerEvents.InvokeUpdateAmmoLoadedText(weaponData.bulletsLoaded);
+    }
+
+    public void RemoveAmmoLoadModifier(AmmoLoadModifier modifierToRemove)
+    {
+        ammoLoadModifiers.Remove(modifierToRemove);
+        bonusAmmoLoad -= modifierToRemove.bonusAmmoLoad;
+    }
+
+    #endregion
 }

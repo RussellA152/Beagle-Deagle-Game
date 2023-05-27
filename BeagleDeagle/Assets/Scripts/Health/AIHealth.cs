@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
 {
-    protected float currentHealth;
-    protected bool isDead;
+    private float currentHealth;
+    private bool isDead;
 
     [SerializeField]
-    protected EnemyData enemyData;
+    private EnemyData enemyData;
+
+    private float bonusMaxHealth = 1f; // a bonus percentage applied to the enemy's max health (Ex. 500 max health * 120%, would mean 120% extra max health)
+
+    [SerializeField, NonReorderable]
+    private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
 
     protected virtual void OnEnable()
     {
@@ -21,18 +26,14 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
         return currentHealth;
     }
 
-    //public virtual float GetMaxHealth()
-    //{
-    //    return enemyData.maxHealth;
-    //}
 
     // add or subtract from health count
     public virtual void ModifyHealth(float amount)
     {
         // if this health modification will exceed the max potential health, then just set the current health to max
-        if (currentHealth + amount > enemyData.maxHealth)
+        if (currentHealth + amount > enemyData.maxHealth * bonusMaxHealth)
         {
-            currentHealth = enemyData.maxHealth;
+            currentHealth = enemyData.maxHealth * bonusMaxHealth;
         }
 
         // if this health modification will drop the health to 0 or below, then call OnDeath()
@@ -62,11 +63,13 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
 
     public void AddMaxHealthModifier(MaxHealthModifier modifierToAdd)
     {
-        throw new System.NotImplementedException();
+        maxHealthModifiers.Add(modifierToAdd);
+        bonusMaxHealth += modifierToAdd.bonusMaxHealth;
     }
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
     {
-        throw new System.NotImplementedException();
+        maxHealthModifiers.Remove(modifierToRemove);
+        bonusMaxHealth -= modifierToRemove.bonusMaxHealth;
     }
 }

@@ -9,12 +9,14 @@ using UnityEngine.UI;
 /// </summary>
 public class TestHUD : MonoBehaviour
 {
+    [Header("Event Systems")]
     [SerializeField]
     private WaveBeginEventSO wavesBegan;
 
     [SerializeField]
     private PlayerEventSO playerEvents;
 
+    [Header("Text Fields")]
     [SerializeField]
     private TextMeshProUGUI ammoMagText;
 
