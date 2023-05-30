@@ -92,7 +92,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
 
     private void Update()
     {
-        agent.speed = enemyScriptableObject.movementSpeed;
+        //agent.speed = enemyScriptableObject.movementSpeed;
 
         inAttackRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.attackRange, enemyScriptableObject.attackLayer);
         inChaseRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.chaseRange, enemyScriptableObject.chaseLayer);
@@ -183,16 +183,44 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
 
     public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
     {
-        bonusSpeed += modifierToAdd.bonusMovementSpeed;
+        if (!movementSpeedModifiers.Contains(modifierToAdd))
+        {
+            movementSpeedModifiers.Add(modifierToAdd);
+            bonusSpeed += modifierToAdd.bonusMovementSpeed;
+        }
+        else
+        {
+            movementSpeedModifiers.Add(modifierToAdd);
+        }
 
-        agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
     }
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
-        bonusSpeed += modifierToRemove.bonusMovementSpeed;
 
-        agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
+        if (!modifierToRemove.appliedOnTriggerEnter)
+        {
+            int count = movementSpeedModifiers.FindAll(num => num == modifierToRemove).Count;
+
+            if (count > 1)
+            {
+                movementSpeedModifiers.Remove(modifierToRemove);
+                Debug.Log("Keep slow effect!");
+            }
+            else if (count == 1)
+            {
+                movementSpeedModifiers.Remove(modifierToRemove);
+                bonusSpeed -= modifierToRemove.bonusMovementSpeed;
+
+                Debug.Log("Remove slow effect permanently!");
+            }
+        }
+        else
+        {
+            movementSpeedModifiers.Remove(modifierToRemove);
+            bonusSpeed -= modifierToRemove.bonusMovementSpeed;
+        }
+
     }
 
     private void OnDrawGizmosSelected()

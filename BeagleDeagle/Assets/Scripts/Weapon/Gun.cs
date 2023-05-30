@@ -31,7 +31,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     [SerializeField, NonReorderable]
     private List<SpreadModifier> spreadModifiers = new List<SpreadModifier>();
     [SerializeField, NonReorderable]
-    private List<FireRateModifier> fireRateModifiers = new List<FireRateModifier>();
+    private List<AttackSpeedModifier> fireRateModifiers = new List<AttackSpeedModifier>();
     [SerializeField, NonReorderable]
     private List<ReloadSpeedModifier> reloadSpeedModifiers = new List<ReloadSpeedModifier>();
     [SerializeField, NonReorderable]
@@ -142,14 +142,42 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     #region StatModifiers
     public void AddDamageModifier(DamageModifier modifierToAdd)
     {
-        damageModifiers.Add(modifierToAdd);
-        bonusDamage += modifierToAdd.bonusDamage;
+        if (!damageModifiers.Contains(modifierToAdd))
+        {
+            damageModifiers.Add(modifierToAdd);
+            bonusDamage += modifierToAdd.bonusDamage;
+        }
+        else
+        {
+            damageModifiers.Add(modifierToAdd);
+        }
+
     }
 
     public void RemoveDamageModifier(DamageModifier modifierToRemove)
     {
-        damageModifiers.Remove(modifierToRemove);
-        bonusDamage -= modifierToRemove.bonusDamage;
+        if (!modifierToRemove.appliedOnTriggerEnter)
+        {
+            int count = damageModifiers.FindAll(num => num == modifierToRemove).Count;
+
+            if (count > 1)
+            {
+                damageModifiers.Remove(modifierToRemove);
+                Debug.Log("Keep slow effect!");
+            }
+            else if (count == 1)
+            {
+                damageModifiers.Remove(modifierToRemove);
+                bonusDamage -= modifierToRemove.bonusDamage;
+
+                Debug.Log("Remove slow effect permanently!");
+            }
+        }
+        else
+        {
+            damageModifiers.Remove(modifierToRemove);
+            bonusDamage -= modifierToRemove.bonusDamage;
+        }
     }
 
     public void AddPenetrationModifier(PenetrationModifier modifierToAdd)
@@ -176,16 +204,46 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         bonusSpread -= modifierToRemove.bonusSpread;
     }
 
-    public void AddFireRateModifier(FireRateModifier modifierToAdd)
+    public void AddAttackSpeedModifier(AttackSpeedModifier modifierToAdd)
     {
-        fireRateModifiers.Add(modifierToAdd);
-        bonusFireRate += modifierToAdd.bonusFireRate;
+        if (!fireRateModifiers.Contains(modifierToAdd))
+        {
+            fireRateModifiers.Add(modifierToAdd);
+            bonusFireRate += modifierToAdd.bonusAttackSpeed;
+        }
+        else
+        {
+            fireRateModifiers.Add(modifierToAdd);
+        }
+
     }
 
-    public void RemoveFireRateModifier(FireRateModifier modifierToRemove)
+    public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove)
     {
-        fireRateModifiers.Remove(modifierToRemove);
-        bonusFireRate -= modifierToRemove.bonusFireRate;
+
+        if (!modifierToRemove.appliedOnTriggerEnter)
+        {
+            int count = fireRateModifiers.FindAll(num => num == modifierToRemove).Count;
+
+            if (count > 1)
+            {
+                fireRateModifiers.Remove(modifierToRemove);
+                Debug.Log("Keep slow effect!");
+            }
+            else if (count == 1)
+            {
+                fireRateModifiers.Remove(modifierToRemove);
+                bonusFireRate -= modifierToRemove.bonusAttackSpeed;
+
+                Debug.Log("Remove slow effect permanently!");
+            }
+        }
+        else
+        {
+            fireRateModifiers.Remove(modifierToRemove);
+            bonusFireRate -= modifierToRemove.bonusAttackSpeed;
+        }
+
     }
 
     public void AddReloadSpeedModifier(ReloadSpeedModifier modifierToAdd)

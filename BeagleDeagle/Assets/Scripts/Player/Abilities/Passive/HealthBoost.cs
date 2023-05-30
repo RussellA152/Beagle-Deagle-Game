@@ -16,7 +16,7 @@ public class HealthBoost : PassiveAbilityData
         if (playerHealth != null)
         {
             // Option 1
-            playerHealth.AddMaxHealthModifier(new MaxHealthModifier(increaseAmount));
+            playerHealth.AddMaxHealthModifier(new MaxHealthModifier(this.name, increaseAmount));
 
         }
 

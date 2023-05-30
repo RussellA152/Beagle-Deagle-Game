@@ -11,13 +11,10 @@ public class SmokeBombUtility : UtilityAbilityData
     [SerializeField]
     private SmokeGrenade smokeGrenadeData;
 
-    [SerializeField]
-    private Vector3 offset;
-
     public override void ActivateUtility(GameObject player)
     {
         Debug.Log("Throw smoke grenade!");
-        //Instantiate(prefab, player.transform.position + offset, Quaternion.identity);
+        Instantiate(prefab, player.transform.position, Quaternion.identity);
         //prefab.GetComponent<Throwable>().UpdateThrowableData(smokeBombData);
     }
 }

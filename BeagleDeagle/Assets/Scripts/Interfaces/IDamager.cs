@@ -7,4 +7,8 @@ public interface IDamager
     public void AddDamageModifier(DamageModifier modifierToAdd);
 
     public void RemoveDamageModifier(DamageModifier modifierToRemove);
+
+    public void AddAttackSpeedModifier(AttackSpeedModifier modifierToAdd);
+
+    public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove);
 }

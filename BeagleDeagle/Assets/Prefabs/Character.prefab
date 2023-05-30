@@ -233,6 +233,7 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   passives:
   - {fileID: 11400000, guid: 05c221c08f911334ba6af2abfddb31cb, type: 2}
+  - {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}
   utility: {fileID: 11400000, guid: 2ae24b0ad22356d43b0a4f479c67cc1d, type: 2}
   utilityCooldownModifiers: []
   utilityUsesModifiers: []

@@ -15,5 +15,5 @@ MonoBehaviour:
   cooldown: 10
   maxUses: 2
   prefab: {fileID: 8164879991046117895, guid: cd6eec6d40152204db89a362109b5df2, type: 3}
-  smokeBombData: {fileID: 11400000, guid: 9cd35060c4c42eb409d72ceefca98f71, type: 2}
+  smokeGrenadeData: {fileID: 11400000, guid: f9b736858f8515e4881b5b31abb13121, type: 2}
   offset: {x: 5, y: 0, z: 0}

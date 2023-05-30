@@ -61,6 +61,8 @@ public class PlayerController : MonoBehaviour
         playerEvents.InvokeNewWeaponEvent(currentWeaponData);
 
         playerEvents.InvokeNewStatsEvent(currentPlayerData);
+
+        playerEvents.InvokeGivePlayerInputComponentEvent(playerInput);
     }
 
 

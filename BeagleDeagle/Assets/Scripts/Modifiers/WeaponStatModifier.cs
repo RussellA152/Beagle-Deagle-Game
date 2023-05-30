@@ -2,8 +2,11 @@
 [System.Serializable]
 public class DamageModifier
 {
+    public string modifierName;
     public float bonusDamage;
-    public DamageModifier(float damage)
+    public bool appliedOnTriggerEnter;
+
+    public DamageModifier(string name, float damage)
     {
         bonusDamage = damage;
     }
@@ -13,10 +16,13 @@ public class DamageModifier
 [System.Serializable]
 public class PenetrationModifier
 {
+    public string modifierName;
     public int bonusPenetration;
 
-    public PenetrationModifier(int penetration)
+
+    public PenetrationModifier(string name, int penetration)
     {
+        modifierName = name;
         bonusPenetration = penetration;
     }
 }
@@ -24,42 +30,54 @@ public class PenetrationModifier
 [System.Serializable]
 public class SpreadModifier
 {
+    public string modifierName;
     public float bonusSpread;
 
-    public SpreadModifier(float spread)
+    public SpreadModifier(string name, float spread)
     {
+        modifierName = name;
         bonusSpread = spread;
     }
 }
 [System.Serializable]
 public class ReloadSpeedModifier
 {
+    public string modifierName;
     public float bonusReloadSpeed;
 
-    public ReloadSpeedModifier(float reloadSpeed)
+    public ReloadSpeedModifier(string name, float reloadSpeed)
     {
+        modifierName = name;
         bonusReloadSpeed = reloadSpeed;
     }
 }
 
 [System.Serializable]
-public class FireRateModifier
+public class AttackSpeedModifier
 {
-    public float bonusFireRate;
+    public string modifierName;
+    public float bonusAttackSpeed;
+    public bool appliedOnTriggerEnter;
 
-    public FireRateModifier(float fireRate)
+    public AttackSpeedModifier(string name, float attackSpeed, bool isAppliedOnTriggerEnter)
     {
-        bonusFireRate = fireRate;
+        modifierName = name;
+        bonusAttackSpeed = attackSpeed;
+        appliedOnTriggerEnter = isAppliedOnTriggerEnter;
+
+
     }
 }
 
 [System.Serializable]
 public class AmmoLoadModifier
 {
+    public string modifierName;
     public float bonusAmmoLoad;
 
-    public AmmoLoadModifier(float ammoLoad)
+    public AmmoLoadModifier(string name, float ammoLoad)
     {
+        modifierName = name;
         bonusAmmoLoad = ammoLoad;
     }
 }

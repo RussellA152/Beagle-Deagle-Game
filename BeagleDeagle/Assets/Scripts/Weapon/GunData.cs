@@ -75,7 +75,6 @@ public abstract class GunData : ScriptableObject
         // if player has no ammo in reserve... force them to reload, then return false
         if (bulletsLoaded <= 0f)
         {
-            Debug.Log("RELOADING!");
             return false;
         }
         // otherwise if they are not reloading, allow them to shoot
