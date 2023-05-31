@@ -75,6 +75,6 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
     {
         maxHealthModifiers.Remove(modifierToRemove);
-        bonusMaxHealth -= modifierToRemove.bonusMaxHealth;
+        bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
     }
 }

@@ -120,13 +120,13 @@ public class Abilities : MonoBehaviour
     public void RegisterUtilityCooldownModifier(UtilityCooldownModifier modifierToAdd)
     {
         utilityCooldownModifiers.Add(modifierToAdd);
-        bonusUtilityCooldown += modifierToAdd.bonusUtilityCooldown;
+        bonusUtilityCooldown += (bonusUtilityCooldown * modifierToAdd.bonusUtilityCooldown);
     }
 
     public void DeregisterUtilityCooldownModifier(UtilityCooldownModifier modifierToRemove)
     {
         utilityCooldownModifiers.Remove(modifierToRemove);
-        bonusUtilityCooldown -= modifierToRemove.bonusUtilityCooldown;
+        bonusUtilityCooldown = bonusUtilityCooldown / (1 + modifierToRemove.bonusUtilityCooldown);
     }
 
     public void RegisterUtilityUsesModifier(UtilityUsesModifier modifierToAdd)

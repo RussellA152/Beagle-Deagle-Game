@@ -1,9 +1,7 @@
 [System.Serializable]
-public class UtilityUsesModifier
+public class UtilityUsesModifier: Modifier
 {
-    public string modifierName;
     public int bonusUtilityUses;
-
     public UtilityUsesModifier(string name, int uses)
     {
         modifierName = name;
@@ -12,11 +10,9 @@ public class UtilityUsesModifier
 }
 
 [System.Serializable]
-public class UtilityCooldownModifier
+public class UtilityCooldownModifier: Modifier
 {
-    public string modifierName;
     public float bonusUtilityCooldown;
-
     public UtilityCooldownModifier(string name, float cooldown)
     {
         modifierName = name;

@@ -1,25 +1,19 @@
-
 [System.Serializable]
-public class DamageModifier
+public class DamageModifier: Modifier
 {
-    public string modifierName;
     public float bonusDamage;
-    public bool appliedOnTriggerEnter;
-
     public DamageModifier(string name, float damage)
     {
+        modifierName = name;
         bonusDamage = damage;
     }
 
 }
 
 [System.Serializable]
-public class PenetrationModifier
+public class PenetrationModifier: Modifier
 {
-    public string modifierName;
     public int bonusPenetration;
-
-
     public PenetrationModifier(string name, int penetration)
     {
         modifierName = name;
@@ -28,11 +22,9 @@ public class PenetrationModifier
 }
 
 [System.Serializable]
-public class SpreadModifier
+public class SpreadModifier: Modifier
 {
-    public string modifierName;
     public float bonusSpread;
-
     public SpreadModifier(string name, float spread)
     {
         modifierName = name;
@@ -40,11 +32,9 @@ public class SpreadModifier
     }
 }
 [System.Serializable]
-public class ReloadSpeedModifier
+public class ReloadSpeedModifier: Modifier
 {
-    public string modifierName;
     public float bonusReloadSpeed;
-
     public ReloadSpeedModifier(string name, float reloadSpeed)
     {
         modifierName = name;
@@ -53,28 +43,21 @@ public class ReloadSpeedModifier
 }
 
 [System.Serializable]
-public class AttackSpeedModifier
+public class AttackSpeedModifier: Modifier
 {
-    public string modifierName;
     public float bonusAttackSpeed;
-    public bool appliedOnTriggerEnter;
-
     public AttackSpeedModifier(string name, float attackSpeed, bool isAppliedOnTriggerEnter)
     {
         modifierName = name;
         bonusAttackSpeed = attackSpeed;
-        appliedOnTriggerEnter = isAppliedOnTriggerEnter;
-
 
     }
 }
 
 [System.Serializable]
-public class AmmoLoadModifier
+public class AmmoLoadModifier: Modifier
 {
-    public string modifierName;
     public float bonusAmmoLoad;
-
     public AmmoLoadModifier(string name, float ammoLoad)
     {
         modifierName = name;

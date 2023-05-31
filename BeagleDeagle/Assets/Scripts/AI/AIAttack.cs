@@ -60,83 +60,27 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
 
     public void AddDamageModifier(DamageModifier modifierToAdd)
     {
-        if (!damageModifiers.Contains(modifierToAdd))
-        {
-            damageModifiers.Add(modifierToAdd);
-            bonusDamage += modifierToAdd.bonusDamage;
-        }
-        else
-        {
-            damageModifiers.Add(modifierToAdd);
-        }
+        damageModifiers.Add(modifierToAdd);
+        bonusDamage += (bonusDamage * modifierToAdd.bonusDamage);
 
     }
 
     public void RemoveDamageModifier(DamageModifier modifierToRemove)
     {
-        if (!modifierToRemove.appliedOnTriggerEnter)
-        {
-            int count = damageModifiers.FindAll(num => num == modifierToRemove).Count;
-
-            if (count > 1)
-            {
-                damageModifiers.Remove(modifierToRemove);
-                Debug.Log("Keep slow effect!");
-            }
-            else if (count == 1)
-            {
-                damageModifiers.Remove(modifierToRemove);
-                bonusDamage -= modifierToRemove.bonusDamage;
-
-                Debug.Log("Remove slow effect permanently!");
-            }
-        }
-        else
-        {
-            damageModifiers.Remove(modifierToRemove);
-            bonusDamage -= modifierToRemove.bonusDamage;
-        }
+        damageModifiers.Remove(modifierToRemove);
+        bonusDamage /= (1 + modifierToRemove.bonusDamage);
     }
 
     public void AddAttackSpeedModifier(AttackSpeedModifier modifierToAdd)
     {
-        if (!attackSpeedModifiers.Contains(modifierToAdd))
-        {
-            attackSpeedModifiers.Add(modifierToAdd);
-            bonusAttackSpeed += modifierToAdd.bonusAttackSpeed;
-        }
-        else
-        {
-            attackSpeedModifiers.Add(modifierToAdd);
-        }
+        attackSpeedModifiers.Add(modifierToAdd);
+        bonusAttackSpeed += (bonusAttackSpeed * modifierToAdd.bonusAttackSpeed);
 
     }
 
     public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove)
     {
-
-        if (!modifierToRemove.appliedOnTriggerEnter)
-        {
-            int count = attackSpeedModifiers.FindAll(num => num == modifierToRemove).Count;
-
-            if (count > 1)
-            {
-                attackSpeedModifiers.Remove(modifierToRemove);
-                Debug.Log("Keep slow effect!");
-            }
-            else if (count == 1)
-            {
-                attackSpeedModifiers.Remove(modifierToRemove);
-                bonusAttackSpeed -= modifierToRemove.bonusAttackSpeed;
-
-                Debug.Log("Remove slow effect permanently!");
-            }
-        }
-        else
-        {
-            attackSpeedModifiers.Remove(modifierToRemove);
-            bonusAttackSpeed -= modifierToRemove.bonusAttackSpeed;
-        }
-        
+        attackSpeedModifiers.Remove(modifierToRemove);
+        bonusAttackSpeed /= (1 + modifierToRemove.bonusAttackSpeed);
     }
 }

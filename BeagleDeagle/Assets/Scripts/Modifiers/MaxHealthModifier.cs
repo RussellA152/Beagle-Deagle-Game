@@ -1,8 +1,6 @@
-
 [System.Serializable]
-public class MaxHealthModifier
+public class MaxHealthModifier: Modifier
 {
-    public string modifierName;
     public float bonusMaxHealth;
     public MaxHealthModifier(string name, float maxHealth)
     {

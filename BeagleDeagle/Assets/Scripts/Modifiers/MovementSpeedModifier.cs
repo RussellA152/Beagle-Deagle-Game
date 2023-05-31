@@ -1,15 +1,11 @@
-
 [System.Serializable]
-public class MovementSpeedModifier
+public class MovementSpeedModifier: Modifier
 {
-    public string modifierName;
     public float bonusMovementSpeed;
-    public bool appliedOnTriggerEnter;
-
     public MovementSpeedModifier(string name, float movementSpeed, bool isAppliedOnTriggerEnter)
     {
         modifierName = name;
         bonusMovementSpeed = movementSpeed;
-        appliedOnTriggerEnter = isAppliedOnTriggerEnter;
+        
     }
 }

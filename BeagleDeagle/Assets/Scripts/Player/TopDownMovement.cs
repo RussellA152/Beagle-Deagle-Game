@@ -232,43 +232,16 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
     {
-        if (!movementSpeedModifiers.Contains(modifierToAdd))
-        {
-            movementSpeedModifiers.Add(modifierToAdd);
-            bonusSpeed += modifierToAdd.bonusMovementSpeed;
-        }
-        else
-        {
-            movementSpeedModifiers.Add(modifierToAdd);
-        }
+        movementSpeedModifiers.Add(modifierToAdd);
+        bonusSpeed += bonusSpeed * modifierToAdd.bonusMovementSpeed;
 
     }
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
+        movementSpeedModifiers.Remove(modifierToRemove);
 
-        if (!modifierToRemove.appliedOnTriggerEnter)
-        {
-            int count = movementSpeedModifiers.FindAll(num => num == modifierToRemove).Count;
-
-            if (count > 1)
-            {
-                movementSpeedModifiers.Remove(modifierToRemove);
-                Debug.Log("Keep slow effect!");
-            }
-            else if (count == 1)
-            {
-                movementSpeedModifiers.Remove(modifierToRemove);
-                bonusSpeed -= modifierToRemove.bonusMovementSpeed;
-
-                Debug.Log("Remove slow effect permanently!");
-            }
-        }
-        else
-        {
-            movementSpeedModifiers.Remove(modifierToRemove);
-            bonusSpeed -= modifierToRemove.bonusMovementSpeed;
-        }
+        bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
 
     }
 
