@@ -46,7 +46,7 @@ public class ReloadSpeedModifier: Modifier
 public class AttackSpeedModifier: Modifier
 {
     public float bonusAttackSpeed;
-    public AttackSpeedModifier(string name, float attackSpeed, bool isAppliedOnTriggerEnter)
+    public AttackSpeedModifier(string name, float attackSpeed)
     {
         modifierName = name;
         bonusAttackSpeed = attackSpeed;

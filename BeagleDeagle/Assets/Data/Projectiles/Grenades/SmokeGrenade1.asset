@@ -18,12 +18,12 @@ MonoBehaviour:
   whatAreaOfEffectCollidesWith:
     serializedVersion: 2
     m_Bits: 256
-  areaSpreadX: 26.8
-  areaSpreadY: 36.2
+  areaSpreadX: 60
+  areaSpreadY: 70
   throwSpeed: 15
   duration: 5
   detonationTime: 1.5
-  movementSlowAmount: -0.4
+  movementSlowAmount: -0.5
   attackSlowAmount: 0.4
   layersToHit:
     serializedVersion: 2

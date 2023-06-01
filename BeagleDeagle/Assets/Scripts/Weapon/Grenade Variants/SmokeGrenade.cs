@@ -26,8 +26,8 @@ public class SmokeGrenade : GrenadeData
     {
         overlappingEnemies.Clear();
 
-        movementSlowEffect = new MovementSpeedModifier(this.name, movementSlowAmount, true);
-        attackSlowEffect = new AttackSpeedModifier(this.name, attackSlowAmount, true);
+        movementSlowEffect = new MovementSpeedModifier(this.name, movementSlowAmount);
+        attackSlowEffect = new AttackSpeedModifier(this.name, attackSlowAmount);
     }
 
     public override void Explode()

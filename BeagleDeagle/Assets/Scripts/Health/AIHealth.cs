@@ -26,11 +26,6 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
         return currentHealth;
     }
 
-    private void OnDisable()
-    {
-        // reset any max health modifiers applied to an enemy
-        bonusMaxHealth = 1f;
-    }
 
     // add or subtract from health count
     public virtual void ModifyHealth(float amount)
@@ -76,5 +71,12 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
     {
         maxHealthModifiers.Remove(modifierToRemove);
         bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
+    }
+
+    public void RevertAllModifiers()
+    {
+        // reset any max health modifiers applied to an enemy
+        bonusMaxHealth = 1f;
+        maxHealthModifiers.Clear();
     }
 }

@@ -84,12 +84,6 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
 
     }
 
-    private void OnDisable()
-    {
-        // reset any movement speed modifiers on the enemy
-        bonusSpeed = 1f;
-    }
-
     private void Update()
     {
         //agent.speed = enemyScriptableObject.movementSpeed;
@@ -165,6 +159,8 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
     {
         gameObject.SetActive(false);
 
+        RevertAllModifiersOnEnemy();
+
         Debug.Log("I am DEAD.");
     }
 
@@ -179,6 +175,20 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
             Debug.Log("ERROR WHEN UPDATING SCRIPTABLE OBJECT! PREFAB DID NOT UPDATE ITS SCRIPTABLE OBJECT");
         }
 
+    }
+
+    public void RevertAllModifiersOnEnemy()
+    {
+        // Reset any movement speed modifiers on the enemy
+        bonusSpeed = 1f;
+
+        // Remove speed modifiers from list when spawning
+        movementSpeedModifiers.Clear();
+        
+        // Remove all health modifiers inside of health script
+        healthScript.RevertAllModifiers();
+        // Remove all modifiers that affect attack stats within the attack script
+        attackScript.RevertAllModifiers();
     }
 
     public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
@@ -198,11 +208,11 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
 
     private void OnDrawGizmosSelected()
     {
-        // Draw a yellow sphere at the transform's position
+        // Draw a red sphere indicating how close enemy can be to attack player
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.attackRange);
 
-        // Draw a yellow sphere at the transform's position
+        // Draw a blue sphere indiciating how close enemy can be to follow player
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.chaseRange);
     }

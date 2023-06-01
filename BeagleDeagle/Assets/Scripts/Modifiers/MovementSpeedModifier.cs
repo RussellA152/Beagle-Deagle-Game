@@ -2,7 +2,7 @@
 public class MovementSpeedModifier: Modifier
 {
     public float bonusMovementSpeed;
-    public MovementSpeedModifier(string name, float movementSpeed, bool isAppliedOnTriggerEnter)
+    public MovementSpeedModifier(string name, float movementSpeed)
     {
         modifierName = name;
         bonusMovementSpeed = movementSpeed;

@@ -194,15 +194,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5abd305a43f324e995048b3e62ceea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   grenadeData: {fileID: 11400000, guid: f9b736858f8515e4881b5b31abb13121, type: 2}
   grenadeSprite: {fileID: 3520225513382146324}
   areaOfEffect: {fileID: 2163512494188207539}
   grenadeCollider: {fileID: 8164879991046117892}
-  playerInput: {fileID: 0}
   rb: {fileID: 7698205712678738710}
-  minThrowStrength: 10
-  maxThrowStrength: 20
 --- !u!70 &8164879991046117892
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

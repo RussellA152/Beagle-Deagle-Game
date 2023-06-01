@@ -129,11 +129,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         spriteRenderer.sprite = weaponData.sprite;
     }
 
-    //public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
-    //{
-    //playerStatModifierScript = modifierScript;
-    //}
-
     public float ReturnLastTimeShot()
     {
         return lastTimeShot;

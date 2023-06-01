@@ -28,7 +28,7 @@ public class RushBoost : PassiveAbilityData
     {
         speedIncreased = false;
 
-        movementSpeedModifier = new MovementSpeedModifier(this.name, speedBoost, false);
+        movementSpeedModifier = new MovementSpeedModifier(this.name, speedBoost);
 
     }
 

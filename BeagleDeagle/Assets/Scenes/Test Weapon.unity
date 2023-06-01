@@ -168,8 +168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4d65578b048da4d9011c57f21979f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeaponData: {fileID: 0}
-  playerTag: Player
 --- !u!114 &656232945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +186,63 @@ MonoBehaviour:
     shouldExpand: 0
     pooled: []
     poolKey: 0
+--- !u!1001 &1327944954
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3711592478197892580, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711592478197892580, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.530342
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711592478197892580, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.5371447
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711592478197892580, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711592478197892580, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711592478197892580, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711592478197892580, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711592478197892580, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711592478197892580, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711592478197892580, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711592478197892580, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711592478197892634, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+      propertyPath: m_Name
+      value: Base Projectile Zombie
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
 --- !u!1 &1512511680
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,7 +325,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1993905678
 PrefabInstance:

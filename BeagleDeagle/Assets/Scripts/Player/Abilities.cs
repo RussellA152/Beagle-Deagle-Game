@@ -42,6 +42,8 @@ public class Abilities : MonoBehaviour
         ActivateAllPassives();
         UtilityUsesModified();
         playerEvents.InvokeUtilityNameUpdatedEvent(utility.name);
+
+        //RemoveModifier(utilityUsesModifiers[0], utilityUsesModifiers);
     }
 
     public void ActivateAllPassives()
@@ -117,25 +119,25 @@ public class Abilities : MonoBehaviour
 
     }
 
-    public void RegisterUtilityCooldownModifier(UtilityCooldownModifier modifierToAdd)
+    public void AddUtilityCooldownModifier(UtilityCooldownModifier modifierToAdd)
     {
         utilityCooldownModifiers.Add(modifierToAdd);
         bonusUtilityCooldown += (bonusUtilityCooldown * modifierToAdd.bonusUtilityCooldown);
     }
 
-    public void DeregisterUtilityCooldownModifier(UtilityCooldownModifier modifierToRemove)
+    public void RemoveUtilityCooldownModifier(UtilityCooldownModifier modifierToRemove)
     {
         utilityCooldownModifiers.Remove(modifierToRemove);
-        bonusUtilityCooldown = bonusUtilityCooldown / (1 + modifierToRemove.bonusUtilityCooldown);
+        bonusUtilityCooldown /= (1 + modifierToRemove.bonusUtilityCooldown);
     }
 
-    public void RegisterUtilityUsesModifier(UtilityUsesModifier modifierToAdd)
+    public void AddUtilityUsesModifier(UtilityUsesModifier modifierToAdd)
     {
         utilityUsesModifiers.Add(modifierToAdd);
         bonusUtilityUses += modifierToAdd.bonusUtilityUses;
     }
 
-    public void DeregisterUtilityUsesModifier(UtilityUsesModifier modifierToRemove)
+    public void RemoveUtilityUsesModifier(UtilityUsesModifier modifierToRemove)
     {
         utilityUsesModifiers.Remove(modifierToRemove);
         bonusUtilityUses -= modifierToRemove.bonusUtilityUses;

@@ -26,12 +26,6 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
         canAttack = true;
     }
 
-    private void OnDisable()
-    {
-        // reset any modifiers on the enemy's damage
-        bonusDamage = 1f;
-    }
-
 
     public virtual void Attack(Transform target)
     {
@@ -51,6 +45,17 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
         yield return new WaitForSeconds(enemyScriptableObject.attackCooldown * bonusAttackSpeed);
 
         canAttack = true;
+    }
+
+    public void RevertAllModifiers()
+    {
+        // reset any modifiers on the enemy's damage
+        bonusDamage = 1f;
+        bonusAttackSpeed = 1f;
+
+        // remove modifiers from lists
+        damageModifiers.Clear();
+        attackSpeedModifiers.Clear();
     }
 
     public void UpdateScriptableObject(EnemyData scriptableObject)
