@@ -12,19 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352a4db3bf1300546bc273d98b806d10, type: 3}
   m_Name: SmokeGrenade1
   m_EditorClassIdentifier: 
-  whatGrenadeCollidesWith:
-    serializedVersion: 2
-    m_Bits: 256
   whatAreaOfEffectCollidesWith:
     serializedVersion: 2
     m_Bits: 256
-  areaSpreadX: 60
-  areaSpreadY: 70
-  throwSpeed: 15
+  areaSpreadX: 70
+  areaSpreadY: 85
+  throwSpeed: 18
   duration: 5
-  detonationTime: 1.5
-  movementSlowAmount: -0.5
-  attackSlowAmount: 0.4
-  layersToHit:
-    serializedVersion: 2
-    m_Bits: 0
+  detonationTime: 0.7
+  movementSlowAmount: -0.7
+  attackSlowAmount: 0.5

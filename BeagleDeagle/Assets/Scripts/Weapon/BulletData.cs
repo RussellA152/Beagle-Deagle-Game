@@ -5,7 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewProjectile", menuName = "ScriptableObjects/Projectile/RegularBullet")]
 public class BulletData : ScriptableObject
 {
-    public LayerMask whatDestroysBullet;
+    public LayerMask whatBulletCanPenetrate; // What will cause this bullet to destroy on collision (Ex. Bullet gets destroyed when hitting a wall)
+    public LayerMask whatBulletCanDamage; // What will this bullet attempt to damage? (Ex. Player shoots a bullet that damages enemies)
 
     public float bulletSpeed = 15f;
 

@@ -13,9 +13,6 @@ public class SmokeGrenade : GrenadeData
     [SerializeField]
     private float attackSlowAmount; // A positive value representing how much to increase the enemy's attack cooldown by (%)
 
-    [SerializeField]
-    private LayerMask layersToHit;
-
     private Dictionary<GameObject, int> overlappingEnemies = new Dictionary<GameObject, int>(); // Key: The enemy inside of the smoke grenade's trigger collider
                                                                                                 // Value: The number of smoke grenade trigger colliders that the enemy is inside of
 

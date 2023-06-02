@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7588949015637170743}
   - component: {fileID: 8940368012436791252}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 4722336087555608957}
   - component: {fileID: 8164879991046117892}
   - component: {fileID: 7698205712678738710}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}

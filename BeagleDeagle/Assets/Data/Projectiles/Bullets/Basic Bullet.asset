@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07722f2d6885d2443b2ab1ac364212ca, type: 3}
   m_Name: Basic Bullet
   m_EditorClassIdentifier: 
-  whatDestroysBullet:
+  whatBulletCanPenetrate:
+    serializedVersion: 2
+    m_Bits: 3063
+  whatBulletCanDamage:
     serializedVersion: 2
     m_Bits: 256
   bulletSpeed: 70

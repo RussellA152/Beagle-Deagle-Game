@@ -245,6 +245,11 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     }
 
+    public Vector2 ReturnPlayerDirection()
+    {
+        return rotationInput;
+    }
+
     #endregion
 
 

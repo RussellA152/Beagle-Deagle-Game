@@ -50,16 +50,25 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // If this bullet hits what its allowed to damage
-        if ((bulletData.whatDestroysBullet.value & (1 << collision.gameObject.layer)) > 0)
+        // If this bullet hits what its allowed to
+        if ((bulletData.whatBulletCanPenetrate.value & (1 << collision.gameObject.layer)) > 0)
         {
             Debug.Log("BULLET HIT " + collision.gameObject.name);
 
-            // Make target take damage
-            collision.gameObject.GetComponent<IHealth>().ModifyHealth(-1 * damagePerHit);
-
-
+            // Check if this bullet can damage that gameobject
+            if((bulletData.whatBulletCanDamage.value & (1 << collision.gameObject.layer)) > 0)
+            {
+                // Make target take damage
+                collision.gameObject.GetComponent<IHealth>().ModifyHealth(-1 * damagePerHit);
+            }
+            
+            // Penetrate through object
             Penetrate();
+        }
+        // If this bullet cannot penetrate a certain layer, do not allow collision or damage to occur
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
     // Call this function each time this bullet hits their target
