@@ -7,7 +7,7 @@ using UnityEngine.AI;
 /// Responsible for executing code based on enemy states. States include: Idle, Chasing, Attack, Stunned, and Death
 /// Override OnAttack() and OnChase() functions to make more complex attacks and movement.
 /// </summary>
-public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemyDataUpdatable where T: EnemyData
+public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdatable where T: EnemyData
 {
     [SerializeField]
     private int poolKey;
@@ -15,7 +15,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
     public T enemyScriptableObject;
 
     [SerializeField] // TEMPORARY, WILL NEED A DIFFERENT WAY TO REFERENCE THE PLAYER *
-    private Transform target; // who this enemy will chase and attack
+    private Transform target; // Who this enemy will chase and attack?
 
     [SerializeField]
     private NavMeshAgent agent;
@@ -27,21 +27,19 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
     private AIHealth healthScript;
 
     [SerializeField]
+    private AIMovement movementScript;
+
+    [SerializeField]
     private EnemyState state;
 
-    private bool inAttackRange; // is the player within this enemy's attack range?
-    private bool inChaseRange; // is the player within this enemy's chase/follow range?
+    private bool inAttackRange; // Is the player within this enemy's attack range?
+    private bool inChaseRange; // Is the player within this enemy's chase/follow range?
 
     public int PoolKey => poolKey;
 
-    [SerializeField, NonReorderable]
-    private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>(); // a list of modifiers being applied to this enemy's movement speed 
-
-    private float bonusSpeed = 1f;
-
     private void Awake()
     {
-        // prevents AI from spawning with incorrect rotation with NavMeshPlus (2D navmesh asset)
+        // Prevents AI from spawning with incorrect rotation with NavMeshPlus (2D navmesh asset)
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
@@ -49,22 +47,22 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
     // states that an enemy can be in
     enum EnemyState
     {
-        // not moving towards player or anyone
+        // Not moving towards player or anyone
         Idle,
 
-        // enemy is spawning behind barrier or from the ground
+        // Enemy is spawning behind barrier or from the ground
         Spawning,
 
-        // moving towards player
+        // Moving towards player
         Chase,
 
-        // player is in enemy's attack range
+        // Player is in enemy's attack range
         Attack,
 
-        // enemy was stunned and cannot move
+        // Enemy was stunned by player or weapon
         Stunned,
 
-        // enemy was killed
+        // Enemy was killed
         Death
 
     }
@@ -80,14 +78,10 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
     {
         state = EnemyState.Idle;
 
-        agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
-
     }
 
     private void Update()
     {
-        //agent.speed = enemyScriptableObject.movementSpeed;
-
         inAttackRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.attackRange, enemyScriptableObject.attackLayer);
         inChaseRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.chaseRange, enemyScriptableObject.chaseLayer);
 
@@ -105,6 +99,9 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
             case EnemyState.Attack:
                 OnAttack();
                 break;
+            case EnemyState.Stunned:
+                OnStun();
+                break;
             case EnemyState.Death:
                 OnDeath();
                 break;
@@ -119,19 +116,24 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
             return;
         }
 
+        if (movementScript.isStunned)
+        {
+            state = EnemyState.Stunned;
+            return;
+        }
 
-        // if the enemy is not dead or currently spawning...
+        // If the enemy is not dead or currently spawning...
         if (state != EnemyState.Death || state != EnemyState.Spawning)
         {
-            // in chase range, but not in attack range
+            // In chase range, but not in attack range
             if (inChaseRange && !inAttackRange)
                 state = EnemyState.Chase;
 
-            // in attack range
+            // In attack range
             else if (inChaseRange && inAttackRange)
                 state = EnemyState.Attack;
 
-            // go idle if not in chase range and not in attack range
+            // Go idle if not in chase range and not in attack range
             else if (!inChaseRange && !inAttackRange)
                 state = EnemyState.Idle;
         }
@@ -164,6 +166,11 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
         Debug.Log("I am DEAD.");
     }
 
+    protected virtual void OnStun()
+    {
+        agent.isStopped = true;
+    }
+
     public virtual void UpdateScriptableObject(EnemyData scriptableObject)
     {
         if (scriptableObject is T)
@@ -179,11 +186,8 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
 
     public void RevertAllModifiersOnEnemy()
     {
-        // Reset any movement speed modifiers on the enemy
-        bonusSpeed = 1f;
-
-        // Remove speed modifiers from list when spawning
-        movementSpeedModifiers.Clear();
+        // Remove all movement modifiers inside of movement script
+        movementScript.RevertAllModifiers();
         
         // Remove all health modifiers inside of health script
         healthScript.RevertAllModifiers();
@@ -191,20 +195,6 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IMovable, IEnemy
         attackScript.RevertAllModifiers();
     }
 
-    public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
-    {
-        movementSpeedModifiers.Add(modifierToAdd);
-        bonusSpeed += bonusSpeed * modifierToAdd.bonusMovementSpeed;
-        agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
-    }
-
-    public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
-    {
-        movementSpeedModifiers.Remove(modifierToRemove);
-        bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
-
-        agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
-    }
 
     private void OnDrawGizmosSelected()
     {

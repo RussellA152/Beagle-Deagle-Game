@@ -8,19 +8,21 @@ public class Bullet : MonoBehaviour, IPoolable
 
     [SerializeField]
     private int poolKey;
-
-    public int PoolKey => poolKey; // return the pool key (anything that is IPoolable, must have a pool key)
+    public int PoolKey => poolKey; // Return the pool key (anything that is IPoolable, must have a pool key)
 
     [SerializeField]
     private Rigidbody2D rb;
 
+    [SerializeField]
+    private CapsuleCollider2D bulletCollider; // The collider of this bullet
+
     private Vector3 defaultRotation = new Vector3(0f, 0f, -90f);
 
-    private float damagePerHit; // the damage of the player's gun or enemy that shot this bullet
+    private float damagePerHit; // The damage of the player's gun or enemy that shot this bullet
 
-    private int penetrationCount; // the amount of penetration of the player's gun or enemy that shot this bullet
+    private int penetrationCount; // The amount of penetration of the player's gun or enemy that shot this bullet
 
-    private int amountPenetrated; // how many enemies has this bullet penetrated through?
+    private int amountPenetrated; // How many enemies has this bullet penetrated through?
 
     private void OnEnable()
     {   
@@ -31,9 +33,15 @@ public class Bullet : MonoBehaviour, IPoolable
         {
             // Start time for this bullet to disable
             StartCoroutine(DisableAfterTime());
+            
+            // Change the bullet's collider size to whatever the scriptable object has
+            bulletCollider.size = new Vector2(bulletData.sizeX, bulletData.sizeY);
+            // Change the bullet's collider direction to whatever the scriptable object has
+            bulletCollider.direction = bulletData.colliderDirection;
 
             // Apply the trajectory of this bullet (We probably could do this inside of the gameobject that spawns it?)
             bulletData.ApplyTrajectory(rb, transform);
+            Debug.Log("Was enabled!");
         }
     }
 
@@ -43,7 +51,10 @@ public class Bullet : MonoBehaviour, IPoolable
         transform.position = Vector2.zero;
         transform.rotation = Quaternion.Euler(defaultRotation);
 
-        // stop all coroutines when this bullet has been disabled
+        // Resetting capsule collider direction
+        bulletCollider.direction = CapsuleDirection2D.Vertical;
+
+        // Stop all coroutines when this bullet has been disabled
         StopAllCoroutines();
     }
 
@@ -53,23 +64,24 @@ public class Bullet : MonoBehaviour, IPoolable
         // If this bullet hits what its allowed to
         if ((bulletData.whatBulletCanPenetrate.value & (1 << collision.gameObject.layer)) > 0)
         {
-            Debug.Log("BULLET HIT " + collision.gameObject.name);
+            //Debug.Log("BULLET HIT " + collision.gameObject.name);
 
             // Check if this bullet can damage that gameobject
             if((bulletData.whatBulletCanDamage.value & (1 << collision.gameObject.layer)) > 0)
             {
-                // Make target take damage
-                collision.gameObject.GetComponent<IHealth>().ModifyHealth(-1 * damagePerHit);
+                bulletData.OnHit(collision, damagePerHit);
             }
             
             // Penetrate through object
             Penetrate();
         }
+
         // If this bullet cannot penetrate a certain layer, do not allow collision or damage to occur
-        else
-        {
-            gameObject.SetActive(false);
-        }
+        //else
+        //{
+        //    Debug.Log("Bullet hit non-collidable layer!");
+        //    gameObject.SetActive(false);
+        //}
     }
     // Call this function each time this bullet hits their target
     private void Penetrate()

@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 3711592478197892580}
   - component: {fileID: 3711592478197892581}
   - component: {fileID: -303412525181116962}
+  - component: {fileID: 7500669978799673356}
   - component: {fileID: 3711592478197892583}
   - component: {fileID: 3711592478197892578}
   - component: {fileID: 3711592478197892577}
   - component: {fileID: 3711592478197892576}
   - component: {fileID: 3711592478197892579}
-  - component: {fileID: 7521638371316340890}
   m_Layer: 8
   m_Name: Base Projectile Zombie
   m_TagString: Untagged
@@ -109,7 +109,23 @@ MonoBehaviour:
   agent: {fileID: 3711592478197892577}
   attackScript: {fileID: 3711592478197892583}
   healthScript: {fileID: 3711592478197892578}
+  movementScript: {fileID: 7500669978799673356}
   state: 0
+--- !u!114 &7500669978799673356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711592478197892634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93afc334c61cb6b459b611a4acf35ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 3711592478197892577}
+  enemyScriptableObject: {fileID: 11400000, guid: 17ec48660538d1548b6cb75719102a7a, type: 2}
+  movementSpeedModifiers: []
 --- !u!114 &3711592478197892583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +139,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScriptableObject: {fileID: 11400000, guid: 17ec48660538d1548b6cb75719102a7a, type: 2}
+  damageModifiers: []
+  attackSpeedModifiers: []
+  bonusAttackSpeed: 1
 --- !u!114 &3711592478197892578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 17ec48660538d1548b6cb75719102a7a, type: 2}
+  maxHealthModifiers: []
 --- !u!195 &3711592478197892577
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -205,15 +225,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &7521638371316340890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3711592478197892634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93e08ad0020a31d43b69d5ea6060aeeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

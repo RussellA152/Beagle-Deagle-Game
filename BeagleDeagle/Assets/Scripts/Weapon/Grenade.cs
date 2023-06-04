@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grenade : MonoBehaviour
+public class Grenade : MonoBehaviour, IPoolable
 {
     private GameObject player;
+
+    [SerializeField]
+    private int poolKey;
 
     [SerializeField]
     private GrenadeData grenadeData;
@@ -21,17 +24,10 @@ public class Grenade : MonoBehaviour
     [SerializeField]
     private Rigidbody2D rb;
 
+    public int PoolKey => poolKey; // Return the pool key (anything that is IPoolable, must have a pool key)
     private void OnEnable()
     {
-        // TEMPORARY? Need a reference to player to retrieve PlayerInput component
-        player = GameObject.FindGameObjectWithTag("Player");
-
         areaOfEffect.UpdateThrowableData(grenadeData);
-
-        Throw();
-
-        StartCoroutine(Detonate());
-
     }
 
     private void OnDisable()
@@ -46,10 +42,9 @@ public class Grenade : MonoBehaviour
         StopAllCoroutines();
     }
 
-    private void Throw()
+    public void ActivateGrenade(Vector2 aimDirection)
     {
-        Vector2 aimDirection = player.GetComponent<TopDownMovement>().ReturnPlayerDirection().normalized;
-        Debug.Log(aimDirection);
+        StartCoroutine(Detonate());
 
         // Rotate the grenade based on the aim direction
         float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
@@ -73,7 +68,6 @@ public class Grenade : MonoBehaviour
         grenadeData.Explode();
 
         grenadeCollider.enabled = false;
-
 
         yield return new WaitForSeconds(grenadeData.duration);
 

@@ -13,19 +13,19 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     public GunData weaponData;
 
     [SerializeField] 
-    private Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
+    private Transform bulletSpawnPoint; // Where does this bullet get shot from? (i.e the barrel)
 
     [SerializeField]
     private SpriteRenderer spriteRenderer;
 
-    private float shootInput; // input for shooting
+    private float shootInput; // Input for shooting
 
     //private IPoolable bulletPool;
 
     private float lastTimeShot;
 
     [SerializeField, NonReorderable]
-    private List<DamageModifier> damageModifiers = new List<DamageModifier>(); // a bonus percentage applied to the gun's damage
+    private List<DamageModifier> damageModifiers = new List<DamageModifier>(); // A bonus percentage applied to the gun's damage
     [SerializeField, NonReorderable]
     private List<PenetrationModifier> penetrationModifiers = new List<PenetrationModifier>();
     [SerializeField, NonReorderable]

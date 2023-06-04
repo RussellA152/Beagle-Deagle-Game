@@ -79,7 +79,8 @@ public class Abilities : MonoBehaviour
 
                 utilityUses--;
 
-                utility.ActivateUtility(gameObject);
+                // Pass in the object pool (to spawn objects like grenades and bullets), and the player gameobject
+                utility.ActivateUtility(ObjectPooler.instance, gameObject);
 
                 UtilityUsesModified();
 

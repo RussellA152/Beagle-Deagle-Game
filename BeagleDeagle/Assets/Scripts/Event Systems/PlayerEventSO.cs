@@ -9,8 +9,6 @@ using UnityEngine.InputSystem;
 [CreateAssetMenu(menuName = "GameEvent/PlayerEvents")]
 public class PlayerEventSO : ScriptableObject
 {
-    public event Action<IPlayerStatModifier> givePlayerStatModifierScriptEvent; // pass a reference to the player's modifier script (could be useful for gameObjects that need reference, but not attached to player)
-
     public event Action<PlayerInput> givePlayerInputComponentEvent; // pass a reference to the player's PlayerInput component (could be useful for gameObjects that need reference, but not attached to player)
 
     public event Action<float> currentHealthChangedEvent; // pass a reference to the player's current Health (used by HUD)
@@ -86,14 +84,6 @@ public class PlayerEventSO : ScriptableObject
         if (playerUtilityNameChangeEvent != null)
         {
             playerUtilityNameChangeEvent(name);
-        }
-    }
-
-    public void InvokeGivePlayerStatModifierScript(IPlayerStatModifier modifierScript)
-    {
-        if(givePlayerStatModifierScriptEvent != null)
-        {
-            givePlayerStatModifierScriptEvent(modifierScript);
         }
     }
 
