@@ -5,9 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewUtility", menuName = "ScriptableObjects/Ability/Utility/SmokeBomb")]
 public class SmokeBombUtility : UtilityAbilityData
 {
+    [Header("Prefab to Spawn")]
     [SerializeField]
     private GameObject prefab;
-
+    
+    [Header("Grenade Data")]
     [SerializeField]
     private SmokeGrenade smokeGrenadeData;
 
@@ -25,19 +27,30 @@ public class SmokeBombUtility : UtilityAbilityData
         // Fetch a grenade from the object pool
         GameObject grenade = objectPool.GetPooledObject(poolKey);
 
+        grenade = SpawnAtPlayerDirection(grenade, player);
+
+        grenade.SetActive(true);
+
+    }
+
+    public override GameObject SpawnAtPlayerDirection(GameObject objectToSpawn, GameObject player)
+    {
         // Find direction that player is looking in
         Vector2 aimDirection = player.GetComponent<TopDownMovement>().ReturnPlayerDirection().normalized;
 
-        Grenade grenadeComponent = grenade.GetComponent<Grenade>();
+        Grenade grenadeComponent = objectToSpawn.GetComponent<Grenade>();
 
         // Make grenade spawn at player's position
-        grenade.transform.position = player.transform.position;
+        objectToSpawn.transform.position = player.transform.position;
 
-        grenade.SetActive(true);
+        objectToSpawn.SetActive(true);
 
         grenadeComponent.UpdateThrowableData(smokeGrenadeData);
 
         // Throw grenade in the direction player is facing
         grenadeComponent.ActivateGrenade(aimDirection);
+
+        return objectToSpawn;
     }
 }
+

@@ -44,7 +44,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         agent.updateUpAxis = false;
     }
 
-    // states that an enemy can be in
+    // States that an enemy can be in
     enum EnemyState
     {
         // Not moving towards player or anyone
@@ -168,6 +168,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
 
     protected virtual void OnStun()
     {
+        agent.velocity = Vector2.zero;
         agent.isStopped = true;
     }
 
@@ -191,6 +192,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         
         // Remove all health modifiers inside of health script
         healthScript.RevertAllModifiers();
+
         // Remove all modifiers that affect attack stats within the attack script
         attackScript.RevertAllModifiers();
     }

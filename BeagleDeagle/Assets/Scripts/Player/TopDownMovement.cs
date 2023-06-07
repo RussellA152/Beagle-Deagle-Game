@@ -50,33 +50,23 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
-    //private void Awake()
-    //{
-    //    playerEvents.givePlayerStatModifierScriptEvent += UpdatePlayerStatsModifierScript;
-    //}
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    //private void OnDestroy()
-    //{
-    //    playerEvents.givePlayerStatModifierScriptEvent -= UpdatePlayerStatsModifierScript;
-    //}
-
     ///-///////////////////////////////////////////////////////////
     ///
-    private void Update()
-    {
-        UpdateMovementAnimation();
+    //private void Update()
+    //{
+        //UpdateMovementAnimation();
 
         //if (weapon.rotation.z >= Quaternion.Euler(0f, 0f, 90f).z || weapon.rotation.z <= Quaternion.Euler(0f,0f,-90f).z)
         //{
         //    Debug.Log("SWAP TO OTHER HAND!");
         //}
 
-    }
+    //}
 
     ///-///////////////////////////////////////////////////////////
     ///
@@ -121,8 +111,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
         Vector2 newLocation = center + (v * 1.5f);
 
-        //Vector2 newLocation = (Vector2)transform.position + (v * 1.5f);
-
         if (direction != Vector2.zero)
         {
             weapon.position = Vector2.Lerp(weapon.position, newLocation, 40 * Time.deltaTime);
@@ -166,18 +154,18 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     ///-///////////////////////////////////////////////////////////
     ///
-    void UpdateMovementAnimation()
-    {
-        //if (movementInput != Vector2.zero)
-        //{
-        //    playerAnimator.SetBool("isRunning", true);
-        //}
-        //else
-        //{
-        //    playerAnimator.SetBool("isRunning", false);
-        //}
+    //void UpdateMovementAnimation()
+    //{
+    //    if (movementInput != Vector2.zero)
+    //    {
+    //        playerAnimator.SetBool("isRunning", true);
+    //    }
+    //    else
+    //    {
+    //        playerAnimator.SetBool("isRunning", false);
+    //    }
 
-    }
+    //}
 
 
     #region ControllerCallbacks
@@ -224,11 +212,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     {
         playerData = scriptableObject;
     }
-
-    //public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
-    //{
-    //    playerStatModifierScript = modifierScript;
-    //}
 
     public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
     {

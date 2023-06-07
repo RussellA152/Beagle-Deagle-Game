@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewGrenade", menuName = "ScriptableObjects/Grenade/SmokeGrenade")]
 public class SmokeGrenade : GrenadeData
 {
+    [Header("Effects On Target")]
+
     [Range(0f, -1f)]
     [SerializeField]
     private float movementSlowAmount; // A positive value representing how much to decrease the enemy's movement speed by (%)

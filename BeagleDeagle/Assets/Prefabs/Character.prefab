@@ -386,6 +386,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: f1461120-ecb1-46fb-bf3f-63e63c7649e1
     m_ActionName: Player/Ultimate[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bf76172e-3b21-497f-b1dd-b74bacff6118
+    m_ActionName: Player/Throw[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -404,7 +408,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

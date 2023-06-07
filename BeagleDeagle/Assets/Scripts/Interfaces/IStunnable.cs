@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface IStunnable
 {
+    // Tell entity to get stunned (use coroutine to start timer)
     public void GetStunned(float duration);
+
 }

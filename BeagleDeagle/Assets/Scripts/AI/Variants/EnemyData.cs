@@ -8,17 +8,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewEnemy", menuName = "ScriptableObjects/CharacterData/EnemyData/RegularEnemy")]
 public class EnemyData : CharacterData
 {
-    public int attackDamage;
-
-    public float attackCooldown;
+    [Header("Damage")]
+    public int attackDamage; // How damage damage does this enemy apply to their target?
+    public float attackCooldown; // How long does it take (seconds) for this enemy to attack again?
 
     [Header("Line of Sight Values")]
-    public float attackRange; // how close does this enemy need to be to its target to do an attack?
-    public float chaseRange; // how close does this enemy need to be to its target to chase them?
+    public float attackRange; // How close does this enemy need to be to its target to do an attack?
+    public float chaseRange; // How close does this enemy need to be to its target to chase them?
 
     [Header("Who to Attack?")]
-    public LayerMask attackLayer; // what kind of layer does this enemy attack? (ex. Player)
+    public LayerMask attackLayer; // What kind of layer does this enemy attack? (ex. Player)
     [Header("Who to Chase?")]
-    public LayerMask chaseLayer; // what kind of layer does this enemy follow? (ex. Player)
+    public LayerMask chaseLayer; // What kind of layer does this enemy follow? (ex. Player)
 
 }

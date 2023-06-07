@@ -18,6 +18,8 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private Vector3 defaultRotation = new Vector3(0f, 0f, -90f);
 
+    private readonly HashSet<Transform> hitEnemies = new HashSet<Transform>(); // Don't let this bullet hit the same enemy twice (we track what this bullet hit in this HashSet)
+
     private float damagePerHit; // The damage of the player's gun or enemy that shot this bullet
 
     private int penetrationCount; // The amount of penetration of the player's gun or enemy that shot this bullet
@@ -25,14 +27,14 @@ public class Bullet : MonoBehaviour, IPoolable
     private int amountPenetrated; // How many enemies has this bullet penetrated through?
 
     private void OnEnable()
-    {   
-        // Reset number of penetration
-        amountPenetrated = 0;
-
-        if(bulletData != null)
+    {
+        
+        if (bulletData != null)
         {
             // Start time for this bullet to disable
             StartCoroutine(DisableAfterTime());
+
+            UpdateWeaponValues(bulletData.bulletDamage, bulletData.bulletPenetration);
             
             // Change the bullet's collider size to whatever the scriptable object has
             bulletCollider.size = new Vector2(bulletData.sizeX, bulletData.sizeY);
@@ -41,18 +43,27 @@ public class Bullet : MonoBehaviour, IPoolable
 
             // Apply the trajectory of this bullet (We probably could do this inside of the gameobject that spawns it?)
             bulletData.ApplyTrajectory(rb, transform);
-            Debug.Log("Was enabled!");
+            //Debug.Log("Was enabled!");
         }
     }
 
     private void OnDisable()
     {
+        hitEnemies.Clear();
+
         // Resetting rotation before applying spread
         transform.position = Vector2.zero;
         transform.rotation = Quaternion.Euler(defaultRotation);
 
         // Resetting capsule collider direction
         bulletCollider.direction = CapsuleDirection2D.Vertical;
+
+        // Reset number of penetration
+        amountPenetrated = 0;
+        penetrationCount = 0;
+
+        // Reset damage
+        damagePerHit = 0;
 
         // Stop all coroutines when this bullet has been disabled
         StopAllCoroutines();
@@ -61,28 +72,35 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // If this bullet already hit this enemy, then don't allow penetration or damage to occur
+        if (hitEnemies.Contains(collision.transform))
+        {
+            Debug.Log("Hit already!");
+            return;
+        }
+            
+
         // If this bullet hits what its allowed to
         if ((bulletData.whatBulletCanPenetrate.value & (1 << collision.gameObject.layer)) > 0)
         {
-            //Debug.Log("BULLET HIT " + collision.gameObject.name);
 
             // Check if this bullet can damage that gameobject
             if((bulletData.whatBulletCanDamage.value & (1 << collision.gameObject.layer)) > 0)
             {
-                bulletData.OnHit(collision, damagePerHit);
+                // Add this enemy to the list of hitEnemies
+                hitEnemies.Add(collision.transform);
+
+                Debug.Log(damagePerHit);
+
+                // Apply damage from both bullet and gun
+                bulletData.OnHit(rb, collision.gameObject, damagePerHit);
             }
             
             // Penetrate through object
             Penetrate();
         }
-
-        // If this bullet cannot penetrate a certain layer, do not allow collision or damage to occur
-        //else
-        //{
-        //    Debug.Log("Bullet hit non-collidable layer!");
-        //    gameObject.SetActive(false);
-        //}
     }
+
     // Call this function each time this bullet hits their target
     private void Penetrate()
     {
@@ -99,8 +117,10 @@ public class Bullet : MonoBehaviour, IPoolable
     // Update the damage and penetration values
     public void UpdateWeaponValues(float damage, int penetration)
     {
-        damagePerHit = damage;
-        penetrationCount = penetration;
+        Debug.Log(damage);
+        damagePerHit += damage;
+
+        penetrationCount += penetration;
     }
 
     // Update the bullet with its scriptable object (Contains trajectory logic and any special ability. e.g, Incinerating on hit)

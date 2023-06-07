@@ -8,8 +8,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     [SerializeField]
     private PlayerEventSO playerEvents;
 
-    //private IPlayerStatModifier playerStatModifierScript;
-
     public GunData weaponData;
 
     [SerializeField] 
@@ -19,8 +17,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     private SpriteRenderer spriteRenderer;
 
     private float shootInput; // Input for shooting
-
-    //private IPoolable bulletPool;
 
     private float lastTimeShot;
 
@@ -121,8 +117,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         weaponData.bulletSpawnPoint = bulletSpawnPoint;
 
         weaponData = scriptableObject;
-
-        //bulletPool = weaponData.bullet.GetComponent<IPoolable>();
 
         weaponData.bulletsLoaded = Mathf.RoundToInt(weaponData.bulletsLoaded * bonusAmmoLoad);
 

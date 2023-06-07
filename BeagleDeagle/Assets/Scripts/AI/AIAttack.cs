@@ -16,7 +16,6 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
 
     private float bonusDamage = 1f; // a bonus percentage applied to the enemy's attack damage
 
-    [SerializeField]
     private float bonusAttackSpeed = 1f; // a bonus percentage applied to the enemy's attack cooldown
 
     private bool canAttack = true;

@@ -10,9 +10,11 @@ public class CharacterData : ScriptableObject
 {
     public RuntimeAnimatorController animatorController;
 
+    [Header("Health")]
     [Range(1f, 2500f)]
     public float maxHealth;
 
+    [Header("Movement Speed")]
     [Range(0f, 50f)]
     public float movementSpeed;
 

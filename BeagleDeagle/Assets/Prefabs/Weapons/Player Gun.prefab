@@ -185,10 +185,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  playerComponentSO: {fileID: 11400000, guid: 80ec77a7d40103145b2eb3a11b5d6016, type: 2}
-  weaponData: {fileID: 11400000, guid: 13a42fb4f1b892d4db540aad15586b89, type: 2}
+  weaponData: {fileID: 11400000, guid: b502558acf37e514db04e7e0dae013d8, type: 2}
   bulletSpawnPoint: {fileID: 3172216759311910775}
   spriteRenderer: {fileID: 3172216759253909028}
+  damageModifiers: []
+  penetrationModifiers: []
+  spreadModifiers: []
+  fireRateModifiers: []
+  reloadSpeedModifiers: []
+  ammoLoadModifiers: []
 --- !u!1 &3172216759311910772
 GameObject:
   m_ObjectHideFlags: 0

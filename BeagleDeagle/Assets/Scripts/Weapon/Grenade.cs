@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Grenade : MonoBehaviour, IPoolable
 {
-    private GameObject player;
-
     [SerializeField]
     private int poolKey;
 

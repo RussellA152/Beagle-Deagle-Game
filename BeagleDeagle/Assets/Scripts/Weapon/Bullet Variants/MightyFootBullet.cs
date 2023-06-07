@@ -1,35 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "NewProjectile", menuName = "ScriptableObjects/Projectile/MightyFootBullet")]
 public class MightyFootBullet : BulletData
 {
-    [Range(0f, 500f)]
-    public float damagePerHit; // How much damage does this bullet do?
-
-    [Range(0f, 100f)]
-    public int numEnemiesCanHit; // How many enemies can this bullet hit?
-
+    [Header("Stun Effect")]
     [Range(0f, 30f)]
     public float stunDuration; // How long will the enemy be stunned when hit by this?
 
-    public override void ApplyTrajectory(Rigidbody2D rb, Transform transform)
-    {
-        rb.velocity = transform.right * bulletSpeed;
+    [Header("Knockback Power")]
+    public Vector2 knockbackForce;
 
-    }
-
-    public override void OnHit(Collider2D collision, float damage)
+    public override void OnHit(Rigidbody2D bulletRb, GameObject objectHit, float damage)
     {
         // Make target take damage
-        collision.gameObject.GetComponent<IHealth>().ModifyHealth(-1 * damage);
+        base.OnHit(bulletRb, objectHit, damage);
+        
+        // Stun the enemy for a certain amount of seconds
+        objectHit.GetComponent<IStunnable>().GetStunned(stunDuration);
 
-        collision.gameObject.GetComponent<IStunnable>().GetStunned(stunDuration);
+        Vector2 knockbackDirection = bulletRb.velocity.normalized;
+        objectHit.GetComponent<IKnockBackable>().ApplyKnockback(knockbackDirection, knockbackForce);
 
-        // TESTING ADD FORCE
-        collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(250f,100f));
     }
-
-
 }
