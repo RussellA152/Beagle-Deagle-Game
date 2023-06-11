@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewWeapon", menuName = "ScriptableObjects/Weapon")]
-public abstract class GunData : ScriptableObject
+[CreateAssetMenu(fileName = "NewWeapon", menuName = "ScriptableObjects/Weapon/Gun")]
+public class GunData : ScriptableObject
 {
     public Sprite sprite;
 
@@ -31,6 +31,8 @@ public abstract class GunData : ScriptableObject
     [Header("Penetration")]
     [Range(1f, 50f)]
     public int penetrationCount; // how many enemies can this gun's bullet pass through?
+
+    private float lastFireTime;
 
     #region hiddenProperties
 
@@ -62,12 +64,67 @@ public abstract class GunData : ScriptableObject
         actuallyShooting = false;
 
         bulletPoolKey = bullet.GetComponent<IPoolable>().PoolKey;
+
+        lastFireTime = 0f;
     }
 
 
-    public abstract int Fire(ObjectPooler bulletPool, float damageModifier, float spreadModifier, int penetrationModifier);
+    public virtual int Fire(ObjectPooler bulletPool, float damageModifier, float spreadModifier, int penetrationModifier)
+    {
+        Debug.Log("Fired as: " + this.name);
+        GameObject bullet;
 
-    public abstract bool CheckIfCanFire(float fireRateModifier);
+        // Fetch a bullet from object pooler
+        bullet = bulletPool.GetPooledObject(bulletPoolKey);
+
+        if (bullet != null)
+        {
+
+            Bullet projectile = bullet.GetComponent<Bullet>();
+
+            // Pass in the damage and penetration values of this gun, to the bullet being shot
+            // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
+            projectile.UpdateWeaponValues(damagePerHit * damageModifier, penetrationCount + penetrationModifier);
+
+            // Giving the bullet its data (for the 'destroyTime' variable and 'trajectory' method)
+            projectile.UpdateProjectileData(bulletData);
+
+            // Set the position to be at the barrel of the gun
+            bullet.transform.position = bulletSpawnPoint.position;
+
+            // Apply the spread to the bullet's rotation
+            bullet.transform.rotation = CalculateWeaponSpread(bulletSpawnPoint.rotation, bulletSpread * spreadModifier);
+
+            bullet.gameObject.SetActive(true);
+
+            bulletsShot++;
+            bulletsLoaded--;
+
+            lastFireTime = Time.time;
+
+            return bulletsLoaded;
+
+        }
+        else
+        {
+            lastFireTime = Time.time;
+            Debug.Log("Could not retrieve a bullet from object pool!");
+            return 0;
+        }
+    }
+
+    public virtual bool CheckIfCanFire(float fireRateModifier)
+    {
+        if (Time.time - lastFireTime > 1f / fireRate * fireRateModifier)
+        {
+            return true;
+
+        }
+        else
+        {
+            return false;
+        }
+    }
 
 
     public virtual bool CheckAmmo()
@@ -84,6 +141,7 @@ public abstract class GunData : ScriptableObject
             actuallyShooting = true;
             return true;
         }
+
         return false;
     }
 

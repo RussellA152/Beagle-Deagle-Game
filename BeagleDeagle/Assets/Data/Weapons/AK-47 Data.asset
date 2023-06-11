@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2109b6e7d0cc82a4b9930663f6f65a0d, type: 3}
   m_Name: AK-47 Data
   m_EditorClassIdentifier: 
-  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   sprite: {fileID: 21300000, guid: 17fa84703485d314b8d6b5216987d4b1, type: 3}
   damagePerHit: 90
   fireRate: 6
@@ -20,10 +19,10 @@ MonoBehaviour:
   totalReloadTime: 3
   bullet: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   bulletData: {fileID: 11400000, guid: b09a69db01fe5e149b338ea65d81f7c9, type: 2}
-  bulletSpread: 5
+  bulletSpread: 3.5
   penetrationCount: 1
-  bulletsShot: 0
-  bulletsLoaded: 30
+  bulletsShot: 5
+  bulletsLoaded: 25
   bulletSpawnPoint: {fileID: 0}
   actuallyShooting: 0
   isReloading: 0

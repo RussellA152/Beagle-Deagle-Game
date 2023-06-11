@@ -47,7 +47,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
     private void OnEnable()
     {
-        UpdateScriptableObject(weaponData);
+        playerEvents.playerObtainedNewWeaponEvent += UpdateScriptableObject;
+
+        playerEvents.InvokeNewWeaponEvent(weaponData);
+        //UpdateScriptableObject(weaponData);
         
     }
 
@@ -113,6 +116,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     // This can change many stats like damage, penetration, fireRate, appearance (sprite), and more.
     public void UpdateScriptableObject(GunData scriptableObject)
     {
+        // Refill the ammo of the old weapon data before switching to new data
+        weaponData.RefillAmmo();
 
         weaponData.bulletSpawnPoint = bulletSpawnPoint;
 
@@ -121,6 +126,13 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         weaponData.bulletsLoaded = Mathf.RoundToInt(weaponData.bulletsLoaded * bonusAmmoLoad);
 
         spriteRenderer.sprite = weaponData.sprite;
+
+        // After swapping to new weapon, show the ammo on the HUD
+        playerEvents.InvokeUpdateAmmoLoadedText(weaponData.bulletsLoaded);
+    }
+    public GunData GetCurrentData()
+    {
+        return weaponData;
     }
 
     public float ReturnLastTimeShot()

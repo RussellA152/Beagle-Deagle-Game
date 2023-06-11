@@ -11,7 +11,7 @@ public class OffScreenSpawner : MonoBehaviour
 
     [Header("Camera Bounds (NEED TO SCALE SCALE WITH MAP SIZE)")]
     [SerializeField]
-    private Vector3 screenBounds = new Vector2(17, 17); // this is the boundaries of the camera, (17,17) is a good value, but this value NEEDS TO BE LOWER if the map is too small
+    private Vector3 screenBounds = new Vector2(17, 17); // This is the boundaries of the camera, (17,17) is a good value, but this value NEEDS TO BE LOWER if the map is too small
 
     [Header("The Map of This Level")]
     [SerializeField]
@@ -39,10 +39,10 @@ public class OffScreenSpawner : MonoBehaviour
     private float leftBounds; // starting point for the left portion of the off-screen
     private float bottomBounds; // starting point for the bottom portion of the off-screen
 
-    private bool playerCloseToLeftBoundary;
-    private bool playerCloseToRightBoundary;
-    private bool playerCloseToTopBoundary;
-    private bool playerCloseToBottomBoundary;
+    [SerializeField] private bool playerCloseToLeftBoundary;
+    [SerializeField] private bool playerCloseToRightBoundary;
+    [SerializeField] private bool playerCloseToTopBoundary;
+    [SerializeField] private bool playerCloseToBottomBoundary;
 
     private int topSpawnValue = 1; // if a value of 1 is chosen by the random number generated, then spawn the enemy above the player
     private int bottomSpawnValue = 2; // if a value of 2 is chosen by the random number generated, then spawn the enemy below the player

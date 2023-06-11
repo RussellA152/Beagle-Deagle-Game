@@ -15,20 +15,18 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
 
     [SerializeField]
+    private PlayerData currentPlayerData;
+
+    [SerializeField]
     private TopDownMovement movementScript;
 
     [SerializeField]
     private PlayerHealth healthScript;
 
-    [SerializeField]
-    private PlayerData currentPlayerData;
+    //[SerializeField]
+    //private Abilities playerAbilitiesScript;
 
     [SerializeField]
-    private Abilities playerAbilitiesScript;
-
-
-    [SerializeField]
-    //private GunWeapon<GunData> weaponEquipped;
     private GunData currentWeaponData;
 
     // states that an enemy can be in

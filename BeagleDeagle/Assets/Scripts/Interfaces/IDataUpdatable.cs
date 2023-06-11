@@ -7,5 +7,9 @@ using UnityEngine;
 // Or, an enemy might change its data to go from a regular zombie, to a slow fat zombie.
 public interface IDataUpdatable<T> where T: ScriptableObject
 {
+    // Give a new scriptable object data to the entity
     public void UpdateScriptableObject(T scriptableObject);
+
+    // Return the current scriptable object data on the entity
+    //public T GetCurrentData();
 }

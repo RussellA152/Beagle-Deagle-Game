@@ -38,6 +38,12 @@ public class TestHUD : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI utilityUsesText;
 
+    [SerializeField]
+    private TextMeshProUGUI ultimateNameText;
+
+    [SerializeField]
+    private TextMeshProUGUI ultimateCooldownText;
+
 
     private void OnEnable()
     {
@@ -52,6 +58,10 @@ public class TestHUD : MonoBehaviour
         playerEvents.playerUtilityNameChangeEvent += UpdateUtilityNameText;
 
         playerEvents.playerBulletsLoadedChangedEvent += UpdateAmmoText;
+
+        playerEvents.playerUltimateCooldownEvent += UpdateUltimateCooldownText;
+
+        playerEvents.playerUltimateNameChangeEvent += UpdateUltimateNameText;
 
     }
 
@@ -68,6 +78,10 @@ public class TestHUD : MonoBehaviour
         playerEvents.playerUtilityNameChangeEvent -= UpdateUtilityNameText;
 
         playerEvents.playerBulletsLoadedChangedEvent -= UpdateAmmoText;
+
+        playerEvents.playerUltimateCooldownEvent -= UpdateUltimateCooldownText;
+
+        playerEvents.playerUltimateNameChangeEvent -= UpdateUltimateNameText;
     }
 
     public void UpdateCurrentHealthText(float currentHealth)
@@ -98,6 +112,17 @@ public class TestHUD : MonoBehaviour
     public void UpdateUtilityNameText(string name)
     {
         utilityNameText.text = name;
+    }
+
+    public void UpdateUltimateCooldownText(float time)
+    {
+        ultimateCooldownText.text = ((int) time).ToString();
+    }
+
+    public void UpdateUltimateNameText(string name)
+    {
+        Debug.Log("Name is: " + name);
+        ultimateNameText.text = name;
     }
 
 }

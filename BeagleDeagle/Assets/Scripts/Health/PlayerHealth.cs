@@ -36,11 +36,6 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
         playerEvents.InvokeCurrentHealthEvent(currentHealth);
 
         playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * bonusMaxHealth);
-
-        //currentHealth = playerData.maxHealth * playerStatModifierScript.GetMaxHealthModifier();
-
-        //playerEvents.InvokeCurrentHealthEvent(currentHealth);
-        //playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * playerStatModifierScript.GetMaxHealthModifier());
     }
 
     public virtual float GetCurrentHealth()
@@ -77,8 +72,8 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
 
     public void MaxHealthWasModified()
     {
+        // Invoke max health event
         playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * bonusMaxHealth);
-        //invoke max health event
     }
 
     // do something when this entity dies
@@ -92,11 +87,6 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
         playerData = scriptableObject;
 
     }
-
-    //public void UpdatePlayerStatsModifierScript(IPlayerStatModifier modifierScript)
-    //{
-    //    playerStatModifierScript = modifierScript;
-    //}
 
     public void AddMaxHealthModifier(MaxHealthModifier modifierToAdd)
     {

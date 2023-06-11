@@ -26,5 +26,5 @@ MonoBehaviour:
   sizeX: 15
   sizeY: 30
   destroyTime: 3
-  stunDuration: 1.5
+  stunDuration: 3
   knockbackForce: {x: 35, y: 35}

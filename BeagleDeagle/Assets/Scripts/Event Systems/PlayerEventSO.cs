@@ -9,21 +9,25 @@ using UnityEngine.InputSystem;
 [CreateAssetMenu(menuName = "GameEvent/PlayerEvents")]
 public class PlayerEventSO : ScriptableObject
 {
-    public event Action<PlayerInput> givePlayerInputComponentEvent; // pass a reference to the player's PlayerInput component (could be useful for gameObjects that need reference, but not attached to player)
+    public event Action<PlayerInput> givePlayerInputComponentEvent; // Pass a reference to the player's PlayerInput component (could be useful for gameObjects that need reference, but not attached to player)
 
-    public event Action<float> currentHealthChangedEvent; // pass a reference to the player's current Health (used by HUD)
+    public event Action<float> currentHealthChangedEvent; // Pass a reference to the player's current Health (used by HUD)
 
-    public event Action<float> maxHealthChangedEvent; // pass a reference to the player's max Health (used by HUD)
+    public event Action<float> maxHealthChangedEvent; // Pass a reference to the player's max Health (used by HUD)
 
-    public event Action<GunData> playerObtainedNewWeaponEvent; // pass a reference to the player's current weapon data
+    public event Action<GunData> playerObtainedNewWeaponEvent; // Pass a reference to the player's current weapon data
 
-    public event Action<PlayerData> playerObtainedNewStatsEvent; // pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
+    public event Action<PlayerData> playerObtainedNewStatsEvent; // Pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
 
-    public event Action<int> playerBulletsLoadedChangedEvent; // pass a reference to the player's current ammo loaded (invoked when the player's ammo changes)
+    public event Action<int> playerBulletsLoadedChangedEvent; // Pass a reference to the player's current ammo loaded (invoked when the player's ammo changes)
 
-    public event Action<int> playerUtilityUsesUpdatedEvent; // pass a reference to the player's utility uses (invoked when the player uses their utility ability)
+    public event Action<int> playerUtilityUsesUpdatedEvent; // Pass a reference to the player's utility uses (invoked when the player uses their utility ability)
 
-    public event Action<string> playerUtilityNameChangeEvent; // pass a reference to the name of the player's utility ability (invoked when the player obtains a new utility ability. Mainly for debugging)
+    public event Action<string> playerUtilityNameChangeEvent; // Pass a reference to the name of the player's utility ability (invoked when the player obtains a new utility ability. Mainly for debugging)
+
+    public event Action<float> playerUltimateCooldownEvent; // Pass a reference to how much time is left on the player's ultimate ability cooldown
+
+    public event Action<string> playerUltimateNameChangeEvent; // Pass a reference to the name of the player's ultimate ability (invoked when the player obtains a new ultimate ability. Mainly for debugging)
 
     // When the player's max health changes
     // Pass around the max health value to whoever needs it (ex. HUD needs to display max health at all times)
@@ -66,12 +70,13 @@ public class PlayerEventSO : ScriptableObject
     {
         if(playerBulletsLoadedChangedEvent != null)
         {
+            //Debug.Log("Ammo is: " + ammoLoaded);
             playerBulletsLoadedChangedEvent(ammoLoaded);
         }
     }
 
     // When the player uses a utility ability, invoke this function.
-    // This should pass around the current number of uses that the player's currently utility has (ex. HUD needs to update utility uses display)
+    // This should Pass around the current number of uses that the player's currently utility has (ex. HUD needs to update utility uses display)
     public void InvokeUtilityUsesUpdatedEvent(int uses)
     {
         if(playerUtilityUsesUpdatedEvent != null)
@@ -92,6 +97,22 @@ public class PlayerEventSO : ScriptableObject
         if (givePlayerInputComponentEvent != null)
         {
             givePlayerInputComponentEvent(inputComponent);
+        }
+    }
+
+    public void InvokeUltimateAbilityCooldownEvent(float time)
+    {
+        if(playerUltimateCooldownEvent != null)
+        {
+            playerUltimateCooldownEvent(time);
+        }
+    }
+
+    public void InvokeUltimateNameUpdatedEvent(string name)
+    {
+        if(playerUltimateNameChangeEvent != null)
+        {
+            playerUltimateNameChangeEvent(name);
         }
     }
 
