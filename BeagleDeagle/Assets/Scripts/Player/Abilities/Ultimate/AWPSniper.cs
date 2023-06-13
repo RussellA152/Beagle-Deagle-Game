@@ -10,11 +10,9 @@ public class AWPSniper : UltimateAbilityData
     private PlayerEventSO playerEvents;
 
     [SerializeField]
-    private AWPSniperData awpGunData;
+    private AbilityGunData awpGunData; 
 
     private GunData previousWeaponData;
-
-    private bool playerHasAwp;
 
 
     private void OnEnable()
@@ -25,7 +23,6 @@ public class AWPSniper : UltimateAbilityData
 
         playerEvents.playerBulletsLoadedChangedEvent += CheckAmmoLoad;
 
-        playerHasAwp = false;
     }
 
     private void OnDisable()
@@ -39,7 +36,7 @@ public class AWPSniper : UltimateAbilityData
     {
         Debug.Log("Give player an awp!");
 
-        playerHasAwp = true;
+        isActive = true;
 
         player.GetComponentInChildren<IGunDataUpdatable>().UpdateScriptableObject(awpGunData);
 
@@ -48,7 +45,7 @@ public class AWPSniper : UltimateAbilityData
     public void CheckAmmoLoad(int ammoLoad)
     {
         // Only check ammo load when the gun that the player has is the AWP sniper
-        if(playerHasAwp && ammoLoad <= 0)
+        if(isActive && ammoLoad <= 0)
         {
             Debug.Log("AWP IS OUT OF AMMO!");
 
@@ -70,13 +67,13 @@ public class AWPSniper : UltimateAbilityData
     public void ReturnOriginalWeapon()
     {
         // Only give back original weapon if the player has the AWP
-        if (playerHasAwp)
+        if (isActive)
         {
             Debug.Log("REMOVE AWP FROM PLAYER!");
             // Give back the player their gun before they received the AWP sniper
             playerEvents.InvokeNewWeaponEvent(previousWeaponData);
 
-            playerHasAwp = false;
+            isActive = false;
 
         }
         
@@ -85,7 +82,7 @@ public class AWPSniper : UltimateAbilityData
     public override IEnumerator ActivationCooldown()
     {
         // If the player currently has the AWP sniper, then wait until the duration ends to give back their original weapon
-        if (playerHasAwp)
+        if (isActive)
         {
             yield return new WaitForSeconds(duration);
 

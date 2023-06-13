@@ -100,11 +100,11 @@ public class PlayerEventSO : ScriptableObject
         }
     }
 
-    public void InvokeUltimateAbilityCooldownEvent(float time)
+    public void InvokeUltimateAbilityCooldownEvent(float timeLeft)
     {
         if(playerUltimateCooldownEvent != null)
         {
-            playerUltimateCooldownEvent(time);
+            playerUltimateCooldownEvent(timeLeft);
         }
     }
 

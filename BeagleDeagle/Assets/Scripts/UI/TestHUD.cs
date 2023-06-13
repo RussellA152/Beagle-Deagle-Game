@@ -114,9 +114,9 @@ public class TestHUD : MonoBehaviour
         utilityNameText.text = name;
     }
 
-    public void UpdateUltimateCooldownText(float time)
+    public void UpdateUltimateCooldownText(float timeLeft)
     {
-        ultimateCooldownText.text = ((int) time).ToString();
+        ultimateCooldownText.text = ((int) timeLeft).ToString() + " seconds";
     }
 
     public void UpdateUltimateNameText(string name)

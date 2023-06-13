@@ -16,9 +16,8 @@ public class UltimateAbility : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log(ultimateData.name);
-
         StartCoroutine(WaitForUse());
+        StartCoroutine(CountDownCooldown());
     }
 
     private void Start()
@@ -45,6 +44,8 @@ public class UltimateAbility : MonoBehaviour
 
                 StartCoroutine(WaitForUse());
 
+                StartCoroutine(CountDownCooldown());
+
             }
         }
     }
@@ -56,7 +57,36 @@ public class UltimateAbility : MonoBehaviour
         yield return StartCoroutine(ultimateData.ActivationCooldown());
 
         canUseUltimate = true;
+
         Debug.Log("Can use ultimate now!");
     }
 
+    public IEnumerator CountDownCooldown()
+    {
+        // Wait until ultimate is no longer active to begin cooldown
+        while (ultimateData.isActive)
+            yield return null;
+
+        float timeLeft = ultimateData.cooldown; // Ex. 5 seconds until cooldown
+
+        // If the cooldown is 0 seconds or less, don't continue further
+        if (timeLeft <= 0f)
+            yield break;
+
+        playerEvents.InvokeUltimateAbilityCooldownEvent(timeLeft);
+
+        // Decrement the cooldown by 1 second
+        // Invoke event system that takes in the amount of time left on the ultimate's cooldown
+        while (timeLeft > 0f)
+        {
+            yield return new WaitForSeconds(1f);
+
+            timeLeft--;
+
+            playerEvents.InvokeUltimateAbilityCooldownEvent(timeLeft);
+        }
+
+        playerEvents.InvokeUltimateAbilityCooldownEvent(0f);
+    }
 }
+

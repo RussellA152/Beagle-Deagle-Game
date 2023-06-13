@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewWeapon", menuName = "ScriptableObjects/Weapon/Gun")]
-public class GunData : ScriptableObject
+//[CreateAssetMenu(fileName = "NewWeapon", menuName = "ScriptableObjects/Weapon/Gun")]
+public abstract class GunData : ScriptableObject
 {
     public Sprite sprite;
 
-    [Header("Damage")]
-    [Range(0, 1000f)]
-    public float damagePerHit;
+    //[Header("Damage")]
+    //[Range(0, 1000f)]
+    //public float damagePerHit;
 
     [Header("Fire Rate (Bullets Per Second)")]
     public float fireRate; // The number of bullets fired per second
@@ -71,7 +71,7 @@ public class GunData : ScriptableObject
 
     public virtual int Fire(ObjectPooler bulletPool, float damageModifier, float spreadModifier, int penetrationModifier)
     {
-        Debug.Log("Fired as: " + this.name);
+        //Debug.Log("Fired as: " + this.name);
         GameObject bullet;
 
         // Fetch a bullet from object pooler
@@ -84,7 +84,7 @@ public class GunData : ScriptableObject
 
             // Pass in the damage and penetration values of this gun, to the bullet being shot
             // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
-            projectile.UpdateWeaponValues(damagePerHit * damageModifier, penetrationCount + penetrationModifier);
+            projectile.UpdateWeaponValues(GetDamage() * damageModifier, penetrationCount + penetrationModifier);
 
             // Giving the bullet its data (for the 'destroyTime' variable and 'trajectory' method)
             projectile.UpdateProjectileData(bulletData);
@@ -154,6 +154,8 @@ public class GunData : ScriptableObject
 
         return Quaternion.Euler(0f, 0f, spreadAngle) * spawnPointRotation;
     }
+
+    public abstract float GetDamage();
 
     #region Reloading
     public virtual IEnumerator WaitReload(float reloadTimeModifier)

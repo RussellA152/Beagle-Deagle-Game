@@ -16,7 +16,7 @@ MonoBehaviour:
   bulletDamage: 20
   whatBulletCanPenetrate:
     serializedVersion: 2
-    m_Bits: 1280
+    m_Bits: 256
   whatBulletCanDamage:
     serializedVersion: 2
     m_Bits: 256
@@ -25,6 +25,6 @@ MonoBehaviour:
   colliderDirection: 0
   sizeX: 15
   sizeY: 30
-  destroyTime: 3
-  stunDuration: 3
+  destroyTime: 0.1
+  stunDuration: 4
   knockbackForce: {x: 35, y: 35}

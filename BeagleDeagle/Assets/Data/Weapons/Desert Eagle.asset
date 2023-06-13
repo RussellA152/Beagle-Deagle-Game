@@ -9,20 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2109b6e7d0cc82a4b9930663f6f65a0d, type: 3}
+  m_Script: {fileID: 11500000, guid: 93fa82c0c5345a341b21656b9e0770b4, type: 3}
   m_Name: Desert Eagle
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  damagePerHit: 145
-  fireRate: 4
+  fireRate: 5
   magazineSize: 8
-  totalReloadTime: 1.5
+  totalReloadTime: 2
   bullet: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   bulletData: {fileID: 11400000, guid: b09a69db01fe5e149b338ea65d81f7c9, type: 2}
   bulletSpread: 2
   penetrationCount: 2
-  bulletsShot: 2
-  bulletsLoaded: 6
+  bulletsShot: 0
+  bulletsLoaded: 15
   bulletSpawnPoint: {fileID: 0}
   actuallyShooting: 0
   isReloading: 0
+  damagePerHit: 150

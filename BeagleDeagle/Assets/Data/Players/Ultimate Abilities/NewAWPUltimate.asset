@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d5d101c15f1cc488adfb3c7686e907, type: 3}
   m_Name: NewAWPUltimate
   m_EditorClassIdentifier: 
-  cooldown: 5
-  duration: 3
+  abilityDamage: 200
+  cooldown: 15
+  duration: 6
+  isActive: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  awpGunData: {fileID: 11400000, guid: 0bb95bf06e578544d9ee8f66cff4e700, type: 2}
+  awpGunData: {fileID: 11400000, guid: fa8fd2ad5ce7d5741b9621155f0030b6, type: 2}

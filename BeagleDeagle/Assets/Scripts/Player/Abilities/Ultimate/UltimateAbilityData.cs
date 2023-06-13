@@ -9,13 +9,25 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewUltimate", menuName = "ScriptableObjects/Ability/Ultimate")]
 public abstract class UltimateAbilityData : ScriptableObject
 {
+    public float abilityDamage;
+
     [Header("Timers")]
     public float cooldown; // How long will it take for the player to be able to use this again?
 
     public float duration; // How long until this ultimate deactivates?
 
-    //[HideInInspector]
-    //public bool isActive;
+    [HideInInspector]
+    public bool isActive;
+
+    private void OnEnable()
+    {
+        isActive = false;
+    }
+
+    private void OnDisable()
+    {
+        isActive = false;
+    }
 
     public abstract void ActivateUltimate(GameObject player);
 
