@@ -17,11 +17,11 @@ MonoBehaviour:
   magazineSize: 8
   totalReloadTime: 2
   bullet: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
-  bulletData: {fileID: 11400000, guid: b09a69db01fe5e149b338ea65d81f7c9, type: 2}
+  bulletData: {fileID: 11400000, guid: 53a677edaa7382d42aa4369f8e9d17c5, type: 2}
   bulletSpread: 2
   penetrationCount: 2
   bulletsShot: 0
-  bulletsLoaded: 15
+  bulletsLoaded: 8
   bulletSpawnPoint: {fileID: 0}
   actuallyShooting: 0
   isReloading: 0

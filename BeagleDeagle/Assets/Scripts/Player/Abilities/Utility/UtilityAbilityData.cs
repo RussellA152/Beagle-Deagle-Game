@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewUtility", menuName = "ScriptableObjects/Ability/Utility")]
-public abstract class UtilityAbilityData : ScriptableObject
+//[CreateAssetMenu(fileName = "NewUtility", menuName = "ScriptableObjects/Ability/Utility")]
+public abstract class UtilityAbilityData : AbilityData
 {
-    public float abilityDamage;
+    //public float abilityDamage;
 
-    [Header("Usage")]
-    public float cooldown; // How long will it take for the player to be able to use this again?
+    //[Header("Usage")]
+    //public float cooldown; // How long will it take for the player to be able to use this again?
     public int maxUses; // How many times can this ability be used?
 
-    public float duration; // How long smoke grenade lasts for & life time for mighty foot bullet
+    //public float duration; // How long smoke grenade lasts for & life time for mighty foot bullet
 
     public abstract void ActivateUtility(ObjectPooler objectPool, GameObject player);
 

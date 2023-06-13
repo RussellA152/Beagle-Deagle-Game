@@ -7,7 +7,8 @@ public class RegularGunData : GunData
 {
     [Header("Damage")]
     [Range(0, 1000f)]
-    public float damagePerHit;
+    [SerializeField]
+    private float damagePerHit;
 
     public override float GetDamage()
     {

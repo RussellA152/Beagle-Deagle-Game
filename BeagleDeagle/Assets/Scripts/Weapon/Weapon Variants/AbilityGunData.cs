@@ -5,8 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewAbilityWeapon", menuName = "ScriptableObjects/Weapon/AbilityWeapon")]
 public class AbilityGunData : GunData
 {
+    [Header("Ability That Activates This")]
     [SerializeField]
-    private UltimateAbilityData abilityData;
+    private AbilityData abilityData;
 
     public override float GetDamage()
     {

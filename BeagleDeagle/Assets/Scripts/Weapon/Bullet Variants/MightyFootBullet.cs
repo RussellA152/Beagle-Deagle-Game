@@ -4,8 +4,11 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "NewProjectile", menuName = "ScriptableObjects/Projectile/MightyFootBullet")]
-public class MightyFootBullet : BulletData
+public class MightyFootBullet : AbilityBulletData
 {
+    [Range(0f, 150f)]
+    public int numEnemiesCanHit;
+
     [Header("Stun Effect")]
     [Range(0f, 30f)]
     public float stunDuration; // How long will the enemy be stunned when hit by this?
@@ -25,4 +28,5 @@ public class MightyFootBullet : BulletData
         objectHit.GetComponent<IKnockBackable>().ApplyKnockback(knockbackDirection, knockbackForce);
 
     }
+
 }

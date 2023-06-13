@@ -43,6 +43,8 @@ public class MightyFootUtility : UtilityAbilityData
         // Give MightyFoot the scriptable object it needs
         bulletComponent.UpdateProjectileData(mightyFootData);
 
+        bulletComponent.UpdateWeaponValues(abilityDamage, mightyFootData.numEnemiesCanHit);
+
         objectToSpawn.transform.position = (Vector2)player.transform.position + aimDirection; //+ new Vector2(offset.x, offset.y);
 
         float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;

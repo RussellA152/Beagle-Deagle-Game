@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour, IPoolable
             // Start time for this bullet to disable
             StartCoroutine(DisableAfterTime());
 
-            UpdateWeaponValues(bulletData.bulletDamage, bulletData.bulletPenetration);
+            //UpdateWeaponValues(bulletData.bulletDamage, bulletData.bulletPenetration);
             
             // Change the bullet's collider size to whatever the scriptable object has
             bulletCollider.size = new Vector2(bulletData.sizeX, bulletData.sizeY);
@@ -132,7 +132,7 @@ public class Bullet : MonoBehaviour, IPoolable
     // If this bullet exists for too long, disable it
     IEnumerator DisableAfterTime()
     {
-        yield return new WaitForSeconds(bulletData.destroyTime);
+        yield return new WaitForSeconds(bulletData.GetLifeTime());
         gameObject.SetActive(false);
     }
 

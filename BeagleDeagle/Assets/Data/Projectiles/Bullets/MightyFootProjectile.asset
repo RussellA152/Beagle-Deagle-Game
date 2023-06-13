@@ -13,18 +13,17 @@ MonoBehaviour:
   m_Name: MightyFootProjectile
   m_EditorClassIdentifier: 
   bulletSprite: {fileID: 0}
-  bulletDamage: 20
   whatBulletCanPenetrate:
     serializedVersion: 2
     m_Bits: 256
   whatBulletCanDamage:
     serializedVersion: 2
     m_Bits: 256
-  bulletPenetration: 50
   bulletSpeed: 30
   colliderDirection: 0
   sizeX: 15
   sizeY: 30
-  destroyTime: 0.1
+  abilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
+  numEnemiesCanHit: 150
   stunDuration: 4
   knockbackForce: {x: 35, y: 35}

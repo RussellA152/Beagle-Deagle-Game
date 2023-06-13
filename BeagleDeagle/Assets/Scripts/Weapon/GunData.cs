@@ -7,10 +7,6 @@ public abstract class GunData : ScriptableObject
 {
     public Sprite sprite;
 
-    //[Header("Damage")]
-    //[Range(0, 1000f)]
-    //public float damagePerHit;
-
     [Header("Fire Rate (Bullets Per Second)")]
     public float fireRate; // The number of bullets fired per second
 

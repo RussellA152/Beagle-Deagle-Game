@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96020e7a6cb01a4aa6ec56f58f84a3a, type: 3}
   m_Name: SmokeB
   m_EditorClassIdentifier: 
+  abilityDamage: 5
   cooldown: 2
-  maxUses: 1
   duration: 5
+  maxUses: 1
   prefab: {fileID: 8164879991046117895, guid: cd6eec6d40152204db89a362109b5df2, type: 3}
   smokeGrenadeData: {fileID: 11400000, guid: f9b736858f8515e4881b5b31abb13121, type: 2}
