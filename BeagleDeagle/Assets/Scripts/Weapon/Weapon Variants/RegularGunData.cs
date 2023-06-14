@@ -10,8 +10,25 @@ public class RegularGunData : GunData
     [SerializeField]
     private float damagePerHit;
 
+    [Header("Reloading")]
+    [SerializeField]
+    [Range(0f, 30f)]
+    private float totalReloadTime;
+
     public override float GetDamage()
     {
         return damagePerHit;
+    }
+
+    public override IEnumerator WaitReload(float reloadTimeModifier)
+    {
+        actuallyShooting = false;
+        isReloading = true;
+
+        yield return new WaitForSeconds(totalReloadTime * reloadTimeModifier);
+
+        RefillAmmo();
+
+        isReloading = false;
     }
 }

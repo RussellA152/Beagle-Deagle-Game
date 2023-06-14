@@ -43,7 +43,7 @@ public class SmokeBombUtility : UtilityAbilityData
         // Make grenade spawn at player's position
         objectToSpawn.transform.position = player.transform.position;
 
-        objectToSpawn.SetActive(true);
+        //objectToSpawn.SetActive(true);
 
         grenadeComponent.UpdateThrowableData(smokeGrenadeData);
 

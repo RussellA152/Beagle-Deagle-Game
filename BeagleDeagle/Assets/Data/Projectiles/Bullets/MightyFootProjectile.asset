@@ -23,7 +23,7 @@ MonoBehaviour:
   colliderDirection: 0
   sizeX: 15
   sizeY: 30
-  abilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
+  utilityAbilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
   numEnemiesCanHit: 150
   stunDuration: 4
   knockbackForce: {x: 35, y: 35}

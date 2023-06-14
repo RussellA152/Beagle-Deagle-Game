@@ -4,8 +4,12 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "NewProjectile", menuName = "ScriptableObjects/Projectile/MightyFootBullet")]
-public class MightyFootBullet : AbilityBulletData
+public class MightyFootBullet : BulletData
 {
+    [Header("Utility Ability That Activates This")]
+    [SerializeField]
+    private UtilityAbilityData utilityAbilityData;
+
     [Range(0f, 150f)]
     public int numEnemiesCanHit;
 
@@ -27,6 +31,11 @@ public class MightyFootBullet : AbilityBulletData
         Vector2 knockbackDirection = bulletRb.velocity.normalized;
         objectHit.GetComponent<IKnockBackable>().ApplyKnockback(knockbackDirection, knockbackForce);
 
+    }
+
+    public override float GetLifeTime()
+    {
+        return utilityAbilityData.duration;
     }
 
 }

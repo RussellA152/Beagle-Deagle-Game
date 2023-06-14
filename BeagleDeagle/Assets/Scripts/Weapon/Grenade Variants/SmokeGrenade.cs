@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewGrenade", menuName = "ScriptableObjects/Grenade/SmokeGrenade")]
+[CreateAssetMenu(fileName = "NewGrenade", menuName = "ScriptableObjects/Grenade/Smoke Grenade")]
 public class SmokeGrenade : GrenadeData
 {
-    [Header("Effects On Target")]
+    [SerializeField]
+    private SmokeBombUtility utilityAbilityData;
 
+    [Header("Effects On Target")]
     [Range(0f, -1f)]
     [SerializeField]
     private float movementSlowAmount; // A positive value representing how much to decrease the enemy's movement speed by (%)
@@ -69,5 +71,10 @@ public class SmokeGrenade : GrenadeData
                 collision.gameObject.GetComponent<IDamager>().RemoveAttackSpeedModifier(attackSlowEffect);
             }
         }
+    }
+
+    public override float GetDuration()
+    {
+        return utilityAbilityData.duration;
     }
 }

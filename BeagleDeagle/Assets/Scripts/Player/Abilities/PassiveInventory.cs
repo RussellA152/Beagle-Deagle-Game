@@ -30,6 +30,7 @@ public class PassiveInventory : MonoBehaviour
                 StartCoroutine(StartContinuousPassive(passive));
         }
     }
+
     // Continuous passives will activate many times, so we use a coroutine
     private IEnumerator StartContinuousPassive(PassiveAbilityData passive)
     {

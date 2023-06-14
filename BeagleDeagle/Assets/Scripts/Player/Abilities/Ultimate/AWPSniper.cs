@@ -10,7 +10,7 @@ public class AWPSniper : UltimateAbilityData
     private PlayerEventSO playerEvents;
 
     [SerializeField]
-    private AbilityGunData awpGunData; 
+    private AWPGunData awpGunData; 
 
     private GunData previousWeaponData;
 

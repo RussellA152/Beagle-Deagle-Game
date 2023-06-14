@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewProjectile", menuName = "ScriptableObjects/Projectile/RegularBullet")]
 public class RegularBulletData : BulletData
 {
+    [Header("Lifetime For This Grenade")]
     [SerializeField]
     private float duration;
 

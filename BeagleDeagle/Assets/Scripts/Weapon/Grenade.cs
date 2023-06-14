@@ -67,7 +67,7 @@ public class Grenade : MonoBehaviour, IPoolable
 
         grenadeCollider.enabled = false;
 
-        yield return new WaitForSeconds(grenadeData.duration);
+        yield return new WaitForSeconds(grenadeData.GetDuration());
 
         gameObject.SetActive(false);
         

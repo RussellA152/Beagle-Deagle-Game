@@ -19,9 +19,8 @@ MonoBehaviour:
   whatBulletCanDamage:
     serializedVersion: 2
     m_Bits: 256
-  bulletPenetration: 0
   bulletSpeed: 70
   colliderDirection: 0
-  sizeX: 5
-  sizeY: 5
+  sizeX: 3
+  sizeY: 3
   duration: 3

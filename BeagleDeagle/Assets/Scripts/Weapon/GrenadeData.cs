@@ -23,8 +23,9 @@ public abstract class GrenadeData : ScriptableObject
 
     [Header("Grenade Timers")]
 
-    [Range(0f, 100f)]
-    public float duration; // how long does the explosion, or AOE linger?
+    //[Range(0f, 100f)]
+    //public float duration; // how long does the explosion, or AOE linger?
+
     [Range(0f, 30f)]
     public float detonationTime; // how long until this grenade detonates?
 
@@ -33,5 +34,7 @@ public abstract class GrenadeData : ScriptableObject
     public abstract void OnAreaEnter(Collider2D collision);
 
     public abstract void OnAreaExit(Collider2D collision);
+
+    public abstract float GetDuration();
 
 }
