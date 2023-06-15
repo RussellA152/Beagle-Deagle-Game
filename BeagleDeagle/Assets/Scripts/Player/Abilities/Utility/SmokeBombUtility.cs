@@ -27,13 +27,11 @@ public class SmokeBombUtility : UtilityAbilityData
         // Fetch a grenade from the object pool
         GameObject grenade = objectPool.GetPooledObject(poolKey);
 
-        grenade = SpawnAtPlayerDirection(grenade, player);
-
-        grenade.SetActive(true);
+        SpawnAtPlayerDirection(grenade, player);
 
     }
 
-    public override GameObject SpawnAtPlayerDirection(GameObject objectToSpawn, GameObject player)
+    public override void SpawnAtPlayerDirection(GameObject objectToSpawn, GameObject player)
     {
         // Find direction that player is looking in
         Vector2 aimDirection = player.GetComponent<TopDownMovement>().ReturnPlayerDirection().normalized;
@@ -43,14 +41,12 @@ public class SmokeBombUtility : UtilityAbilityData
         // Make grenade spawn at player's position
         objectToSpawn.transform.position = player.transform.position;
 
-        //objectToSpawn.SetActive(true);
+        objectToSpawn.SetActive(true);
 
-        grenadeComponent.UpdateThrowableData(smokeGrenadeData);
+        grenadeComponent.UpdateExplosiveData(smokeGrenadeData);
 
         // Throw grenade in the direction player is facing
         grenadeComponent.ActivateGrenade(aimDirection);
-
-        return objectToSpawn;
     }
 }
 

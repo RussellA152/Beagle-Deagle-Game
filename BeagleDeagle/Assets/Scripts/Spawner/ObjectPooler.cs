@@ -19,7 +19,6 @@ public class ObjectPoolItem
 
 }
 
-
 public class ObjectPooler : MonoBehaviour
 {
     public static ObjectPooler instance;

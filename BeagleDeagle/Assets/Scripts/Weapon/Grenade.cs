@@ -2,36 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grenade : MonoBehaviour, IPoolable
+public class Grenade : Explosive<GrenadeData>, IPoolable
 {
     [SerializeField]
     private int poolKey;
 
     [SerializeField]
-    private GrenadeData grenadeData;
-
-    [SerializeField]
-    private GameObject grenadeSprite;
-
-    [SerializeField]
-    private GrenadeAreaOfEffect areaOfEffect;
+    private Rigidbody2D rb;
 
     [SerializeField]
     private Collider2D grenadeCollider;
 
-    [SerializeField]
-    private Rigidbody2D rb;
-
     public int PoolKey => poolKey; // Return the pool key (anything that is IPoolable, must have a pool key)
     private void OnEnable()
     {
-        areaOfEffect.UpdateThrowableData(grenadeData);
+        areaOfEffect.UpdateAOEData(explosiveData.aoeData);
     }
 
     private void OnDisable()
     {
         areaOfEffect.gameObject.SetActive(false);
-        grenadeSprite.SetActive(true);
+        sprite.SetActive(true);
 
         grenadeCollider.enabled = true;
 
@@ -49,25 +40,25 @@ public class Grenade : MonoBehaviour, IPoolable
         transform.rotation = Quaternion.Euler(0f, 0f, aimAngle);
 
         // Apply force to push the grenade forward in the aim direction
-        rb.AddForce(aimDirection * grenadeData.throwSpeed, ForceMode2D.Impulse);
+        rb.AddForce(aimDirection * explosiveData.throwSpeed, ForceMode2D.Impulse);
     }
 
     // Wait some time, then activate the grenade's explosion
     // Then after some more time, disable this grenade
-    public IEnumerator Detonate()
+    public override IEnumerator Detonate()
     {
-        yield return new WaitForSeconds(grenadeData.detonationTime);
+        yield return new WaitForSeconds(explosiveData.detonationTime);
 
-        grenadeSprite.SetActive(false);
+        sprite.SetActive(false);
         areaOfEffect.gameObject.SetActive(true);
 
         FreezePosition();
 
-        grenadeData.Explode();
+        explosiveData.Explode(transform.position);
 
         grenadeCollider.enabled = false;
 
-        yield return new WaitForSeconds(grenadeData.GetDuration());
+        yield return new WaitForSeconds(explosiveData.GetDuration());
 
         gameObject.SetActive(false);
         
@@ -83,8 +74,8 @@ public class Grenade : MonoBehaviour, IPoolable
     {
         rb.constraints = RigidbodyConstraints2D.None;
     }
-    public void UpdateThrowableData(GrenadeData scriptableObject)
+    public override void UpdateExplosiveData(GrenadeData scriptableObject)
     {
-        grenadeData = scriptableObject;
+        base.UpdateExplosiveData(scriptableObject);
     }
 }

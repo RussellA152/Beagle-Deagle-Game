@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7589004471731816067}
-  - component: {fileID: 2163512494188207539}
+  - component: {fileID: 6857167495458679442}
   - component: {fileID: 4418311646622141623}
   m_Layer: 0
   m_Name: Area of Effect
@@ -117,7 +117,7 @@ Transform:
   m_Father: {fileID: 8164879991046117893}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2163512494188207539
+--- !u!114 &6857167495458679442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5551387674908472178}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d42bf3a9ec7fed4298b6541f4d84881, type: 3}
+  m_Script: {fileID: 11500000, guid: 584fc77bd578a8944958f5d9ccb62ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   triggerCollider: {fileID: 4418311646622141623}
@@ -194,12 +194,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5abd305a43f324e995048b3e62ceea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 3520225513382146324}
+  explosiveData: {fileID: 11400000, guid: f9b736858f8515e4881b5b31abb13121, type: 2}
+  areaOfEffect: {fileID: 6857167495458679442}
   poolKey: 12
-  grenadeData: {fileID: 11400000, guid: f9b736858f8515e4881b5b31abb13121, type: 2}
-  grenadeSprite: {fileID: 3520225513382146324}
-  areaOfEffect: {fileID: 2163512494188207539}
-  grenadeCollider: {fileID: 8164879991046117892}
   rb: {fileID: 7698205712678738710}
+  grenadeCollider: {fileID: 8164879991046117892}
 --- !u!70 &8164879991046117892
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -12,13 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352a4db3bf1300546bc273d98b806d10, type: 3}
   m_Name: SmokeGrenade
   m_EditorClassIdentifier: 
-  whatAreaOfEffectCollidesWith:
-    serializedVersion: 2
-    m_Bits: 256
-  areaSpreadX: 70
-  areaSpreadY: 85
+  physicsMaterial: {fileID: 6200000, guid: c2cd37aec7ea54d4c8aa8beda6aec249, type: 2}
+  aoeData: {fileID: 11400000, guid: 16d483d683ce78b488ae05f259405749, type: 2}
+  explosiveRadius: 0
   throwSpeed: 18
   detonationTime: 0.7
   utilityAbilityData: {fileID: 11400000, guid: 2ae24b0ad22356d43b0a4f479c67cc1d, type: 2}
-  movementSlowAmount: -0.7
-  attackSlowAmount: 0.5

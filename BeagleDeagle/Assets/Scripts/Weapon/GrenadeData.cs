@@ -5,16 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewGrenade", menuName = "ScriptableObjects/Grenade")]
 public abstract class GrenadeData : ScriptableObject
 {
-    public LayerMask whatAreaOfEffectCollidesWith; // What should this grenade collide with (Ex. hitting and bouncing off a wall)
+    [SerializeField]
+    private PhysicsMaterial2D physicsMaterial; // What physics material should this grenade use? (Ex. Bouncy material)
 
-    //public float radius; // How big should this explosion be?
-
-    [Header("Size of the Area of Effect")]
-
-    [Range(0f, 100f)]
-    public float areaSpreadX;
-    [Range(0f, 100f)]
-    public float areaSpreadY;
+    public AreaOfEffectData aoeData;
 
     [Header("Speed of Grenade")]
 
@@ -22,18 +16,11 @@ public abstract class GrenadeData : ScriptableObject
     public float throwSpeed = 15f;
 
     [Header("Grenade Timers")]
-
-    //[Range(0f, 100f)]
-    //public float duration; // how long does the explosion, or AOE linger?
-
     [Range(0f, 30f)]
     public float detonationTime; // how long until this grenade detonates?
 
-    public abstract void Explode();
+    public abstract void Explode(Vector2 position);
 
-    public abstract void OnAreaEnter(Collider2D collision);
-
-    public abstract void OnAreaExit(Collider2D collision);
 
     public abstract float GetDuration();
 

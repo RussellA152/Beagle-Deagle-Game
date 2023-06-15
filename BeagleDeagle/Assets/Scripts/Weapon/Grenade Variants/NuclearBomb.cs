@@ -8,10 +8,19 @@ public class NuclearBomb : GrenadeData
     [SerializeField]
     private UltimateAbilityData ultimateAbilityData;
 
-    public override void Explode()
+    [Range(0f, 40f)]
+    public float explosiveRadius;
+
+    public override void Explode(Vector2 position)
     {
         // Big explosion hurt all enemies
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(Vector2.zero, areaSpreadX, 1 << LayerMask.NameToLayer("Enemy"));
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(position, explosiveRadius, 1 << LayerMask.NameToLayer("Enemy"));
+
+        // Loop through enemies and apply damage to them
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            enemy.gameObject.GetComponent<IHealth>().ModifyHealth(-1f * ultimateAbilityData.abilityDamage);
+        }
 
         Debug.Log("THIS HIT: " + hitEnemies.Length);
     }
@@ -22,13 +31,4 @@ public class NuclearBomb : GrenadeData
         return ultimateAbilityData.duration;
     }
 
-    public override void OnAreaEnter(Collider2D collision)
-    {
-        // radiation damage
-    }
-
-    public override void OnAreaExit(Collider2D collision)
-    {
-        // remove radiation?
-    }
 }

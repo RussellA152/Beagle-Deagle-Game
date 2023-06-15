@@ -27,13 +27,11 @@ public class MightyFootUtility : UtilityAbilityData
         GameObject mightyFootGameObject = objectPool.GetPooledObject(poolKey);
 
         // Spawn the mighty foot at the direction of the player
-        mightyFootGameObject = SpawnAtPlayerDirection(mightyFootGameObject, player);
+        SpawnAtPlayerDirection(mightyFootGameObject, player);
 
-        // Reenable the projectile
-        mightyFootGameObject.SetActive(true);
     }
 
-    public override GameObject SpawnAtPlayerDirection(GameObject objectToSpawn, GameObject player)
+    public override void SpawnAtPlayerDirection(GameObject objectToSpawn, GameObject player)
     {
         // Find direction that player is looking in
         Vector2 aimDirection = player.GetComponent<TopDownMovement>().ReturnPlayerDirection().normalized;
@@ -50,6 +48,9 @@ public class MightyFootUtility : UtilityAbilityData
         float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         objectToSpawn.transform.rotation = Quaternion.Euler(0f, 0f, aimAngle);
 
-        return objectToSpawn;
+        // Reenable the projectile
+        objectToSpawn.SetActive(true);
+
+        //return objectToSpawn;
     }
 }

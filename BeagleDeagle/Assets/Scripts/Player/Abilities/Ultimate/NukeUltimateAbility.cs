@@ -23,12 +23,9 @@ public class NukeUltimateAbility : UltimateAbilityData
 
         nuclearBomb.transform.position = player.transform.position;
 
-        nuclearBomb.GetComponent<Grenade>().UpdateThrowableData(nuclearBombData);
+        nuclearBomb.GetComponent<Nuke>().UpdateExplosiveData(nuclearBombData);
 
         nuclearBomb.SetActive(true);
-
-        nuclearBomb.GetComponent<Grenade>().ActivateGrenade(player.transform.position);
-        //nuclearBomb
     }
 
     public override IEnumerator ActivationCooldown()
