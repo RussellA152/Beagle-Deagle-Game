@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewGrenade", menuName = "ScriptableObjects/Grenade/Nuclear Bomb")]
+[CreateAssetMenu(fileName = "NewExplosive", menuName = "ScriptableObjects/Explosive/Nuclear Bomb")]
 public class NuclearBomb : GrenadeData
 {
     [SerializeField]
@@ -11,18 +11,17 @@ public class NuclearBomb : GrenadeData
     [Range(0f, 40f)]
     public float explosiveRadius;
 
-    public override void Explode(Vector2 position)
+    public override void Explode(Vector2 explosionSource)
     {
         // Big explosion hurt all enemies
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(position, explosiveRadius, 1 << LayerMask.NameToLayer("Enemy"));
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(explosionSource, explosiveRadius, 1 << LayerMask.NameToLayer("Enemy"));
 
-        // Loop through enemies and apply damage to them
-        foreach(Collider2D enemy in hitEnemies)
+        foreach (Collider2D targetCollider in hitEnemies)
         {
-            enemy.gameObject.GetComponent<IHealth>().ModifyHealth(-1f * ultimateAbilityData.abilityDamage);
-        }
+            if(!CheckObstruction(explosionSource, targetCollider))
+                targetCollider.gameObject.GetComponent<IHealth>().ModifyHealth(-1f * ultimateAbilityData.abilityDamage);
 
-        Debug.Log("THIS HIT: " + hitEnemies.Length);
+        }
     }
 
     public override float GetDuration()

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Nuke : Explosive<NuclearBomb>
 {
+    private bool explosionHappening = false;
+
     private void OnEnable()
     {
         areaOfEffect.UpdateAOEData(explosiveData.aoeData);
@@ -33,11 +35,14 @@ public class Nuke : Explosive<NuclearBomb>
         sprite.SetActive(false);
         areaOfEffect.gameObject.SetActive(true);
 
+        StartCoroutine(BrieflyShowGizmo());
+
         explosiveData.Explode(transform.position);
 
         yield return new WaitForSeconds(explosiveData.GetDuration());
 
-        gameObject.SetActive(false);
+        // We destroy the nuke instead of disabling it because we don't pool nukes at the moment
+        Destroy(gameObject);
 
     }
 
@@ -48,9 +53,20 @@ public class Nuke : Explosive<NuclearBomb>
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        if (explosionHappening)
+        {
+            Gizmos.color = Color.red;
 
-        Gizmos.DrawWireSphere(transform.position, explosiveData.explosiveRadius);
+            Gizmos.DrawWireSphere(transform.position, explosiveData.explosiveRadius);
+        }
+        
+    }
+
+    private IEnumerator BrieflyShowGizmo()
+    {
+        explosionHappening = true;
+        yield return new WaitForSeconds(0.5f);
+        explosionHappening = false;
     }
 
 }

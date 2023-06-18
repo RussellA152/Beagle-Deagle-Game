@@ -15,7 +15,7 @@ MonoBehaviour:
   whatAreaOfEffectCollidesWith:
     serializedVersion: 2
     m_Bits: 256
-  areaSpreadX: 70
+  areaSpreadX: 55
   areaSpreadY: 50
   movementSlowAmount: -0.7
   attackSlowAmount: 0.3

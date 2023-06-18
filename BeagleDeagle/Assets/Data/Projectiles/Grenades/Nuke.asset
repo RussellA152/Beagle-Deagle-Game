@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicsMaterial: {fileID: 0}
   aoeData: {fileID: 11400000, guid: 16d483d683ce78b488ae05f259405749, type: 2}
+  hitThroughWalls: 0
   throwSpeed: 0
   detonationTime: 3
   ultimateAbilityData: {fileID: 11400000, guid: 8d978ad8039192b42b0c5c89926fcb38, type: 2}
