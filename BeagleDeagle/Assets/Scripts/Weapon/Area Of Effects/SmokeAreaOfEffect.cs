@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewAreaOfEffect", menuName = "ScriptableObjects/Area of Effects/Slow Smoke")]
 public class SmokeAreaOfEffect : AreaOfEffectData
 {
+    public SmokeBombUtility smokeBombData;
+
     [Header("Effects On Target")]
     [Range(0f, -1f)]
     [SerializeField]
@@ -26,42 +28,16 @@ public class SmokeAreaOfEffect : AreaOfEffectData
         attackSlowEffect = new AttackSpeedModifier(this.name, attackSlowAmount);
     }
 
-    public override void OnAreaEnter(Collider2D targetCollider)
+    public override void AddEffectOnEnemies(Collider2D targetCollider)
     {
-        // When enemy enters the smoke grenade collider
-        if (!overlappingEnemies.ContainsKey(targetCollider.gameObject))
-        {
-            overlappingEnemies.Add(targetCollider.gameObject, 0);
-        }
-
-        // Increment overlappingEnemies by 1
-        overlappingEnemies[targetCollider.gameObject]++;
-
-        // Only apply slow effects for the first smoke grenade that the enemy walks into
-        if (overlappingEnemies[targetCollider.gameObject] == 1)
-        {
-            targetCollider.gameObject.GetComponent<IMovable>().AddMovementSpeedModifier(movementSlowEffect);
-            targetCollider.gameObject.GetComponent<IDamager>().AddAttackSpeedModifier(attackSlowEffect);
-        }
-
-        // Deal small damage to enemies that enter?
+        targetCollider.gameObject.GetComponent<IMovable>().AddMovementSpeedModifier(movementSlowEffect);
+        targetCollider.gameObject.GetComponent<IDamager>().AddAttackSpeedModifier(attackSlowEffect);
     }
 
-    public override void OnAreaExit(Collider2D targetCollider)
+    public override void RemoveEffectFromEnemies(Collider2D targetCollider)
     {
-        if (overlappingEnemies.ContainsKey(targetCollider.gameObject))
-        {
-            // Decrement overlappingEnemies by 1
-            overlappingEnemies[targetCollider.gameObject]--;
-
-            // When the enemy is no longer colliding with any smoke grenade trigger colliders, then remove the slow effects
-            // This ensures that the slow effect 
-            if (overlappingEnemies[targetCollider.gameObject] == 0)
-            {
-                overlappingEnemies.Remove(targetCollider.gameObject);
-                targetCollider.gameObject.GetComponent<IMovable>().RemoveMovementSpeedModifier(movementSlowEffect);
-                targetCollider.gameObject.GetComponent<IDamager>().RemoveAttackSpeedModifier(attackSlowEffect);
-            }
-        }
+        targetCollider.gameObject.GetComponent<IMovable>().RemoveMovementSpeedModifier(movementSlowEffect);
+        targetCollider.gameObject.GetComponent<IDamager>().RemoveAttackSpeedModifier(attackSlowEffect);
     }
+
 }

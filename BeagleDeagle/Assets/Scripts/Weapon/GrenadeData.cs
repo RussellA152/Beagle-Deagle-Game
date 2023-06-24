@@ -12,10 +12,9 @@ public abstract class GrenadeData : ScriptableObject
 
     public bool hitThroughWalls;
 
-    [Header("Speed of Grenade")]
-
-    [Range(0f, 100f)]
-    public float throwSpeed = 15f;
+    //[Header("Speed of Grenade")]
+    //[Range(0f, 100f)]
+    //public float throwSpeed = 15f;
 
     [Header("Grenade Timers")]
     [Range(0f, 30f)]

@@ -13,6 +13,10 @@ public class Grenade : Explosive<GrenadeData>, IPoolable
     [SerializeField]
     private Collider2D grenadeCollider;
 
+    [Range(0f, 100f)]
+    [SerializeField]
+    private float throwSpeed = 15f; // How fast this grenade throws towards enemies (inside of monobehaviour for now)
+
     public int PoolKey => poolKey; // Return the pool key (anything that is IPoolable, must have a pool key)
     private void OnEnable()
     {
@@ -40,7 +44,7 @@ public class Grenade : Explosive<GrenadeData>, IPoolable
         transform.rotation = Quaternion.Euler(0f, 0f, aimAngle);
 
         // Apply force to push the grenade forward in the aim direction
-        rb.AddForce(aimDirection * explosiveData.throwSpeed, ForceMode2D.Impulse);
+        rb.AddForce(aimDirection * throwSpeed, ForceMode2D.Impulse);
     }
 
     // Wait some time, then activate the grenade's explosion

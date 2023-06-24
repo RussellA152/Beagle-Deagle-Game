@@ -6,8 +6,6 @@ public abstract class AreaOfEffectData : ScriptableObject
 {
     public LayerMask whatAreaOfEffectCollidesWith; // What should this grenade collide with (Ex. hitting and bouncing off a wall)
 
-    //public bool hitThroughWalls;
-
     [Header("Size of the Area of Effect")]
 
     [Range(0f, 100f)]
@@ -23,9 +21,45 @@ public abstract class AreaOfEffectData : ScriptableObject
         overlappingEnemies.Clear();
     }
 
-    public abstract void OnAreaEnter(Collider2D targetCollider);
+    public virtual void OnAreaEnter(Collider2D targetCollider)
+    {
+        // When enemy enters the smoke grenade collider
+        if (!overlappingEnemies.ContainsKey(targetCollider.gameObject))
+        {
+            overlappingEnemies.Add(targetCollider.gameObject, 0);
+        }
 
-    public abstract void OnAreaExit(Collider2D targetCollider);
+        // Increment overlappingEnemies by 1
+        overlappingEnemies[targetCollider.gameObject]++;
+
+        // Only apply slow effects for the first smoke grenade that the enemy walks into
+        if (overlappingEnemies[targetCollider.gameObject] == 1)
+        {
+            AddEffectOnEnemies(targetCollider);
+        }
+
+    }
+
+    public virtual void OnAreaExit(Collider2D targetCollider)
+    {
+        if (overlappingEnemies.ContainsKey(targetCollider.gameObject))
+        {
+            // Decrement overlappingEnemies by 1
+            overlappingEnemies[targetCollider.gameObject]--;
+
+            // When the enemy is no longer colliding with any smoke grenade trigger colliders, then remove the slow effects
+            // This ensures that the slow effect 
+            if (overlappingEnemies[targetCollider.gameObject] == 0)
+            {
+                overlappingEnemies.Remove(targetCollider.gameObject);
+                RemoveEffectFromEnemies(targetCollider);
+            }
+        }
+    }
+
+    public abstract void AddEffectOnEnemies(Collider2D targetCollider);
+
+    public abstract void RemoveEffectFromEnemies(Collider2D targetCollider);
 
     //public bool CheckObstruction(Vector2 areaSource, Collider2D targetCollider)
     //{

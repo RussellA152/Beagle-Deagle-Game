@@ -21,10 +21,13 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
     [SerializeField, NonReorderable]
     private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
 
+    [SerializeField, NonReorderable]
+    private List<DamageOverTime> damageOverTimeEffects = new List<DamageOverTime>(); // All DOT's that have been applied to the player
+
     private void Start()
     {
         InitializeHealth();
-       
+
     }
 
     public void InitializeHealth()
@@ -98,5 +101,36 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
     {
         maxHealthModifiers.Remove(modifierToRemove);
         bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
+    }
+
+    public void AddDamageOverTime(DamageOverTime dotToAdd)
+    {
+        damageOverTimeEffects.Add(dotToAdd);
+
+        StartCoroutine(TakeDamageOverTime(dotToAdd));
+    }
+
+    public void RemoveDamageOverTime(DamageOverTime dotToRemove)
+    {
+        damageOverTimeEffects.Remove(dotToRemove);
+
+    }
+
+    public IEnumerator TakeDamageOverTime(DamageOverTime dot)
+    {
+        float ticks = dot.ticks;
+
+        while (ticks > 0)
+        {
+            // THIS ASSUMES WE ALWAYS DO DAMAGE! WILL CHANGE!
+            ModifyHealth(-1f * dot.damage);
+
+            yield return new WaitForSeconds(dot.tickInterval);
+
+            ticks--;
+        }
+
+        RemoveDamageOverTime(dot);
+
     }
 }

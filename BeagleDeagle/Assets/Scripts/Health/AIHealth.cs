@@ -15,6 +15,9 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
     [SerializeField, NonReorderable]
     private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
 
+    [SerializeField, NonReorderable]
+    private List<DamageOverTime> damageOverTimeEffects = new List<DamageOverTime>(); // All DOT's that have been applied to the enemy
+
     protected virtual void OnEnable()
     {
         isDead = false;
@@ -78,5 +81,35 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
         // reset any max health modifiers applied to an enemy
         bonusMaxHealth = 1f;
         maxHealthModifiers.Clear();
+    }
+
+    public void AddDamageOverTime(DamageOverTime dotToAdd)
+    {
+        damageOverTimeEffects.Add(dotToAdd);
+
+        StartCoroutine(TakeDamageOverTime(dotToAdd));
+    }
+
+    public void RemoveDamageOverTime(DamageOverTime dotToRemove)
+    {
+        damageOverTimeEffects.Remove(dotToRemove);
+
+    }
+
+    public IEnumerator TakeDamageOverTime(DamageOverTime dot)
+    {
+        float ticks = dot.ticks;
+
+        while(ticks > 0)
+        {
+            // THIS ASSUMES WE ALWAYS DO DAMAGE! WILL CHANGE!
+            ModifyHealth(-1f * dot.damage);
+
+            yield return new WaitForSeconds(dot.tickInterval);
+
+            ticks--;
+        }
+
+        RemoveDamageOverTime(dot);
     }
 }
