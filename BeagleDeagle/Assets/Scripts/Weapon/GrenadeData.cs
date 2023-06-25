@@ -12,13 +12,16 @@ public abstract class GrenadeData : ScriptableObject
 
     public bool hitThroughWalls;
 
-    //[Header("Speed of Grenade")]
-    //[Range(0f, 100f)]
-    //public float throwSpeed = 15f;
-
     [Header("Grenade Timers")]
     [Range(0f, 30f)]
     public float detonationTime; // how long until this grenade detonates?
+
+    private int wallLayerMask;
+
+    private void OnEnable()
+    {
+        wallLayerMask = LayerMask.GetMask("Wall");
+    }
 
     public virtual void Explode(Vector2 explosionSource)
     {
@@ -41,7 +44,7 @@ public abstract class GrenadeData : ScriptableObject
         float distance = direction.magnitude;
 
         // Exclude the target if there is an obstruction between the explosion source and the target
-        RaycastHit2D hit = Physics2D.Raycast(explosionSource, direction.normalized, distance, 1 << LayerMask.NameToLayer("Wall"));
+        RaycastHit2D hit = Physics2D.Raycast(explosionSource, direction.normalized, distance, wallLayerMask);
 
         if (hit.collider != null)
         {

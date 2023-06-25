@@ -59,13 +59,12 @@ public class Grenade : Explosive<GrenadeData>, IPoolable
 
         yield return new WaitForSeconds(explosiveData.detonationTime);
 
-
-        FreezePosition();
-
         sprite.SetActive(false);
 
         //particleAOE.SetActive(true);
         areaOfEffect.gameObject.SetActive(true);
+
+        FreezePosition();
 
         explosiveData.Explode(transform.position);
 

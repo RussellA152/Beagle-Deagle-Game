@@ -15,6 +15,9 @@ MonoBehaviour:
   whatAreaOfEffectCollidesWith:
     serializedVersion: 2
     m_Bits: 256
+  hitThroughWalls: 0
   areaSpreadX: 90
   areaSpreadY: 80
-  radiationDamage: 25
+  radiationDamage: 40
+  radiationTicks: 3
+  radiationTickInterval: 1

@@ -10,6 +10,12 @@ public class AreaOfEffect : MonoBehaviour
     private CapsuleCollider2D triggerCollider;
 
 
+    private void OnDestroy()
+    {
+        // Resetting the size of the trigger collider when destroyed
+        triggerCollider.size = new Vector2(1f, 1f);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // If this bullet hits what its allowed to damage

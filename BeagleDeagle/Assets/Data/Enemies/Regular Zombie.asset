@@ -18,7 +18,7 @@ MonoBehaviour:
   attackDamage: -50
   attackCooldown: 1.5
   attackRange: 2.5
-  chaseRange: 150
+  chaseRange: 100
   attackLayer:
     serializedVersion: 2
     m_Bits: 128

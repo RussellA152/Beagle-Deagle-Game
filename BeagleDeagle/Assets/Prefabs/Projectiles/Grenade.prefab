@@ -144,7 +144,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 70, y: 85}
+  m_Size: {x: 1, y: 1}
   m_Direction: 0
 --- !u!1 &8164879991046117895
 GameObject:
@@ -200,7 +200,6 @@ MonoBehaviour:
   poolKey: 12
   rb: {fileID: 7698205712678738710}
   grenadeCollider: {fileID: 8164879991046117892}
-  particleAOE: {fileID: 0}
   throwSpeed: 15
 --- !u!70 &8164879991046117892
 CapsuleCollider2D:
