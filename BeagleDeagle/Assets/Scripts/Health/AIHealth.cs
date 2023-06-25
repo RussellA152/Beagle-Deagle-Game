@@ -81,6 +81,7 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
         // reset any max health modifiers applied to an enemy
         bonusMaxHealth = 1f;
         maxHealthModifiers.Clear();
+        damageOverTimeEffects.Clear();
     }
 
     public void AddDamageOverTime(DamageOverTime dotToAdd)

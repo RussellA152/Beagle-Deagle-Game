@@ -7,7 +7,7 @@ public class AreaOfEffect : MonoBehaviour
     private AreaOfEffectData aoeData;
 
     [SerializeField]
-    public CapsuleCollider2D triggerCollider;
+    private CapsuleCollider2D triggerCollider;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,6 +28,16 @@ public class AreaOfEffect : MonoBehaviour
 
         }
 
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        // If this bullet hits what its allowed to damage
+        if ((aoeData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
+        {
+            aoeData.OnAreaStay(transform.position, collision);
+
+        }
     }
 
     public void UpdateAOEData(AreaOfEffectData scriptableObject)

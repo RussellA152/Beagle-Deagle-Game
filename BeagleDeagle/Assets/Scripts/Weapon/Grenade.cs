@@ -13,6 +13,9 @@ public class Grenade : Explosive<GrenadeData>, IPoolable
     [SerializeField]
     private Collider2D grenadeCollider;
 
+    //[SerializeField]
+    //private GameObject particleAOE;
+
     [Range(0f, 100f)]
     [SerializeField]
     private float throwSpeed = 15f; // How fast this grenade throws towards enemies (inside of monobehaviour for now)
@@ -26,6 +29,7 @@ public class Grenade : Explosive<GrenadeData>, IPoolable
     private void OnDisable()
     {
         areaOfEffect.gameObject.SetActive(false);
+        //particleAOE.SetActive(false);
         sprite.SetActive(true);
 
         grenadeCollider.enabled = true;
@@ -51,12 +55,17 @@ public class Grenade : Explosive<GrenadeData>, IPoolable
     // Then after some more time, disable this grenade
     public override IEnumerator Detonate()
     {
+        
+
         yield return new WaitForSeconds(explosiveData.detonationTime);
 
-        sprite.SetActive(false);
-        areaOfEffect.gameObject.SetActive(true);
 
         FreezePosition();
+
+        sprite.SetActive(false);
+
+        //particleAOE.SetActive(true);
+        areaOfEffect.gameObject.SetActive(true);
 
         explosiveData.Explode(transform.position);
 

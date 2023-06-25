@@ -24,4 +24,5 @@ public class RadiationAreaOfEffect : AreaOfEffectData
     {
         throw new System.NotImplementedException();
     }
+
 }

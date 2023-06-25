@@ -6,6 +6,8 @@ public abstract class AreaOfEffectData : ScriptableObject
 {
     public LayerMask whatAreaOfEffectCollidesWith; // What should this grenade collide with (Ex. hitting and bouncing off a wall)
 
+    public bool hitThroughWalls;
+
     [Header("Size of the Area of Effect")]
 
     [Range(0f, 100f)]
@@ -14,7 +16,9 @@ public abstract class AreaOfEffectData : ScriptableObject
     public float areaSpreadY;
 
     protected Dictionary<GameObject, int> overlappingEnemies = new Dictionary<GameObject, int>(); // Key: The enemy inside of the smoke grenade's trigger collider
-                                                                                                // Value: The number of smoke grenade trigger colliders that the enemy is inside of
+                                                                                                  // Value: The number of smoke grenade trigger colliders that the enemy is inside of
+
+    protected HashSet<GameObject> affectedEnemies = new HashSet<GameObject>(); // A hashset of all enemies affected by the area of effect
 
     public virtual void OnEnable()
     {
@@ -32,12 +36,6 @@ public abstract class AreaOfEffectData : ScriptableObject
         // Increment overlappingEnemies by 1
         overlappingEnemies[targetCollider.gameObject]++;
 
-        // Only apply slow effects for the first smoke grenade that the enemy walks into
-        if (overlappingEnemies[targetCollider.gameObject] == 1)
-        {
-            AddEffectOnEnemies(targetCollider);
-        }
-
     }
 
     public virtual void OnAreaExit(Collider2D targetCollider)
@@ -49,10 +47,32 @@ public abstract class AreaOfEffectData : ScriptableObject
 
             // When the enemy is no longer colliding with any smoke grenade trigger colliders, then remove the slow effects
             // This ensures that the slow effect 
-            if (overlappingEnemies[targetCollider.gameObject] == 0)
+            if (overlappingEnemies[targetCollider.gameObject] == 0 )
             {
                 overlappingEnemies.Remove(targetCollider.gameObject);
-                RemoveEffectFromEnemies(targetCollider);
+
+                if (affectedEnemies.Contains(targetCollider.gameObject))
+                {
+                    RemoveEffectFromEnemies(targetCollider);
+
+                    affectedEnemies.Remove(targetCollider.gameObject);
+                }
+                
+            }
+        }
+    }
+
+    public virtual void OnAreaStay(Vector2 areaSource, Collider2D targetCollider)
+    {
+        Debug.Log("Hashset length: " + affectedEnemies.Count);
+
+        if (!affectedEnemies.Contains(targetCollider.gameObject) && !CheckObstruction(areaSource, targetCollider))
+        {
+            // Only apply slow effects for the first smoke grenade that the enemy walks into
+            if (overlappingEnemies[targetCollider.gameObject] == 1)
+            {
+                affectedEnemies.Add(targetCollider.gameObject);
+                AddEffectOnEnemies(targetCollider);
             }
         }
     }
@@ -61,30 +81,32 @@ public abstract class AreaOfEffectData : ScriptableObject
 
     public abstract void RemoveEffectFromEnemies(Collider2D targetCollider);
 
-    //public bool CheckObstruction(Vector2 areaSource, Collider2D targetCollider)
-    //{
-    //    if (hitThroughWalls)
-    //    {
-    //        return false;
-    //    }
+    public bool CheckObstruction(Vector2 areaSource, Collider2D targetCollider)
+    {
+        if (hitThroughWalls)
+        {
+            return false;
+        }
 
-    //    Vector2 targetPosition = targetCollider.transform.position;
-    //    Vector2 direction = targetPosition - areaSource;
-    //    float distance = direction.magnitude;
+        Vector2 targetPosition = targetCollider.transform.position;
+        Vector2 direction = targetPosition - areaSource;
+        float distance = direction.magnitude;
 
-    //    // Exclude the target if there is an obstruction between the explosion source and the target
-    //    RaycastHit2D hit = Physics2D.Raycast(areaSource, direction.normalized, distance, 1 << LayerMask.NameToLayer("Wall"));
+        // Exclude the target if there is an obstruction between the explosion source and the target
+        RaycastHit2D hit = Physics2D.Raycast(areaSource, direction.normalized, distance, 1 << LayerMask.NameToLayer("Wall"));
 
-    //    if (hit.collider != null)
-    //    {
-    //        Debug.Log("OBSTRUCTION FOUND!");
-    //        // There is an obstruction, so skip this target
-    //        return true;
-    //    }
-    //    else
-    //    {
-    //        // If no obstruction found, allow this target to be affected by the explosion
-    //        return false;
-    //    }
-    //}
+        Debug.Log("shoot raycast!");
+
+        if (hit.collider != null)
+        {
+            Debug.Log("OBSTRUCTION FOUND!");
+            // There is an obstruction, so skip this target
+            return true;
+        }
+        else
+        {
+            // If no obstruction found, allow this target to be affected by the explosion
+            return false;
+        }
+    }
 }

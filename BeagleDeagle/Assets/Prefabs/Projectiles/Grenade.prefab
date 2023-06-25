@@ -24,9 +24,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3520225513382146324}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8164879991046117893}
@@ -174,7 +174,7 @@ Transform:
   m_GameObject: {fileID: 8164879991046117895}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7588949015637170743}
@@ -200,6 +200,8 @@ MonoBehaviour:
   poolKey: 12
   rb: {fileID: 7698205712678738710}
   grenadeCollider: {fileID: 8164879991046117892}
+  particleAOE: {fileID: 0}
+  throwSpeed: 15
 --- !u!70 &8164879991046117892
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

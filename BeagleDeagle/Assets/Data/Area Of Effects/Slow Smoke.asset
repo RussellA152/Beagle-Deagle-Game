@@ -15,8 +15,9 @@ MonoBehaviour:
   whatAreaOfEffectCollidesWith:
     serializedVersion: 2
     m_Bits: 256
-  areaSpreadX: 55
-  areaSpreadY: 50
+  hitThroughWalls: 0
+  areaSpreadX: 35
+  areaSpreadY: 30
   smokeBombData: {fileID: 11400000, guid: 2ae24b0ad22356d43b0a4f479c67cc1d, type: 2}
   movementSlowAmount: -0.7
   attackSlowAmount: 0.3
