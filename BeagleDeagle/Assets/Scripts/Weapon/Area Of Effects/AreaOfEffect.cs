@@ -21,7 +21,7 @@ public class AreaOfEffect : MonoBehaviour
         // If this bullet hits what its allowed to damage
         if ((aoeData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
-            aoeData.OnAreaEnter(collision);
+            aoeData.OnAreaEnter(collision.gameObject);
         }
 
     }
@@ -30,7 +30,7 @@ public class AreaOfEffect : MonoBehaviour
         // If this bullet hits what its allowed to damage
         if ((aoeData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
-            aoeData.OnAreaExit(collision);
+            aoeData.OnAreaExit(collision.gameObject);
 
         }
 
@@ -41,7 +41,7 @@ public class AreaOfEffect : MonoBehaviour
         // If this bullet hits what its allowed to damage
         if ((aoeData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
-            aoeData.OnAreaStay(transform.position, collision);
+            aoeData.OnAreaStay(transform.position, collision.gameObject);
 
         }
     }

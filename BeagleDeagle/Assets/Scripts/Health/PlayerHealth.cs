@@ -21,8 +21,8 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
     [SerializeField, NonReorderable]
     private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
 
-    [SerializeField, NonReorderable]
-    private List<DamageOverTime> damageOverTimeEffects = new List<DamageOverTime>(); // All DOT's that have been applied to the player
+    //[SerializeField, NonReorderable]
+    //private List<DamageOverTime> damageOverTimeEffects = new List<DamageOverTime>(); // All DOT's that have been applied to the player
 
     private void Start()
     {
@@ -46,32 +46,28 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
         return currentHealth;
     }
 
-    // add or subtract from health count
     public virtual void ModifyHealth(float amount)
     {
-        // If this health modification will exceed the max potential health, then just set the current health to max.
-        // We add the maxHealth by the playerStat's modifier just in case the player has any items that affect their max health (Ex. Health upgrade passive)
-        if (currentHealth + amount > playerData.maxHealth * bonusMaxHealth)
-        {
-            currentHealth = playerData.maxHealth * bonusMaxHealth;
-            playerEvents.InvokeCurrentHealthEvent(currentHealth);
-        }
+        // Calculate the potential new health value
+        float newHealth = currentHealth + amount;
 
-        // if this health modification will drop the health to 0 or below, then call OnDeath()
-        else if (currentHealth + amount <= 0f)
+        // Clamp the new health value between 0 and the maximum potential health (including any max health modifiers)
+        newHealth = Mathf.Clamp(newHealth, 0f, playerData.maxHealth * bonusMaxHealth);
+
+        // Check if the new health value is zero or below
+        if (newHealth <= 0f)
         {
-            currentHealth = 0;
+            currentHealth = 0f;
             playerEvents.InvokeCurrentHealthEvent(currentHealth);
             isDead = true;
         }
-
         else
         {
-            currentHealth += amount;
+            currentHealth = newHealth;
             playerEvents.InvokeCurrentHealthEvent(currentHealth);
         }
-
     }
+
 
     public void MaxHealthWasModified()
     {
@@ -101,36 +97,5 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
     {
         maxHealthModifiers.Remove(modifierToRemove);
         bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
-    }
-
-    public void AddDamageOverTime(DamageOverTime dotToAdd)
-    {
-        damageOverTimeEffects.Add(dotToAdd);
-
-        StartCoroutine(TakeDamageOverTime(dotToAdd));
-    }
-
-    public void RemoveDamageOverTime(DamageOverTime dotToRemove)
-    {
-        damageOverTimeEffects.Remove(dotToRemove);
-
-    }
-
-    public IEnumerator TakeDamageOverTime(DamageOverTime dot)
-    {
-        float ticks = dot.ticks;
-
-        while (ticks > 0)
-        {
-            // THIS ASSUMES WE ALWAYS DO DAMAGE! WILL CHANGE!
-            ModifyHealth(-1f * dot.damage);
-
-            yield return new WaitForSeconds(dot.tickInterval);
-
-            ticks--;
-        }
-
-        RemoveDamageOverTime(dot);
-
     }
 }

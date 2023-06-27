@@ -4,22 +4,27 @@ using UnityEngine;
 
 public abstract class AreaOfEffectData : ScriptableObject
 {
-    public LayerMask whatAreaOfEffectCollidesWith; // What should this grenade collide with (Ex. hitting and bouncing off a wall)
+    // What should this grenade collide with (Ex. hitting and bouncing off a wall)
+    public LayerMask whatAreaOfEffectCollidesWith;
 
+    // Should this AOE be able to hit targets through walls (typically not)
     public bool hitThroughWalls;
 
+    // How big will the AOE's trigger collider be?
     [Header("Size of the Area of Effect")]
-
     [Range(0f, 100f)]
     public float areaSpreadX;
     [Range(0f, 100f)]
     public float areaSpreadY;
 
-    protected Dictionary<GameObject, int> overlappingEnemies = new Dictionary<GameObject, int>(); // Key: The enemy inside of the smoke grenade's trigger collider
-                                                                                                  // Value: The number of smoke grenade trigger colliders that the enemy is inside of
+    // Key: The enemy inside of the smoke grenade's trigger collider
+    // Value: The number of smoke grenade trigger colliders that the enemy is inside of
+    protected Dictionary<GameObject, int> overlappingEnemies = new Dictionary<GameObject, int>();
 
-    protected HashSet<GameObject> affectedEnemies = new HashSet<GameObject>(); // A hashset of all enemies affected by the area of effect
+    // A hashset of all enemies affected by the area of effect's ability (ex. smoke slow effect or radiation damage)
+    protected HashSet<GameObject> affectedEnemies = new HashSet<GameObject>();
 
+    // The layer mask for walls
     private int wallLayerMask;
 
     public virtual void OnEnable()
@@ -30,87 +35,104 @@ public abstract class AreaOfEffectData : ScriptableObject
         wallLayerMask = LayerMask.GetMask("Wall");
     }
 
-    public virtual void OnAreaEnter(Collider2D targetCollider)
+    ///-///////////////////////////////////////////////////////////
+    /// When the target enters the trigger collider -> Do something
+    /// In this case, we add the target to the overlappingEnemies dictionary
+    ///
+    public virtual void OnAreaEnter(GameObject target)
     {
         // When enemy enters the smoke grenade collider
-        if (!overlappingEnemies.ContainsKey(targetCollider.gameObject))
+        if (!overlappingEnemies.ContainsKey(target))
         {
-            overlappingEnemies.Add(targetCollider.gameObject, 0);
+            overlappingEnemies.Add(target, 0);
         }
 
         // Increment overlappingEnemies by 1
-        overlappingEnemies[targetCollider.gameObject]++;
+        overlappingEnemies[target]++;
 
     }
 
-    public virtual void OnAreaExit(Collider2D targetCollider)
+    ///-///////////////////////////////////////////////////////////
+    /// When the target exits the trigger collider -> Do something
+    /// In this case, we remove the taregt from the overlappingEnemies dictionary
+    ///
+    public virtual void OnAreaExit(GameObject target)
     {
-        if (overlappingEnemies.ContainsKey(targetCollider.gameObject))
+        if (overlappingEnemies.ContainsKey(target))
         {
-            // Decrement overlappingEnemies by 1
-            overlappingEnemies[targetCollider.gameObject]--;
+            overlappingEnemies[target]--;
 
             // When the enemy is no longer colliding with any smoke grenade trigger colliders, then remove the slow effects
-            // This ensures that the slow effect 
-            if (overlappingEnemies[targetCollider.gameObject] == 0)
+            // But, only if they were affected in the first place
+            if (overlappingEnemies[target] == 0)
             {
-                overlappingEnemies.Remove(targetCollider.gameObject);
+                overlappingEnemies.Remove(target);
 
-                if (affectedEnemies.Contains(targetCollider.gameObject))
+                if (affectedEnemies.Contains(target))
                 {
-                    RemoveEffectFromEnemies(targetCollider);
+                    RemoveEffectFromEnemies(target);
 
-                    affectedEnemies.Remove(targetCollider.gameObject);
+                    affectedEnemies.Remove(target);
                 }
                 
             }
         }
     }
 
-    public virtual void OnAreaStay(Vector2 areaSource, Collider2D targetCollider)
+    ///-///////////////////////////////////////////////////////////
+    /// Do something WHILE the target is inside of the trigger collider
+    /// Usually, this is where we try to reapply a DOT to an enemy or check if there is wall between the AOE and target
+    ///
+    public virtual void OnAreaStay(Vector2 areaSource, GameObject target)
     {
-        if (!affectedEnemies.Contains(targetCollider.gameObject))
+        if (!affectedEnemies.Contains(target))
         {
             // Only apply slow effects for the first smoke grenade that the enemy walks into
-            if (overlappingEnemies[targetCollider.gameObject] == 1 && !CheckObstruction(areaSource, targetCollider))
+            if (overlappingEnemies[target] == 1 && !CheckObstruction(areaSource, target))
             {
-                affectedEnemies.Add(targetCollider.gameObject);
-                AddEffectOnEnemies(targetCollider);
+                affectedEnemies.Add(target);
+                AddEffectOnEnemies(target);
             }
         }
     }
 
-    public abstract void AddEffectOnEnemies(Collider2D targetCollider);
+    ///-///////////////////////////////////////////////////////////
+    /// Add some sort of buff or debuff (or DOT) to the target that is inside of the AOE
+    ///
+    public abstract void AddEffectOnEnemies(GameObject target);
 
-    public abstract void RemoveEffectFromEnemies(Collider2D targetCollider);
+    ///-///////////////////////////////////////////////////////////
+    /// Remove the applied buff or debuff from the target when they exit the AOE
+    ///
+    public abstract void RemoveEffectFromEnemies(GameObject target);
 
-    public bool CheckObstruction(Vector2 areaSource, Collider2D targetCollider)
+    ///-///////////////////////////////////////////////////////////
+    /// Shoot a raycast beginning from the center of the AOE towards the target
+    /// If there is wall between the AOE and target, then do not apply any effects to the target (Don't hit through walls)
+    ///
+    public bool CheckObstruction(Vector2 areaSource, GameObject target)
     {
         if (hitThroughWalls)
         {
             return false;
         }
-
-        Vector2 targetPosition = targetCollider.transform.position;
+        
+        // Calculate distance and direction to shoot raycast
+        Vector2 targetPosition = target.transform.position;
         Vector2 direction = targetPosition - areaSource;
         float distance = direction.magnitude;
 
         // Exclude the target if there is an obstruction between the explosion source and the target
         RaycastHit2D hit = Physics2D.Raycast(areaSource, direction.normalized, distance, wallLayerMask);
 
-
-        //Debug.Log("shoot raycast!");
-
         if (hit.collider != null)
         {
-            //Debug.Log("OBSTRUCTION FOUND!");
-
-            // There is an obstruction, so skip this target
+            // There is an obstruction, so don't apply this AOE's effect
             return true;
         }
         else
         {
-            // If no obstruction found, allow this target to be affected by the explosion
+            // If no obstruction found, allow this target to be affected by the AOE
             return false;
         }
     }

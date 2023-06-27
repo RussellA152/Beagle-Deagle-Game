@@ -27,6 +27,9 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     private AIHealth healthScript;
 
     [SerializeField]
+    private DamageOverTimeHandler damageOverTimeScript;
+
+    [SerializeField]
     private AIMovement movementScript;
 
     [SerializeField]
@@ -198,6 +201,9 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
 
         // Remove all modifiers that affect attack stats within the attack script
         attackScript.RevertAllModifiers();
+
+        // Remove all damage over time effects that the enemy may contain
+        damageOverTimeScript.RevertAllModifiers();
     }
 
 

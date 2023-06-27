@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,9 +16,6 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
     [SerializeField, NonReorderable]
     private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
 
-    [SerializeField, NonReorderable]
-    private List<DamageOverTime> damageOverTimeEffects = new List<DamageOverTime>(); // All DOT's that have been applied to the enemy
-
     protected virtual void OnEnable()
     {
         isDead = false;
@@ -30,27 +28,24 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
     }
 
 
-    // add or subtract from health count
     public virtual void ModifyHealth(float amount)
     {
-        // if this health modification will exceed the max potential health, then just set the current health to max
-        if (currentHealth + amount > enemyData.maxHealth * bonusMaxHealth)
-        {
-            currentHealth = enemyData.maxHealth * bonusMaxHealth;
-        }
+        // Calculate the potential new health value
+        float newHealth = currentHealth + amount;
 
-        // if this health modification will drop the health to 0 or below, then call OnDeath()
-        else if (currentHealth + amount <= 0f)
+        // Clamp the new health value between 0 and the maximum potential health (including any max health modifiers)
+        newHealth = Mathf.Clamp(newHealth, 0f, enemyData.maxHealth * bonusMaxHealth);
+
+        // Check if the new health value is zero or below
+        if (newHealth <= 0f)
         {
-            currentHealth = 0;
+            currentHealth = 0f;
             isDead = true;
         }
-
         else
         {
-            currentHealth += amount;
+            currentHealth = newHealth;
         }
-
     }
 
     // do something when this entity dies
@@ -81,36 +76,6 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
         // reset any max health modifiers applied to an enemy
         bonusMaxHealth = 1f;
         maxHealthModifiers.Clear();
-        damageOverTimeEffects.Clear();
     }
 
-    public void AddDamageOverTime(DamageOverTime dotToAdd)
-    {
-        damageOverTimeEffects.Add(dotToAdd);
-
-        StartCoroutine(TakeDamageOverTime(dotToAdd));
-    }
-
-    public void RemoveDamageOverTime(DamageOverTime dotToRemove)
-    {
-        damageOverTimeEffects.Remove(dotToRemove);
-
-    }
-
-    public IEnumerator TakeDamageOverTime(DamageOverTime dot)
-    {
-        float ticks = dot.ticks;
-
-        while(ticks > 0)
-        {
-            // THIS ASSUMES WE ALWAYS DO DAMAGE! WILL CHANGE!
-            ModifyHealth(-1f * dot.damage);
-
-            yield return new WaitForSeconds(dot.tickInterval);
-
-            ticks--;
-        }
-
-        RemoveDamageOverTime(dot);
-    }
 }

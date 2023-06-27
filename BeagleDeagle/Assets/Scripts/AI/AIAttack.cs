@@ -8,16 +8,21 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
     [SerializeField]
     private EnemyData enemyScriptableObject;
 
+    // A list of damage modifiers applied to the enemy's attack damage
     [SerializeField, NonReorderable]
-    private List<DamageModifier> damageModifiers = new List<DamageModifier>(); // a list of damage modifiers applied to the enemy's attack damage
+    private List<DamageModifier> damageModifiers = new List<DamageModifier>();
 
+    // A list of attack speed modifiers applied to the enemy's attack cooldown
     [SerializeField, NonReorderable]
-    private List<AttackSpeedModifier> attackSpeedModifiers = new List<AttackSpeedModifier>(); // a list of attack speed modifiers applied to the enemy's attack cooldown
+    private List<AttackSpeedModifier> attackSpeedModifiers = new List<AttackSpeedModifier>();
 
-    private float bonusDamage = 1f; // a bonus percentage applied to the enemy's attack damage
+    // A bonus percentage applied to the enemy's attack damage
+    private float bonusDamage = 1f;
 
-    private float bonusAttackSpeed = 1f; // a bonus percentage applied to the enemy's attack cooldown
+    // A bonus percentage applied to the enemy's attack cooldown
+    private float bonusAttackSpeed = 1f;
 
+    // Is the enemy allowed to attack?
     private bool canAttack = true;
 
     private void OnEnable()
@@ -36,16 +41,23 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
             
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Wait some time to allow attacks again.
+    /// Multiply by "bonusAttackSpeed" which can cause attacks to be slower or faster
+    ///
     IEnumerator AttackCooldown()
     {
         canAttack = false;
-        Debug.Log("SWIPE AT TARGET!");
+        //Debug.Log("SWIPE AT TARGET!");
 
         yield return new WaitForSeconds(enemyScriptableObject.attackCooldown * bonusAttackSpeed);
 
         canAttack = true;
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Remove all damage and attackspeed modifiers from this enemy
+    ///
     public void RevertAllModifiers()
     {
         // reset any modifiers on the enemy's damage

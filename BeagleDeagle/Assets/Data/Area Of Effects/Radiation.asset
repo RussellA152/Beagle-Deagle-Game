@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatAreaOfEffectCollidesWith:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 384
   hitThroughWalls: 0
   areaSpreadX: 90
   areaSpreadY: 80

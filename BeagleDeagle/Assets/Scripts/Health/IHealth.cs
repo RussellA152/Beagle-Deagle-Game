@@ -13,12 +13,6 @@ public interface IHealth
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove);
 
-    public void AddDamageOverTime(DamageOverTime dotToAdd);
-
-    public void RemoveDamageOverTime(DamageOverTime dotToRemove);
-
-    public IEnumerator TakeDamageOverTime(DamageOverTime dot);
-
     // Do something when this entity dies
     public bool IsDead();
 }
