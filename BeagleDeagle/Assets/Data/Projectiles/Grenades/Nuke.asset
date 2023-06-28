@@ -18,3 +18,6 @@ MonoBehaviour:
   detonationTime: 3
   ultimateAbilityData: {fileID: 11400000, guid: 8d978ad8039192b42b0c5c89926fcb38, type: 2}
   explosiveRadius: 15
+  whatDoesExplosionHit:
+    serializedVersion: 2
+    m_Bits: 256

@@ -110,6 +110,7 @@ MonoBehaviour:
   agent: {fileID: 3711592478197892577}
   attackScript: {fileID: 3711592478197892583}
   healthScript: {fileID: 3711592478197892578}
+  damageOverTimeScript: {fileID: 7645405754992922946}
   movementScript: {fileID: 2060393728062037017}
   state: 0
 --- !u!114 &2060393728062037017
@@ -157,7 +158,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
   maxHealthModifiers: []
-  damageOverTimeEffects: []
 --- !u!114 &7645405754992922946
 MonoBehaviour:
   m_ObjectHideFlags: 0

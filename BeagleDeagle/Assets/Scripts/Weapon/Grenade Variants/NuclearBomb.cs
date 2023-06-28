@@ -11,10 +11,12 @@ public class NuclearBomb : GrenadeData
     [Range(0f, 40f)]
     public float explosiveRadius;
 
+    [SerializeField]
+    private LayerMask whatDoesExplosionHit;
     public override void Explode(Vector2 explosionSource)
     {
         // Big explosion hurt all enemies
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(explosionSource, explosiveRadius, 1 << LayerMask.NameToLayer("Enemy"));
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(explosionSource, explosiveRadius, whatDoesExplosionHit);
 
         foreach (Collider2D targetCollider in hitEnemies)
         {

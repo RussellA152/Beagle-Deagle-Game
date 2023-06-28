@@ -20,19 +20,8 @@ public class RadiationAreaOfEffect : AreaOfEffectData
 
     private DamageOverTime _radiationOverTime;
 
-    public override void OnEnable()
+    private void OnEnable()
     {
-        // Clear all subscriptions to targets' events*
-        foreach (GameObject targetWithDOT in affectedEnemies)
-        {
-            //targetWithDOT.GetComponent<AIHealth>().dotEndEvent -= ReapplyDOT;
-            targetWithDOT.GetComponent<IDamageOverTimeHandler>().onDamageOverTimeExpire -= ReapplyDOT;
-        }
-
-        base.OnEnable();
-
-        // The radiation DOT that we will apply to the targets
-        // Damage is negative so that we can hurt the target
         _radiationOverTime = new DamageOverTime(this.name, -1f * radiationDamage, radiationTicks, radiationTickInterval);
     }
 
@@ -42,8 +31,6 @@ public class RadiationAreaOfEffect : AreaOfEffectData
     /// 
     public override void OnAreaEnter(GameObject target)
     {
-        base.OnAreaEnter(target);
-
         IDamageOverTimeHandler damageOverTimeScript = target.GetComponent<IDamageOverTimeHandler>();
 
         damageOverTimeScript.onDamageOverTimeExpire += ReapplyDOT;

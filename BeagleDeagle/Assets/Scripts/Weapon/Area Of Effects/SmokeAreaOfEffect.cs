@@ -23,9 +23,8 @@ public class SmokeAreaOfEffect : AreaOfEffectData
     private AttackSpeedModifier attackSlowEffect;
 
 
-    public override void OnEnable()
+    private void OnEnable()
     {
-        base.OnEnable();
         // The slow effect to apply to targets
         movementSlowEffect = new MovementSpeedModifier(this.name, movementSlowAmount);
         // The attack speed slow effect to apply to targets

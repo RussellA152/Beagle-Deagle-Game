@@ -6,48 +6,107 @@ using UnityEngine;
 
 public class AreaOfEffectManager : MonoBehaviour
 {
+    public static AreaOfEffectManager Instance;
+    
     [SerializeField]
     private List<AreaOfEffectData> activeAreaOfEffects;
     
-    private Dictionary<AreaOfEffectData, Dictionary<GameObject, int>> areaOfEffectOverlappingTargets = new Dictionary<AreaOfEffectData, Dictionary<GameObject, int>>();
-
+    // Key: The area of effect that will be applied to target (ex. Slowing Smoke)
+    // Value: Another dictionary whose key is the target that is being affected by the area of effect,
+    // and the value that indicates the number of same area of effects that the target is standing in
     
-    // Key: The target inside of the AOE's trigger collider
-    // Value: The number of AOE trigger colliders that the target is inside of
-    //private Dictionary<GameObject, int> overLappingTargets = new Dictionary<GameObject, int>();
+    private Dictionary<AreaOfEffectData, Dictionary<GameObject, int>> _areaOfEffectOverlappingTargets = new Dictionary<AreaOfEffectData, Dictionary<GameObject, int>>();
 
-    // A hashset of all enemies affected by the area of effect's ability (ex. smoke slow effect or radiation damage)
-    private HashSet<GameObject> affectedEnemies = new HashSet<GameObject>();
+    // Key: The area of effect that will be applied to target (ex. Slowing Smoke)
+    // Value: A hashset containing all targets that are inside of the area of effect
+    private Dictionary<AreaOfEffectData, HashSet<GameObject>> _affectedTargets =
+        new Dictionary<AreaOfEffectData, HashSet<GameObject>>();
     
+
+    private void Awake()
+    {
+        if(Instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+        
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     private void OnDisable()
     {
-        //overLappingTargets.Clear();
-        areaOfEffectOverlappingTargets.Clear();
-        affectedEnemies.Clear();
+        activeAreaOfEffects.Clear();
+        
+        _areaOfEffectOverlappingTargets.Clear();
+        
+        _affectedTargets.Clear();
     }
 
     public void AddNewAreaOfEffect(AreaOfEffectData newAreaOfEffect)
     {
-        areaOfEffectOverlappingTargets.TryAdd(newAreaOfEffect, new Dictionary<GameObject, int>());
-    }
-
-    public void RemoveAreaOfEffect(AreaOfEffectData areaOfEffect)
-    {
-        areaOfEffectOverlappingTargets.Remove(areaOfEffect);
+        if(!activeAreaOfEffects.Contains(newAreaOfEffect))
+            activeAreaOfEffects.Add(newAreaOfEffect);
+        
+        _areaOfEffectOverlappingTargets.TryAdd(newAreaOfEffect, new Dictionary<GameObject, int>());
+        
+        _affectedTargets.TryAdd(newAreaOfEffect, new HashSet<GameObject>());
     }
 
     public void AddNewOverlappingTarget(AreaOfEffectData areaOfEffect, GameObject target)
     {
-        Dictionary<GameObject, int> nestedDictionary = areaOfEffectOverlappingTargets[areaOfEffect];
-
+        Dictionary<GameObject, int> nestedDictionary = _areaOfEffectOverlappingTargets[areaOfEffect];
+        
+        nestedDictionary.TryAdd(target, 0);
+        
         nestedDictionary[target]++;
     }
 
-    public void RemoveOverlappingTarget(AreaOfEffectData areaOfEffect, GameObject target)
+    public bool RemoveOverlappingTarget(AreaOfEffectData areaOfEffect, GameObject target)
     {
-        Dictionary<GameObject, int> nestedDictionary = areaOfEffectOverlappingTargets[areaOfEffect];
+        bool shouldRemove = false;
+        Dictionary<GameObject, int> nestedDictionary = _areaOfEffectOverlappingTargets[areaOfEffect];
+        HashSet<GameObject>nestedDictionary2 = _affectedTargets[areaOfEffect];
 
         nestedDictionary[target]--;
+
+        if (nestedDictionary[target] == 0)
+        {
+            shouldRemove = true;
+            nestedDictionary.Remove(target);
+            
+            nestedDictionary2.Remove(target);
+        }
+        
+        return shouldRemove;
     }
+
+    public bool CheckIfTargetCanBeAffected(AreaOfEffectData areaOfEffect, GameObject target)
+    {
+        HashSet<GameObject>nestedDictionary2 = _affectedTargets[areaOfEffect];
+
+        // If this is the first AOE that the target enters,
+        // and the target is not affected by the AOE, then allow the AOE to apply its effect on the target
+        if (CheckIfTargetIsOverlapping(areaOfEffect, target) && !nestedDictionary2.Contains(target))
+        {
+            nestedDictionary2.Add(target);
+            return true;
+        }
+        
+        else
+        {
+            return false;
+        }
+        
+    }
+
+    public bool CheckIfTargetIsOverlapping(AreaOfEffectData areaOfEffect, GameObject target)
+    {
+        Dictionary<GameObject, int> nestedDictionary = _areaOfEffectOverlappingTargets[areaOfEffect];
+
+        return nestedDictionary[target] == 1;
+    }
+    
     
 }
