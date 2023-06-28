@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class AreaOfEffectManager : MonoBehaviour
@@ -15,11 +14,11 @@ public class AreaOfEffectManager : MonoBehaviour
     // Value: Another dictionary whose key is the target that is being affected by the area of effect,
     // and the value that indicates the number of same area of effects that the target is standing in
     
-    private Dictionary<AreaOfEffectData, Dictionary<GameObject, int>> _areaOfEffectOverlappingTargets = new Dictionary<AreaOfEffectData, Dictionary<GameObject, int>>();
+    private readonly Dictionary<AreaOfEffectData, Dictionary<GameObject, int>> _areaOfEffectOverlappingTargets = new Dictionary<AreaOfEffectData, Dictionary<GameObject, int>>();
 
     // Key: The area of effect that will be applied to target (ex. Slowing Smoke)
     // Value: A hashset containing all targets that are inside of the area of effect
-    private Dictionary<AreaOfEffectData, HashSet<GameObject>> _affectedTargets =
+    private readonly Dictionary<AreaOfEffectData, HashSet<GameObject>> _affectedTargets =
         new Dictionary<AreaOfEffectData, HashSet<GameObject>>();
     
 
@@ -54,43 +53,67 @@ public class AreaOfEffectManager : MonoBehaviour
         _affectedTargets.TryAdd(newAreaOfEffect, new HashSet<GameObject>());
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// When the target enters an AOE, add them to the areaOfEffectOverlappingTargets dictionary
+    /// 
     public void AddNewOverlappingTarget(AreaOfEffectData areaOfEffect, GameObject target)
     {
-        Dictionary<GameObject, int> nestedDictionary = _areaOfEffectOverlappingTargets[areaOfEffect];
+        Dictionary<GameObject, int> nestedOverlappingTargetsDictionary = _areaOfEffectOverlappingTargets[areaOfEffect];
         
-        nestedDictionary.TryAdd(target, 0);
+        nestedOverlappingTargetsDictionary.TryAdd(target, 0);
         
-        nestedDictionary[target]++;
+        nestedOverlappingTargetsDictionary[target]++;
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// When the target leaves the AOE, remove them from both dictionaries
+    /// 
     public bool RemoveOverlappingTarget(AreaOfEffectData areaOfEffect, GameObject target)
     {
         bool shouldRemove = false;
-        Dictionary<GameObject, int> nestedDictionary = _areaOfEffectOverlappingTargets[areaOfEffect];
-        HashSet<GameObject>nestedDictionary2 = _affectedTargets[areaOfEffect];
+        Dictionary<GameObject, int> nestedOverlappingTargetsDictionary = _areaOfEffectOverlappingTargets[areaOfEffect];
+        HashSet<GameObject>affectedTargetsHashSet = _affectedTargets[areaOfEffect];
 
-        nestedDictionary[target]--;
+        nestedOverlappingTargetsDictionary[target]--;
 
-        if (nestedDictionary[target] == 0)
+        if (nestedOverlappingTargetsDictionary[target] == 0)
         {
             shouldRemove = true;
-            nestedDictionary.Remove(target);
+            nestedOverlappingTargetsDictionary.Remove(target);
             
-            nestedDictionary2.Remove(target);
         }
-        
+
         return shouldRemove;
     }
 
+    public bool RemoveFromAffectedHashSet(AreaOfEffectData areaOfEffect, GameObject target)
+    {
+        HashSet<GameObject>affectedTargetsHashSet = _affectedTargets[areaOfEffect];
+
+        if (affectedTargetsHashSet.Contains(target))
+        {
+            affectedTargetsHashSet.Remove(target);
+            
+            return true;
+        }
+
+        return false;
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Check if the target has not already been affected by the AOE's effect
+    /// If not, then add them to the affectedTargets dictionary
+    /// 
     public bool CheckIfTargetCanBeAffected(AreaOfEffectData areaOfEffect, GameObject target)
     {
-        HashSet<GameObject>nestedDictionary2 = _affectedTargets[areaOfEffect];
+        HashSet<GameObject>affectedTargetsHashSet = _affectedTargets[areaOfEffect];
 
         // If this is the first AOE that the target enters,
         // and the target is not affected by the AOE, then allow the AOE to apply its effect on the target
-        if (CheckIfTargetIsOverlapping(areaOfEffect, target) && !nestedDictionary2.Contains(target))
+        if (CheckIfTargetIsOverlapping(areaOfEffect, target) && !affectedTargetsHashSet.Contains(target))
         {
-            nestedDictionary2.Add(target);
+            affectedTargetsHashSet.Add(target);
+            
             return true;
         }
         
@@ -101,11 +124,14 @@ public class AreaOfEffectManager : MonoBehaviour
         
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Check if the target is only touching 1 AOE (of the same type)
+    /// 
     public bool CheckIfTargetIsOverlapping(AreaOfEffectData areaOfEffect, GameObject target)
     {
-        Dictionary<GameObject, int> nestedDictionary = _areaOfEffectOverlappingTargets[areaOfEffect];
+        Dictionary<GameObject, int> nestedOverlappingTargetsDictionary = _areaOfEffectOverlappingTargets[areaOfEffect];
 
-        return nestedDictionary[target] == 1;
+        return nestedOverlappingTargetsDictionary[target] == 1;
     }
     
     

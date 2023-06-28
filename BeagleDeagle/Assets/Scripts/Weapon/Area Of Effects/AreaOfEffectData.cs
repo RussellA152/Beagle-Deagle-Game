@@ -25,7 +25,7 @@ public abstract class AreaOfEffectData : ScriptableObject
     ///
     public virtual void OnAreaEnter(GameObject target)
     {
-        
+        // NOT SURE HOW TO NOT MAKE THIS EMPTY
     }
 
     ///-///////////////////////////////////////////////////////////

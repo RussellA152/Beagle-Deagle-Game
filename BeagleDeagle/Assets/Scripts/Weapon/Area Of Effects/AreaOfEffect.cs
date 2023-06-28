@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AreaOfEffect : MonoBehaviour
 {
-    private AreaOfEffectData aoeData;
+    private AreaOfEffectData _areaOfEffectData;
 
     [SerializeField]
     private CapsuleCollider2D triggerCollider;
@@ -27,32 +27,24 @@ public class AreaOfEffect : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        AreaOfEffectManager.Instance.AddNewAreaOfEffect(aoeData);
+        AreaOfEffectManager.Instance.AddNewAreaOfEffect(_areaOfEffectData);
         
-        // If this bullet hits what its allowed to damage
-        if ((aoeData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
+        // If this AOE hits what its allowed to affect
+        if ((_areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
-            AreaOfEffectManager.Instance.AddNewOverlappingTarget(aoeData, collision.gameObject);
+            AreaOfEffectManager.Instance.AddNewOverlappingTarget(_areaOfEffectData, collision.gameObject);
             
-            if(AreaOfEffectManager.Instance.CheckIfTargetIsOverlapping(aoeData, collision.gameObject))
-                aoeData.OnAreaEnter(collision.gameObject);
+            if(AreaOfEffectManager.Instance.CheckIfTargetIsOverlapping(_areaOfEffectData, collision.gameObject))
+                _areaOfEffectData.OnAreaEnter(collision.gameObject);
         }
 
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // If this bullet hits what its allowed to damage
-        if ((aoeData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
+        if ((_areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
-            if (AreaOfEffectManager.Instance.RemoveOverlappingTarget(aoeData, collision.gameObject))
-                aoeData.OnAreaExit(collision.gameObject);
-            
-            
-            // Only remove AOE effect if the target is not standing in any AOE(s) at all
-            // if(AreaOfEffectManager.Instance.CheckIfTargetIsNotStandingInAreaOfEffect(aoeData, collision.gameObject))
-            //     aoeData.OnAreaExit(collision.gameObject);
-            //
-            // AreaOfEffectManager.Instance.RemoveOverlappingTarget(aoeData, collision.gameObject);
+            if (AreaOfEffectManager.Instance.RemoveOverlappingTarget(_areaOfEffectData, collision.gameObject) && AreaOfEffectManager.Instance.RemoveFromAffectedHashSet(_areaOfEffectData, collision.gameObject))
+                _areaOfEffectData.OnAreaExit(collision.gameObject);
 
         }
 
@@ -60,14 +52,11 @@ public class AreaOfEffect : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        // If this bullet hits what its allowed to damage
-        if ((aoeData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
+        // If this AOE hits what its allowed to affect
+        if ((_areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
-            if (!CheckObstruction(transform.position, collision.gameObject) && AreaOfEffectManager.Instance.CheckIfTargetCanBeAffected(aoeData, collision.gameObject))
-            {
-                aoeData.OnAreaStay(transform.position, collision.gameObject);
-            }
-                
+            if (!CheckObstruction(transform.position, collision.gameObject) && AreaOfEffectManager.Instance.CheckIfTargetCanBeAffected(_areaOfEffectData, collision.gameObject))
+                _areaOfEffectData.OnAreaStay(transform.position, collision.gameObject);
             
         }
     }
@@ -77,7 +66,7 @@ public class AreaOfEffect : MonoBehaviour
     ///
     private bool CheckObstruction(Vector2 areaSource, GameObject target)
     {
-        if (aoeData.hitThroughWalls)
+        if (_areaOfEffectData.hitThroughWalls)
             return false;
 
         // Calculate distance and direction to shoot raycast
@@ -93,10 +82,13 @@ public class AreaOfEffect : MonoBehaviour
         return hit.collider != null;
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Changes the AOE effect of this instance
+    /// 
     public void UpdateAOEData(AreaOfEffectData scriptableObject)
     {
-        aoeData = scriptableObject;
+        _areaOfEffectData = scriptableObject;
 
-        triggerCollider.size = new Vector2(aoeData.areaSpreadX, aoeData.areaSpreadY);
+        triggerCollider.size = new Vector2(_areaOfEffectData.areaSpreadX, _areaOfEffectData.areaSpreadY);
     }
 }
