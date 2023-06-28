@@ -19,21 +19,29 @@ public abstract class BulletData : ScriptableObject
     public float sizeX; // What is the width of this bullet's collider?
     [Range(0f, 100f)]
     public float sizeY; // What is the height of this bullet's collider?
-
-    // The trajectory of the bullet can differ with each bullet (Ex. regular vs. homing)
+    
+    ///-///////////////////////////////////////////////////////////
+    /// The trajectory of the bullet can differ with each bullet (Ex. regular vs. homing)
+    ///
     public virtual void ApplyTrajectory(Rigidbody2D rb, Transform transform)
     {
         rb.velocity = transform.right * bulletSpeed;
     }
-
-    // What does this bullet do when it hits an enemy?
-    // By default, it will apply some damage on the enemy 
+    
+    ///-///////////////////////////////////////////////////////////
+    /// What does this bullet do when it hits an enemy?
+    /// By default, it will apply some damage on the enemy
+    ///
     public virtual void OnHit(Rigidbody2D bulletRb, GameObject objectHit, float damage)
     {
         // Make target take damage
         objectHit.GetComponent<IHealth>().ModifyHealth(-1 * damage);
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Return the "duration" of the bullet
+    /// Might come from the bullet itself, or an ability
+    ///
     public abstract float GetLifeTime();
 
 }

@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GunData currentWeaponData;
 
+    public static PlayerController Instance;
+
     // states that an enemy can be in
     public enum PlayerState
     {
@@ -45,7 +47,7 @@ public class PlayerController : MonoBehaviour
         Attacking,
 
         // player is currently using their ultimate ability
-        Ulting,
+        //Ulting,
 
         // enemy was killed
         Death
@@ -68,6 +70,15 @@ public class PlayerController : MonoBehaviour
     {
         state = PlayerState.Idle;
 
+
+        if(Instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+        
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Update()
@@ -123,7 +134,7 @@ public class PlayerController : MonoBehaviour
         // just checking if the player is pressing any movement keys (or moving the left stick)
         return ((Mathf.Abs(movementScript.movementInput.x) > 0f) || (Mathf.Abs(movementScript.movementInput.y) > 0f));
     }
-
+    
     private bool CheckIfAttacking()
     {
         // checking if the player is attacking with their weapon

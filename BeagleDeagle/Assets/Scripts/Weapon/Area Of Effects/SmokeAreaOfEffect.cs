@@ -35,7 +35,7 @@ public class SmokeAreaOfEffect : AreaOfEffectData
     ///-///////////////////////////////////////////////////////////
     /// When the target enters the smoke AOE, apply the slow and attack slow effects
     /// 
-    public override void AddEffectOnEnemies(GameObject target)
+    protected override void AddEffectOnEnemies(GameObject target)
     {
         target.GetComponent<IMovable>().AddMovementSpeedModifier(movementSlowEffect);
         target.GetComponent<IDamager>().AddAttackSpeedModifier(attackSlowEffect);
@@ -44,7 +44,7 @@ public class SmokeAreaOfEffect : AreaOfEffectData
     ///-///////////////////////////////////////////////////////////
     /// When the target exits the smoke AOE, remove the slow and attack slow effects immediately
     /// 
-    public override void RemoveEffectFromEnemies(GameObject target)
+    protected override void RemoveEffectFromEnemies(GameObject target)
     {
         target.GetComponent<IMovable>().RemoveMovementSpeedModifier(movementSlowEffect);
         target.GetComponent<IDamager>().RemoveAttackSpeedModifier(attackSlowEffect);

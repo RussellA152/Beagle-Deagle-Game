@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SmokeB
   m_EditorClassIdentifier: 
   abilityDamage: 0
-  cooldown: 2
+  cooldown: 1
   duration: 5
   maxUses: 2
   prefab: {fileID: 8164879991046117895, guid: cd6eec6d40152204db89a362109b5df2, type: 3}

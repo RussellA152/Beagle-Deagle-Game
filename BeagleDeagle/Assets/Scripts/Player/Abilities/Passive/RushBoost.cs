@@ -28,6 +28,10 @@ public class RushBoost : PassiveAbilityData
     {
         speedIncreased = false;
 
+        gunScript = null;
+
+        movementScript = null;
+
         movementSpeedModifier = new MovementSpeedModifier(this.name, speedBoost);
 
     }

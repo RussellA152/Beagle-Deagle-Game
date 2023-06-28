@@ -6,29 +6,21 @@ using UnityEngine;
 public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
 {
     // The health script of this entity
-    private IHealth healthScript;
+    private IHealth _healthScript;
 
     // All damage over time effects that have been applied to this entity
     [SerializeField, NonReorderable]
     private List<DamageOverTime> damageOverTimeEffects = new List<DamageOverTime>();
 
     // An event that occurs when any damage over time effect expires
-    public event Action<Tuple<GameObject, DamageOverTime>> OnDamageOverTimeExpire;
+    public event Action<Tuple<GameObject, DamageOverTime>> onDamageOverTimeExpire;
 
     private void OnEnable()
     {
-        if(healthScript == null)
-        {
-            healthScript = GetComponent<IHealth>();
-        }
-
-        //OnDamageOverTimeExpire += DebugDOT;
+        _healthScript ??= GetComponent<IHealth>();
+        
     }
-
-    private void OnDisable()
-    {
-        //OnDamageOverTimeExpire -= DebugDOT;
-    }
+    
 
     public void RevertAllModifiers()
     {
@@ -46,10 +38,10 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
     {
         damageOverTimeEffects.Remove(dotToRemove);
 
-        if (OnDamageOverTimeExpire != null)
+        if (onDamageOverTimeExpire != null)
         {
             Tuple<GameObject, DamageOverTime> tuple = Tuple.Create(this.gameObject, dotToRemove);
-            OnDamageOverTimeExpire(tuple);
+            onDamageOverTimeExpire(tuple);
         }
 
     }
@@ -61,7 +53,7 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
         while (ticks > 0)
         {
             // THIS ASSUMES WE ALWAYS DO DAMAGE! WILL CHANGE!
-            healthScript.ModifyHealth(dot.damage);
+            _healthScript.ModifyHealth(dot.damage);
 
             yield return new WaitForSeconds(dot.tickInterval);
 

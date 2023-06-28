@@ -18,7 +18,7 @@ public class RadiationAreaOfEffect : AreaOfEffectData
     [Range(0f, 30f)]
     public float radiationTickInterval;
 
-    private DamageOverTime radiationOverTime;
+    private DamageOverTime _radiationOverTime;
 
     public override void OnEnable()
     {
@@ -26,14 +26,14 @@ public class RadiationAreaOfEffect : AreaOfEffectData
         foreach (GameObject targetWithDOT in affectedEnemies)
         {
             //targetWithDOT.GetComponent<AIHealth>().dotEndEvent -= ReapplyDOT;
-            targetWithDOT.GetComponent<IDamageOverTimeHandler>().OnDamageOverTimeExpire -= ReapplyDOT;
+            targetWithDOT.GetComponent<IDamageOverTimeHandler>().onDamageOverTimeExpire -= ReapplyDOT;
         }
 
         base.OnEnable();
 
         // The radiation DOT that we will apply to the targets
         // Damage is negative so that we can hurt the target
-        radiationOverTime = new DamageOverTime(this.name, -1f * radiationDamage, radiationTicks, radiationTickInterval);
+        _radiationOverTime = new DamageOverTime(this.name, -1f * radiationDamage, radiationTicks, radiationTickInterval);
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -46,7 +46,7 @@ public class RadiationAreaOfEffect : AreaOfEffectData
 
         IDamageOverTimeHandler damageOverTimeScript = target.GetComponent<IDamageOverTimeHandler>();
 
-        damageOverTimeScript.OnDamageOverTimeExpire += ReapplyDOT;
+        damageOverTimeScript.onDamageOverTimeExpire += ReapplyDOT;
 
         Debug.Log("Subscribe to DOT event!");
     }
@@ -54,13 +54,11 @@ public class RadiationAreaOfEffect : AreaOfEffectData
     ///-///////////////////////////////////////////////////////////
     /// Apply DOT to the target
     ///
-    public override void AddEffectOnEnemies(GameObject target)
+    protected override void AddEffectOnEnemies(GameObject target)
     {
-
         IDamageOverTimeHandler damageOverTimeScript = target.GetComponent<IDamageOverTimeHandler>();
 
-        damageOverTimeScript.AddDamageOverTime(radiationOverTime);
-
+        damageOverTimeScript.AddDamageOverTime(_radiationOverTime);
 
         Debug.Log("Radiation was applied!");
 
@@ -70,20 +68,20 @@ public class RadiationAreaOfEffect : AreaOfEffectData
     /// When the target exits the radiation AOE, unsubscribe from DOT end event.
     /// This prevents the AOE from trying to reapply the DOT when the target leaves the area
     ///
-    public override void RemoveEffectFromEnemies(GameObject target)
+    protected override void RemoveEffectFromEnemies(GameObject target)
     {
         IDamageOverTimeHandler damageOverTimeScript = target.GetComponent<IDamageOverTimeHandler>();
 
-        damageOverTimeScript.OnDamageOverTimeExpire -= ReapplyDOT;
+        damageOverTimeScript.onDamageOverTimeExpire -= ReapplyDOT;
     }
 
     ///-///////////////////////////////////////////////////////////
     /// Reapply DOT to target if the DOT that ended originated from this AOE
     ///
-    public void ReapplyDOT(Tuple<GameObject, DamageOverTime> tuple)
+    private void ReapplyDOT(Tuple<GameObject, DamageOverTime> tuple)
     {
         // Check if the DOT that ended was the same as this DOT (radiation)
-        if(tuple.Item2 == radiationOverTime)
+        if(tuple.Item2 == _radiationOverTime)
         {
             Debug.Log("Reapply DOT NOW! TO " + tuple.Item1.name);
 

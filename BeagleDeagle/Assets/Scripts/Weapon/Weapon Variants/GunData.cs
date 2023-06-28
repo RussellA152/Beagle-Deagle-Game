@@ -28,7 +28,7 @@ public abstract class GunData : ScriptableObject
     [Range(1f, 50f)]
     public int penetrationCount; // how many enemies can this gun's bullet pass through?
 
-    private float lastFireTime;
+    private float _lastFireTime;
 
     #region hiddenProperties
 
@@ -46,7 +46,7 @@ public abstract class GunData : ScriptableObject
     [HideInInspector]
     public bool isReloading;
 
-    protected int bulletPoolKey;
+    protected int BulletPoolKey;
 
     #endregion
 
@@ -59,24 +59,23 @@ public abstract class GunData : ScriptableObject
         isReloading = false;
         actuallyShooting = false;
 
-        bulletPoolKey = bullet.GetComponent<IPoolable>().PoolKey;
+        BulletPoolKey = bullet.GetComponent<IPoolable>().PoolKey;
 
-        lastFireTime = 0f;
+        _lastFireTime = 0f;
     }
 
 
     public virtual int Fire(ObjectPooler bulletPool, float damageModifier, float spreadModifier, int penetrationModifier)
     {
         //Debug.Log("Fired as: " + this.name);
-        GameObject bullet;
 
         // Fetch a bullet from object pooler
-        bullet = bulletPool.GetPooledObject(bulletPoolKey);
+        GameObject newBullet = bulletPool.GetPooledObject(BulletPoolKey);
 
-        if (bullet != null)
+        if (newBullet != null)
         {
 
-            Bullet projectile = bullet.GetComponent<Bullet>();
+            Bullet projectile = newBullet.GetComponent<Bullet>();
 
             // Pass in the damage and penetration values of this gun, to the bullet being shot
             // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
@@ -86,24 +85,24 @@ public abstract class GunData : ScriptableObject
             projectile.UpdateProjectileData(bulletData);
 
             // Set the position to be at the barrel of the gun
-            bullet.transform.position = bulletSpawnPoint.position;
+            newBullet.transform.position = bulletSpawnPoint.position;
 
             // Apply the spread to the bullet's rotation
-            bullet.transform.rotation = CalculateWeaponSpread(bulletSpawnPoint.rotation, bulletSpread * spreadModifier);
+            newBullet.transform.rotation = CalculateWeaponSpread(bulletSpawnPoint.rotation, bulletSpread * spreadModifier);
 
-            bullet.gameObject.SetActive(true);
+            newBullet.gameObject.SetActive(true);
 
             bulletsShot++;
             bulletsLoaded--;
 
-            lastFireTime = Time.time;
+            _lastFireTime = Time.time;
 
             return bulletsLoaded;
 
         }
         else
         {
-            lastFireTime = Time.time;
+            _lastFireTime = Time.time;
             Debug.Log("Could not retrieve a bullet from object pool!");
             return 0;
         }
@@ -111,15 +110,7 @@ public abstract class GunData : ScriptableObject
 
     public virtual bool CheckIfCanFire(float fireRateModifier)
     {
-        if (Time.time - lastFireTime > 1f / fireRate * fireRateModifier)
-        {
-            return true;
-
-        }
-        else
-        {
-            return false;
-        }
+        return Time.time - _lastFireTime > 1f / fireRate * fireRateModifier;
     }
 
 
@@ -155,8 +146,7 @@ public abstract class GunData : ScriptableObject
 
     #region Reloading
     public abstract IEnumerator WaitReload(float reloadTimeModifier);
-
-
+    
     // When the gun is done reloading, refill all the ammo
     // For pump-action shotguns, we might only refill 1 bullet at a time
     public virtual void RefillAmmo()
