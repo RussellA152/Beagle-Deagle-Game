@@ -19,6 +19,8 @@ public abstract class AreaOfEffectData : ScriptableObject
     [Range(0f, 100f)]
     public float areaSpreadY;
 
+    // Should this effect be removed OnTriggerExit()?
+    // Usually true for non-DOT AOEs
     public bool removeEffectOnTriggerExit;
     
 

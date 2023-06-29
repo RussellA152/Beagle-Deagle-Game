@@ -12,9 +12,7 @@ public abstract class GunData : ScriptableObject
 
     [Header("Ammo")]
     public int magazineSize; // how much ammo can this weapon hold for its total magazine?
-
-    //public int maxAmmoInReserve; // how much ammo can this weapon hold for total capacity?
-    //public float totalReloadTime; // how long will this gun take to reload to full?
+    
 
     [Header("Bullet To Shoot")]
     public GameObject bullet; // what bullet is spawned when shooting?
@@ -27,48 +25,22 @@ public abstract class GunData : ScriptableObject
     [Header("Penetration")]
     [Range(1f, 50f)]
     public int penetrationCount; // how many enemies can this gun's bullet pass through?
-
-    private float _lastFireTime;
-
-    #region hiddenProperties
-
-    [HideInInspector]
-    public int bulletsShot; // how much ammo has the player shot since the last reload or refill?
-    [HideInInspector]
-    public int bulletsLoaded; // how much ammo is currently in the magazine?
-
+    
     [HideInInspector]
     public Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
-
-    [HideInInspector]
-    public bool actuallyShooting; // is the player shooting (i.e, not idle or reloading or just moving)
-
-    [HideInInspector]
-    public bool isReloading;
-
+    
     protected int BulletPoolKey;
-
-    #endregion
-
-
+    
     public virtual void OnEnable()
     {
-        // Always reset these values OnEnable because scriptable object data can persist *
-        bulletsShot = 0;
-        bulletsLoaded = magazineSize;
-        isReloading = false;
-        actuallyShooting = false;
-
         BulletPoolKey = bullet.GetComponent<IPoolable>().PoolKey;
-
-        _lastFireTime = 0f;
     }
 
 
     public virtual int Fire(ObjectPooler bulletPool, float damageModifier, float spreadModifier, int penetrationModifier)
     {
-        //Debug.Log("Fired as: " + this.name);
-
+        int bulletsShot = 0;
+        
         // Fetch a bullet from object pooler
         GameObject newBullet = bulletPool.GetPooledObject(BulletPoolKey);
 
@@ -93,45 +65,30 @@ public abstract class GunData : ScriptableObject
             newBullet.gameObject.SetActive(true);
 
             bulletsShot++;
-            bulletsLoaded--;
 
-            _lastFireTime = Time.time;
-
-            return bulletsLoaded;
+            return bulletsShot;
 
         }
-        else
-        {
-            _lastFireTime = Time.time;
-            Debug.Log("Could not retrieve a bullet from object pool!");
-            return 0;
-        }
+        Debug.Log("Could not retrieve a bullet from object pool!");
+        return 0;
     }
 
-    public virtual bool CheckIfCanFire(float fireRateModifier)
+    public virtual bool CheckIfCanFire(float lastTimeFired, float fireRateModifier)
     {
-        return Time.time - _lastFireTime > 1f / fireRate * fireRateModifier;
+        return Time.time - lastTimeFired > 1f / fireRate * fireRateModifier;
     }
 
 
-    public virtual bool CheckAmmo()
+    public virtual bool CheckAmmo(int ammoLoaded)
     {
         // if player has no ammo in reserve... force them to reload, then return false
-        if (bulletsLoaded <= 0f)
+        if (ammoLoaded <= 0f)
         {
             return false;
         }
-        // otherwise if they are not reloading, allow them to shoot
-        else if (!isReloading)
-        {
-
-            actuallyShooting = true;
-            return true;
-        }
-
-        return false;
+        
+        return true;
     }
-
 
     // very simple weapon spread, just add a random offset to the bullet's Y position
     public virtual Quaternion CalculateWeaponSpread(Quaternion spawnPointRotation, float spreadModifier)
@@ -149,10 +106,10 @@ public abstract class GunData : ScriptableObject
     
     // When the gun is done reloading, refill all the ammo
     // For pump-action shotguns, we might only refill 1 bullet at a time
-    public virtual void RefillAmmo()
+    public virtual void RefillAmmo(out int newBulletsLoaded, out int newBulletsShot)
     {
-        bulletsLoaded += bulletsShot;
-        bulletsShot = 0;
+        newBulletsLoaded = magazineSize;
+        newBulletsShot = 0;
     }
 
     #endregion

@@ -22,13 +22,8 @@ public class RegularGunData : GunData
 
     public override IEnumerator WaitReload(float reloadTimeModifier)
     {
-        actuallyShooting = false;
-        isReloading = true;
 
         yield return new WaitForSeconds(totalReloadTime * reloadTimeModifier);
-
-        RefillAmmo();
-
-        isReloading = false;
+        
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AWP Ultimate
   m_EditorClassIdentifier: 
   abilityDamage: 200
-  cooldown: 15
+  cooldown: 5
   duration: 6
   isActive: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}

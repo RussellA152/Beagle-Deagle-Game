@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     //private Abilities playerAbilitiesScript;
 
     [SerializeField]
-    private GunData currentWeaponData;
+    private Gun currentWeapon;
 
     public static PlayerController Instance;
 
@@ -56,9 +56,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        currentWeaponData = GetComponentInChildren<Gun>().weaponData;
+        currentWeapon = GetComponentInChildren<Gun>();
 
-        playerEvents.InvokeNewWeaponEvent(currentWeaponData);
+        playerEvents.InvokeNewWeaponEvent(currentWeapon.weaponData);
 
         playerEvents.InvokeNewStatsEvent(currentPlayerData);
 
@@ -138,14 +138,14 @@ public class PlayerController : MonoBehaviour
     private bool CheckIfAttacking()
     {
         // checking if the player is attacking with their weapon
-        if(currentWeaponData == null)
+        if(currentWeapon == null)
         {
             Debug.Log("WEAPON MISSING!");
             return false;
         }
         else
         {
-            return currentWeaponData.actuallyShooting;
+            return currentWeapon.actuallyShooting;
         }
         
     }

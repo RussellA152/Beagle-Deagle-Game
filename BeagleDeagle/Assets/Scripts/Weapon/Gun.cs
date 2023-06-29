@@ -17,8 +17,21 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     private SpriteRenderer spriteRenderer;
 
     private float _shootInput; // Input for shooting
+    
+    [HideInInspector]
+    public bool actuallyShooting; // is the player shooting (i.e, not idle or reloading or just moving)
+    
+    [HideInInspector]
+    public int bulletsShot; // how much ammo has the player shot since the last reload or refill?
+    
+    [HideInInspector]
+    public int bulletsLoaded; // how much ammo is currently in the magazine?
+
+    [HideInInspector]
+    public bool isReloading;
 
     private float _lastTimeShot;
+    private float _timeElapsedSinceShot;
 
     [SerializeField, NonReorderable]
     private List<DamageModifier> damageModifiers = new List<DamageModifier>(); // A bonus percentage applied to the gun's damage
@@ -42,7 +55,14 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
     private void Start()
     {
-        playerEvents.InvokeUpdateAmmoLoadedText(Mathf.RoundToInt(weaponData.bulletsLoaded * _bonusAmmoLoad));
+        playerEvents.InvokeUpdateAmmoLoadedText(Mathf.RoundToInt(bulletsLoaded * _bonusAmmoLoad));
+
+        _lastTimeShot = 0f;
+        _timeElapsedSinceShot = 0f;
+
+        bulletsShot = 0;
+        
+        bulletsLoaded = weaponData.magazineSize;
     }
 
     private void OnEnable()
@@ -50,17 +70,17 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         playerEvents.playerObtainedNewWeaponEvent += UpdateScriptableObject;
 
         playerEvents.InvokeNewWeaponEvent(weaponData);
-        //UpdateScriptableObject(weaponData);
-        
+
     }
 
     private void Update()
     {
-        _lastTimeShot += Time.deltaTime;
+        //_lastTimeShot += Time.deltaTime;
+        _timeElapsedSinceShot += Time.deltaTime;
 
         // If the player has no ammo loaded into their weapon, begin reloading
         // If the gun is not already reloading, begin a coroutine for the reload
-        if (weaponData.bulletsLoaded <= 0f && !weaponData.isReloading)
+        if (bulletsLoaded <= 0f && !isReloading)
         {
             StartCoroutine(Reload());
             return;
@@ -68,13 +88,13 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
         // If player is holding down "fire" button, then attempt to shoot
         // Also check that the gun's fire rate is ready to shoot
-        if (_shootInput > 0 && weaponData.CheckAmmo() && weaponData.CheckIfCanFire(_bonusFireRate))
+        if (_shootInput > 0 && weaponData.CheckAmmo(bulletsLoaded) && weaponData.CheckIfCanFire(_lastTimeShot, _bonusFireRate))
         {
             Attack();
         }
         else
         {
-            weaponData.actuallyShooting = false;
+            actuallyShooting = false;
         }
     }
     public void OnFire(CallbackContext context)
@@ -85,11 +105,17 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
     public IEnumerator Reload()
     {
+        isReloading = true;
+        actuallyShooting = false;
         // Wait until reload is finished
         yield return StartCoroutine(weaponData.WaitReload(_bonusReloadSpeed));
+        
+        weaponData.RefillAmmo(out bulletsLoaded, out bulletsShot);
+
+        isReloading = false;
 
         // Then call event that ammo has changed
-        playerEvents.InvokeUpdateAmmoLoadedText(weaponData.bulletsLoaded);
+        playerEvents.InvokeUpdateAmmoLoadedText(bulletsLoaded);
     }
 
     // Call reload function when the player presses the reload key
@@ -104,12 +130,17 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         // The bullet will spawn at the barrel of the gun
         weaponData.bulletSpawnPoint = bulletSpawnPoint;
 
-        // Player has shot their gun, so reset lastTimeShot to 0 seconds
-        _lastTimeShot = 0f;
+        int amountShot = weaponData.Fire(ObjectPooler.instance, _bonusDamage, _bonusSpread, _bonusPenetration);
 
-        int ammoLoaded = weaponData.Fire(ObjectPooler.instance, _bonusDamage, _bonusSpread, _bonusPenetration);
+        bulletsShot += amountShot;
 
-        playerEvents.InvokeUpdateAmmoLoadedText(ammoLoaded);
+        bulletsLoaded -= amountShot;
+
+        // Player has shot gun, so reset timeElapsedSinceShot to 0 seconds
+        _timeElapsedSinceShot = 0f;
+        _lastTimeShot = Time.time;
+
+        playerEvents.InvokeUpdateAmmoLoadedText(bulletsLoaded);
     }
 
     // Update the GunData scriptable object to a new one.
@@ -117,18 +148,18 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     public void UpdateScriptableObject(GunData scriptableObject)
     {
         // Refill the ammo of the old weapon data before switching to new data
-        weaponData.RefillAmmo();
+        weaponData.RefillAmmo(out bulletsLoaded, out bulletsShot);
 
         weaponData.bulletSpawnPoint = bulletSpawnPoint;
 
         weaponData = scriptableObject;
 
-        weaponData.bulletsLoaded = Mathf.RoundToInt(weaponData.bulletsLoaded * _bonusAmmoLoad);
+        bulletsLoaded = Mathf.RoundToInt(bulletsLoaded * _bonusAmmoLoad);
 
         spriteRenderer.sprite = weaponData.sprite;
 
         // After swapping to new weapon, show the ammo on the HUD
-        playerEvents.InvokeUpdateAmmoLoadedText(weaponData.bulletsLoaded);
+        playerEvents.InvokeUpdateAmmoLoadedText(bulletsLoaded);
     }
     public GunData GetCurrentData()
     {
@@ -137,7 +168,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
     public float ReturnLastTimeShot()
     {
-        return _lastTimeShot;
+        return _timeElapsedSinceShot;
     }
 
     #region StatModifiers
@@ -212,9 +243,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
         // Give player's weapon this bonus ammo load (this is because bulletsLoaded is only inside of the SO)
         // Refill the player's weapon before applying new ammo load
-        weaponData.RefillAmmo();
-        weaponData.bulletsLoaded = Mathf.RoundToInt(weaponData.bulletsLoaded * _bonusAmmoLoad);
-        playerEvents.InvokeUpdateAmmoLoadedText(weaponData.bulletsLoaded);
+        weaponData.RefillAmmo(out bulletsLoaded, out bulletsShot);
+        
+        bulletsLoaded = Mathf.RoundToInt(bulletsLoaded * _bonusAmmoLoad);
+        playerEvents.InvokeUpdateAmmoLoadedText(bulletsLoaded);
     }
 
     public void RemoveAmmoLoadModifier(AmmoLoadModifier modifierToRemove)

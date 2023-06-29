@@ -16,8 +16,14 @@ public class AWPGunData : GunData
 
     public override IEnumerator WaitReload(float reloadTimeModifier)
     {
-        yield return null;
+        yield break;
 
-        Debug.Log("Cannot reload this weapon!");
+        //Debug.Log("Cannot reload this weapon!");
     }
+
+    // public override void RefillAmmo(out int newBulletsLoaded, out int newBulletsShot)
+    // {
+    //     newBulletsLoaded = 0;
+    //     newBulletsShot = 0;
+    // }
 }
