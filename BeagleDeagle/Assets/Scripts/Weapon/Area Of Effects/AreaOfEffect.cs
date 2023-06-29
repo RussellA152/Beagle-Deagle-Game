@@ -32,20 +32,29 @@ public class AreaOfEffect : MonoBehaviour
         // If this AOE hits what its allowed to affect
         if ((_areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
+            // Target has entered AOE, add them to overlappingTargets dictionary
             AreaOfEffectManager.Instance.AddNewOverlappingTarget(_areaOfEffectData, collision.gameObject);
             
-            if(AreaOfEffectManager.Instance.CheckIfTargetIsOverlapping(_areaOfEffectData, collision.gameObject))
-                _areaOfEffectData.OnAreaEnter(collision.gameObject);
         }
+            
+            
 
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if ((_areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
-            if (AreaOfEffectManager.Instance.RemoveOverlappingTarget(_areaOfEffectData, collision.gameObject) && AreaOfEffectManager.Instance.RemoveFromAffectedHashSet(_areaOfEffectData, collision.gameObject))
-                _areaOfEffectData.OnAreaExit(collision.gameObject);
-
+            // Target has left AOE, so remove them from overlappingTarget dictionary
+            // Also, they are no longer affected by their AOE, so remove them from affectedTargets dictionary (* Not exactly the case for DOT's *)
+            // DOT's will also remove from affectedTargets if they had to reapply their DOT
+            AreaOfEffectManager.Instance.RemoveTargetFromOverlappingDictionary(_areaOfEffectData, collision.gameObject);
+            AreaOfEffectManager.Instance.RemoveTargetFromAffected(_areaOfEffectData, collision.gameObject);
+            
+            // If the target is not standing in any AOE at all, then call OnAreaExit()
+            if(!AreaOfEffectManager.Instance.IsTargetOverlappingAreaOfEffect(_areaOfEffectData, collision.gameObject))
+                if(_areaOfEffectData.removeEffectOnTriggerExit)
+                    _areaOfEffectData.RemoveEffectFromEnemies(collision.gameObject);
+            
         }
 
     }
@@ -55,8 +64,13 @@ public class AreaOfEffect : MonoBehaviour
         // If this AOE hits what its allowed to affect
         if ((_areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
+            // If the target is not obstructed by a wall, and they are not already affected by the AOE's ability (smoke or radiation), then call OnAreaStay()
             if (!CheckObstruction(transform.position, collision.gameObject) && AreaOfEffectManager.Instance.CheckIfTargetCanBeAffected(_areaOfEffectData, collision.gameObject))
-                _areaOfEffectData.OnAreaStay(transform.position, collision.gameObject);
+            {
+                AreaOfEffectManager.Instance.TryAddAffectedTarget(_areaOfEffectData, collision.gameObject);
+                _areaOfEffectData.AddEffectOnEnemies(collision.gameObject);
+            }
+                
             
         }
     }

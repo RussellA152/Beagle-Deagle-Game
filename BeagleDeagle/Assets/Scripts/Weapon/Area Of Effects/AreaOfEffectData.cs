@@ -19,42 +19,17 @@ public abstract class AreaOfEffectData : ScriptableObject
     [Range(0f, 100f)]
     public float areaSpreadY;
 
-
-    ///-///////////////////////////////////////////////////////////
-    /// When the target enters the trigger collider -> Do something
-    ///
-    public virtual void OnAreaEnter(GameObject target)
-    {
-        // NOT SURE HOW TO NOT MAKE THIS EMPTY
-    }
-
-    ///-///////////////////////////////////////////////////////////
-    /// When the target exits the trigger collider -> Do something
-    /// In this case, we remove the target from the overlappingEnemies dictionary
-    ///
-    public virtual void OnAreaExit(GameObject target)
-    {
-        RemoveEffectFromEnemies(target);
-
-    }
-
-    ///-///////////////////////////////////////////////////////////
-    /// Do something WHILE the target is inside of the trigger collider
-    /// Usually, this is where we try to reapply a DOT to an target
-    ///
-    public virtual void OnAreaStay(Vector2 areaSource, GameObject target)
-    {
-        AddEffectOnEnemies(target);
-    }
+    public bool removeEffectOnTriggerExit;
+    
 
     ///-///////////////////////////////////////////////////////////
     /// Add some sort of buff or debuff (or DOT) to the target that is inside of the AOE
     ///
-    protected abstract void AddEffectOnEnemies(GameObject target);
+    public abstract void AddEffectOnEnemies(GameObject target);
 
     ///-///////////////////////////////////////////////////////////
     /// Remove the applied buff or debuff from the target when they exit the AOE
     ///
-    protected abstract void RemoveEffectFromEnemies(GameObject target);
+    public abstract void RemoveEffectFromEnemies(GameObject target);
     
 }

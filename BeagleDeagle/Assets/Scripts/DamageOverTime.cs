@@ -3,25 +3,29 @@ public class DamageOverTime
 {
     public string dotName;
 
-    public float damage; // How much damage does this DOT do?
+    // How much damage does this DOT do?
+    public float damage;
+    
+    // How many times does this DOT apply its damage?
+    public int ticks; 
 
-    //public float duration;
+    // How much time between each DOT tick?
+    public float tickInterval;
 
-    public int ticks; // How many times does this DOT apply its damage?
+    // What created this DOT?
+    public AreaOfEffectData source;
 
-    public float tickInterval; // How much time between each DOT tick?
-
-    public DamageOverTime(string name, float damage, int ticks, float tickInterval)
+    public DamageOverTime(string name, float damage, int ticks, float tickInterval, AreaOfEffectData source)
     {
         dotName = name;
 
         this.damage = damage;
 
-        //this.duration = duration;
-
         this.ticks = ticks;
 
         this.tickInterval = tickInterval;
+
+        this.source = source;
 
     }
 

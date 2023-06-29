@@ -22,26 +22,13 @@ public class RadiationAreaOfEffect : AreaOfEffectData
 
     private void OnEnable()
     {
-        _radiationOverTime = new DamageOverTime(this.name, -1f * radiationDamage, radiationTicks, radiationTickInterval);
+        _radiationOverTime = new DamageOverTime(this.name, -1f * radiationDamage, radiationTicks, radiationTickInterval, this);
     }
-
-    ///-///////////////////////////////////////////////////////////
-    /// When the target enters the radiation AOE, apply a DOT to them,
-    /// then subscribe to an event that will wait until that DOT ends.
-    /// 
-    public override void OnAreaEnter(GameObject target)
-    {
-        IDamageOverTimeHandler damageOverTimeScript = target.GetComponent<IDamageOverTimeHandler>();
-
-        damageOverTimeScript.onDamageOverTimeExpire += ReapplyDOT;
-
-        Debug.Log("Subscribe to DOT event!");
-    }
-
+    
     ///-///////////////////////////////////////////////////////////
     /// Apply DOT to the target
     ///
-    protected override void AddEffectOnEnemies(GameObject target)
+    public override void AddEffectOnEnemies(GameObject target)
     {
         IDamageOverTimeHandler damageOverTimeScript = target.GetComponent<IDamageOverTimeHandler>();
 
@@ -55,26 +42,11 @@ public class RadiationAreaOfEffect : AreaOfEffectData
     /// When the target exits the radiation AOE, unsubscribe from DOT end event.
     /// This prevents the AOE from trying to reapply the DOT when the target leaves the area
     ///
-    protected override void RemoveEffectFromEnemies(GameObject target)
+    public override void RemoveEffectFromEnemies(GameObject target)
     {
-        IDamageOverTimeHandler damageOverTimeScript = target.GetComponent<IDamageOverTimeHandler>();
-
-        damageOverTimeScript.onDamageOverTimeExpire -= ReapplyDOT;
+        // TODO: Not sure what to put here for Radiation
+        // Because it doesn't remove any effects OnTriggerExit
     }
 
-    ///-///////////////////////////////////////////////////////////
-    /// Reapply DOT to target if the DOT that ended originated from this AOE
-    ///
-    private void ReapplyDOT(Tuple<GameObject, DamageOverTime> tuple)
-    {
-        // Check if the DOT that ended was the same as this DOT (radiation)
-        if(tuple.Item2 == _radiationOverTime)
-        {
-            Debug.Log("Reapply DOT NOW! TO " + tuple.Item1.name);
-
-            AddEffectOnEnemies(tuple.Item1);
-        }
-        
-    }
 
 }

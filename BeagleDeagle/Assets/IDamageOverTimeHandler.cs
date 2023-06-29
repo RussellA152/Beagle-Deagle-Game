@@ -6,7 +6,7 @@ using UnityEngine;
 public interface IDamageOverTimeHandler
 {
     // An event that occurs when any DOT effect expires on the entity
-    event Action<Tuple<GameObject, DamageOverTime>> onDamageOverTimeExpire;
+    event Action<DamageOverTime> onDamageOverTimeExpire;
 
     ///-///////////////////////////////////////////////////////////
     /// Apply a damage over time effect to the entity.
