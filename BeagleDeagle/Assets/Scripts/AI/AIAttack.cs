@@ -35,6 +35,7 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
     {
         if (canAttack)
         {
+            // TODO: This is temporary. Change to "whatEnemyAttacks" and GetComponent<IHealth>
             target.GetComponent<PlayerHealth>().ModifyHealth(enemyScriptableObject.attackDamage * bonusDamage);
             StartCoroutine(AttackCooldown());
         }

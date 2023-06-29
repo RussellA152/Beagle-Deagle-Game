@@ -15,6 +15,9 @@ public class DamageOverTime
     // What created this DOT?
     public AreaOfEffectData source;
 
+    ///-///////////////////////////////////////////////////////////
+    /// Every "tickInterval" seconds, apply a certain amount of damage to the entity
+    /// for a "tick" amount of times.
     public DamageOverTime(string name, float damage, int ticks, float tickInterval, AreaOfEffectData source)
     {
         dotName = name;

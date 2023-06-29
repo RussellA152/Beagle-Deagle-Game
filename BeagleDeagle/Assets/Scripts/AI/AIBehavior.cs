@@ -47,7 +47,9 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         agent.updateUpAxis = false;
     }
 
-    // States that an enemy can be in
+    ///-///////////////////////////////////////////////////////////
+    /// All states that an enemy can be in at once
+    /// 
     enum EnemyState
     {
         // Not moving towards player or anyone
@@ -114,6 +116,11 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         }
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Check if the enemy meets conditions to change to a new state.
+    /// For instance, if the enemy is in chase range and not in attack range,
+    /// then switch to chase state
+    /// 
     protected virtual void CheckState()
     {
         if (healthScript.IsDead())
@@ -191,6 +198,9 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
 
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Remove all modifiers when this enemy dies or their gameObject gets disabled
+    /// 
     public void RevertAllModifiersOnEnemy()
     {
         // Remove all movement modifiers inside of movement script

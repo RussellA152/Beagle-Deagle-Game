@@ -18,12 +18,5 @@ public class AWPGunData : GunData
     {
         yield break;
 
-        //Debug.Log("Cannot reload this weapon!");
     }
-
-    // public override void RefillAmmo(out int newBulletsLoaded, out int newBulletsShot)
-    // {
-    //     newBulletsLoaded = 0;
-    //     newBulletsShot = 0;
-    // }
 }

@@ -29,7 +29,7 @@ public class MightyFootBullet : BulletData
         objectHit.GetComponent<IStunnable>().GetStunned(stunDuration);
 
         Vector2 knockbackDirection = bulletRb.velocity.normalized;
-        objectHit.GetComponent<IKnockBackable>().ApplyKnockback(knockbackDirection, knockbackForce);
+        objectHit.GetComponent<IKnockBackable>().ApplyKnockBack(knockbackDirection, knockbackForce);
 
     }
 

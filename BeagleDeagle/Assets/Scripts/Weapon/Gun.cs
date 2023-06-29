@@ -91,6 +91,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         if (_shootInput > 0 && weaponData.CheckAmmo(bulletsLoaded) && weaponData.CheckIfCanFire(_lastTimeShot, _bonusFireRate))
         {
             Attack();
+            actuallyShooting = true;
         }
         else
         {

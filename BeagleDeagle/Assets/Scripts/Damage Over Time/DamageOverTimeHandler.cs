@@ -5,32 +5,27 @@ using UnityEngine;
 
 public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
 {
-    // The health script of this entity
+    // The health script of this target
     private IHealth _healthScript;
 
-    // All damage over time effects that have been applied to this entity
+    // All damage over time effects that have been applied to this target
     [SerializeField, NonReorderable]
     private List<DamageOverTime> damageOverTimeEffects = new List<DamageOverTime>();
-
-    // An event that occurs when any damage over time effect expires
-    public event Action<DamageOverTime> onDamageOverTimeExpire;
 
     private void OnEnable()
     {
         _healthScript ??= GetComponent<IHealth>();
-        onDamageOverTimeExpire += ReapplyDOT;
     }
-
-    private void OnDisable()
-    {
-        onDamageOverTimeExpire -= ReapplyDOT;
-    }
+    
 
     public void RevertAllModifiers()
     {
         damageOverTimeEffects.Clear();
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Add a new DamageOverTime effect to this target,
+    /// then start a coroutine that will wait some time to remove it.
     public void AddDamageOverTime(DamageOverTime dotToAdd)
     {
         damageOverTimeEffects.Add(dotToAdd);
@@ -39,20 +34,22 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
         StartCoroutine(TakeDamageOverTime(dotToAdd));
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Remove the DamageOverTime effect from this target, then check 
+    /// if it needs to be reapplied.
     public void RemoveDamageOverTime(DamageOverTime dotToRemove)
     {
         damageOverTimeEffects.Remove(dotToRemove);
-
-        if (onDamageOverTimeExpire != null)
-        {
-            //Tuple<GameObject, DamageOverTime> tuple = Tuple.Create(this.gameObject, dotToRemove);
-            
-            onDamageOverTimeExpire(dotToRemove);
-        }
         
+        // Check if we need to reapply the DOT
+        ReapplyDot(dotToRemove);
+
 
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Make the target take damage (or heal) every "tickInterval" seconds for a 
+    /// "tick" amount of times.
     public IEnumerator TakeDamageOverTime(DamageOverTime dot)
     {
         float ticks = dot.ticks;
@@ -71,9 +68,10 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
     }
 
     ///-///////////////////////////////////////////////////////////
-    /// Reapply DOT to target if the DOT that ended originated from this AOE
+    /// Reapply the expired DOT to this target, if they are still colliding with the
+    /// AOE that originally applied it.
     ///
-    private void ReapplyDOT(DamageOverTime dotExpired)
+    private void ReapplyDot(DamageOverTime dotExpired)
     {
         //AreaOfEffectData sourceOfDOT = tuple.Item2.source;
         AreaOfEffectData sourceOfDot = dotExpired.source;

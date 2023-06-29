@@ -50,7 +50,7 @@ public class AreaOfEffect : MonoBehaviour
             AreaOfEffectManager.Instance.RemoveOverlappingTarget(_areaOfEffectData, collision.gameObject);
 
             // If the target is not standing in any AOE at all, then call OnAreaExit()
-            if (!AreaOfEffectManager.Instance.IsTargetOverlappingAreaOfEffect(_areaOfEffectData, collision.gameObject) && !AreaOfEffectManager.Instance.CheckIfTargetIsAffected(_areaOfEffectData, collision.gameObject))
+            if (!AreaOfEffectManager.Instance.IsTargetOverlappingAreaOfEffect(_areaOfEffectData, collision.gameObject) && AreaOfEffectManager.Instance.CheckIfTargetIsAffected(_areaOfEffectData, collision.gameObject))
             {
                 // Only remove effect if this type of AOE is required to
                 if(_areaOfEffectData.removeEffectOnTriggerExit)
@@ -70,7 +70,7 @@ public class AreaOfEffect : MonoBehaviour
         if ((_areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
             // If the target is not obstructed by a wall, and they are not already affected by the AOE's ability (smoke or radiation), then call OnAreaStay()
-            if (!CheckObstruction(transform.position, collision.gameObject) && AreaOfEffectManager.Instance.CheckIfTargetIsAffected(_areaOfEffectData, collision.gameObject))
+            if (!CheckObstruction(transform.position, collision.gameObject) && !AreaOfEffectManager.Instance.CheckIfTargetIsAffected(_areaOfEffectData, collision.gameObject))
             {
                 AreaOfEffectManager.Instance.TryAddAffectedTarget(_areaOfEffectData, collision.gameObject);
                 _areaOfEffectData.AddEffectOnEnemies(collision.gameObject);

@@ -102,14 +102,13 @@ public class AreaOfEffectManager : MonoBehaviour
 
 
     ///-///////////////////////////////////////////////////////////
-    /// Check if the target has not already been affected by the AOE's effect
-    /// If not, then add them to the affectedTargets dictionary
+    /// Return true if the target is inside of the affectedTarget's hashset
     /// 
     public bool CheckIfTargetIsAffected(AreaOfEffectData areaOfEffect, GameObject target)
     {
         HashSet<GameObject> affectedTargetsHashSet = _affectedTargets[areaOfEffect];
 
-        return !affectedTargetsHashSet.Contains(target);
+        return affectedTargetsHashSet.Contains(target);
     }
 
     public void TryAddAffectedTarget(AreaOfEffectData areaOfEffect, GameObject target)

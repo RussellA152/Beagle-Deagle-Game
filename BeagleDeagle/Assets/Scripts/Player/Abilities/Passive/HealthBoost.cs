@@ -11,23 +11,10 @@ public class HealthBoost : PassiveAbilityData
     public override void ActivatePassive(GameObject player)
     {
         IHealth playerHealth = player.GetComponent<IHealth>();
-
-
-        if (playerHealth != null)
-        {
-            // Option 1
-            playerHealth.AddMaxHealthModifier(new MaxHealthModifier(this.name, increaseAmount));
-
-        }
-
-
-        //// Option 2
-        //IModifier modifierScript = player.GetComponent<IModifier>();
-
-        //if(modifierScript != null)
-        //{
-        //    modifierScript.ModifyMaxHealthModifier(increaseAmount);
-        //}      
+        
+        // Add max health modifier to the player
+        // Increases player's max health
+        playerHealth?.AddMaxHealthModifier(new MaxHealthModifier(this.name, increaseAmount));
     }
 }
 

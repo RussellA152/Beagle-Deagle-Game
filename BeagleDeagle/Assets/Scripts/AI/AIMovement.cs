@@ -31,37 +31,50 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
         StopAllCoroutines();
     }
 
-    // Disable the enemy's ability to move
+    ///-///////////////////////////////////////////////////////////
+    /// Disable the enemy's ability to move.
+    /// Then start a coroutine to wait some time and remove the stun effect
+    /// 
     public void GetStunned(float duration)
     {       
         if(!isStunned)
             StartCoroutine(RemoveStunCoroutine(duration));
     }
 
-    public void ApplyKnockback(Vector2 force, Vector2 direction)
+    ///-///////////////////////////////////////////////////////////
+    /// Apply a specified amount of force in a direction to the enemy.
+    /// 
+    public void ApplyKnockBack(Vector2 force, Vector2 direction)
     {
         agent.isStopped = true;
 
         rb.AddForce(direction * force, ForceMode2D.Impulse);
 
-        StartCoroutine(DampKnockBackForce());
+        StartCoroutine(WaitForKnockBackToFinish());
     }
 
-    // Slow down knockback effect on this enemy
-    // Without this, enemies will be knocked back forever and won't slow down
-    public IEnumerator DampKnockBackForce()
-    {
-        yield return new WaitForSeconds(0.1f); // Wait for a short duration before damping the force
 
-        while (rb.velocity.magnitude > 0.1f) // Continue waiting until velocity becomes small
+    ///-///////////////////////////////////////////////////////////
+    /// Wait until the enemy's velocity reaches near zero to allow them to move again
+    /// 
+    public IEnumerator WaitForKnockBackToFinish()
+    {
+        // Wait for a short duration before checking
+        yield return new WaitForSeconds(0.1f);
+
+        // Continue waiting until velocity becomes small
+        while (rb.velocity.magnitude > 0.1f) 
         {
             yield return null;
         }
 
+        // Allow enemy to move again
         agent.isStopped = false;
     }
 
-    // Wait some time, then remove stun from enemy
+    ///-///////////////////////////////////////////////////////////
+    /// Wait some time, then remove stun from enemy
+    /// 
     public IEnumerator RemoveStunCoroutine(float duration)
     {
         isStunned = true;
@@ -92,5 +105,4 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
         // Remove speed modifiers from list when spawning
         movementSpeedModifiers.Clear();
     }
-
 }

@@ -5,24 +5,19 @@ using UnityEngine;
 
 public interface IDamageOverTimeHandler
 {
-    // An event that occurs when any DOT effect expires on the entity
-    event Action<DamageOverTime> onDamageOverTimeExpire;
-
     ///-///////////////////////////////////////////////////////////
-    /// Apply a damage over time effect to the entity.
-    /// This starts the "TakeDamageOverTime" coroutine
-    ///
+    /// Add a new DamageOverTime effect to this target,
+    /// then start a coroutine that will wait some time to remove it.
     public void AddDamageOverTime(DamageOverTime dotToAdd);
 
     ///-///////////////////////////////////////////////////////////
-    /// Remove a damage over time effect from the entity.
-    /// This will invoke the "OnDamageOverTimeExpire" event
-    ///
+    /// Remove the DamageOverTime effect from this target, then check 
+    /// if it needs to be reapplied.
     public void RemoveDamageOverTime(DamageOverTime dotToRemove);
 
     ///-///////////////////////////////////////////////////////////
-    /// A coroutine that counts down every tickInterval seconds and hurts/heals the entity
-    ///
+    /// Make the target take damage (or heal) every "tickInterval" seconds for a 
+    /// "tick" amount of times.
     public IEnumerator TakeDamageOverTime(DamageOverTime dot);
 
 }
