@@ -4,28 +4,30 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public class UltimateAbility : MonoBehaviour
+public abstract class UltimateAbility<T> : MonoBehaviour where T: UltimateAbilityData
 {
     [SerializeField]
-    private PlayerEventSO playerEvents;
+    protected PlayerEvents playerEvents;
+    
+    [SerializeField]
+    protected T ultimateData;
 
     [SerializeField]
-    private UltimateAbilityData ultimateData;
+    protected bool canUseUltimate;
+    
 
-    private bool canUseUltimate;
-
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         StartCoroutine(WaitForUse());
         StartCoroutine(CountDownCooldown());
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         playerEvents.InvokeUltimateNameUpdatedEvent(ultimateData.name);
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         StopAllCoroutines();
     }
@@ -38,35 +40,32 @@ public class UltimateAbility : MonoBehaviour
             {
                 Debug.Log("Activate ultimate!");
 
-                canUseUltimate = false;
-
-                ultimateData.ActivateUltimate(gameObject);
-
-                StartCoroutine(WaitForUse());
-
-                StartCoroutine(CountDownCooldown());
+                UltimateAction(gameObject);
+                
+                //StartCoroutine(WaitForUse());
+                //StartCoroutine(CountDownCooldown());
 
             }
         }
     }
 
-    public IEnumerator WaitForUse()
+    protected abstract void UltimateAction(GameObject player);
+
+
+    protected virtual IEnumerator WaitForUse()
     {
         canUseUltimate = false;
-
-        yield return StartCoroutine(ultimateData.ActivationCooldown());
+        
+        yield return new WaitForSeconds(ultimateData.cooldown);
 
         canUseUltimate = true;
+        
 
         Debug.Log("Can use ultimate now!");
     }
 
-    public IEnumerator CountDownCooldown()
+    protected virtual IEnumerator CountDownCooldown()
     {
-        // Wait until ultimate is no longer active to begin cooldown
-        while (ultimateData.isActive)
-            yield return null;
-
         float timeLeft = ultimateData.cooldown; // Ex. 5 seconds until cooldown
 
         // If the cooldown is 0 seconds or less, don't continue further

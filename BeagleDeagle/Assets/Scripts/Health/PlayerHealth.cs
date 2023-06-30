@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
 {
     [SerializeField]
-    private PlayerEventSO playerEvents;
+    private PlayerEvents playerEvents;
 
     //private IPlayerStatModifier playerStatModifierScript;
 

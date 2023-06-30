@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private PlayerState state;
 
     [SerializeField]
-    private PlayerEventSO playerEvents;
+    private PlayerEvents playerEvents;
 
     [SerializeField]
     private PlayerInput playerInput;

@@ -14,14 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   fireRate: 2
-  magazineSize: 5
+  magazineSize: 3
   bullet: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   bulletData: {fileID: 11400000, guid: 78505bd38dfc3ca4ea874939b519bf85, type: 2}
   bulletSpread: 0.5
   penetrationCount: 50
-  bulletsShot: 0
-  bulletsLoaded: 5
   bulletSpawnPoint: {fileID: 0}
-  actuallyShooting: 0
-  isReloading: 0
   ultimateAbilityData: {fileID: 11400000, guid: 42f995ffd0be09f4486e341d1899a190, type: 2}

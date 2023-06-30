@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "NewAreaOfEffect", menuName = "ScriptableObjects/Area of Effects/Slow Smoke")]
 public class SmokeAreaOfEffect : AreaOfEffectData
 {
     // A scriptable object for the smoke grenade utility (contains duration)
-    public SmokeBombUtility smokeBombData;
+    [FormerlySerializedAs("smokeBombData")] public SmokeGrenadeUtilityData smokeGrenadeData;
 
     // A positive value representing how much to decrease the enemy's movement speed by (%)
     [Header("Effects On Target")]

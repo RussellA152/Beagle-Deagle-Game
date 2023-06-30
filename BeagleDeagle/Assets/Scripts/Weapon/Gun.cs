@@ -6,7 +6,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 {
     [SerializeField]
-    private PlayerEventSO playerEvents;
+    private PlayerEvents playerEvents;
 
     public GunData weaponData;
 
@@ -67,7 +67,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
     private void OnEnable()
     {
-        playerEvents.playerObtainedNewWeaponEvent += UpdateScriptableObject;
+        playerEvents.onPlayerSwitchedWeapon += UpdateScriptableObject;
 
         playerEvents.InvokeNewWeaponEvent(weaponData);
 

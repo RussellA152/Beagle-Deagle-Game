@@ -15,6 +15,8 @@ MonoBehaviour:
   abilityDamage: 200
   cooldown: 5
   duration: 6
-  isActive: 0
+  startTime: 0.5
+  activationType: 1
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   awpGunData: {fileID: 11400000, guid: fa8fd2ad5ce7d5741b9621155f0030b6, type: 2}
+  startingTime: 0.5

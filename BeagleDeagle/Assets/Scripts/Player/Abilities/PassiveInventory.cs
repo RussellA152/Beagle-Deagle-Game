@@ -7,7 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class PassiveInventory : MonoBehaviour
 {
     [SerializeField]
-    private PlayerEventSO playerEvents;
+    private PlayerEvents playerEvents;
 
     // a list of the player's passive abilities
     [SerializeField]

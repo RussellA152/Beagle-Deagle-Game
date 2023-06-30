@@ -117,7 +117,7 @@ public class Bullet : MonoBehaviour, IPoolable
     // Update the damage and penetration values
     public void UpdateWeaponValues(float damage, int penetration)
     {
-        Debug.Log(damage);
+        //Debug.Log(damage);
         damagePerHit += damage;
 
         penetrationCount += penetration;

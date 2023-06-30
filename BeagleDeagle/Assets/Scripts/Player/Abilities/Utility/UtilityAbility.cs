@@ -7,7 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class UtilityAbility : MonoBehaviour
 {
     [SerializeField]
-    private PlayerEventSO playerEvents;
+    private PlayerEvents playerEvents;
 
     [SerializeField]
     private UtilityAbilityData utilityData;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// A powerful ability that is unique to each playable character. Similar to utility abilities, an ultimate ability has a cooldown
@@ -9,22 +10,19 @@ using UnityEngine;
 
 public abstract class UltimateAbilityData : AbilityData
 {
+    [Range(0f, 3f)]
+    public float startTime;
 
-    [HideInInspector]
-    public bool isActive;
+    // public ActivationType activationType;
+    //
+    // public enum ActivationType
+    // {
+    //     Immediate,
+    //     
+    //     Duration
+    // }
 
-    private void OnEnable()
-    {
-        isActive = false;
-    }
-
-    private void OnDisable()
-    {
-        isActive = false;
-    }
-
-    public abstract void ActivateUltimate(GameObject player);
-
-    public abstract IEnumerator ActivationCooldown();
+    //public abstract IEnumerator ActivateUltimate(GameObject player);
+    
 
 }

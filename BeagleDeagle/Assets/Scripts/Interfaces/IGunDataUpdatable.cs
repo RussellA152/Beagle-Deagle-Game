@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IGunDataUpdatable : IDataUpdatable<GunData>
 {
-
+    public GunData GetCurrentData();
 }

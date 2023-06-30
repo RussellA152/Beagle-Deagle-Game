@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: NewNukeUltimate
   m_EditorClassIdentifier: 
   abilityDamage: 1000
-  cooldown: 5
-  duration: 5
-  isActive: 0
+  cooldown: 3
+  duration: 6
+  startTime: 0
   prefab: {fileID: 8164879991046117895, guid: aa33ae65cdafcb0459a60d94822c128b, type: 3}
   nuclearBombData: {fileID: 11400000, guid: 76af1c12408bb984e8e85236fff79b1d, type: 2}

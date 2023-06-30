@@ -7,7 +7,7 @@ using System.Linq;
 
 public class WaveGenerator : MonoBehaviour
 {
-    public WaveBeginEventSO waveBegan;
+    public WaveBeginEvents waveBegan;
 
     public OffScreenSpawner offScreenSpawnerScript;
 

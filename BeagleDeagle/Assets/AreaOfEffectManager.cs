@@ -27,13 +27,13 @@ public class AreaOfEffectManager : MonoBehaviour
         // Create singleton instance
         if (Instance != null)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             return;
         }
 
         Instance = this;
 
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnDisable()

@@ -11,10 +11,10 @@ public class TestHUD : MonoBehaviour
 {
     [Header("Event Systems")]
     [SerializeField]
-    private WaveBeginEventSO wavesBegan;
+    private WaveBeginEvents wavesBegan;
 
     [SerializeField]
-    private PlayerEventSO playerEvents;
+    private PlayerEvents playerEvents;
 
     [Header("Text Fields")]
     [SerializeField]
@@ -49,19 +49,19 @@ public class TestHUD : MonoBehaviour
     {
         wavesBegan.changeHUDTextEvent += UpdateHudText;
 
-        playerEvents.currentHealthChangedEvent += UpdateCurrentHealthText;
+        playerEvents.onPlayerCurrentHealthChanged += UpdateOnPlayerCurrentHealthText;
 
-        playerEvents.maxHealthChangedEvent += UpdateMaxHealthText;
+        playerEvents.onPlayerMaxHealthChanged += UpdateOnPlayerMaxHealthText;
 
-        playerEvents.playerUtilityUsesUpdatedEvent += UpdateUtilityUsesText;
+        playerEvents.onPlayerUtilityUsesUpdated += UpdateUtilityUsesText;
 
-        playerEvents.playerUtilityNameChangeEvent += UpdateUtilityNameText;
+        playerEvents.onPlayerUtilityNameChanged += UpdateUtilityNameText;
 
-        playerEvents.playerBulletsLoadedChangedEvent += UpdateAmmoText;
+        playerEvents.onPlayerBulletsLoadedChanged += UpdateAmmoText;
 
-        playerEvents.playerUltimateCooldownEvent += UpdateUltimateCooldownText;
+        playerEvents.onPlayerUltimateAbilityCooldown += UpdateUltimateAbilityCooldownText;
 
-        playerEvents.playerUltimateNameChangeEvent += UpdateUltimateNameText;
+        playerEvents.onPlayerUltimateAbilityNameChanged += UpdateUltimateAbilityNameText;
 
     }
 
@@ -69,27 +69,27 @@ public class TestHUD : MonoBehaviour
     {
         wavesBegan.changeHUDTextEvent -= UpdateHudText;
 
-        playerEvents.currentHealthChangedEvent -= UpdateCurrentHealthText;
+        playerEvents.onPlayerCurrentHealthChanged -= UpdateOnPlayerCurrentHealthText;
 
-        playerEvents.maxHealthChangedEvent -= UpdateMaxHealthText;
+        playerEvents.onPlayerMaxHealthChanged -= UpdateOnPlayerMaxHealthText;
 
-        playerEvents.playerUtilityUsesUpdatedEvent -= UpdateUtilityUsesText;
+        playerEvents.onPlayerUtilityUsesUpdated -= UpdateUtilityUsesText;
 
-        playerEvents.playerUtilityNameChangeEvent -= UpdateUtilityNameText;
+        playerEvents.onPlayerUtilityNameChanged -= UpdateUtilityNameText;
 
-        playerEvents.playerBulletsLoadedChangedEvent -= UpdateAmmoText;
+        playerEvents.onPlayerBulletsLoadedChanged -= UpdateAmmoText;
 
-        playerEvents.playerUltimateCooldownEvent -= UpdateUltimateCooldownText;
+        playerEvents.onPlayerUltimateAbilityCooldown -= UpdateUltimateAbilityCooldownText;
 
-        playerEvents.playerUltimateNameChangeEvent -= UpdateUltimateNameText;
+        playerEvents.onPlayerUltimateAbilityNameChanged -= UpdateUltimateAbilityNameText;
     }
 
-    public void UpdateCurrentHealthText(float currentHealth)
+    public void UpdateOnPlayerCurrentHealthText(float currentHealth)
     {
         currentHealthText.text = currentHealth.ToString();
     }
 
-    public void UpdateMaxHealthText(float maxHealth)
+    public void UpdateOnPlayerMaxHealthText(float maxHealth)
     {
         maxHealthText.text = maxHealth.ToString();
     }
@@ -114,12 +114,12 @@ public class TestHUD : MonoBehaviour
         utilityNameText.text = name;
     }
 
-    public void UpdateUltimateCooldownText(float timeLeft)
+    public void UpdateUltimateAbilityCooldownText(float timeLeft)
     {
         ultimateCooldownText.text = ((int) timeLeft).ToString() + " seconds";
     }
 
-    public void UpdateUltimateNameText(string name)
+    public void UpdateUltimateAbilityNameText(string name)
     {
         Debug.Log("Name is: " + name);
         ultimateNameText.text = name;

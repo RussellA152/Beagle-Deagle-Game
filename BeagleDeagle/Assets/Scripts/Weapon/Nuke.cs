@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Nuke : Explosive<NuclearBomb>
+public class Nuke : Explosive<NukeData>
 {
     private bool explosionHappening = false;
 
@@ -46,7 +46,7 @@ public class Nuke : Explosive<NuclearBomb>
 
     }
 
-    public override void UpdateExplosiveData(NuclearBomb scriptableObject)
+    public override void UpdateExplosiveData(NukeData scriptableObject)
     {
         base.UpdateExplosiveData(scriptableObject);
     }
