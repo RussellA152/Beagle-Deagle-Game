@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "NewAreaOfEffect", menuName = "ScriptableObjects/Area of Effects/Slow Smoke")]
-public class SmokeAreaOfEffect : AreaOfEffectData
+public class SmokeAreaOfEffectData : AreaOfEffectData
 {
     // A scriptable object for the smoke grenade utility (contains duration)
     [FormerlySerializedAs("smokeBombData")] public SmokeGrenadeUtilityData smokeGrenadeData;

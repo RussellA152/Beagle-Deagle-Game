@@ -11,19 +11,20 @@ public abstract class UltimateAbility<T> : MonoBehaviour where T: UltimateAbilit
     
     [SerializeField]
     protected T ultimateData;
-
-    [SerializeField]
-    protected bool canUseUltimate;
+    
+    private bool _canUseUltimate;
     
 
     protected virtual void OnEnable()
     {
-        StartCoroutine(WaitForUse());
+        StartCoroutine(Cooldown());
         StartCoroutine(CountDownCooldown());
     }
 
     protected virtual void Start()
     {
+        _canUseUltimate = false;
+        
         playerEvents.InvokeUltimateNameUpdatedEvent(ultimateData.name);
     }
 
@@ -36,55 +37,52 @@ public abstract class UltimateAbility<T> : MonoBehaviour where T: UltimateAbilit
     {
         if (inputValue.performed)
         {
-            if (canUseUltimate)
+            if (_canUseUltimate)
             {
                 Debug.Log("Activate ultimate!");
 
                 UltimateAction(gameObject);
                 
-                //StartCoroutine(WaitForUse());
-                //StartCoroutine(CountDownCooldown());
-
+                _canUseUltimate = false;
+                
             }
         }
     }
 
     protected abstract void UltimateAction(GameObject player);
 
-
-    protected virtual IEnumerator WaitForUse()
+    protected IEnumerator Cooldown()
     {
-        canUseUltimate = false;
-        
         yield return new WaitForSeconds(ultimateData.cooldown);
 
-        canUseUltimate = true;
+        _canUseUltimate = true;
         
-
-        Debug.Log("Can use ultimate now!");
+        Debug.Log("Ultimate is ready.");
     }
 
-    protected virtual IEnumerator CountDownCooldown()
+    
+
+    protected IEnumerator CountDownCooldown()
     {
         float timeLeft = ultimateData.cooldown; // Ex. 5 seconds until cooldown
-
+    
         // If the cooldown is 0 seconds or less, don't continue further
         if (timeLeft <= 0f)
             yield break;
-
+    
         playerEvents.InvokeUltimateAbilityCooldownEvent(timeLeft);
-
+    
         // Decrement the cooldown by 1 second
         // Invoke event system that takes in the amount of time left on the ultimate's cooldown
         while (timeLeft > 0f)
         {
             yield return new WaitForSeconds(1f);
-
+    
             timeLeft--;
-
+    
             playerEvents.InvokeUltimateAbilityCooldownEvent(timeLeft);
         }
-
+    
         playerEvents.InvokeUltimateAbilityCooldownEvent(0f);
     }
 }

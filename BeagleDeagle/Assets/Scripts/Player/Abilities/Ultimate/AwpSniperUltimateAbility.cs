@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 {
-    //private bool _firstTimeUse;
-
     private IGunDataUpdatable playerGunScript;
 
     private GunData _previousWeaponData;
     
     protected bool isActive;
+
+    private Coroutine durationCoroutine;
 
     protected override void Start()
     {
@@ -46,19 +46,25 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 
         playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
 
-        StartCoroutine(WaitForUse());
-        //StartCoroutine(CountDownCooldown());
+        durationCoroutine = StartCoroutine(Duration());
 
     }
     
     public void CheckAmmoLoad(int ammoLoad)
     {
         // Only check ammo load when the gun that the player has is the AWP sniper
-        if(isActive &&  ammoLoad<= 0)
+        if(isActive &&  ammoLoad <= 0)
         {
             Debug.Log("AWP IS OUT OF AMMO!");
             
+            StopCoroutine(durationCoroutine);
+            
             ReturnOriginalWeapon();
+
+            StartCoroutine(Cooldown());
+            StartCoroutine(CountDownCooldown());
+            
+            
         
             playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
         }
@@ -91,38 +97,21 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 
     }
 
-    protected override IEnumerator WaitForUse()
+    private IEnumerator Duration()
     {
-        canUseUltimate = false;
-        
-        // If the player currently has the AWP sniper, then wait until the duration ends to give back their original weapon
         if (isActive)
         {
             yield return new WaitForSeconds(ultimateData.duration);
-
             ReturnOriginalWeapon();
-            
+
+            StartCoroutine(Cooldown());
+            StartCoroutine(CountDownCooldown());
+
+
         }
-        Debug.Log("Start waiting for awp's cooldown!                 1");
-        
-        StartCoroutine(CountDownCooldown());
-        
-        yield return new WaitForSeconds(ultimateData.cooldown);
-
-        canUseUltimate = true;
-        Debug.Log("AWP ULTIMATE READY!");
 
     }
 
-    protected override IEnumerator CountDownCooldown()
-    {
-        // Wait until ultimate is no longer active to begin cooldown
-        // while (isActive)
-        //     yield return null;
-    
-        // Call the base implementation of the method
-        yield return base.CountDownCooldown();
-    }
 
 }
     

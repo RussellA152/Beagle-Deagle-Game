@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewAreaOfEffect", menuName = "ScriptableObjects/Area of Effects/Nuke Radiation")]
-public class RadiationAreaOfEffect : AreaOfEffectData
+public class RadiationAreaOfEffectData : AreaOfEffectData
 {
+    [Header("Damage Over Time Values")]
     // How much damage does this do to enemies per tick?
     [Range(0f,100f)]
     public float radiationDamage;

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "NewProjectile", menuName = "ScriptableObjects/Projectile/MightyFootBullet")]
-public class MightyFootBullet : BulletData
+public class MightyFootBulletData : BulletData
 {
     [Header("Utility Ability That Activates This")]
     [SerializeField]

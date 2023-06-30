@@ -9,7 +9,7 @@ public class MightyFootUtility : UtilityAbilityData
     public GameObject prefab;
 
     [Header("Projectile Data")]
-    public MightyFootBullet mightyFootData;
+    public MightyFootBulletData mightyFootData;
 
     [Header("Offset From Player Position")]
     public Vector2 offset; // Offset applied to Mighty Foot projectile when this ability is activated
