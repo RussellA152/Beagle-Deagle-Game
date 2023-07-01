@@ -28,8 +28,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private Gun currentWeapon;
-
-    public static PlayerController Instance;
+    
 
     // states that an enemy can be in
     public enum PlayerState
@@ -58,7 +57,7 @@ public class PlayerController : MonoBehaviour
     {
         currentWeapon = GetComponentInChildren<Gun>();
 
-        playerEvents.InvokeNewWeaponEvent(currentWeapon.weaponData);
+        playerEvents.InvokeNewWeaponEvent(currentWeapon.GetCurrentData());
 
         playerEvents.InvokeNewStatsEvent(currentPlayerData);
 
@@ -71,14 +70,14 @@ public class PlayerController : MonoBehaviour
         state = PlayerState.Idle;
 
 
-        if(Instance != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        Instance = this;
+        // if(Instance != null)
+        // {
+        //     Destroy(this.gameObject);
+        //     return;
+        // }
+        // Instance = this;
         
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
     }
 
     private void Update()
@@ -145,7 +144,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            return currentWeapon.actuallyShooting;
+            return currentWeapon.CheckIfIsShooting();
         }
         
     }

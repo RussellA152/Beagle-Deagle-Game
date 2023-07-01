@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Deagle Beagle Data
   m_EditorClassIdentifier: 
   animatorController: {fileID: 0}
-  maxHealth: 2500
+  maxHealth: 500
   movementSpeed: 10

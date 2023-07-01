@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 2912267811165790606}
   - component: {fileID: 7895175864974104758}
   - component: {fileID: 5313635083943124193}
-  - component: {fileID: 5966119391847160325}
+  - component: {fileID: 8415524520585413472}
   - component: {fileID: 787244964802426978}
   - component: {fileID: 5084828282012666581}
   - component: {fileID: 5313635083943124192}
@@ -233,7 +233,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
---- !u!114 &5966119391847160325
+--- !u!114 &8415524520585413472
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,11 +242,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5313635083943124204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f2bde6943e4c0243b3f2d56c3048c11, type: 3}
+  m_Script: {fileID: 11500000, guid: 7440f012e8e22724eadb35b2e8d95bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   utilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
+  prefab: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   utilityCooldownModifiers: []
   utilityUsesModifiers: []
 --- !u!114 &787244964802426978
@@ -278,7 +279,6 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   passives:
   - {fileID: 11400000, guid: 05c221c08f911334ba6af2abfddb31cb, type: 2}
-  - {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}
 --- !u!114 &5313635083943124192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,8 +410,8 @@ MonoBehaviour:
     m_ActionName: Player/Reload[/Keyboard/r]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5966119391847160325}
-        m_TargetAssemblyTypeName: UtilityAbility, Assembly-CSharp
+      - m_Target: {fileID: 8415524520585413472}
+        m_TargetAssemblyTypeName: UtilityAbility`1[[MightyFootUtilityData, Assembly-CSharp
         m_MethodName: ActivateUtility
         m_Mode: 0
         m_Arguments:
@@ -975,6 +975,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7358910972957582640, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
+      propertyPath: weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 487a1b6c73e208344acd0c1c91b30cbc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
 --- !u!4 &332774463098060846 stripped

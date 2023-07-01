@@ -17,7 +17,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour where T: UltimateAbilit
 
     protected virtual void OnEnable()
     {
-        StartCoroutine(Cooldown());
+        StartCoroutine(UltimateCooldown());
         StartCoroutine(CountDownCooldown());
     }
 
@@ -33,6 +33,9 @@ public abstract class UltimateAbility<T> : MonoBehaviour where T: UltimateAbilit
         StopAllCoroutines();
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// When player presses 'Q' or ultimate button, 
+    /// activate the ultimate ability associated with the character
     public void ActivateUltimate(CallbackContext inputValue)
     {
         if (inputValue.performed)
@@ -51,7 +54,10 @@ public abstract class UltimateAbility<T> : MonoBehaviour where T: UltimateAbilit
 
     protected abstract void UltimateAction(GameObject player);
 
-    protected IEnumerator Cooldown()
+    ///-///////////////////////////////////////////////////////////
+    /// Wait some time to allow player to use ultimate ability again
+    /// 
+    protected IEnumerator UltimateCooldown()
     {
         yield return new WaitForSeconds(ultimateData.cooldown);
 
@@ -64,7 +70,8 @@ public abstract class UltimateAbility<T> : MonoBehaviour where T: UltimateAbilit
 
     protected IEnumerator CountDownCooldown()
     {
-        float timeLeft = ultimateData.cooldown; // Ex. 5 seconds until cooldown
+        // Ex. 5 seconds until cooldown
+        float timeLeft = ultimateData.cooldown;
     
         // If the cooldown is 0 seconds or less, don't continue further
         if (timeLeft <= 0f)
@@ -73,7 +80,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour where T: UltimateAbilit
         playerEvents.InvokeUltimateAbilityCooldownEvent(timeLeft);
     
         // Decrement the cooldown by 1 second
-        // Invoke event system that takes in the amount of time left on the ultimate's cooldown
+        // Invoke event system that takes in the amount of time left on the ultimate's cooldown (displays on the HUD)
         while (timeLeft > 0f)
         {
             yield return new WaitForSeconds(1f);

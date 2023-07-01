@@ -1,25 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 {
-    private IGunDataUpdatable playerGunScript;
+    [SerializeField]
+    private Gun playerGunScript;
 
     private GunData _previousWeaponData;
     
-    protected bool isActive;
+    private bool _isActive;
 
-    private Coroutine durationCoroutine;
-
-    protected override void Start()
-    {
-        base.Start();
-
-        playerGunScript = gameObject.GetComponentInChildren<IGunDataUpdatable>();
-
-    }
+    private Coroutine _durationCoroutine;
+    
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -33,7 +27,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
     protected override void OnDisable()
     {
         base.OnDisable();
-        
+
         playerEvents.onPlayerBulletsLoadedChanged -= CheckAmmoLoad;
 
         playerEvents.onPlayerSwitchedWeapon -= UpdateCurrentWeapon;
@@ -42,31 +36,31 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
     {
         Debug.Log("Give player an awp!");
 
-        isActive = true;
+        _isActive = true;
 
         playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
+        
+        // Don't allow player to reload when activating AWP
+        playerGunScript.SetCanReload(false);
 
-        durationCoroutine = StartCoroutine(Duration());
+        _durationCoroutine = StartCoroutine(WeaponDuration());
 
     }
     
     public void CheckAmmoLoad(int ammoLoad)
     {
         // Only check ammo load when the gun that the player has is the AWP sniper
-        if(isActive &&  ammoLoad <= 0)
+        if(_isActive &&  ammoLoad <= 0)
         {
             Debug.Log("AWP IS OUT OF AMMO!");
             
-            StopCoroutine(durationCoroutine);
+            StopCoroutine(_durationCoroutine);
             
             ReturnOriginalWeapon();
 
-            StartCoroutine(Cooldown());
+            StartCoroutine(UltimateCooldown());
             StartCoroutine(CountDownCooldown());
             
-            
-        
-            playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
         }
     }
     
@@ -84,34 +78,36 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
     public void ReturnOriginalWeapon()
     {
         // Only give back original weapon if the player has the AWP
-        if (isActive)
+        if (_isActive)
         {
             Debug.Log("REMOVE AWP FROM PLAYER!");
+            playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
             // Give back the player their gun before they received the AWP sniper
             playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
             
 
-            isActive = false;
+            _isActive = false;
+            
+            // Allow the player to reload again
+            playerGunScript.SetCanReload(true);
 
         }
 
     }
 
-    private IEnumerator Duration()
+    private IEnumerator WeaponDuration()
     {
-        if (isActive)
+        if (_isActive)
         {
             yield return new WaitForSeconds(ultimateData.duration);
             ReturnOriginalWeapon();
 
-            StartCoroutine(Cooldown());
+            StartCoroutine(UltimateCooldown());
             StartCoroutine(CountDownCooldown());
-
-
+            
         }
 
     }
-
 
 }
     

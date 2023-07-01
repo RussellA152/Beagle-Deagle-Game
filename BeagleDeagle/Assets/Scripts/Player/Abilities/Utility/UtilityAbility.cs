@@ -4,17 +4,21 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public class UtilityAbility : MonoBehaviour
+public abstract class UtilityAbility<T> : MonoBehaviour where T: UtilityAbilityData
 {
     [SerializeField]
     private PlayerEvents playerEvents;
 
     [SerializeField]
-    private UtilityAbilityData utilityData;
+    protected T utilityData;
+    
+    [Header("Prefab to Spawn")]
+    [SerializeField]
+    private GameObject prefab;
 
-    private bool canUseUtility = true;
+    private bool _canUseUtility = true;
 
-    private float delayBetweenUse = 0.4f; // a small delay added between each utility use (prevents player from using too many at once)
+    private float _delayBetweenUse = 0.4f; // a small delay added between each utility use (prevents player from using too many at once)
 
     [SerializeField, NonReorderable]
     private List<UtilityCooldownModifier> utilityCooldownModifiers = new List<UtilityCooldownModifier>();
@@ -22,18 +26,22 @@ public class UtilityAbility : MonoBehaviour
     [SerializeField, NonReorderable]
     private List<UtilityUsesModifier> utilityUsesModifiers = new List<UtilityUsesModifier>();
 
-    private int utilityUses;
-    private int bonusUtilityUses = 0;
+    private int _utilityUses;
+    private int _bonusUtilityUses = 0;
 
-    private float bonusUtilityCooldown = 1f;
+    private float _bonusUtilityCooldown = 1f;
+
+    protected int PoolKey;
 
     private void OnEnable()
     {
-        utilityUses = utilityData.maxUses;
+        _utilityUses = utilityData.maxUses;
     }
 
     private void Start()
     {
+        PoolKey = prefab.GetComponent<IPoolable>().PoolKey;
+        
         UtilityUsesModified();
         playerEvents.InvokeUtilityNameUpdatedEvent(utilityData.name);
     }
@@ -44,14 +52,14 @@ public class UtilityAbility : MonoBehaviour
         {
             // If player has uses left on their utility ability, let them activate it 
             // We also take into account any items that upgraded the number of uses on their utility ability
-            if (canUseUtility && ((utilityUses + bonusUtilityUses) > 0))
+            if (_canUseUtility && ((_utilityUses + _bonusUtilityUses) > 0))
             {
                 Debug.Log("Activate utility!");
 
-                utilityUses--;
+                _utilityUses--;
 
                 // Pass in the object pool (to spawn objects like grenades and bullets), and the player gameobject
-                utilityData.ActivateUtility(ObjectPooler.instance, gameObject);
+                UtilityAction(ObjectPooler.instance, gameObject);
 
                 UtilityUsesModified();
 
@@ -62,54 +70,68 @@ public class UtilityAbility : MonoBehaviour
         }
 
     }
-    public void UtilityUsesModified()
+
+    protected abstract void UtilityAction(ObjectPooler objectPooler, GameObject player);
+    
+    //protected abstract void SpawnAtPlayerDirection(GameObject objectToSpawn, GameObject player);
+    
+    private void UtilityUsesModified()
     {
-        playerEvents.InvokeUtilityUsesUpdatedEvent(utilityUses + bonusUtilityUses);
+        playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
     }
 
-    // This coroutine will add a small delay between each use of a utility
-    IEnumerator StartDelayBetweenUtilityUse()
+    ///-///////////////////////////////////////////////////////////
+    /// Small delay between each use of a utility to prevent spamming.
+    /// 
+    private IEnumerator StartDelayBetweenUtilityUse()
     {
-        canUseUtility = false;
+        _canUseUtility = false;
 
-        yield return new WaitForSeconds(delayBetweenUse);
+        yield return new WaitForSeconds(_delayBetweenUse);
 
-        canUseUtility = true;
+        _canUseUtility = true;
     }
 
-    // Start the cooldown that comes from the Utility scriptable object.
-    // We start a coroutine within another coroutine so that we don't have to modify the...
-    // uses variable within the Utility scriptable object.
+    ///-///////////////////////////////////////////////////////////
+    /// Wait some time to add another use to the utility.
+    /// Start the cooldown that comes from the Utility scriptable object.
+    /// 
     IEnumerator StartUtilityCooldown()
     {
-        yield return new WaitForSeconds(utilityData.cooldown * bonusUtilityCooldown);
+        yield return new WaitForSeconds(utilityData.cooldown * _bonusUtilityCooldown);
 
-        utilityUses++;
+        _utilityUses++;
 
         UtilityUsesModified();
 
     }
+
+    #region UtilityModifiers
+
     public void AddUtilityCooldownModifier(UtilityCooldownModifier modifierToAdd)
     {
         utilityCooldownModifiers.Add(modifierToAdd);
-        bonusUtilityCooldown += (bonusUtilityCooldown * modifierToAdd.bonusUtilityCooldown);
+        _bonusUtilityCooldown += (_bonusUtilityCooldown * modifierToAdd.bonusUtilityCooldown);
     }
 
     public void RemoveUtilityCooldownModifier(UtilityCooldownModifier modifierToRemove)
     {
         utilityCooldownModifiers.Remove(modifierToRemove);
-        bonusUtilityCooldown /= (1 + modifierToRemove.bonusUtilityCooldown);
+        _bonusUtilityCooldown /= (1 + modifierToRemove.bonusUtilityCooldown);
     }
 
     public void AddUtilityUsesModifier(UtilityUsesModifier modifierToAdd)
     {
         utilityUsesModifiers.Add(modifierToAdd);
-        bonusUtilityUses += modifierToAdd.bonusUtilityUses;
+        _bonusUtilityUses += modifierToAdd.bonusUtilityUses;
     }
 
     public void RemoveUtilityUsesModifier(UtilityUsesModifier modifierToRemove)
     {
         utilityUsesModifiers.Remove(modifierToRemove);
-        bonusUtilityUses -= modifierToRemove.bonusUtilityUses;
+        _bonusUtilityUses -= modifierToRemove.bonusUtilityUses;
     }
+
+    #endregion
+    
 }

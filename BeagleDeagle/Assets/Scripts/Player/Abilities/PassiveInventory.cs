@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static UnityEngine.InputSystem.InputAction;
 
 public class PassiveInventory : MonoBehaviour
 {
@@ -17,27 +15,38 @@ public class PassiveInventory : MonoBehaviour
     {
         ActivateAllPassives();
 
+        //StartCoroutine(TestRemovePassive());
+
     }
 
-    public void ActivateAllPassives()
+    private void ActivateAllPassives()
     {
         foreach (PassiveAbilityData passive in passives)
         {
-            if (passive.activationType == PassiveAbilityData.PassiveActivationType.Once)
-                passive.ActivatePassive(gameObject);
-
-            else if (passive.activationType == PassiveAbilityData.PassiveActivationType.Continuous)
-                StartCoroutine(StartContinuousPassive(passive));
+            Debug.Log(passive.name);
+            
+            StartCoroutine(passive.ActivatePassive(gameObject));
         }
     }
 
-    // Continuous passives will activate many times, so we use a coroutine
-    private IEnumerator StartContinuousPassive(PassiveAbilityData passive)
+    private void RemovePassiveFromInventory(PassiveAbilityData passive)
     {
-        while (true)
+        passive.RemovePassive(gameObject);
+        
+        passives.Remove(passive);
+    }
+
+    // Testing the removal of passives
+    IEnumerator TestRemovePassive()
+    {
+        int count = passives.Count;
+        
+        yield return new WaitForSeconds(5f);
+        
+        for(int i = 0; i < count; i++)
         {
-            passive.ActivatePassive(gameObject);
-            yield return null;
+            passives[0].RemovePassive(gameObject);
+            passives.Remove(passives[0]);
         }
     }
 }

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//[CreateAssetMenu(fileName = "NewWeapon", menuName = "ScriptableObjects/Weapon/Gun")]
 public abstract class GunData : ScriptableObject
 {
     public Sprite sprite;
@@ -13,7 +12,11 @@ public abstract class GunData : ScriptableObject
     [Header("Ammo")]
     public int magazineSize; // how much ammo can this weapon hold for its total magazine?
     
-
+    [Header("Reloading")]
+    [SerializeField]
+    [Range(0f, 30f)]
+    private float totalReloadTime;
+    
     [Header("Bullet To Shoot")]
     public GameObject bullet; // what bullet is spawned when shooting?
     public BulletData bulletData; // what data will this bullet use?
@@ -37,7 +40,7 @@ public abstract class GunData : ScriptableObject
     }
 
 
-    public virtual int Fire(ObjectPooler bulletPool, float damageModifier, float spreadModifier, int penetrationModifier)
+    public int Fire(ObjectPooler bulletPool, float damageModifier, float spreadModifier, int penetrationModifier)
     {
         int bulletsShot = 0;
         
@@ -73,24 +76,22 @@ public abstract class GunData : ScriptableObject
         return 0;
     }
 
-    public virtual bool CheckIfCanFire(float lastTimeFired, float fireRateModifier)
+    public bool CheckIfCanFire(float lastTimeFired, float fireRateModifier)
     {
         return Time.time - lastTimeFired > 1f / fireRate * fireRateModifier;
     }
 
 
-    public virtual bool CheckAmmo(int ammoLoaded)
+    public bool CheckAmmo(int ammoLoaded)
     {
-        // if player has no ammo in reserve... force them to reload, then return false
-        if (ammoLoaded <= 0f)
-        {
-            return false;
-        }
-        
-        return true;
+        // If player has no ammo in reserve,
+        // then force them to reload by returning false
+        return ammoLoaded > 0f;
     }
 
-    // very simple weapon spread, just add a random offset to the bullet's Y position
+    ///-///////////////////////////////////////////////////////////
+    /// Add a random offset to the bullet's Y position
+    /// to simulate random spread.
     public virtual Quaternion CalculateWeaponSpread(Quaternion spawnPointRotation, float spreadModifier)
     {
         // Calculate the spread angle
@@ -99,14 +100,22 @@ public abstract class GunData : ScriptableObject
         return Quaternion.Euler(0f, 0f, spreadAngle) * spawnPointRotation;
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Return the damage of this weapon.
+    /// 
     public abstract float GetDamage();
 
     #region Reloading
-    public abstract IEnumerator WaitReload(float reloadTimeModifier);
-    
-    // When the gun is done reloading, refill all the ammo
-    // For pump-action shotguns, we might only refill 1 bullet at a time
-    public virtual void RefillAmmo(out int newBulletsLoaded, out int newBulletsShot)
+
+    public virtual IEnumerator WaitReload(float reloadTimeModifier)
+    {
+        yield return new WaitForSeconds(totalReloadTime * reloadTimeModifier);
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// When the gun is done reloading, refill all the ammo
+    /// 
+    public virtual void RefillAmmoCompletely(out int newBulletsLoaded, out int newBulletsShot)
     {
         newBulletsLoaded = magazineSize;
         newBulletsShot = 0;

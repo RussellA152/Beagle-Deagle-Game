@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 2912267811165790606}
   - component: {fileID: 7895175864974104758}
   - component: {fileID: 5313635083943124193}
-  - component: {fileID: 5966119391847160325}
+  - component: {fileID: 3892091962803129594}
   - component: {fileID: 3866228901131709651}
   - component: {fileID: 5084828282012666581}
   - component: {fileID: 5313635083943124192}
@@ -164,7 +164,7 @@ MonoBehaviour:
   state: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerInput: {fileID: 5313635083943124192}
-  currentPlayerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
+  currentPlayerData: {fileID: 11400000, guid: 8325833637f557d48b1d2988c242b7bf, type: 2}
   movementScript: {fileID: 5313635083943124193}
   healthScript: {fileID: 2912267811165790606}
   currentWeapon: {fileID: 0}
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  playerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
+  playerData: {fileID: 11400000, guid: 8325833637f557d48b1d2988c242b7bf, type: 2}
   maxHealthModifiers: []
 --- !u!114 &7895175864974104758
 MonoBehaviour:
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  playerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
+  playerData: {fileID: 11400000, guid: 8325833637f557d48b1d2988c242b7bf, type: 2}
   movementSpeedModifiers: []
   rb: {fileID: 5313635083943124195}
   body: {fileID: 5313635084664649029}
@@ -233,7 +233,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
---- !u!114 &5966119391847160325
+--- !u!114 &3892091962803129594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,11 +242,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5313635083943124204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f2bde6943e4c0243b3f2d56c3048c11, type: 3}
+  m_Script: {fileID: 11500000, guid: 710364a6978f9ef428399df1b2e263d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  utilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
+  utilityData: {fileID: 11400000, guid: 2ae24b0ad22356d43b0a4f479c67cc1d, type: 2}
+  prefab: {fileID: 8164879991046117895, guid: cd6eec6d40152204db89a362109b5df2, type: 3}
   utilityCooldownModifiers: []
   utilityUsesModifiers: []
 --- !u!114 &3866228901131709651
@@ -263,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   ultimateData: {fileID: 11400000, guid: 42f995ffd0be09f4486e341d1899a190, type: 2}
+  playerGunScript: {fileID: 5673304368955972411}
 --- !u!114 &5084828282012666581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,7 +279,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   passives:
-  - {fileID: 11400000, guid: 05c221c08f911334ba6af2abfddb31cb, type: 2}
   - {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}
 --- !u!114 &5313635083943124192
 MonoBehaviour:
@@ -410,8 +411,8 @@ MonoBehaviour:
     m_ActionName: Player/Reload[/Keyboard/r]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5966119391847160325}
-        m_TargetAssemblyTypeName: UtilityAbility, Assembly-CSharp
+      - m_Target: {fileID: 3892091962803129594}
+        m_TargetAssemblyTypeName: UtilityAbility`1[[SmokeGrenadeUtilityData, Assembly-CSharp
         m_MethodName: ActivateUtility
         m_Mode: 0
         m_Arguments:
@@ -975,6 +976,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7358910972957582640, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
+      propertyPath: weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 1fbbb3d1cf289bc49b6d957359758726, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
 --- !u!4 &332774463098060846 stripped
