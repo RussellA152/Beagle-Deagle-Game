@@ -12,7 +12,7 @@ public class MightyFootUtilityAbility : UtilityAbility<MightyFootUtilityData>
         // Find direction that player is looking in
         Vector2 aimDirection = player.GetComponent<TopDownMovement>().ReturnPlayerDirection().normalized;
 
-        Bullet bulletComponent = mightyFootGameObject.GetComponent<Bullet>();
+        MightyFootBullet bulletComponent = mightyFootGameObject.GetComponent<MightyFootBullet>();
 
         // Give MightyFoot the scriptable object it needs
         bulletComponent.UpdateProjectileData(utilityData.mightyFootData);

@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
 
     [SerializeField]
-    private PlayerData currentPlayerData;
+    private CharacterData currentPlayerData;
 
     [SerializeField]
     private TopDownMovement movementScript;

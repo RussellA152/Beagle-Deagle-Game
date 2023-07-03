@@ -209,7 +209,7 @@ MonoBehaviour:
   state: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerInput: {fileID: 5313635083943124192}
-  currentPlayerData: {fileID: 11400000, guid: 8325833637f557d48b1d2988c242b7bf, type: 2}
+  currentPlayerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   movementScript: {fileID: 5313635083943124193}
   healthScript: {fileID: 2912267811165790606}
   currentWeapon: {fileID: 0}
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  playerData: {fileID: 11400000, guid: 8325833637f557d48b1d2988c242b7bf, type: 2}
+  playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   maxHealthModifiers: []
 --- !u!114 &7895175864974104758
 MonoBehaviour:
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  playerData: {fileID: 11400000, guid: 8325833637f557d48b1d2988c242b7bf, type: 2}
+  playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   movementSpeedModifiers: []
   rb: {fileID: 5313635083943124195}
   body: {fileID: 5313635084664649029}

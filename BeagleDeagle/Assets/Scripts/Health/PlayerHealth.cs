@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
     private bool isDead;
 
     [SerializeField]
-    private PlayerData playerData;
+    private CharacterData playerData;
 
     [SerializeField, NonReorderable]
     private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
@@ -81,7 +82,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
         return isDead;
     }
 
-    public void UpdateScriptableObject(PlayerData scriptableObject)
+    public void UpdateScriptableObject(CharacterData scriptableObject)
     {
         playerData = scriptableObject;
 

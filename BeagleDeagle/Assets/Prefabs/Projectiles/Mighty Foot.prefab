@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8164879991046117893}
   - component: {fileID: 8164879991046117894}
-  - component: {fileID: 6023227578832544114}
+  - component: {fileID: 6630679290743430282}
   - component: {fileID: 8164879991046117892}
   - component: {fileID: 7698205712678738710}
   m_Layer: 9
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 50
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.90703213, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6023227578832544114
+--- !u!114 &6630679290743430282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,10 +96,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8164879991046117895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 099133a98b628b64480047b9829f7be6, type: 3}
+  m_Script: {fileID: 11500000, guid: da0a05e8e9d85d34d8d75e1ab9d89eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolKey: 100
+  poolKey: 14
   rb: {fileID: 7698205712678738710}
   bulletCollider: {fileID: 8164879991046117892}
 --- !u!70 &8164879991046117892

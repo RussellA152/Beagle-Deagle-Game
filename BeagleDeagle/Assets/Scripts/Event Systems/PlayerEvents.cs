@@ -17,7 +17,7 @@ public class PlayerEvents : ScriptableObject
 
     public event Action<GunData> onPlayerSwitchedWeapon; // Pass a reference to the player's current weapon data
     
-    public event Action<PlayerData> onPlayerObtainedNewCharacterStats; // Pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
+    public event Action<CharacterData> onPlayerObtainedNewCharacterStats; // Pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
 
     public event Action<int> onPlayerBulletsLoadedChanged; // Pass a reference to the player's current ammo loaded (invoked when the player's ammo changes)
 
@@ -61,7 +61,7 @@ public class PlayerEvents : ScriptableObject
     }
 
     // When the player receives a new set of stats (New set of maxHealth, movementSpeed, etc. values)
-    public void InvokeNewStatsEvent(PlayerData newPlayerData)
+    public void InvokeNewStatsEvent(CharacterData newPlayerData)
     {
         if (onPlayerObtainedNewCharacterStats != null)
         {

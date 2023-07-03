@@ -10,7 +10,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     private PlayerEvents playerEvents;
     
     [SerializeField]
-    private PlayerData playerData;
+    private CharacterData playerData;
 
     [SerializeField, NonReorderable]
     private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>(); // a list of modifiers being applied to the player's movement speed 
@@ -208,7 +208,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         movementInput = inputValue.ReadValue<Vector2>();
     }
 
-    public void UpdateScriptableObject(PlayerData scriptableObject)
+    public void UpdateScriptableObject(CharacterData scriptableObject)
     {
         playerData = scriptableObject;
     }

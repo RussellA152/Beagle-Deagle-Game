@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedBoost : PassiveAbility<SpeedBoostPassive>
+public class SpeedBoost : PassiveAbility<SpeedBoostData>
 {
     private bool _speedIncreased = false;
 

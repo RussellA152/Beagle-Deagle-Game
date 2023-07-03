@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBoost : PassiveAbility<HealthBoostPassive>
+public class HealthBoost : PassiveAbility<HealthBoostData>
 {
     protected override void ActivatePassive()
     {

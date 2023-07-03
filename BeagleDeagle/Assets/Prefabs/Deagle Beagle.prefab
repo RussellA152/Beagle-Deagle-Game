@@ -164,7 +164,7 @@ MonoBehaviour:
   state: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerInput: {fileID: 5313635083943124192}
-  currentPlayerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
+  currentPlayerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
   movementScript: {fileID: 5313635083943124193}
   healthScript: {fileID: 2912267811165790606}
   currentWeapon: {fileID: 0}
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  playerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
+  playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
   maxHealthModifiers: []
 --- !u!114 &7895175864974104758
 MonoBehaviour:
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  playerData: {fileID: 11400000, guid: 8581d4872a036d24397d065c8e919c3a, type: 2}
+  playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
   movementSpeedModifiers: []
   rb: {fileID: 5313635083943124195}
   body: {fileID: 5313635084664649029}
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   utilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
-  prefab: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
+  prefab: {fileID: 8164879991046117895, guid: 4690bf3bda783ed4f8a0174326ca84cb, type: 3}
   utilityCooldownModifiers: []
   utilityUsesModifiers: []
 --- !u!114 &787244964802426978
