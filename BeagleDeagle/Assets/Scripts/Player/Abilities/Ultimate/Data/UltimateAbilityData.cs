@@ -12,17 +12,5 @@ public abstract class UltimateAbilityData : AbilityData
 {
     [Range(0f, 3f)]
     public float startTime;
-
-    // public ActivationType activationType;
-    //
-    // public enum ActivationType
-    // {
-    //     Immediate,
-    //     
-    //     Duration
-    // }
-
-    //public abstract IEnumerator ActivateUltimate(GameObject player);
     
-
 }

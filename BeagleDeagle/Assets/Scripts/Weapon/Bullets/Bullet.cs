@@ -84,12 +84,19 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
             Debug.Log("Hit already!");
             return;
         }
+        
+        // If this bullet hits something that destroys it, disable the bullet
+        if((bulletData.whatDestroysBullet.value & (1 << collision.gameObject.layer)) > 0)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
             
 
         // If this bullet hits what its allowed to
         if ((bulletData.whatBulletCanPenetrate.value & (1 << collision.gameObject.layer)) > 0)
         {
-            // Check if this bullet can damage that gameobject
+            // Check if this bullet can damage that gameObject
             if((bulletData.whatBulletCanDamage.value & (1 << collision.gameObject.layer)) > 0)
             {
                 // Add this enemy to the list of hitEnemies
@@ -97,12 +104,8 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
                 Debug.Log(_damagePerHit);
 
-                // Apply damage from both bullet and gun
-                //bulletData.OnHit(rb, collision.gameObject, _damagePerHit);
-                
                 OnHit(collision.gameObject);
             }
-            
             // Penetrate through object
             Penetrate();
         }
@@ -150,8 +153,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         }
         else
         {
-            //Debug.Log("ERROR WHEN UPDATING SCRIPTABLE OBJECT! PREFAB DID NOT UPDATE ITS SCRIPTABLE OBJECT");
-            Debug.LogError("ERROR WHEN UPDATING SCRIPTABLE OBJECT! PREFAB DID NOT UPDATE ITS SCRIPTABLE OBJECT");
+            Debug.LogError("ERROR WHEN UPDATING SCRIPTABLE OBJECT! " + scriptableObject + " IS NOT A " + typeof(T));
         }
     }
 }

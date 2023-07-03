@@ -11,6 +11,8 @@ public class ObjectPoolItem
 
     public bool shouldExpand; // should this item be allowed to instaniate more objects if needed?
 
+    public Transform container; 
+
     [NonReorderable]
     public List<GameObject> pooled;
 
@@ -52,7 +54,15 @@ public class ObjectPooler : MonoBehaviour
 
             for (int i = 0; i < item.amountToPool; i++)
             {
+                // Create the new object
                 GameObject obj = Instantiate(item.objectToPool);
+
+                // Set its parent to a container (if it exists)
+                if (item.container != null)
+                {
+                    obj.transform.parent = item.container;
+                }
+
                 obj.SetActive(false);
                 item.pooled.Add(obj);
             }

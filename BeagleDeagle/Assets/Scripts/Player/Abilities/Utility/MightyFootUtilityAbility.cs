@@ -18,6 +18,9 @@ public class MightyFootUtilityAbility : UtilityAbility<MightyFootUtilityData>
         bulletComponent.UpdateScriptableObject(utilityData.mightyFootData);
 
         bulletComponent.UpdateWeaponValues(utilityData.abilityDamage, utilityData.mightyFootData.numEnemiesCanHit);
+        
+        // Tell the bullet that the player is the transform that shot it
+        bulletComponent.UpdateWhoShotThisBullet(transform);
 
         mightyFootGameObject.transform.position = (Vector2)player.transform.position + aimDirection; //+ new Vector2(offset.x, offset.y);
 
