@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "NewWave", menuName = "ScriptableObjects/WaveData/MiniWave")]
 public class MiniWaveData : ScriptableObject
@@ -9,7 +10,8 @@ public class MiniWaveData : ScriptableObject
 
     public float delayBetweenSpawn;
 
-    public GameObject prefab;
+    [RestrictedPrefab(typeof(IEnemyDataUpdatable))]
+    public GameObject enemyPrefab;
 
     public EnemyData enemyData;
 

@@ -71,7 +71,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         Death
 
     }
-    private void Start()
+    protected virtual void Start()
     {
         state = EnemyState.Idle;
 

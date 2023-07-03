@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class GunData : ScriptableObject
 {
@@ -17,9 +18,13 @@ public abstract class GunData : ScriptableObject
     [Range(0f, 30f)]
     private float totalReloadTime;
     
+    [FormerlySerializedAs("bullet")]
     [Header("Bullet To Shoot")]
-    public GameObject bullet; // what bullet is spawned when shooting?
-    public RegularBulletData bulletData; // what data will this bullet use?
+    [RestrictedPrefab(typeof(IBulletUpdatable))]
+    public GameObject bulletPrefab; // What bullet is spawned when shooting?
+
+    // What data will this bullet use?
+    public BulletData bulletData;
 
     [Header("Weapon Spread")]
     [Range(0f, 20f)]
@@ -36,7 +41,7 @@ public abstract class GunData : ScriptableObject
     
     public virtual void OnEnable()
     {
-        BulletPoolKey = bullet.GetComponent<IPoolable>().PoolKey;
+        BulletPoolKey = bulletPrefab.GetComponent<IPoolable>().PoolKey;
     }
 
 
@@ -49,15 +54,13 @@ public abstract class GunData : ScriptableObject
 
         if (newBullet != null)
         {
-
-            RegularBullet projectile = newBullet.GetComponent<RegularBullet>();
+            IBulletUpdatable projectile = newBullet.GetComponent<IBulletUpdatable>();
 
             // Pass in the damage and penetration values of this gun, to the bullet being shot
             // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
             projectile.UpdateWeaponValues(GetDamage() * damageModifier, penetrationCount + penetrationModifier);
-
-            // Giving the bullet its data (for the 'destroyTime' variable and 'trajectory' method)
-            projectile.UpdateProjectileData(bulletData);
+            
+            projectile.UpdateScriptableObject(bulletData);
 
             // Set the position to be at the barrel of the gun
             newBullet.transform.position = bulletSpawnPoint.position;

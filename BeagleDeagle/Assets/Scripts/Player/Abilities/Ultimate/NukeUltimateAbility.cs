@@ -19,7 +19,7 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
         nuclearBomb.transform.position = player.transform.position;
 
         // Give the nuke the data it needs
-        nuclearBomb.GetComponent<Nuke>().UpdateExplosiveData(ultimateData.nukeData);
+        nuclearBomb.GetComponent<Nuke>().UpdateScriptableObject(ultimateData.nukeData);
 
         nuclearBomb.SetActive(true);
         

@@ -15,10 +15,5 @@ MonoBehaviour:
   name: Wave 2
   message: A horde of zombies! AGAIN
   miniWaves:
-  - name: Regular Zombie Horde
-    delayBetweenSpawn: 1
-    prefab: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-    enemyData: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
-    enemiesPerSpawn: 1
-    miniDuration: 10
+  - {fileID: 11400000, guid: d4461b9d9dcce85489467fd5bb11f138, type: 2}
   duration: 0

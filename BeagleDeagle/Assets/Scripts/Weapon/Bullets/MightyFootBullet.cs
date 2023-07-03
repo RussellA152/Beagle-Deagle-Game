@@ -54,5 +54,4 @@ public class MightyFootBullet : Bullet<MightyFootBulletData>
             return false;
         }
     }
-
 }

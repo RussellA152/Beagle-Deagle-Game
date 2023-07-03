@@ -91,11 +91,11 @@ public class WaveGenerator : MonoBehaviour
                 yield return new WaitForSeconds(A.delayBetweenSpawn * m_DelayFactor);
 
             // check if there is an enemy to spawn
-            if (A.prefab != null && A.enemiesPerSpawn > 0)
+            if (A.enemyPrefab != null && A.enemiesPerSpawn > 0)
             {
                 // all enemies of the same type, have the same pool key
                 // For example, the basic zombie runner has a pool key of 0
-                int enemyPoolKey = A.prefab.GetComponent<IPoolable>().PoolKey;
+                int enemyPoolKey = A.enemyPrefab.GetComponent<IPoolable>().PoolKey;
 
                 for (int i = 0; i < A.enemiesPerSpawn; i++)
                 {

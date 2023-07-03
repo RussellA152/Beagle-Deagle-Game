@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public abstract class Explosive<T> : MonoBehaviour where T: GrenadeData
+public abstract class Explosive<T> : MonoBehaviour, IGrenadeUpdatable where T: GrenadeData
 {
     [SerializeField]
     protected GameObject sprite;
@@ -44,11 +44,6 @@ public abstract class Explosive<T> : MonoBehaviour where T: GrenadeData
         Debug.Log("EXPLODE! " + name);
     }
 
-    public virtual void UpdateExplosiveData(T scriptableObject)
-    {
-        explosiveData = scriptableObject;
-    }
-
     protected bool CheckObstruction(Collider2D targetCollider)
     {
         if (explosiveData.hitThroughWalls)
@@ -73,6 +68,18 @@ public abstract class Explosive<T> : MonoBehaviour where T: GrenadeData
         {
             // If no obstruction found, allow this target to be affected by the explosion
             return false;
+        }
+    }
+
+    public void UpdateScriptableObject(GrenadeData scriptableObject)
+    {
+        if (scriptableObject is T)
+        {
+            explosiveData = scriptableObject as T;
+        }
+        else
+        {
+            Debug.Log("ERROR WHEN UPDATING SCRIPTABLE OBJECT! PREFAB DID NOT UPDATE ITS SCRIPTABLE OBJECT");
         }
     }
 }

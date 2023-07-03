@@ -21,7 +21,7 @@ public class SmokeGrenadeUtilityAbility : UtilityAbility<SmokeGrenadeUtilityData
 
         grenade.SetActive(true);
 
-        smokeGrenadeComponent.UpdateExplosiveData(utilityData.smokeGrenadeData);
+        smokeGrenadeComponent.UpdateScriptableObject(utilityData.smokeGrenadeData);
 
         // Throw grenade in the direction player is facing
         smokeGrenadeComponent.ActivateGrenade(aimDirection);

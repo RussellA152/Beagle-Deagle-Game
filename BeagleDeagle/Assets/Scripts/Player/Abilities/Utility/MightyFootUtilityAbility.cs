@@ -15,7 +15,7 @@ public class MightyFootUtilityAbility : UtilityAbility<MightyFootUtilityData>
         MightyFootBullet bulletComponent = mightyFootGameObject.GetComponent<MightyFootBullet>();
 
         // Give MightyFoot the scriptable object it needs
-        bulletComponent.UpdateProjectileData(utilityData.mightyFootData);
+        bulletComponent.UpdateScriptableObject(utilityData.mightyFootData);
 
         bulletComponent.UpdateWeaponValues(utilityData.abilityDamage, utilityData.mightyFootData.numEnemiesCanHit);
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet<T> : MonoBehaviour, IPoolable where T: BulletData
+public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: BulletData
 {
     protected T bulletData;
 
@@ -134,13 +134,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable where T: BulletData
 
         _penetrationCount += penetration;
     }
-
-    // Update the bullet with its scriptable object (Contains trajectory logic and any special ability. e.g, Incinerating on hit)
-    public void UpdateProjectileData(T scriptableObject)
-    {
-        bulletData = scriptableObject;
-    }
-
+    
     // If this bullet exists for too long, disable it
     IEnumerator DisableAfterTime()
     {
@@ -148,4 +142,17 @@ public class Bullet<T> : MonoBehaviour, IPoolable where T: BulletData
         gameObject.SetActive(false);
     }
 
+    public void UpdateScriptableObject(BulletData scriptableObject)
+    {
+        if (scriptableObject is T)
+        {
+            bulletData = scriptableObject as T;
+        }
+        else
+        {
+            //Debug.Log("ERROR WHEN UPDATING SCRIPTABLE OBJECT! PREFAB DID NOT UPDATE ITS SCRIPTABLE OBJECT");
+            Debug.LogError("ERROR WHEN UPDATING SCRIPTABLE OBJECT! PREFAB DID NOT UPDATE ITS SCRIPTABLE OBJECT");
+        }
+    }
 }
+
