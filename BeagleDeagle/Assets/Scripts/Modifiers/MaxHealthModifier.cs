@@ -1,7 +1,10 @@
+using UnityEngine;
+
 [System.Serializable]
 
 public class MaxHealthModifier: Modifier
 {
+    [Range(-1f, 1f)]
     public float bonusMaxHealth;
     
     ///-///////////////////////////////////////////////////////////

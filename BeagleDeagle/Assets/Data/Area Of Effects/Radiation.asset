@@ -18,6 +18,9 @@ MonoBehaviour:
   hitThroughWalls: 0
   areaSpreadX: 90
   areaSpreadY: 80
-  radiationDamage: 40
-  radiationTicks: 3
-  radiationTickInterval: 1
+  damageOverTime:
+    dotName: Nuke Radiation
+    damage: 30
+    ticks: 3
+    tickInterval: 1
+    source: {fileID: 11400000}

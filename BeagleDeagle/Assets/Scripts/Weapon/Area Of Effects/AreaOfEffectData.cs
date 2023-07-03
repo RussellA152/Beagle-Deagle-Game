@@ -21,17 +21,17 @@ public abstract class AreaOfEffectData : ScriptableObject
 
     // Should this effect be removed OnTriggerExit()?
     // Usually true for non-DOT AOEs
-    public bool removeEffectOnTriggerExit;
+    //public bool removeEffectOnTriggerExit;
     
 
     ///-///////////////////////////////////////////////////////////
     /// Add some sort of buff or debuff (or DOT) to the target that is inside of the AOE
     ///
-    public abstract void AddEffectOnEnemies(GameObject target);
+    //public abstract void AddEffectOnEnemies(GameObject target);
 
     ///-///////////////////////////////////////////////////////////
     /// Remove the applied buff or debuff from the target when they exit the AOE
     ///
-    public abstract void RemoveEffectFromEnemies(GameObject target);
+    //public abstract void RemoveEffectFromEnemies(GameObject target);
     
 }

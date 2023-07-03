@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd07501426668d4385793ec2f63919a, type: 3}
   m_Name: RushBoost
   m_EditorClassIdentifier: 
-  activationType: 1
-  speedBoost: 0.5
   minimumTimeRequired: 2.5
+  movementSpeedModifier:
+    modifierName: T-Bone Speed Boost
+    bonusMovementSpeed: 0.3

@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaOfEffect : MonoBehaviour
+public abstract class AreaOfEffect<T> : MonoBehaviour where T: AreaOfEffectData
 {
-    private AreaOfEffectData _areaOfEffectData;
+    [SerializeField]
+    protected T areaOfEffectData;
 
     [SerializeField]
     private CapsuleCollider2D triggerCollider;
@@ -18,6 +19,11 @@ public class AreaOfEffect : MonoBehaviour
         _wallLayerMask = LayerMask.GetMask("Wall");
     }
 
+    private void OnEnable()
+    {
+        UpdateAOEData(areaOfEffectData);
+    }
+
     private void OnDestroy()
     {
         // Resetting the size of the trigger collider when destroyed
@@ -27,13 +33,13 @@ public class AreaOfEffect : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        AreaOfEffectManager.Instance.AddNewAreaOfEffect(_areaOfEffectData);
+        AreaOfEffectManager.Instance.AddNewAreaOfEffect(areaOfEffectData);
         
         // If this AOE hits what its allowed to affect
-        if ((_areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
+        if ((areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
             // Target has entered AOE, add them to overlappingTargets dictionary
-            AreaOfEffectManager.Instance.AddNewOverlappingTarget(_areaOfEffectData, collision.gameObject);
+            AreaOfEffectManager.Instance.AddNewOverlappingTarget(areaOfEffectData, collision.gameObject);
             
         }
             
@@ -42,21 +48,20 @@ public class AreaOfEffect : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if ((_areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
+        if ((areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
             // Target has left AOE, so remove them from overlappingTarget dictionary
             // Also, they are no longer affected by their AOE, so remove them from affectedTargets dictionary (* Not exactly the case for DOT's *)
             // DOT's will also remove from affectedTargets if they had to reapply their DOT
-            AreaOfEffectManager.Instance.RemoveOverlappingTarget(_areaOfEffectData, collision.gameObject);
+            AreaOfEffectManager.Instance.RemoveOverlappingTarget(areaOfEffectData, collision.gameObject);
 
             // If the target is not standing in any AOE at all, then call OnAreaExit()
-            if (!AreaOfEffectManager.Instance.IsTargetOverlappingAreaOfEffect(_areaOfEffectData, collision.gameObject) && AreaOfEffectManager.Instance.CheckIfTargetIsAffected(_areaOfEffectData, collision.gameObject))
+            if (!AreaOfEffectManager.Instance.IsTargetOverlappingAreaOfEffect(areaOfEffectData, collision.gameObject) && AreaOfEffectManager.Instance.CheckIfTargetIsAffected(areaOfEffectData, collision.gameObject))
             {
                 // Only remove effect if this type of AOE is required to
-                if(_areaOfEffectData.removeEffectOnTriggerExit)
-                    _areaOfEffectData.RemoveEffectFromEnemies(collision.gameObject);
+                RemoveEffectFromEnemies(collision.gameObject);
                 
-                AreaOfEffectManager.Instance.RemoveTargetFromAffectedHashSet(_areaOfEffectData, collision.gameObject);
+                AreaOfEffectManager.Instance.RemoveTargetFromAffectedHashSet(areaOfEffectData, collision.gameObject);
             }
                 
             
@@ -67,25 +72,32 @@ public class AreaOfEffect : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         // If this AOE hits what its allowed to affect
-        if ((_areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
+        if ((areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
             // If the target is not obstructed by a wall, and they are not already affected by the AOE's ability (smoke or radiation), then call OnAreaStay()
-            if (!CheckObstruction(transform.position, collision.gameObject) && !AreaOfEffectManager.Instance.CheckIfTargetIsAffected(_areaOfEffectData, collision.gameObject))
+            if (!CheckObstruction(transform.position, collision.gameObject) && !AreaOfEffectManager.Instance.CheckIfTargetIsAffected(areaOfEffectData, collision.gameObject))
             {
-                AreaOfEffectManager.Instance.TryAddAffectedTarget(_areaOfEffectData, collision.gameObject);
-                _areaOfEffectData.AddEffectOnEnemies(collision.gameObject);
+                AreaOfEffectManager.Instance.TryAddAffectedTarget(areaOfEffectData, collision.gameObject);
+                
+                AddEffectOnEnemies(collision.gameObject);
             }
                 
             
         }
     }
+
+    public abstract void AddEffectOnEnemies(GameObject target);
+
+    public abstract void RemoveEffectFromEnemies(GameObject target);
+    
+
     ///-///////////////////////////////////////////////////////////
     /// Shoot a raycast beginning from the center of the AOE towards the target
     /// If there is wall between the AOE and target, then do not apply any effects to the target (Don't hit through walls)
     ///
     private bool CheckObstruction(Vector2 areaSource, GameObject target)
     {
-        if (_areaOfEffectData.hitThroughWalls)
+        if (areaOfEffectData.hitThroughWalls)
             return false;
 
         // Calculate distance and direction to shoot raycast
@@ -104,10 +116,10 @@ public class AreaOfEffect : MonoBehaviour
     ///-///////////////////////////////////////////////////////////
     /// Changes the AOE effect of this instance
     /// 
-    public void UpdateAOEData(AreaOfEffectData scriptableObject)
+    public virtual void UpdateAOEData(T scriptableObject)
     {
-        _areaOfEffectData = scriptableObject;
+        areaOfEffectData = scriptableObject;
 
-        triggerCollider.size = new Vector2(_areaOfEffectData.areaSpreadX, _areaOfEffectData.areaSpreadY);
+        triggerCollider.size = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY);
     }
 }

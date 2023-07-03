@@ -6,8 +6,15 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "NewExplosive", menuName = "ScriptableObjects/Explosive/Smoke Grenade")]
 public class SmokeGrenadeData : GrenadeData
 {
-    [FormerlySerializedAs("utilityAbilityData")] [SerializeField]
+    [SerializeField]
     private SmokeGrenadeUtilityData utilityAbilityData;
+
+    //public SmokeAreaOfEffectData smokeAOEData;
+
+    public override float GetDamage()
+    {
+        return utilityAbilityData.abilityDamage;
+    }
 
     public override float GetDuration()
     {

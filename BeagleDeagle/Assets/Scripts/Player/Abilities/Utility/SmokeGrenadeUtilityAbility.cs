@@ -14,17 +14,17 @@ public class SmokeGrenadeUtilityAbility : UtilityAbility<SmokeGrenadeUtilityData
         // Find direction that player is looking in
         Vector2 aimDirection = player.GetComponent<TopDownMovement>().ReturnPlayerDirection().normalized;
 
-        Grenade grenadeComponent = grenade.GetComponent<Grenade>();
+        SmokeGrenade smokeGrenadeComponent = grenade.GetComponent<SmokeGrenade>();
 
         // Make grenade spawn at player's position
         grenade.transform.position = player.transform.position;
 
         grenade.SetActive(true);
 
-        grenadeComponent.UpdateExplosiveData(utilityData.smokeGrenadeData);
+        smokeGrenadeComponent.UpdateExplosiveData(utilityData.smokeGrenadeData);
 
         // Throw grenade in the direction player is facing
-        grenadeComponent.ActivateGrenade(aimDirection);
+        smokeGrenadeComponent.ActivateGrenade(aimDirection);
         
     }
     

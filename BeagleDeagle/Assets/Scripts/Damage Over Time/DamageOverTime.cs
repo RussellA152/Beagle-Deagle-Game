@@ -1,14 +1,19 @@
+using UnityEngine;
+
 [System.Serializable]
 public class DamageOverTime
 {
     public string dotName;
 
+    [Range(-1000f, 1000f)]
     // How much damage does this DOT do?
     public float damage;
     
+    [Range(1, 25)]
     // How many times does this DOT apply its damage?
     public int ticks; 
 
+    [Range(0.1f, 10f)]
     // How much time between each DOT tick?
     public float tickInterval;
 

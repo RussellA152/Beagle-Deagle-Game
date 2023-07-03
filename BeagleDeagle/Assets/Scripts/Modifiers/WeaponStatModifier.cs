@@ -1,6 +1,9 @@
+using UnityEngine;
+
 [System.Serializable]
 public class DamageModifier: Modifier
 {
+    [Range(-1f, 1f)]
     public float bonusDamage;
 
     ///-///////////////////////////////////////////////////////////
@@ -18,6 +21,7 @@ public class DamageModifier: Modifier
 [System.Serializable]
 public class PenetrationModifier: Modifier
 {
+    [Range(-10, 10)]
     public int bonusPenetration;
 
     ///-///////////////////////////////////////////////////////////
@@ -33,6 +37,7 @@ public class PenetrationModifier: Modifier
 [System.Serializable]
 public class SpreadModifier: Modifier
 {
+    [Range(-1f, 1f)]
     public float bonusSpread;
 
     ///-///////////////////////////////////////////////////////////
@@ -47,6 +52,7 @@ public class SpreadModifier: Modifier
 [System.Serializable]
 public class ReloadSpeedModifier: Modifier
 {
+    [Range(-1f, 1f)]
     public float bonusReloadSpeed;
 
     ///-///////////////////////////////////////////////////////////
@@ -62,6 +68,7 @@ public class ReloadSpeedModifier: Modifier
 [System.Serializable]
 public class AttackSpeedModifier: Modifier
 {
+    [Range(-1f, 1f)]
     public float bonusAttackSpeed;
 
     ///-///////////////////////////////////////////////////////////
@@ -79,6 +86,7 @@ public class AttackSpeedModifier: Modifier
 [System.Serializable]
 public class AmmoLoadModifier: Modifier
 {
+    [Range(-1f, 1f)]
     public float bonusAmmoLoad;
 
     ///-///////////////////////////////////////////////////////////

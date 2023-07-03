@@ -1,6 +1,9 @@
+using UnityEngine;
+
 [System.Serializable]
 public class UtilityUsesModifier: Modifier
 {
+    [Range(-10, 10)]
     public int bonusUtilityUses;
     
     ///-///////////////////////////////////////////////////////////
@@ -16,6 +19,7 @@ public class UtilityUsesModifier: Modifier
 [System.Serializable]
 public class UtilityCooldownModifier: Modifier
 {
+    [Range(-1f, 1f)]
     public float bonusUtilityCooldown;
 
     ///-///////////////////////////////////////////////////////////

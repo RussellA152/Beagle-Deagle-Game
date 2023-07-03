@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class Nuke : Explosive<NukeData>
 {
-    private bool explosionHappening = false;
+    private bool _explosionHappening = false;
 
     private void OnEnable()
     {
-        areaOfEffect.UpdateAOEData(explosiveData.aoeData);
-
         ActivateNuclearBomb();
     }
 
     private void OnDisable()
     {
-        areaOfEffect.gameObject.SetActive(false);
+        areaOfEffectGameObject.gameObject.SetActive(false);
         sprite.SetActive(true);
 
         StopAllCoroutines();
@@ -33,11 +31,11 @@ public class Nuke : Explosive<NukeData>
         yield return new WaitForSeconds(explosiveData.detonationTime);
 
         sprite.SetActive(false);
-        areaOfEffect.gameObject.SetActive(true);
+        areaOfEffectGameObject.gameObject.SetActive(true);
 
         StartCoroutine(BrieflyShowGizmo());
 
-        explosiveData.Explode(transform.position);
+        Explode();
 
         yield return new WaitForSeconds(explosiveData.GetDuration());
 
@@ -46,14 +44,27 @@ public class Nuke : Explosive<NukeData>
 
     }
 
-    public override void UpdateExplosiveData(NukeData scriptableObject)
+    public virtual void Explode()
     {
-        base.UpdateExplosiveData(scriptableObject);
+        // Big explosion hurt all enemies
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, explosiveData.explosiveRadius, explosiveData.whatDoesExplosionHit);
+
+        foreach (Collider2D targetCollider in hitEnemies)
+        {
+            if(!CheckObstruction(targetCollider))
+                targetCollider.gameObject.GetComponent<IHealth>().ModifyHealth(-1f * explosiveData.GetDamage());
+
+        }
     }
+
+    // public override void UpdateExplosiveData(NukeData scriptableObject)
+    // {
+    //     base.UpdateExplosiveData(scriptableObject);
+    // }
 
     private void OnDrawGizmos()
     {
-        if (explosionHappening)
+        if (_explosionHappening)
         {
             Gizmos.color = Color.red;
 
@@ -64,9 +75,9 @@ public class Nuke : Explosive<NukeData>
 
     private IEnumerator BrieflyShowGizmo()
     {
-        explosionHappening = true;
+        _explosionHappening = true;
         yield return new WaitForSeconds(0.5f);
-        explosionHappening = false;
+        _explosionHappening = false;
     }
 
 }

@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7589004471731816067}
-  - component: {fileID: 1319530689180729432}
+  - component: {fileID: 3165291975883993080}
   - component: {fileID: 4418311646622141623}
   m_Layer: 0
   m_Name: Area of Effect
@@ -117,7 +117,7 @@ Transform:
   m_Father: {fileID: 8164879991046117893}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1319530689180729432
+--- !u!114 &3165291975883993080
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,9 +126,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5551387674908472178}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 584fc77bd578a8944958f5d9ccb62ae6, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b3ab92860236234f989a5e1a1aa5aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  areaOfEffectData: {fileID: 11400000, guid: b36b28c2153c44749b4f8c24c33429af, type: 2}
   triggerCollider: {fileID: 4418311646622141623}
 --- !u!70 &4418311646622141623
 CapsuleCollider2D:
@@ -194,4 +195,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 3520225513382146324}
   explosiveData: {fileID: 11400000, guid: 76af1c12408bb984e8e85236fff79b1d, type: 2}
-  areaOfEffect: {fileID: 1319530689180729432}
+  areaOfEffectGameObject: {fileID: 5551387674908472178}

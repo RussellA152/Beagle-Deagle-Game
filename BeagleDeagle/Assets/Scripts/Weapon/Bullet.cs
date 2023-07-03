@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour, IPoolable
 {
-    private BulletData bulletData;
+    private BulletData _bulletData;
 
     [SerializeField]
     private int poolKey;
@@ -18,18 +18,18 @@ public class Bullet : MonoBehaviour, IPoolable
 
     private Vector3 defaultRotation = new Vector3(0f, 0f, -90f);
 
-    private readonly HashSet<Transform> hitEnemies = new HashSet<Transform>(); // Don't let this bullet hit the same enemy twice (we track what this bullet hit in this HashSet)
+    private readonly HashSet<Transform> _hitEnemies = new HashSet<Transform>(); // Don't let this bullet hit the same enemy twice (we track what this bullet hit in this HashSet)
 
-    private float damagePerHit; // The damage of the player's gun or enemy that shot this bullet
+    private float _damagePerHit; // The damage of the player's gun or enemy that shot this bullet
 
-    private int penetrationCount; // The amount of penetration of the player's gun or enemy that shot this bullet
+    private int _penetrationCount; // The amount of penetration of the player's gun or enemy that shot this bullet
 
-    private int amountPenetrated; // How many enemies has this bullet penetrated through?
+    private int _amountPenetrated; // How many enemies has this bullet penetrated through?
 
     private void OnEnable()
     {
         
-        if (bulletData != null)
+        if (_bulletData != null)
         {
             // Start time for this bullet to disable
             StartCoroutine(DisableAfterTime());
@@ -37,19 +37,19 @@ public class Bullet : MonoBehaviour, IPoolable
             //UpdateWeaponValues(bulletData.bulletDamage, bulletData.bulletPenetration);
             
             // Change the bullet's collider size to whatever the scriptable object has
-            bulletCollider.size = new Vector2(bulletData.sizeX, bulletData.sizeY);
+            bulletCollider.size = new Vector2(_bulletData.sizeX, _bulletData.sizeY);
             // Change the bullet's collider direction to whatever the scriptable object has
-            bulletCollider.direction = bulletData.colliderDirection;
+            bulletCollider.direction = _bulletData.colliderDirection;
 
             // Apply the trajectory of this bullet (We probably could do this inside of the gameobject that spawns it?)
-            bulletData.ApplyTrajectory(rb, transform);
+            _bulletData.ApplyTrajectory(rb, transform);
             //Debug.Log("Was enabled!");
         }
     }
 
     private void OnDisable()
     {
-        hitEnemies.Clear();
+        _hitEnemies.Clear();
 
         // Resetting rotation before applying spread
         transform.position = Vector2.zero;
@@ -59,11 +59,11 @@ public class Bullet : MonoBehaviour, IPoolable
         bulletCollider.direction = CapsuleDirection2D.Vertical;
 
         // Reset number of penetration
-        amountPenetrated = 0;
-        penetrationCount = 0;
+        _amountPenetrated = 0;
+        _penetrationCount = 0;
 
         // Reset damage
-        damagePerHit = 0;
+        _damagePerHit = 0;
 
         // Stop all coroutines when this bullet has been disabled
         StopAllCoroutines();
@@ -73,7 +73,7 @@ public class Bullet : MonoBehaviour, IPoolable
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // If this bullet already hit this enemy, then don't allow penetration or damage to occur
-        if (hitEnemies.Contains(collision.transform))
+        if (_hitEnemies.Contains(collision.transform))
         {
             Debug.Log("Hit already!");
             return;
@@ -81,19 +81,19 @@ public class Bullet : MonoBehaviour, IPoolable
             
 
         // If this bullet hits what its allowed to
-        if ((bulletData.whatBulletCanPenetrate.value & (1 << collision.gameObject.layer)) > 0)
+        if ((_bulletData.whatBulletCanPenetrate.value & (1 << collision.gameObject.layer)) > 0)
         {
 
             // Check if this bullet can damage that gameobject
-            if((bulletData.whatBulletCanDamage.value & (1 << collision.gameObject.layer)) > 0)
+            if((_bulletData.whatBulletCanDamage.value & (1 << collision.gameObject.layer)) > 0)
             {
                 // Add this enemy to the list of hitEnemies
-                hitEnemies.Add(collision.transform);
+                _hitEnemies.Add(collision.transform);
 
-                Debug.Log(damagePerHit);
+                Debug.Log(_damagePerHit);
 
                 // Apply damage from both bullet and gun
-                bulletData.OnHit(rb, collision.gameObject, damagePerHit);
+                _bulletData.OnHit(rb, collision.gameObject, _damagePerHit);
             }
             
             // Penetrate through object
@@ -104,10 +104,10 @@ public class Bullet : MonoBehaviour, IPoolable
     // Call this function each time this bullet hits their target
     private void Penetrate()
     {
-        amountPenetrated++;
+        _amountPenetrated++;
 
         // If this bullet has penetrated through too many targets, then disable it
-        if (amountPenetrated >= penetrationCount)
+        if (_amountPenetrated >= _penetrationCount)
         {
             gameObject.SetActive(false);
         }
@@ -118,21 +118,21 @@ public class Bullet : MonoBehaviour, IPoolable
     public void UpdateWeaponValues(float damage, int penetration)
     {
         //Debug.Log(damage);
-        damagePerHit += damage;
+        _damagePerHit += damage;
 
-        penetrationCount += penetration;
+        _penetrationCount += penetration;
     }
 
     // Update the bullet with its scriptable object (Contains trajectory logic and any special ability. e.g, Incinerating on hit)
     public void UpdateProjectileData(BulletData scriptableObject)
     {
-        bulletData = scriptableObject;
+        _bulletData = scriptableObject;
     }
 
     // If this bullet exists for too long, disable it
     IEnumerator DisableAfterTime()
     {
-        yield return new WaitForSeconds(bulletData.GetLifeTime());
+        yield return new WaitForSeconds(_bulletData.GetLifeTime());
         gameObject.SetActive(false);
     }
 

@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: Nuke
   m_EditorClassIdentifier: 
   physicsMaterial: {fileID: 0}
-  aoeData: {fileID: 11400000, guid: b36b28c2153c44749b4f8c24c33429af, type: 2}
   hitThroughWalls: 0
   detonationTime: 3
   ultimateAbilityData: {fileID: 11400000, guid: 8d978ad8039192b42b0c5c89926fcb38, type: 2}
   explosiveRadius: 15
   whatDoesExplosionHit:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 384

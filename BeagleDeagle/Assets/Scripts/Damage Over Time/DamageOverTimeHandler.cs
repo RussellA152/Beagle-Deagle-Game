@@ -57,7 +57,7 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
         while (ticks > 0)
         {
             // THIS ASSUMES WE ALWAYS DO DAMAGE!
-            _healthScript.ModifyHealth(dot.damage);
+            _healthScript.ModifyHealth(-1f * dot.damage);
 
             yield return new WaitForSeconds(dot.tickInterval);
 
@@ -73,7 +73,6 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
     ///
     private void ReapplyDot(DamageOverTime dotExpired)
     {
-        //AreaOfEffectData sourceOfDOT = tuple.Item2.source;
         AreaOfEffectData sourceOfDot = dotExpired.source;
 
         // If this target is still standing in an AOE, reapply the DOT
@@ -83,7 +82,9 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
             
             AreaOfEffectManager.Instance.TryAddAffectedTarget(sourceOfDot, gameObject);
             
-            sourceOfDot.AddEffectOnEnemies(gameObject);
+            // Add the DOT to this target again
+            AddDamageOverTime(dotExpired);
+            
         }
         else
         {

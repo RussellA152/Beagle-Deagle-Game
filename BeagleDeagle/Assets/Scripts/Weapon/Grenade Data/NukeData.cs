@@ -7,23 +7,28 @@ public class NukeData : GrenadeData
 {
     [SerializeField]
     private UltimateAbilityData ultimateAbilityData;
-
-    [Range(0f, 40f)]
+    
+    //public RadiationAreaOfEffectData radiationAOEData;
+    
     public float explosiveRadius;
 
-    [SerializeField]
-    private LayerMask whatDoesExplosionHit;
-    public override void Explode(Vector2 explosionSource)
+    public LayerMask whatDoesExplosionHit;
+    // public override void Explode(Vector2 explosionSource)
+    // {
+    //     // Big explosion hurt all enemies
+    //     Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(explosionSource, explosiveRadius, whatDoesExplosionHit);
+    //
+    //     foreach (Collider2D targetCollider in hitEnemies)
+    //     {
+    //         if(!CheckObstruction(explosionSource, targetCollider))
+    //             targetCollider.gameObject.GetComponent<IHealth>().ModifyHealth(-1f * ultimateAbilityData.abilityDamage);
+    //
+    //     }
+    // }
+
+    public override float GetDamage()
     {
-        // Big explosion hurt all enemies
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(explosionSource, explosiveRadius, whatDoesExplosionHit);
-
-        foreach (Collider2D targetCollider in hitEnemies)
-        {
-            if(!CheckObstruction(explosionSource, targetCollider))
-                targetCollider.gameObject.GetComponent<IHealth>().ModifyHealth(-1f * ultimateAbilityData.abilityDamage);
-
-        }
+        return ultimateAbilityData.abilityDamage;
     }
 
     public override float GetDuration()

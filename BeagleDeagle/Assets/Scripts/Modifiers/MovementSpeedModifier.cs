@@ -1,6 +1,9 @@
+using UnityEngine;
+
 [System.Serializable]
 public class MovementSpeedModifier: Modifier
 {
+    [Range(-1f, 1f)]
     public float bonusMovementSpeed;
     
     ///-///////////////////////////////////////////////////////////

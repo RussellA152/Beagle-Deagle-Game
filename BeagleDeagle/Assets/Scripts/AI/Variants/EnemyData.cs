@@ -11,8 +11,9 @@ using UnityEngine;
 public class EnemyData : CharacterData
 {
     [Header("Damage")]
+    [Range(-1000f, 1000f)]
     // How damage damage does this enemy apply to their target?
-    public int attackDamage;
+    public float attackDamage;
     // How long does it take (seconds) for this enemy to attack again?
     public float attackCooldown;
 
