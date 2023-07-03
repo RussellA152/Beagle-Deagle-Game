@@ -35,8 +35,8 @@ public abstract class Explosive<T> : MonoBehaviour where T: GrenadeData
     // Wait some time, then activate the grenade's explosion
     // Then after some more time, disable this grenade
     public abstract IEnumerator Detonate();
-    
-    public virtual void Explode()
+
+    protected virtual void Explode()
     {
         // Play explosion sound
 
@@ -48,8 +48,8 @@ public abstract class Explosive<T> : MonoBehaviour where T: GrenadeData
     {
         explosiveData = scriptableObject;
     }
-    
-    public bool CheckObstruction(Collider2D targetCollider)
+
+    protected bool CheckObstruction(Collider2D targetCollider)
     {
         if (explosiveData.hitThroughWalls)
         {

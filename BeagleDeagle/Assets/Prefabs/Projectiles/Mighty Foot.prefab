@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0a05e8e9d85d34d8d75e1ab9d89eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolKey: 14
+  poolKey: 21
   rb: {fileID: 7698205712678738710}
   bulletCollider: {fileID: 8164879991046117892}
 --- !u!70 &8164879991046117892

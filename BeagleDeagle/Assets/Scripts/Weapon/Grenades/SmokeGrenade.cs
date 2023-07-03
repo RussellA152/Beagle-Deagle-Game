@@ -69,18 +69,15 @@ public class SmokeGrenade : Explosive<SmokeGrenadeData>, IPoolable
         
     }
 
-    public void FreezePosition()
+    private void FreezePosition()
     {
         rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
 
     }
 
-    public void UnfreezePosition()
+    private void UnfreezePosition()
     {
         rb.constraints = RigidbodyConstraints2D.None;
     }
-    // public override void UpdateExplosiveData(SmokeGrenadeData scriptableObject)
-    // {
-    //     base.UpdateExplosiveData(scriptableObject);
-    // }
+
 }

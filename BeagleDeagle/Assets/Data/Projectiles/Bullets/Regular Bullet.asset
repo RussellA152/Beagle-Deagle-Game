@@ -15,7 +15,7 @@ MonoBehaviour:
   bulletSprite: {fileID: 0}
   whatBulletCanPenetrate:
     serializedVersion: 2
-    m_Bits: 1280
+    m_Bits: 256
   whatBulletCanDamage:
     serializedVersion: 2
     m_Bits: 256

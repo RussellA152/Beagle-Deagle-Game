@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable where T: BulletData
     protected Rigidbody2D rb;
 
     [SerializeField]
-    private CapsuleCollider2D bulletCollider; // The collider of this bullet
+    protected CapsuleCollider2D bulletCollider; // The collider of this bullet
 
     private Vector3 defaultRotation = new Vector3(0f, 0f, -90f);
 
@@ -88,7 +89,6 @@ public class Bullet<T> : MonoBehaviour, IPoolable where T: BulletData
         // If this bullet hits what its allowed to
         if ((bulletData.whatBulletCanPenetrate.value & (1 << collision.gameObject.layer)) > 0)
         {
-
             // Check if this bullet can damage that gameobject
             if((bulletData.whatBulletCanDamage.value & (1 << collision.gameObject.layer)) > 0)
             {
@@ -125,7 +125,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable where T: BulletData
         }
 
     }
-
+    
     // Update the damage and penetration values
     public void UpdateWeaponValues(float damage, int penetration)
     {

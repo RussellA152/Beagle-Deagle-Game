@@ -198,7 +198,7 @@ MonoBehaviour:
   sprite: {fileID: 3520225513382146324}
   explosiveData: {fileID: 11400000, guid: f9b736858f8515e4881b5b31abb13121, type: 2}
   areaOfEffectGameObject: {fileID: 5551387674908472178}
-  poolKey: 12
+  poolKey: 30
   rb: {fileID: 7698205712678738710}
   grenadeCollider: {fileID: 8164879991046117892}
   throwSpeed: 15
