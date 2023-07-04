@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolKey: 10
-  enemyScriptableObject: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
+  enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
   target: {fileID: 0}
   agent: {fileID: 3711592478197892577}
   attackScript: {fileID: 3711592478197892583}
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 3711592478197892577}
   rb: {fileID: 3711592478197892576}
-  enemyScriptableObject: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
+  enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
   movementSpeedModifiers: []
 --- !u!114 &3711592478197892583
 MonoBehaviour:
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460dd298d8e60ff4084e3952071a492d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyScriptableObject: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
+  enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
   damageModifiers: []
   attackSpeedModifiers: []
 --- !u!114 &3711592478197892578
@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db53577188b32941a633f33e5026826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 54510153031b3e14ca773b492290bd1f, type: 2}
+  enemyData: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
   maxHealthModifiers: []
 --- !u!114 &7645405754992922946
 MonoBehaviour:

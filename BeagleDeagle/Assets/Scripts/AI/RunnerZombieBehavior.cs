@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunnerZombieBehavior : AIBehavior<EnemyData>
+public class RunnerZombieBehavior : AIBehavior<RunnerEnemyData>
 {
 
 }
