@@ -22,13 +22,14 @@ public abstract class GunData : ScriptableObject
     [SerializeField]
     [Range(0f, 30f)]
     private float totalReloadTime;
-    
-    [Header("Bullet To Shoot")]
-    [RestrictedPrefab(typeof(IBulletUpdatable))]
-    public GameObject bulletPrefab; // What bullet is spawned when shooting?
 
-    // What data will this bullet use?
-    public BulletData bulletData;
+    public BulletTypeData bulletType;
+    // [Header("Bullet To Shoot")]
+    // [RestrictedPrefab(typeof(IBulletUpdatable))]
+    // public GameObject bulletPrefab; // What bullet is spawned when shooting?
+    //
+    // // What data will this bullet use?
+    // public BulletData bulletData;
 
     [Header("Weapon Spread")]
     [Range(0f, 20f)]
@@ -45,7 +46,9 @@ public abstract class GunData : ScriptableObject
     
     public virtual void OnEnable()
     {
-        BulletPoolKey = bulletPrefab.GetComponent<IPoolable>().PoolKey;
+        BulletPoolKey = bulletType.GetBulletPrefab().GetComponent<IPoolable>().PoolKey;
+        
+        //BulletPoolKey = bulletPrefab.GetComponent<IPoolable>().PoolKey;
     }
 
 
@@ -64,7 +67,7 @@ public abstract class GunData : ScriptableObject
             // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
             projectile.UpdateWeaponValues(GetDamage() * damageModifier, penetrationCount + penetrationModifier);
             
-            projectile.UpdateScriptableObject(bulletData);
+            projectile.UpdateScriptableObject(bulletType.GetBulletData());
 
             // Set the position to be at the barrel of the gun
             newBullet.transform.position = bulletSpawnPoint.position;
