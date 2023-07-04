@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64ef52db2401394badc8d8314f9131c, type: 3}
+  m_Name: mini_wave_police
+  m_EditorClassIdentifier: 
+  name: Mini Wave 1
+  enemyPrefab: {fileID: 3711592478197892634, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
+  enemyData: {fileID: 11400000, guid: 17ec48660538d1548b6cb75719102a7a, type: 2}
+  delayBetweenSpawn: 1
+  enemiesPerSpawn: 1
+  waveDuration: 5

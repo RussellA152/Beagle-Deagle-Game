@@ -5,6 +5,9 @@ using UnityEngine.Serialization;
 
 public abstract class GunData : ScriptableObject
 {
+    // Name displayed in-game
+    public string name;
+    
     public Sprite sprite;
 
     [Header("Fire Rate (Bullets Per Second)")]

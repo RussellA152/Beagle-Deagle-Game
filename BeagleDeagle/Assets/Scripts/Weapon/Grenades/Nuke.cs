@@ -19,7 +19,7 @@ public class Nuke : Explosive<NukeData>
         StopAllCoroutines();
     }
 
-    public void ActivateNuclearBomb()
+    private void ActivateNuclearBomb()
     {
         StartCoroutine(Detonate());
     }
@@ -44,8 +44,10 @@ public class Nuke : Explosive<NukeData>
 
     }
 
-    public virtual void Explode()
+    protected override void Explode()
     {
+        base.Explode();
+        
         // Big explosion hurt all enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, explosiveData.explosiveRadius, explosiveData.whatDoesExplosionHit);
 

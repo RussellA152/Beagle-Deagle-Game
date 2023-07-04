@@ -10,9 +10,9 @@ public class WaveData : ScriptableObject
 {
     public string name;
 
+    [TextArea(minLines: 1, maxLines: 4)]
     public string message; // this string will be displayed on the screen when this mini wave begins
-
-    [NonReorderable]
+    
     public List<MiniWaveData> miniWaves;
 
     [HideInInspector]

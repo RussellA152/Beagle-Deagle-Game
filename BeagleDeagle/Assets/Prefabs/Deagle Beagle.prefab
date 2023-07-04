@@ -884,8 +884,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.9352659, g: 1, b: 0.19339621, a: 1}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -957,11 +957,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.65
+      value: 1.14
       objectReference: {fileID: 0}
     - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.82
+      value: 3.14
       objectReference: {fileID: 0}
     - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -994,14 +994,6 @@ PrefabInstance:
     - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759311910775, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 34.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3172216759311910775, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -23.8
       objectReference: {fileID: 0}
     - target: {fileID: 7358910972957582640, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
       propertyPath: weaponData

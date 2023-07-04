@@ -8,6 +8,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewCharacter", menuName = "ScriptableObjects/CharacterData/Character")]
 public class CharacterData : ScriptableObject
 {
+    // Name to display in-game
+    public string name;
+    
     public RuntimeAnimatorController animatorController;
 
     [Header("Health")]

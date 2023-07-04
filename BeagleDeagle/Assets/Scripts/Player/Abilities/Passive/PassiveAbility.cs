@@ -31,6 +31,13 @@ public abstract class PassiveAbility<T> : MonoBehaviour where T: ScriptableObjec
 
     public void UpdateScriptableObject(T scriptableObject)
     {
-        passiveData = scriptableObject;
+        if (scriptableObject is T)
+        {
+            passiveData = scriptableObject as T;
+        }
+        else
+        {
+            Debug.LogError("ERROR WHEN UPDATING SCRIPTABLE OBJECT! " + scriptableObject + " IS NOT A " + typeof(T));
+        }
     }
 }

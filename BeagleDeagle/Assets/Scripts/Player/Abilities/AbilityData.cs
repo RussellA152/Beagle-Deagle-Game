@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AbilityData : ScriptableObject
 {
+    public string name;
+    
     [Range(0, 1000f)]
     public float abilityDamage;
 
