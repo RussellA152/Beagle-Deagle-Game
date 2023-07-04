@@ -957,11 +957,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.288
+      value: 1.65
       objectReference: {fileID: 0}
     - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.825
+      value: 3.82
       objectReference: {fileID: 0}
     - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -994,6 +994,14 @@ PrefabInstance:
     - target: {fileID: 3172216759253909029, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3172216759311910775, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3172216759311910775, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -23.8
       objectReference: {fileID: 0}
     - target: {fileID: 7358910972957582640, guid: 3c4a62ed01365084682e80c05dbf47fd, type: 3}
       propertyPath: weaponData
