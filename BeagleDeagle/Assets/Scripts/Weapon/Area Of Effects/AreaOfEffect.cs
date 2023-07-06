@@ -21,6 +21,8 @@ public abstract class AreaOfEffect<T> : MonoBehaviour where T: AreaOfEffectData
 
     private void OnEnable()
     {
+        AreaOfEffectManager.Instance.AddNewAreaOfEffect(areaOfEffectData);
+        
         UpdateAOEData(areaOfEffectData);
     }
 
@@ -33,8 +35,6 @@ public abstract class AreaOfEffect<T> : MonoBehaviour where T: AreaOfEffectData
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        AreaOfEffectManager.Instance.AddNewAreaOfEffect(areaOfEffectData);
-        
         // If this AOE hits what its allowed to affect
         if ((areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {

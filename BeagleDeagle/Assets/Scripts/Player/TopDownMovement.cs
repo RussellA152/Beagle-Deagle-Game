@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 
 public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
@@ -19,6 +20,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     public Vector2 movementInput { get; private set; }
     Vector2 rotationInput;
+    
     [Header("Required Components")]
     [SerializeField]
     private Rigidbody2D rb;
@@ -27,15 +29,9 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     // How far out should the weapon be from player when rotating (lower values = closer)
     private float rotationRadius = 0.5f;
 
-    //private float moveSpeed;
-
-    [Header("Body Parts")]
     [SerializeField] 
-    private Transform body;
-    [SerializeField] 
-    private Transform head;
-    [SerializeField] 
-    private Transform weapon;
+    // Empty object that holds the weapon and player hands
+    private Transform pivotPoint;
 
     [SerializeField] 
     private CapsuleCollider2D capsuleCollider2D;
@@ -44,11 +40,10 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     //private Animator playerAnimator;
     //[SerializeField]
     //private Animator attackAnimator;
+    
     [Header("Sprite Renderers")]
     [SerializeField]
     private SpriteRenderer bodySr;
-    //[SerializeField]
-    //private SpriteRenderer tailSr;
     [SerializeField]
     private SpriteRenderer headSr;
 
@@ -57,26 +52,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     public ContactFilter2D movementFilter;
 
-    List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
-
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
-
-    ///-///////////////////////////////////////////////////////////
-    ///
-    //private void Update()
-    //{
-        //UpdateMovementAnimation();
-
-        //if (weapon.rotation.z >= Quaternion.Euler(0f, 0f, 90f).z || weapon.rotation.z <= Quaternion.Euler(0f,0f,-90f).z)
-        //{
-        //    Debug.Log("SWAP TO OTHER HAND!");
-        //}
-
-    //}
-
+    List<RaycastHit2D> _castCollisions = new List<RaycastHit2D>();
+    
     ///-///////////////////////////////////////////////////////////
     ///
     void FixedUpdate()
@@ -85,7 +62,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         if (movementInput != Vector2.zero)
         {
             //The number of objects we can collide with if we go in this direction
-            int count = rb.Cast(movementInput, movementFilter, castCollisions, (playerData.movementSpeed * bonusSpeed) * Time.fixedDeltaTime + collisionOffset);
+            int count = rb.Cast(movementInput, movementFilter, _castCollisions, (playerData.movementSpeed * bonusSpeed) * Time.fixedDeltaTime + collisionOffset);
 
             //if nothing is in the way, move our character
             if (count == 0)
@@ -95,19 +72,19 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
         }
 
-        HandleRotation(rotationInput);
-        FlipWithLook(rotationInput);
-
-        //Flip(movementInput, GetComponent<SpriteRenderer>());
-        FlipWithMovement(movementInput, bodySr);
-        //FlipWithMovement(movementInput, tailSr);
+        HandleWeaponRotation(rotationInput);
+        
+        FlipSpritesWithLook(rotationInput);
+        
+        FlipSpritesWithMovement(movementInput);
+        
     }
 
 
 
     ///-///////////////////////////////////////////////////////////
     ///
-    void HandleRotation(Vector2 direction)
+    void HandleWeaponRotation(Vector2 direction)
     {
         direction.Normalize();
 
@@ -120,39 +97,53 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         
         if (direction != Vector2.zero)
         {
-            weapon.position = Vector2.Lerp(weapon.position, newLocation, 40 * Time.deltaTime);
+            pivotPoint.position = Vector2.Lerp(pivotPoint.position, newLocation, 40 * Time.deltaTime);
         
             // Rotate towards w/ stick movement
             float zRotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            weapon.rotation = Quaternion.Euler(0f, 0f, zRotation);
+            pivotPoint.rotation = Quaternion.Euler(0f, 0f, zRotation);
         }
         
     }
 
 
     ///-///////////////////////////////////////////////////////////
-    ///
-    private void FlipWithMovement(Vector2 input, SpriteRenderer sr)
+    /// Flip the sprite of the player's body depending on which direction
+    /// the player is moving in.
+    /// 
+    private void FlipSpritesWithMovement(Vector2 input)
     {
         if (input.x > 0f)
         {
-            sr.flipX = false;
+            bodySr.flipX = false;
+
         }
         else if (input.x < 0f)
         {
-            sr.flipX = true;
+            bodySr.flipX = true;
+
         }
     }
 
-    private void FlipWithLook(Vector2 direction)
+    ///-///////////////////////////////////////////////////////////
+    /// Flip the sprite of the player's head and hands depending on which
+    /// direction the player is looking at (with mouse or gamepad stick).
+    /// 
+    private void FlipSpritesWithLook(Vector2 direction)
     {
         // If mouse cursor, or joystick is moving to the left of the player,
-        // then turn their head to the right
+        // then turn their head to the left
         if (direction.x <= 0f)
-            headSr.flipX = false;
-        // otherwise, turn their head to the left
-        else
+        {
             headSr.flipX = true;
+
+        }
+        // Otherwise, turn their head to the right
+        else
+        {
+            headSr.flipX = false;
+
+        }
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -176,11 +167,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     ///
     public void OnLook(CallbackContext inputValue)
     {
-        //Vector2 playerOffSet = new Vector2()
-
         if (inputValue.ReadValue<Vector2>() != Vector2.zero)
         {
-
             // If the current input is a mouse
             if (inputValue.control.displayName == "Delta")
             {
@@ -188,9 +176,9 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
                 Vector3 mousePos = Mouse.current.position.ReadValue();
 
                 // Convert that mouse position to a coordinate in world space
-                Vector3 Worldpos = Camera.main.ScreenToWorldPoint(mousePos);
+                Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-                rotationInput = Worldpos - capsuleCollider2D.bounds.center;
+                rotationInput = worldPos - capsuleCollider2D.bounds.center;
 
 
             }
@@ -204,8 +192,10 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         }
 
     }
+
     ///-///////////////////////////////////////////////////////////
-    ///
+    /// Get input value when player is moving
+    /// 
     public void OnMove(CallbackContext inputValue)
     {
         movementInput = inputValue.ReadValue<Vector2>();
@@ -230,7 +220,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
 
     }
-
+    
     public Vector2 ReturnPlayerDirection()
     {
         return rotationInput;

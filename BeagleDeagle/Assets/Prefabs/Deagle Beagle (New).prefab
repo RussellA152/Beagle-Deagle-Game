@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2439171421654748757}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &5886235219759038886
 CapsuleCollider2D:
@@ -254,6 +254,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2439171422020017620}
+  - {fileID: 2439171422092810394}
   - {fileID: 2439171421700932897}
   - {fileID: 4293141521574051827}
   m_Father: {fileID: 0}
@@ -321,10 +322,8 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
   movementSpeedModifiers: []
   rb: {fileID: 2439171421654748756}
-  rotationRadius: 0.5
-  body: {fileID: 2439171421377474773}
-  head: {fileID: 2439171422150902592}
-  weapon: {fileID: 2439171422092810394}
+  rotationRadius: 0
+  pivotPoint: {fileID: 2439171422092810394}
   capsuleCollider2D: {fileID: 5886235219759038886}
   bodySr: {fileID: 2439171421377474772}
   headSr: {fileID: 2439171422150902655}
@@ -610,7 +609,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2439171421654748757}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2439171421700932896
 MonoBehaviour:
@@ -655,7 +654,6 @@ Transform:
   m_Children:
   - {fileID: 2439171422150902592}
   - {fileID: 2439171421377474773}
-  - {fileID: 2439171422092810394}
   m_Father: {fileID: 2439171421654748757}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -690,8 +688,8 @@ Transform:
   - {fileID: 3093359913422740386}
   - {fileID: 2439171421320100821}
   - {fileID: 2439171422854681639}
-  m_Father: {fileID: 2439171422020017620}
-  m_RootOrder: 2
+  m_Father: {fileID: 2439171421654748757}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2439171422150902593
 GameObject:
@@ -767,7 +765,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d54de68c491ffbf49a0176cf46451c1d, type: 3}
-  m_Color: {r: 0.8712125, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.8921106, b: 0.07075471, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

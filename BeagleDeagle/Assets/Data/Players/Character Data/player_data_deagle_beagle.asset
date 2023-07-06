@@ -15,4 +15,4 @@ MonoBehaviour:
   characterName: 
   animatorController: {fileID: 0}
   maxHealth: 500
-  movementSpeed: 15
+  movementSpeed: 10
