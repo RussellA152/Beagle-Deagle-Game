@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d5d101c15f1cc488adfb3c7686e907, type: 3}
   m_Name: ultimate_awp
   m_EditorClassIdentifier: 
-  name: AWP Sniper
+  abilityName: AWP Sniper
   abilityDamage: 200
   cooldown: 5
   duration: 6

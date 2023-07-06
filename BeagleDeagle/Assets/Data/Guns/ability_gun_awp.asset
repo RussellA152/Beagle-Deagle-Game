@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f000695150f3216448aeec1e683707db, type: 3}
   m_Name: ability_gun_awp
   m_EditorClassIdentifier: 
-  name: AWP
+  gunName: AWP
   sprite: {fileID: 21300000, guid: d29d4dde89b016e44bdf70f66f28cf34, type: 3}
   fireRate: 1.5
   magazineSize: 5

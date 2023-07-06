@@ -11,10 +11,6 @@ public abstract class UtilityAbility<T> : MonoBehaviour where T: UtilityAbilityD
 
     [SerializeField]
     protected T utilityData;
-    
-    [Header("Prefab to Spawn")]
-    [SerializeField]
-    private GameObject prefab;
 
     private bool _canUseUtility = true;
 
@@ -38,12 +34,10 @@ public abstract class UtilityAbility<T> : MonoBehaviour where T: UtilityAbilityD
         _utilityUses = utilityData.maxUses;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
-        PoolKey = prefab.GetComponent<IPoolable>().PoolKey;
-        
         UtilityUsesModified();
-        playerEvents.InvokeUtilityNameUpdatedEvent(utilityData.name);
+        playerEvents.InvokeUtilityNameUpdatedEvent(utilityData.abilityName);
     }
 
     public void ActivateUtility(CallbackContext inputValue)

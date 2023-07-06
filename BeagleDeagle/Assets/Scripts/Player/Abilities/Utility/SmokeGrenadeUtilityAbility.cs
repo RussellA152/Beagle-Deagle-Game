@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class SmokeGrenadeUtilityAbility : UtilityAbility<SmokeGrenadeUtilityData>
 {
+    protected override void Start()
+    {
+        PoolKey = utilityData.smokeGrenadePrefab.GetComponent<IPoolable>().PoolKey;
+        
+        base.Start();
+    }
+    
     protected override void UtilityAction(ObjectPooler objectPool, GameObject player)
     {
         Debug.Log("Throw smoke grenade!");

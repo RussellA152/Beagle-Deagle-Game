@@ -7,7 +7,8 @@ using UnityEngine.Serialization;
 public class NukeUltimateData : UltimateAbilityData
 {
     [Header("Prefab to Spawn")]
-    public GameObject prefab;
+    [RestrictedPrefab(typeof(Nuke))]
+    public GameObject nukePrefab;
 
     [Header("Grenade Data")]
     public NukeData nukeData;

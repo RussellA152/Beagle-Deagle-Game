@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7aed98210e83f4aa4f3a5f53cb0d9b, type: 3}
   m_Name: player_data_deagle_beagle
   m_EditorClassIdentifier: 
-  name: Deagle Beagle
+  characterName: 
   animatorController: {fileID: 0}
   maxHealth: 500
-  movementSpeed: 10
+  movementSpeed: 15

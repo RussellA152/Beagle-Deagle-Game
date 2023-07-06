@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 // We can use ScriptableObjects for enemies  that are very similar to each other
 // This is useful if we have enemies that have the same behavior, and only different stats
@@ -9,7 +10,7 @@ using UnityEngine;
 public class CharacterData : ScriptableObject
 {
     // Name to display in-game
-    public string name;
+    public string characterName;
     
     public RuntimeAnimatorController animatorController;
 

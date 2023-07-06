@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MightyFootUtilityAbility : UtilityAbility<MightyFootUtilityData>
 {
+    protected override void Start()
+    {
+        PoolKey = utilityData.mightyFootPrefab.GetComponent<IPoolable>().PoolKey;
+        
+        base.Start();
+    }
     protected override void UtilityAction(ObjectPooler objectPool, GameObject player)
     {
         // Fetch a grenade from the object pool

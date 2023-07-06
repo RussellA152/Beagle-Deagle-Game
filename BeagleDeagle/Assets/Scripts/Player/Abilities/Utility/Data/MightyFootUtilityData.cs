@@ -6,6 +6,9 @@ using UnityEngine;
 public class MightyFootUtilityData : UtilityAbilityData
 {
     [Header("Projectile Data")]
+    [RestrictedPrefab(typeof(MightyFootBullet))]
+    public GameObject mightyFootPrefab;
+    
     public MightyFootBulletData mightyFootData;
 
     [Header("Offset From Player Position")]

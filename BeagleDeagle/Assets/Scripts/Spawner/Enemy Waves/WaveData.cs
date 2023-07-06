@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 
 // We can use ScriptableObjects for data about our weapons.
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 //[CreateAssetMenu(fileName = "NewWave", menuName = "ScriptableObjects/WaveData/Wave")]
 public abstract class WaveData : ScriptableObject
 {
-    public string name;
+    public string waveName;
 
     [TextArea(minLines: 1, maxLines: 4)]
     public string message; // this string will be displayed on the screen when this mini wave begins

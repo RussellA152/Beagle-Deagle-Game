@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ce0a3db036f9a43aeb3eed0758f8dd, type: 3}
   m_Name: wave_2
   m_EditorClassIdentifier: 
-  name: Wave 2
+  waveName: Wave 2
   message: Wave 2 has started!
   duration: 0
   miniWaves:

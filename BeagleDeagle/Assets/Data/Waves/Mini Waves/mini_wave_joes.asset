@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c5b4588389ba145ad4da232451f5b0, type: 3}
   m_Name: mini_wave_joes
   m_EditorClassIdentifier: 
-  name: Joe Wave
+  miniWaveName: Runner Zombie Waves
   delayBetweenSpawn: 1
   enemiesPerSpawn: 2
   waveDuration: 10

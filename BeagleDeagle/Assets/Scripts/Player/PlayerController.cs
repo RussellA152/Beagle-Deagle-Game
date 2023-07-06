@@ -25,13 +25,12 @@ public class PlayerController : MonoBehaviour
 
     //[SerializeField]
     //private Abilities playerAbilitiesScript;
-
-    [SerializeField]
-    private Gun currentWeapon;
+    
+    private Gun _currentWeapon;
     
 
     // states that an enemy can be in
-    public enum PlayerState
+    private enum PlayerState
     {
         // not moving
         Idle,
@@ -55,9 +54,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        currentWeapon = GetComponentInChildren<Gun>();
+        _currentWeapon = GetComponentInChildren<Gun>();
 
-        playerEvents.InvokeNewWeaponEvent(currentWeapon.GetCurrentData());
+        playerEvents.InvokeNewWeaponEvent(_currentWeapon.GetCurrentData());
 
         playerEvents.InvokeNewStatsEvent(currentPlayerData);
 
@@ -137,14 +136,14 @@ public class PlayerController : MonoBehaviour
     private bool CheckIfAttacking()
     {
         // checking if the player is attacking with their weapon
-        if(currentWeapon == null)
+        if(_currentWeapon == null)
         {
             Debug.Log("WEAPON MISSING!");
             return false;
         }
         else
         {
-            return currentWeapon.CheckIfIsShooting();
+            return _currentWeapon.CheckIfIsShooting();
         }
         
     }

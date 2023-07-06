@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 public abstract class GunData : ScriptableObject
 {
     // Name displayed in-game
-    public string name;
+    public string gunName;
     
     public Sprite sprite;
 
@@ -23,14 +23,9 @@ public abstract class GunData : ScriptableObject
     [Range(0f, 30f)]
     private float totalReloadTime;
 
+    // What kind of bullet will this gun shoot (ex. regular, fire, radiation... etc.)
     public BulletTypeData bulletType;
-    // [Header("Bullet To Shoot")]
-    // [RestrictedPrefab(typeof(IBulletUpdatable))]
-    // public GameObject bulletPrefab; // What bullet is spawned when shooting?
-    //
-    // // What data will this bullet use?
-    // public BulletData bulletData;
-
+    
     [Header("Weapon Spread")]
     [Range(0f, 20f)]
     public float bulletSpread; // spread of bullet in X direction

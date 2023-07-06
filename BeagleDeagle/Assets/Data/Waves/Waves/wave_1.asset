@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548f70bf4253f654198861bfe4e04001, type: 3}
   m_Name: wave_1
   m_EditorClassIdentifier: 
-  name: Wave 1
+  waveName: Wave 1
   message: Zombies incoming!
   duration: 10
   miniWaves:

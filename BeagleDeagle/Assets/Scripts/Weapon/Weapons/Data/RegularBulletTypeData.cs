@@ -7,7 +7,8 @@ public class RegularBulletTypeData : BulletTypeData
 {
     [Header("Bullet To Shoot")]
     [RestrictedPrefab(typeof(RegularBullet))]
-    public GameObject bulletPrefab; // What bullet is spawned when shooting?
+    // What bullet is spawned when shooting?
+    public GameObject bulletPrefab; 
     
     // What data will this bullet use?
     public RegularBulletData bulletData;

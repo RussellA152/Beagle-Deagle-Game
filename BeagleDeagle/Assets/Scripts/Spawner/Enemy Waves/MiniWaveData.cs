@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 //[CreateAssetMenu(fileName = "NewWave", menuName = "ScriptableObjects/WaveData/MiniWave")]
 public abstract class MiniWaveData : ScriptableObject
 {
-    public string name;
+    public string miniWaveName;
     
     [Space(30)]
 

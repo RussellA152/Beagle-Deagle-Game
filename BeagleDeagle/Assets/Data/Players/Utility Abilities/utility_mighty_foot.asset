@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ffd2733aba5a224f9df2acdced235ef, type: 3}
   m_Name: utility_mighty_foot
   m_EditorClassIdentifier: 
-  name: Mighty Foot
+  abilityName: Mighty Foot
   abilityDamage: 40
   cooldown: 3
   duration: 0.15
   maxUses: 1
+  mightyFootPrefab: {fileID: 8164879991046117895, guid: 4690bf3bda783ed4f8a0174326ca84cb, type: 3}
   mightyFootData: {fileID: 11400000, guid: 7d16991d98ac3644980c8574734b32fc, type: 2}
   offset: {x: 0.5, y: 0.5}

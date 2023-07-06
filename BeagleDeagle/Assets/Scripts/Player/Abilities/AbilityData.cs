@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class AbilityData : ScriptableObject
 {
-    public string name;
+    public string abilityName;
     
     [Range(0, 1000f)]
     public float abilityDamage;

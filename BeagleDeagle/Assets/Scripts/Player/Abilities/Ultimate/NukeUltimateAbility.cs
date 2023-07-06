@@ -12,7 +12,7 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
         Debug.Log("Spawn nuclear bomb!");
 
         // Spawn a nuke at the player's location
-        GameObject nuclearBomb = Instantiate(ultimateData.prefab);
+        GameObject nuclearBomb = Instantiate(ultimateData.nukePrefab);
 
         nuclearBomb.SetActive(false);
 

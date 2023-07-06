@@ -167,7 +167,6 @@ MonoBehaviour:
   currentPlayerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
   movementScript: {fileID: 5313635083943124193}
   healthScript: {fileID: 2912267811165790606}
-  currentWeapon: {fileID: 0}
 --- !u!114 &2912267811165790606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,8 +214,8 @@ MonoBehaviour:
   body: {fileID: 5313635084664649029}
   head: {fileID: 5313635084907708359}
   weapon: {fileID: 5313635084010504988}
+  capsuleCollider2D: {fileID: 5091715681384261876}
   bodySr: {fileID: 5313635084664649082}
-  tailSr: {fileID: 5313635083331269459}
   headSr: {fileID: 5313635084907708356}
   collisionOffset: 0.05
   movementFilter:
@@ -247,7 +246,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   utilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
-  prefab: {fileID: 8164879991046117895, guid: 4690bf3bda783ed4f8a0174326ca84cb, type: 3}
   utilityCooldownModifiers: []
   utilityUsesModifiers: []
 --- !u!114 &787244964802426978

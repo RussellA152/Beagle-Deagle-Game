@@ -7,6 +7,9 @@ using UnityEngine.Serialization;
 public class SmokeGrenadeUtilityData : UtilityAbilityData
 {
     [Header("Grenade Data")]
+    [RestrictedPrefab(typeof(SmokeGrenade))]
+    public GameObject smokeGrenadePrefab;
+    
     public SmokeGrenadeData smokeGrenadeData;
     
 }

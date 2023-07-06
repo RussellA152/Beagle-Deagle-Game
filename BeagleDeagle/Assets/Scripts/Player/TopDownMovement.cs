@@ -23,14 +23,23 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     [SerializeField]
     private Rigidbody2D rb;
 
+    [SerializeField] 
+    // How far out should the weapon be from player when rotating (lower values = closer)
+    private float rotationRadius = 0.5f;
+
     //private float moveSpeed;
 
     [Header("Body Parts")]
-    [SerializeField] private Transform body;
-    [SerializeField] private Transform head;
-    [SerializeField]
-    Transform weapon;
+    [SerializeField] 
+    private Transform body;
+    [SerializeField] 
+    private Transform head;
+    [SerializeField] 
+    private Transform weapon;
 
+    [SerializeField] 
+    private CapsuleCollider2D capsuleCollider2D;
+    
     //[SerializeField]
     //private Animator playerAnimator;
     //[SerializeField]
@@ -38,8 +47,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     [Header("Sprite Renderers")]
     [SerializeField]
     private SpriteRenderer bodySr;
-    [SerializeField]
-    private SpriteRenderer tailSr;
+    //[SerializeField]
+    //private SpriteRenderer tailSr;
     [SerializeField]
     private SpriteRenderer headSr;
 
@@ -91,7 +100,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
         //Flip(movementInput, GetComponent<SpriteRenderer>());
         FlipWithMovement(movementInput, bodySr);
-        FlipWithMovement(movementInput, tailSr);
+        //FlipWithMovement(movementInput, tailSr);
     }
 
 
@@ -102,25 +111,22 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     {
         direction.Normalize();
 
-        Vector2 v = direction;
-
-        // adding some random offset to the center
-        Vector2 center = (((Vector2)body.position + new Vector2(0f, -3f)) + ((Vector2)head.position + new Vector2(0f,3f))) / 2f;
-
+        Vector2 v = direction * rotationRadius;
+        
         v = Vector2.ClampMagnitude(v, 6);
 
-        Vector2 newLocation = center + (v * 1.5f);
-
+        // Circling around collider, instead of parent transform
+        Vector2 newLocation = (Vector2)capsuleCollider2D.bounds.center + v;
+        
         if (direction != Vector2.zero)
         {
             weapon.position = Vector2.Lerp(weapon.position, newLocation, 40 * Time.deltaTime);
-
+        
             // Rotate towards w/ stick movement
             float zRotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             weapon.rotation = Quaternion.Euler(0f, 0f, zRotation);
         }
-
-
+        
     }
 
 
@@ -128,7 +134,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     ///
     private void FlipWithMovement(Vector2 input, SpriteRenderer sr)
     {
-
         if (input.x > 0f)
         {
             sr.flipX = false;
@@ -141,9 +146,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     private void FlipWithLook(Vector2 direction)
     {
-        //Debug.Log(direction);
-
-        // if mouse cursor, or joystick is moving to the left of the player,
+        // If mouse cursor, or joystick is moving to the left of the player,
         // then turn their head to the right
         if (direction.x <= 0f)
             headSr.flipX = false;
@@ -187,7 +190,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
                 // Convert that mouse position to a coordinate in world space
                 Vector3 Worldpos = Camera.main.ScreenToWorldPoint(mousePos);
 
-                rotationInput = Worldpos - transform.position;
+                rotationInput = Worldpos - capsuleCollider2D.bounds.center;
 
 
             }

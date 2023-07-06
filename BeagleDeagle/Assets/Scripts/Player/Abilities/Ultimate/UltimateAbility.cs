@@ -25,7 +25,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour where T: UltimateAbilit
     {
         _canUseUltimate = false;
         
-        playerEvents.InvokeUltimateNameUpdatedEvent(ultimateData.name);
+        playerEvents.InvokeUltimateNameUpdatedEvent(ultimateData.abilityName);
     }
 
     protected virtual void OnDisable()
