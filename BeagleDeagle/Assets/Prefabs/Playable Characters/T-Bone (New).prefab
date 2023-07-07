@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1297267559727409783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6341451002868254957}
+  - component: {fileID: 4754763807898686148}
+  m_Layer: 0
+  m_Name: AWP Sniper Ultimate Ability
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6341451002868254957
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297267559727409783}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1777428645584621178}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4754763807898686148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297267559727409783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16f3c3cb12726674b98036b47458e827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  ultimateActivator: {fileID: 3854441205808898233}
+  playerGunScript: {fileID: 633001574926292169}
+  ultimateData: {fileID: 11400000, guid: 42f995ffd0be09f4486e341d1899a190, type: 2}
 --- !u!1 &1777428645335658745
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +246,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1777428645584621178}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6309951973812617350
 MonoBehaviour:
@@ -227,7 +275,7 @@ GameObject:
   - component: {fileID: 1777428645584621153}
   - component: {fileID: 1777428645584621180}
   - component: {fileID: 1282870346346946886}
-  - component: {fileID: 8540342016672658076}
+  - component: {fileID: 3854441205808898233}
   - component: {fileID: 1777428645584621182}
   - component: {fileID: 1777428645584621179}
   - component: {fileID: 1777428645584621181}
@@ -253,6 +301,7 @@ Transform:
   - {fileID: 1777428645764226555}
   - {fileID: 1777428646219782325}
   - {fileID: 7844997387264200015}
+  - {fileID: 6341451002868254957}
   - {fileID: 1777428645546820878}
   - {fileID: 8974415428967847468}
   m_Father: {fileID: 0}
@@ -370,7 +419,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8540342016672658076
+--- !u!114 &3854441205808898233
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -379,12 +428,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1777428645584621176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16f3c3cb12726674b98036b47458e827, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f6f70e93f2af514e8bce8b98cd2e0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   ultimateData: {fileID: 11400000, guid: 42f995ffd0be09f4486e341d1899a190, type: 2}
-  playerGunScript: {fileID: 633001574926292169}
+  onUltimateUse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4754763807898686148}
+        m_TargetAssemblyTypeName: AwpSniperUltimateAbility, Assembly-CSharp
+        m_MethodName: UltimateAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1777428645584621182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,8 +555,8 @@ MonoBehaviour:
     m_ActionName: Player/Utility[/Keyboard/e]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8540342016672658076}
-        m_TargetAssemblyTypeName: UltimateAbility`1[[AwpSniperUltimateData, Assembly-CSharp
+      - m_Target: {fileID: 3854441205808898233}
+        m_TargetAssemblyTypeName: UltimateActivator, Assembly-CSharp
         m_MethodName: ActivateUltimate
         m_Mode: 0
         m_Arguments:
@@ -838,7 +901,7 @@ GameObject:
   - component: {fileID: 7844997387264200015}
   - component: {fileID: 6463483001155321788}
   m_Layer: 0
-  m_Name: Utility Ability
+  m_Name: Smoke Grenade Utility Ability
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -903,7 +966,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1777428645584621178}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &3573752587559370938
 CapsuleCollider2D:

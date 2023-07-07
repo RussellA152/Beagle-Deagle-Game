@@ -1,0 +1,104 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
+using static UnityEngine.InputSystem.InputAction;
+
+public class UltimateActivator : MonoBehaviour
+{
+    [SerializeField]
+    private PlayerEvents playerEvents;
+    
+    [SerializeField]
+    private UltimateAbilityData ultimateData;
+
+    [SerializeField] 
+    private UnityEvent<GameObject> onUltimateUse;
+    
+    private bool _canUseUltimate;
+    
+
+    protected virtual void OnEnable()
+    {
+        StartCoroutine(UltimateCooldown());
+        StartCoroutine(CountDownCooldown());
+    }
+
+    protected virtual void Start()
+    {
+        _canUseUltimate = false;
+        
+        playerEvents.InvokeUltimateNameUpdatedEvent(ultimateData.abilityName);
+    }
+
+    protected virtual void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// When player presses 'Q' or ultimate button, 
+    /// activate the ultimate ability associated with the character
+    public void ActivateUltimate(CallbackContext inputValue)
+    {
+        if (inputValue.performed)
+        {
+            if (_canUseUltimate)
+            {
+                Debug.Log("Activate ultimate!");
+
+                onUltimateUse.Invoke(gameObject);
+                
+                _canUseUltimate = false;
+                
+            }
+        }
+    }
+
+    //protected abstract void UltimateAction(GameObject player);
+
+    public void StartCooldowns()
+    {
+        StartCoroutine(UltimateCooldown());
+        StartCoroutine(CountDownCooldown());
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Wait some time to allow player to use ultimate ability again
+    /// 
+    private IEnumerator UltimateCooldown()
+    {
+        yield return new WaitForSeconds(ultimateData.cooldown);
+
+        _canUseUltimate = true;
+        
+        Debug.Log("Ultimate is ready.");
+    }
+
+    
+
+    private IEnumerator CountDownCooldown()
+    {
+        // Ex. 5 seconds until cooldown
+        float timeLeft = ultimateData.cooldown;
+    
+        // If the cooldown is 0 seconds or less, don't continue further
+        if (timeLeft <= 0f)
+            yield break;
+    
+        playerEvents.InvokeUltimateAbilityCooldownEvent(timeLeft);
+    
+        // Decrement the cooldown by 1 second
+        // Invoke event system that takes in the amount of time left on the ultimate's cooldown (displays on the HUD)
+        while (timeLeft > 0f)
+        {
+            yield return new WaitForSeconds(1f);
+    
+            timeLeft--;
+    
+            playerEvents.InvokeUltimateAbilityCooldownEvent(timeLeft);
+        }
+    
+        playerEvents.InvokeUltimateAbilityCooldownEvent(0f);
+    }
+}
+

@@ -13,5 +13,7 @@ public class NukeUltimateData : UltimateAbilityData
     [Header("Grenade Data")]
     public NukeData nukeData;
 
+    public DamageOverTimeData damageOverTimeData;
+
     
 }

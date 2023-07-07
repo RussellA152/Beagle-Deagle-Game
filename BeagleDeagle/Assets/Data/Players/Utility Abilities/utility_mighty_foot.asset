@@ -19,4 +19,6 @@ MonoBehaviour:
   maxUses: 1
   mightyFootPrefab: {fileID: 8164879991046117895, guid: 4690bf3bda783ed4f8a0174326ca84cb, type: 3}
   mightyFootData: {fileID: 11400000, guid: 7d16991d98ac3644980c8574734b32fc, type: 2}
+  stunData: {fileID: 11400000, guid: f99b7cfa7568bb84dab1dca6fc954872, type: 2}
+  knockBackData: {fileID: 11400000, guid: 5d07bdf4586c22f4d8b92ee58d1c6377, type: 2}
   offset: {x: 0.5, y: 0.5}

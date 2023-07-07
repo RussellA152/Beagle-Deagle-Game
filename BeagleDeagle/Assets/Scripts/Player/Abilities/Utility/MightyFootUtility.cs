@@ -10,16 +10,11 @@ public class MightyFootUtility : MonoBehaviour
     
     [SerializeField] 
     private MightyFootUtilityData utilityData;
-
-    [SerializeField] 
-    private StunData stunData;
-
-    [SerializeField] private KnockBackData knockBackData;
+    
     private void Start()
     {
         PoolKey = utilityData.mightyFootPrefab.GetComponent<IPoolable>().PoolKey;
-        
-        //base.Start();
+
     }
     public void UtilityAction(GameObject player)
     {
@@ -35,8 +30,8 @@ public class MightyFootUtility : MonoBehaviour
         
         StatusEffect<KnockBackData> knockBackComponent = mightyFootGameObject.GetComponent<StatusEffect<KnockBackData>>();
 
-        stunComponent.UpdateScriptableObject(stunData);
-        knockBackComponent.UpdateScriptableObject(knockBackData);
+        stunComponent.UpdateScriptableObject(utilityData.stunData);
+        knockBackComponent.UpdateScriptableObject(utilityData.knockBackData);
 
         // Give MightyFoot the scriptable object it needs
         bulletComponent.UpdateScriptableObject(utilityData.mightyFootData);

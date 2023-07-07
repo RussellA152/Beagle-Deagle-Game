@@ -8,9 +8,7 @@ public class SmokeGrenadeUtility : MonoBehaviour
     
     [SerializeField] 
     private SmokeGrenadeUtilityData utilityData;
-
-    [SerializeField] 
-    private SlowData slowData;
+    
     
     private void Start()
     {
@@ -30,25 +28,25 @@ public class SmokeGrenadeUtility : MonoBehaviour
         
         Debug.Log(aimDirection);
 
-        SmokeGrenade smokeGrenadeComponent = grenade.GetComponent<SmokeGrenade>();
+        Grenade grenadeComponent = grenade.GetComponent<Grenade>();
         
-        Debug.Log(smokeGrenadeComponent);
+        Debug.Log(grenadeComponent);
 
         StatusEffect<SlowData> slowComponent = grenade.GetComponentInChildren<StatusEffect<SlowData>>();
 
         Debug.Log(slowComponent);
         
-        slowComponent.UpdateScriptableObject(slowData);
+        slowComponent.UpdateScriptableObject(utilityData.slowData);
 
         // Make grenade spawn at player's position
         grenade.transform.position = player.transform.position;
 
         grenade.SetActive(true);
 
-        smokeGrenadeComponent.UpdateScriptableObject(utilityData.smokeGrenadeData);
+        grenadeComponent.UpdateScriptableObject(utilityData.smokeGrenadeData);
 
         // Throw grenade in the direction player is facing
-        smokeGrenadeComponent.ActivateGrenade(aimDirection);
+        grenadeComponent.ActivateGrenade(aimDirection);
         
     }
     

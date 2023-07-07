@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NukeUltimateAbility : UltimateAbilityActivator
+public class NukeUltimateAbility : MonoBehaviour
 {
-    protected override void UltimateAction(GameObject player)
+    [SerializeField] 
+    private UltimateActivator ultimateActivator;
+    
+    [SerializeField] 
+    private NukeUltimateData ultimateData;
+
+    public void UltimateAction(GameObject player)
     {
-        StartCoroutine(UltimateCooldown());
-        StartCoroutine(CountDownCooldown());
+        ultimateActivator.StartCooldowns();
         
         Debug.Log("Spawn nuclear bomb!");
 
@@ -20,9 +25,10 @@ public class NukeUltimateAbility : UltimateAbilityActivator
 
         // Give the nuke the data it needs
         nuclearBomb.GetComponent<Nuke>().UpdateScriptableObject(ultimateData.nukeData);
+        
+        nuclearBomb.GetComponent<StatusEffect<DamageOverTimeData>>().UpdateScriptableObject(ultimateData.damageOverTimeData);
 
         nuclearBomb.SetActive(true);
-        
 
     }
 }

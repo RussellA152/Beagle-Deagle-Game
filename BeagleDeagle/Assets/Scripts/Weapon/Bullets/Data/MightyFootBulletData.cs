@@ -13,15 +13,7 @@ public class MightyFootBulletData : BulletData
 
     [Range(0f, 150f)]
     public int numEnemiesCanHit;
-
-    [Header("Stun Effect")]
-    [Range(0f, 30f)]
-    public float stunDuration; // How long will the enemy be stunned when hit by this?
-
-    [Header("Knockback Power")]
-    public Vector2 knockBackForce;
-
-
+    
     public override float GetLifeTime()
     {
         return utilityAbilityData.duration;

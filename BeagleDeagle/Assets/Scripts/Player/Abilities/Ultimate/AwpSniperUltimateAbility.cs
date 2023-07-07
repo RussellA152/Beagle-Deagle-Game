@@ -5,8 +5,17 @@ using UnityEngine.Serialization;
 
 public class AwpSniperUltimateAbility : MonoBehaviour
 {
+    [SerializeField] 
+    private PlayerEvents playerEvents;
+
+    [SerializeField] 
+    private UltimateActivator ultimateActivator;
+    
     [SerializeField]
     private Gun playerGunScript;
+    
+    [SerializeField] 
+    private AwpSniperUltimateData ultimateData;
 
     private GunData _previousWeaponData;
     
@@ -14,25 +23,21 @@ public class AwpSniperUltimateAbility : MonoBehaviour
 
     private Coroutine _durationCoroutine;
     
-    protected override void OnEnable()
+    private void OnEnable()
     {
-        base.OnEnable();
-        
         playerEvents.onPlayerSwitchedWeapon += UpdateCurrentWeapon;
 
         playerEvents.onPlayerBulletsLoadedChanged += CheckAmmoLoad;
 
     }
 
-    protected override void OnDisable()
+    private void OnDisable()
     {
-        base.OnDisable();
-
         playerEvents.onPlayerBulletsLoadedChanged -= CheckAmmoLoad;
 
         playerEvents.onPlayerSwitchedWeapon -= UpdateCurrentWeapon;
     }
-    protected override void UltimateAction(GameObject player)
+    public void UltimateAction(GameObject player)
     {
         Debug.Log("Give player an awp!");
 
@@ -47,7 +52,7 @@ public class AwpSniperUltimateAbility : MonoBehaviour
 
     }
     
-    public void CheckAmmoLoad(int ammoLoad)
+    private void CheckAmmoLoad(int ammoLoad)
     {
         // Only check ammo load when the gun that the player has is the AWP sniper
         if(_isActive &&  ammoLoad <= 0)
@@ -58,14 +63,11 @@ public class AwpSniperUltimateAbility : MonoBehaviour
             
             ReturnOriginalWeapon();
 
-            StartCoroutine(UltimateCooldown());
-            StartCoroutine(CountDownCooldown());
-            
         }
     }
     
     // Save a reference to the gun the player had before receiving AWP sniper
-    public void UpdateCurrentWeapon(GunData gunData)
+    private void UpdateCurrentWeapon(GunData gunData)
     {
         // Check the current weapon that the player has
         // Don't update this value if the player received an AWP sniper
@@ -75,7 +77,7 @@ public class AwpSniperUltimateAbility : MonoBehaviour
         }
     }
 
-    public void ReturnOriginalWeapon()
+    private void ReturnOriginalWeapon()
     {
         // Only give back original weapon if the player has the AWP
         if (_isActive)
@@ -92,7 +94,6 @@ public class AwpSniperUltimateAbility : MonoBehaviour
             playerGunScript.SetCanReload(true);
 
         }
-
     }
 
     private IEnumerator WeaponDuration()
@@ -102,8 +103,9 @@ public class AwpSniperUltimateAbility : MonoBehaviour
             yield return new WaitForSeconds(ultimateData.duration);
             ReturnOriginalWeapon();
 
-            StartCoroutine(UltimateCooldown());
-            StartCoroutine(CountDownCooldown());
+            ultimateActivator.StartCooldowns();
+            // StartCoroutine(UltimateCooldown());
+            // StartCoroutine(CountDownCooldown());
             
         }
 

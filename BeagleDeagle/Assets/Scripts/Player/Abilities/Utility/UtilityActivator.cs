@@ -29,9 +29,7 @@ public class UtilityActivator : MonoBehaviour
     private int _bonusUtilityUses = 0;
 
     private float _bonusUtilityCooldown = 1f;
-
-    protected int PoolKey;
-
+    
     private void OnEnable()
     {
         _utilityUses = currentUtilityData.maxUses;
@@ -54,9 +52,6 @@ public class UtilityActivator : MonoBehaviour
                 Debug.Log("Activate utility!");
 
                 _utilityUses--;
-
-                // Pass in the object pool (to spawn objects like grenades and bullets), and the player gameobject
-                //UtilityAction(ObjectPooler.instance, gameObject);
                 
                 onUtilityUse.Invoke(gameObject);
 
@@ -91,7 +86,7 @@ public class UtilityActivator : MonoBehaviour
     /// Wait some time to add another use to the utility.
     /// Start the cooldown that comes from the Utility scriptable object.
     /// 
-    IEnumerator StartUtilityCooldown()
+    private IEnumerator StartUtilityCooldown()
     {
         yield return new WaitForSeconds(currentUtilityData.cooldown * _bonusUtilityCooldown);
 
