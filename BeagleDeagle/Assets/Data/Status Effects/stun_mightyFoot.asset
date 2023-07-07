@@ -15,4 +15,4 @@ MonoBehaviour:
   whatStatusEffectHits:
     serializedVersion: 2
     m_Bits: 256
-  stunDuration: 4
+  stunDuration: 3

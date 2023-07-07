@@ -282,14 +282,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b349a021fc7a72a4b809632e17656f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerData: {fileID: 0}
   movementSpeedModifiers: []
   rb: {fileID: 4207914906763851230}
   rotationRadius: 0.5
-  body: {fileID: 4207914907016088415}
-  head: {fileID: 4207914906167032010}
-  weapon: {fileID: 4207914906124460816}
+  pivotPoint: {fileID: 0}
   capsuleCollider2D: {fileID: 0}
   bodySr: {fileID: 4207914907016088414}
   headSr: {fileID: 4207914906167032053}
@@ -486,7 +483,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4207914906763851229}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -513,7 +510,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 1}
-  m_Size: {x: 3, y: 2}
+  m_Size: {x: 2.5, y: 2}
   m_Direction: 0
 --- !u!1 &4207914906964410460
 GameObject:

@@ -28,9 +28,9 @@ public class SmokeGrenadeUtility : MonoBehaviour
         
         Debug.Log(aimDirection);
 
-        Grenade grenadeComponent = grenade.GetComponent<Grenade>();
+        AreaGrenade areaGrenadeComponent = grenade.GetComponent<AreaGrenade>();
         
-        Debug.Log(grenadeComponent);
+        Debug.Log(areaGrenadeComponent);
 
         StatusEffect<SlowData> slowComponent = grenade.GetComponentInChildren<StatusEffect<SlowData>>();
 
@@ -43,10 +43,10 @@ public class SmokeGrenadeUtility : MonoBehaviour
 
         grenade.SetActive(true);
 
-        grenadeComponent.UpdateScriptableObject(utilityData.smokeGrenadeData);
+        areaGrenadeComponent.UpdateScriptableObject(utilityData.utilityGrenadeData);
 
         // Throw grenade in the direction player is facing
-        grenadeComponent.ActivateGrenade(aimDirection);
+        areaGrenadeComponent.ActivateGrenade(aimDirection);
         
     }
     

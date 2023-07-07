@@ -37,6 +37,7 @@ public class AwpSniperUltimateAbility : MonoBehaviour
 
         playerEvents.onPlayerSwitchedWeapon -= UpdateCurrentWeapon;
     }
+    
     public void UltimateAction(GameObject player)
     {
         Debug.Log("Give player an awp!");
@@ -87,6 +88,8 @@ public class AwpSniperUltimateAbility : MonoBehaviour
             // Give back the player their gun before they received the AWP sniper
             playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
             
+            // Activate cooldown
+            ultimateActivator.StartCooldowns();
 
             _isActive = false;
             
@@ -96,6 +99,10 @@ public class AwpSniperUltimateAbility : MonoBehaviour
         }
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// If the duration of the awp runs out, then
+    /// return the player's original weapon.
+    /// 
     private IEnumerator WeaponDuration()
     {
         if (_isActive)
@@ -103,10 +110,6 @@ public class AwpSniperUltimateAbility : MonoBehaviour
             yield return new WaitForSeconds(ultimateData.duration);
             ReturnOriginalWeapon();
 
-            ultimateActivator.StartCooldowns();
-            // StartCoroutine(UltimateCooldown());
-            // StartCoroutine(CountDownCooldown());
-            
         }
 
     }
