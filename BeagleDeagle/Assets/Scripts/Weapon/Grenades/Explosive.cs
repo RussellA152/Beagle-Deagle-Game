@@ -16,6 +16,7 @@ public abstract class Explosive<T> : MonoBehaviour, IGrenadeUpdatable where T: G
     protected GameObject areaOfEffectGameObject;
     
     private int _wallLayerMask;
+    
 
     private void Start()
     {

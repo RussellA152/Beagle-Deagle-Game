@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7589004471731816067}
-  - component: {fileID: 3165291975883993080}
+  - component: {fileID: 4266929759319300008}
   - component: {fileID: 4418311646622141623}
   m_Layer: 0
   m_Name: Area of Effect
@@ -117,7 +117,7 @@ Transform:
   m_Father: {fileID: 8164879991046117893}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3165291975883993080
+--- !u!114 &4266929759319300008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,11 +126,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 5551387674908472178}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b3ab92860236234f989a5e1a1aa5aca, type: 3}
+  m_Script: {fileID: 11500000, guid: 584fc77bd578a8944958f5d9ccb62ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areaOfEffectData: {fileID: 11400000, guid: b36b28c2153c44749b4f8c24c33429af, type: 2}
+  areaOfEffectData: {fileID: 11400000, guid: 76c3dbea33a66a444949fba4a83bc5c6, type: 2}
   triggerCollider: {fileID: 4418311646622141623}
+  onAreaEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onAreaStay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5263291236087894076}
+        m_TargetAssemblyTypeName: DamageOverTimeOnCollision, Assembly-CSharp
+        m_MethodName: ApplyEffect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onAreaExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!70 &4418311646622141623
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -157,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8164879991046117893}
   - component: {fileID: 8384440829540624150}
+  - component: {fileID: 5263291236087894076}
   m_Layer: 11
   m_Name: Nuke
   m_TagString: Untagged
@@ -196,3 +218,16 @@ MonoBehaviour:
   sprite: {fileID: 3520225513382146324}
   explosiveData: {fileID: 11400000, guid: 76af1c12408bb984e8e85236fff79b1d, type: 2}
   areaOfEffectGameObject: {fileID: 5551387674908472178}
+--- !u!114 &5263291236087894076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8164879991046117895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34027b9d94afcaa4286ec175a3cabc0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusEffectData: {fileID: 11400000, guid: a02b25fbc92f9fa46b6ff7f42d39026d, type: 2}

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: BulletData
 {
@@ -26,6 +27,10 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     private int _penetrationCount; // The amount of penetration of the player's gun or enemy that shot this bullet
 
     private int _amountPenetrated; // How many enemies has this bullet penetrated through?
+    
+    [SerializeField]
+    // What should bullet do (besides just damaging target..)
+    private UnityEvent<GameObject> onBulletHit;
 
     private void OnEnable()
     {
@@ -78,6 +83,8 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        onBulletHit.Invoke(collision.gameObject);
+        
         // If this bullet already hit this enemy, then don't allow penetration or damage to occur
         if (_hitEnemies.Contains(collision.transform))
         {
@@ -104,14 +111,14 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
                 Debug.Log(_damagePerHit);
 
-                OnHit(collision.gameObject);
+                DamageOnHit(collision.gameObject);
             }
             // Penetrate through object
             Penetrate();
         }
     }
 
-    protected virtual void OnHit(GameObject objectHit)
+    protected virtual void DamageOnHit(GameObject objectHit)
     {
         objectHit.GetComponent<IHealth>().ModifyHealth(-1 * _damagePerHit);
     }

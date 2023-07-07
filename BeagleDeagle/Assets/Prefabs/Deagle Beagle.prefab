@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 2912267811165790606}
   - component: {fileID: 7895175864974104758}
   - component: {fileID: 5313635083943124193}
-  - component: {fileID: 8415524520585413472}
+  - component: {fileID: 5432334242410444715}
   - component: {fileID: 787244964802426978}
   - component: {fileID: 5313635083943124192}
   - component: {fileID: 5313635083943124195}
@@ -207,13 +207,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b349a021fc7a72a4b809632e17656f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
   movementSpeedModifiers: []
   rb: {fileID: 5313635083943124195}
-  body: {fileID: 5313635084664649029}
-  head: {fileID: 5313635084907708359}
-  weapon: {fileID: 5313635084010504988}
+  rotationRadius: 0.5
+  pivotPoint: {fileID: 0}
   capsuleCollider2D: {fileID: 5091715681384261876}
   bodySr: {fileID: 5313635084664649082}
   headSr: {fileID: 5313635084907708356}
@@ -232,7 +230,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
---- !u!114 &8415524520585413472
+--- !u!114 &5432334242410444715
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,10 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7440f012e8e22724eadb35b2e8d95bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   utilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
-  utilityCooldownModifiers: []
-  utilityUsesModifiers: []
 --- !u!114 &787244964802426978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,7 +388,7 @@ MonoBehaviour:
     m_ActionName: Player/Reload[/Keyboard/r]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8415524520585413472}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UtilityAbility`1[[MightyFootUtilityData, Assembly-CSharp
         m_MethodName: ActivateUtility
         m_Mode: 0

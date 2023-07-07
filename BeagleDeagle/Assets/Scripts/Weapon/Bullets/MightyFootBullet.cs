@@ -14,20 +14,14 @@ public class MightyFootBullet : Bullet<MightyFootBulletData>
          _wallLayerMask = LayerMask.GetMask("Wall");
      }
     
-    protected override void OnHit(GameObject objectHit)
+    protected override void DamageOnHit(GameObject objectHit)
     {
         if (CheckObstruction(objectHit)) 
             return;
         
         // Make target take damage
-        base.OnHit(objectHit);
+        base.DamageOnHit(objectHit);
         
-        // Stun the enemy for a certain amount of seconds
-        objectHit.GetComponent<IStunnable>().GetStunned(bulletData.stunDuration);
-
-        Vector2 knockBackDirection = rb.velocity.normalized;
-        objectHit.GetComponent<IKnockBackable>().ApplyKnockBack(knockBackDirection, bulletData.knockBackForce);
-
     }
 
     public void UpdateWhoShotThisBullet(Transform caster)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
+public class NukeUltimateAbility : UltimateAbilityActivator
 {
     protected override void UltimateAction(GameObject player)
     {

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Police Officer Zombie
   animatorController: {fileID: 0}
-  maxHealth: 80
+  maxHealth: 1000
   movementSpeed: 6
-  attackDamage: -45
+  attackDamage: -1
   attackCooldown: 2
   attackRange: 2.5
   chaseRange: 150

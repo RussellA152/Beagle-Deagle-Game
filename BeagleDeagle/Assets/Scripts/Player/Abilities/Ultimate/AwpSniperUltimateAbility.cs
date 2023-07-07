@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
+public class AwpSniperUltimateAbility : MonoBehaviour
 {
     [SerializeField]
     private Gun playerGunScript;

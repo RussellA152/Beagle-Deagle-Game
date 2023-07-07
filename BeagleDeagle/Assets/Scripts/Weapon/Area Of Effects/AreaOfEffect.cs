@@ -2,17 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public abstract class AreaOfEffect<T> : MonoBehaviour where T: AreaOfEffectData
+public class AreaOfEffect : MonoBehaviour
 {
     [SerializeField]
-    protected T areaOfEffectData;
+    protected AreaOfEffectData areaOfEffectData;
 
     [SerializeField]
     private CapsuleCollider2D triggerCollider;
     
     // The layer mask for walls
     private int _wallLayerMask;
+
+    [SerializeField] 
+    private UnityEvent<GameObject> onAreaEnter;
+    
+    [SerializeField] 
+    private UnityEvent<GameObject> onAreaStay;
+    
+    [SerializeField] 
+    private UnityEvent<GameObject> onAreaExit;
+    
 
     private void Start()
     {
@@ -41,9 +52,8 @@ public abstract class AreaOfEffect<T> : MonoBehaviour where T: AreaOfEffectData
             // Target has entered AOE, add them to overlappingTargets dictionary
             AreaOfEffectManager.Instance.AddNewOverlappingTarget(areaOfEffectData, collision.gameObject);
             
+            onAreaEnter.Invoke(collision.gameObject);
         }
-            
-            
 
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -59,14 +69,12 @@ public abstract class AreaOfEffect<T> : MonoBehaviour where T: AreaOfEffectData
             if (!AreaOfEffectManager.Instance.IsTargetOverlappingAreaOfEffect(areaOfEffectData, collision.gameObject) && AreaOfEffectManager.Instance.CheckIfTargetIsAffected(areaOfEffectData, collision.gameObject))
             {
                 // Only remove effect if this type of AOE is required to
-                RemoveEffectFromEnemies(collision.gameObject);
                 
+                onAreaExit.Invoke(collision.gameObject);
+
                 AreaOfEffectManager.Instance.RemoveTargetFromAffectedHashSet(areaOfEffectData, collision.gameObject);
             }
-                
-            
         }
-
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -78,17 +86,11 @@ public abstract class AreaOfEffect<T> : MonoBehaviour where T: AreaOfEffectData
             if (!CheckObstruction(transform.position, collision.gameObject) && !AreaOfEffectManager.Instance.CheckIfTargetIsAffected(areaOfEffectData, collision.gameObject))
             {
                 AreaOfEffectManager.Instance.TryAddAffectedTarget(areaOfEffectData, collision.gameObject);
-                
-                AddEffectOnEnemies(collision.gameObject);
+
+                onAreaStay.Invoke(collision.gameObject);
             }
-                
-            
         }
     }
-
-    public abstract void AddEffectOnEnemies(GameObject target);
-
-    public abstract void RemoveEffectFromEnemies(GameObject target);
     
 
     ///-///////////////////////////////////////////////////////////
@@ -116,7 +118,7 @@ public abstract class AreaOfEffect<T> : MonoBehaviour where T: AreaOfEffectData
     ///-///////////////////////////////////////////////////////////
     /// Changes the AOE effect of this instance
     /// 
-    public virtual void UpdateAOEData(T scriptableObject)
+    public void UpdateAOEData(AreaOfEffectData scriptableObject)
     {
         areaOfEffectData = scriptableObject;
 

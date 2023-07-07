@@ -58,12 +58,7 @@ public class Nuke : Explosive<NukeData>
 
         }
     }
-
-    // public override void UpdateExplosiveData(NukeData scriptableObject)
-    // {
-    //     base.UpdateExplosiveData(scriptableObject);
-    // }
-
+    
     private void OnDrawGizmos()
     {
         if (_explosionHappening)

@@ -7,8 +7,8 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 {
-    [SerializeField]
-    private PlayerEvents playerEvents;
+    // [SerializeField]
+    // private PlayerEvents playerEvents;
     
     [SerializeField]
     private CharacterData playerData;
