@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class MightyFootBullet : Bullet<MightyFootBulletData>
 {
-    // Who shot this bullet? (usually player)
-    private Transform _whoShotThisBullet;
-    
     private int _wallLayerMask;
 
      private void Start()
@@ -23,12 +20,7 @@ public class MightyFootBullet : Bullet<MightyFootBulletData>
         base.DamageOnHit(objectHit);
         
     }
-
-    public void UpdateWhoShotThisBullet(Transform caster)
-    {
-        _whoShotThisBullet = caster;
-    }
-
+    
     private bool CheckObstruction(GameObject objectHit)
     {
         // Start from whoever shot this MightyFootBullet (usually the player)

@@ -2,22 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmokeGrenadeUtility : MonoBehaviour
+public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
 {
     private int PoolKey;
     
-    [SerializeField] 
-    private SmokeGrenadeUtilityData utilityData;
+    //[SerializeField] 
+    //private SmokeGrenadeUtilityData utilityData;
     
     
-    private void Start()
+    protected override void Start()
     {
-        PoolKey = utilityData.smokeGrenadePrefab.GetComponent<IPoolable>().PoolKey;
+        base.Start();
         
-        //base.Start();
+        PoolKey = currentUtilityData.smokeGrenadePrefab.GetComponent<IPoolable>().PoolKey;
+
     }
     
-    public void UtilityAction(GameObject player)
+    protected override void UtilityAction(GameObject player)
     {
         // Fetch a grenade from the object pool
         GameObject grenade = ObjectPooler.instance.GetPooledObject(PoolKey);
@@ -36,14 +37,14 @@ public class SmokeGrenadeUtility : MonoBehaviour
 
         Debug.Log(slowComponent);
         
-        slowComponent.UpdateScriptableObject(utilityData.slowData);
+        slowComponent.UpdateScriptableObject(currentUtilityData.slowData);
 
         // Make grenade spawn at player's position
         grenade.transform.position = player.transform.position;
 
         grenade.SetActive(true);
 
-        areaGrenadeComponent.UpdateScriptableObject(utilityData.utilityGrenadeData);
+        areaGrenadeComponent.UpdateScriptableObject(currentUtilityData.utilityGrenadeData);
 
         // Throw grenade in the direction player is facing
         areaGrenadeComponent.ActivateGrenade(aimDirection);

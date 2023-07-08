@@ -17,7 +17,7 @@ MonoBehaviour:
   fireRate: 1.5
   magazineSize: 5
   totalReloadTime: 2.5
-  bulletType: {fileID: 11400000, guid: f0682028fd4f1f241a80636564aaa20e, type: 2}
+  bulletType: {fileID: 11400000, guid: 0298f61c67d0e8b428838d4025e85e6e, type: 2}
   bulletSpread: 0.5
   penetrationCount: 50
   bulletSpawnPoint: {fileID: 0}

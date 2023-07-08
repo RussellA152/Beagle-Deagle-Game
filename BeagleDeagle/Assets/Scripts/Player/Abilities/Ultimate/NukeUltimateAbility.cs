@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NukeUltimateAbility : MonoBehaviour
+public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
 {
-    [SerializeField] 
-    private UltimateActivator ultimateActivator;
     
-    [SerializeField] 
-    private NukeUltimateData ultimateData;
-
-    public void UltimateAction(GameObject player)
+    protected override void UltimateAction(GameObject player)
     {
-        ultimateActivator.StartCooldowns();
+        StartCooldowns();
         
         Debug.Log("Spawn nuclear bomb!");
 

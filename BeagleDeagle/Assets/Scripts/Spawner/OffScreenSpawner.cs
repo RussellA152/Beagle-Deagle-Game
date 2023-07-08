@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 // This script will calculate the boundaries of the screen and spawn enemies slightly off-screen
 // The point is to have enemies walk into the scene, without the player seeing the enemies spawn
@@ -68,6 +71,14 @@ public class OffScreenSpawner : MonoBehaviour
         surfaceLeftBoundary = mapSurface.navMeshData.sourceBounds.min.x;
         surfaceRightBoundary = mapSurface.navMeshData.sourceBounds.max.x;
 
+    }
+    
+    // Update is called once per frame
+    void Update()
+    {
+        UpdateScreenBoundaries();
+
+        CheckPlayerProximityToBoundaries();
     }
 
     private Vector2 SpawnEnemyOnTop()
@@ -379,11 +390,39 @@ public class OffScreenSpawner : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDrawGizmosSelected()
     {
-        UpdateScreenBoundaries();
+        Gizmos.color = Color.red;
+        // Draw a box that represents the off-screen spawn location for enemies (enemies can spawn outside of this box)
+        Gizmos.DrawLine(new Vector3(-screenBounds.x,screenBounds.y), new Vector3(screenBounds.x, screenBounds.y));
+        Gizmos.DrawLine(new Vector3(-screenBounds.x, screenBounds.y), new Vector3(-screenBounds.x, -screenBounds.y));
+        Gizmos.DrawLine(new Vector3(screenBounds.x, screenBounds.y), new Vector3(screenBounds.x, -screenBounds.y));
+        Gizmos.DrawLine(new Vector3(-screenBounds.x, -screenBounds.y), new Vector3(screenBounds.x, -screenBounds.y));
+        
+    }
 
-        CheckPlayerProximityToBoundaries();
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        // Draw a box that represents the off-screen spawn location for enemies (enemies can spawn outside of this box)
+        Gizmos.DrawLine(new Vector3(leftBounds,topBounds), new Vector3(rightBounds, topBounds));
+        Gizmos.DrawLine(new Vector3(leftBounds, topBounds), new Vector3(leftBounds, bottomBounds));
+        Gizmos.DrawLine(new Vector3(rightBounds, topBounds), new Vector3(rightBounds, bottomBounds));
+        Gizmos.DrawLine(new Vector3(leftBounds, bottomBounds), new Vector3(rightBounds, bottomBounds));
+        
+        
+        
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawLine(new Vector3(leftBounds - maximumXScreenOffset,topBounds + maximumYScreenOffset), new Vector3(rightBounds + maximumXScreenOffset, topBounds + maximumYScreenOffset));
+        Gizmos.DrawLine(new Vector3(leftBounds - maximumXScreenOffset, topBounds + maximumYScreenOffset), new Vector3(leftBounds - maximumXScreenOffset, bottomBounds - maximumYScreenOffset));
+        Gizmos.DrawLine(new Vector3(rightBounds + maximumXScreenOffset, topBounds + maximumYScreenOffset), new Vector3(rightBounds + maximumXScreenOffset, bottomBounds - maximumYScreenOffset));
+        Gizmos.DrawLine(new Vector3(leftBounds - maximumXScreenOffset, bottomBounds - maximumYScreenOffset), new Vector3(rightBounds + maximumXScreenOffset, bottomBounds - maximumYScreenOffset));
+        
+        Gizmos.color = Color.black;
+        Gizmos.DrawCube(new Vector3(surfaceLeftBoundary + maximumXScreenOffset, surfaceTopBoundary - maximumYScreenOffset), new Vector3(5f,5f));
+        Gizmos.DrawCube(new Vector3(surfaceRightBoundary - maximumXScreenOffset, surfaceTopBoundary - maximumYScreenOffset), new Vector3(5f,5f));
+        Gizmos.DrawCube(new Vector3(surfaceLeftBoundary + maximumXScreenOffset, surfaceBottomBoundary + maximumYScreenOffset), new Vector3(5f,5f));
+        Gizmos.DrawCube(new Vector3(surfaceRightBoundary - maximumXScreenOffset, surfaceBottomBoundary + maximumYScreenOffset), new Vector3(5f,5f));
+        
     }
 }

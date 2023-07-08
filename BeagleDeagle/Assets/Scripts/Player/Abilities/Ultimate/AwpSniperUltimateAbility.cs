@@ -3,19 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class AwpSniperUltimateAbility : MonoBehaviour
+public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 {
-    [SerializeField] 
-    private PlayerEvents playerEvents;
-
-    [SerializeField] 
-    private UltimateActivator ultimateActivator;
-    
     [SerializeField]
     private Gun playerGunScript;
     
-    [SerializeField] 
-    private AwpSniperUltimateData ultimateData;
 
     private GunData _previousWeaponData;
     
@@ -23,22 +15,26 @@ public class AwpSniperUltimateAbility : MonoBehaviour
 
     private Coroutine _durationCoroutine;
     
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+        
         playerEvents.onPlayerSwitchedWeapon += UpdateCurrentWeapon;
 
         playerEvents.onPlayerBulletsLoadedChanged += CheckAmmoLoad;
 
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
+        
         playerEvents.onPlayerBulletsLoadedChanged -= CheckAmmoLoad;
 
         playerEvents.onPlayerSwitchedWeapon -= UpdateCurrentWeapon;
     }
     
-    public void UltimateAction(GameObject player)
+    protected override void UltimateAction(GameObject player)
     {
         Debug.Log("Give player an awp!");
 
@@ -89,7 +85,7 @@ public class AwpSniperUltimateAbility : MonoBehaviour
             playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
             
             // Activate cooldown
-            ultimateActivator.StartCooldowns();
+            StartCooldowns();
 
             _isActive = false;
             

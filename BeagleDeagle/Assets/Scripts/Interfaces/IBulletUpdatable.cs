@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface IBulletUpdatable : IDataUpdatable<BulletData>
 {
-    public void UpdateWeaponValues(float damage, int penetration);
+    public void UpdateDamageAndPenetrationValues(float damage, int penetration);
+
+    public void UpdateWhoShotThisBullet(Transform shooter);
 }

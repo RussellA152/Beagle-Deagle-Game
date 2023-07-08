@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: BulletData
 {
@@ -19,6 +20,9 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     protected CapsuleCollider2D bulletCollider; // The collider of this bullet
 
     private Vector3 defaultRotation = new Vector3(0f, 0f, -90f);
+    
+    // Who shot this bullet? (usually player or enemy)
+    protected Transform _whoShotThisBullet;
 
     private readonly HashSet<Transform> _hitEnemies = new HashSet<Transform>(); // Don't let this bullet hit the same enemy twice (we track what this bullet hit in this HashSet)
 
@@ -34,22 +38,19 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
     private void OnEnable()
     {
-        
         if (bulletData != null)
         {
             // Start time for this bullet to disable
             StartCoroutine(DisableAfterTime());
-
-            //UpdateWeaponValues(bulletData.bulletDamage, bulletData.bulletPenetration);
             
             // Change the bullet's collider size to whatever the scriptable object has
             bulletCollider.size = new Vector2(bulletData.sizeX, bulletData.sizeY);
+            
             // Change the bullet's collider direction to whatever the scriptable object has
             bulletCollider.direction = bulletData.colliderDirection;
 
             // Apply the trajectory of this bullet (We probably could do this inside of the gameobject that spawns it?)
-            ApplyTrajectory(rb, transform);
-            //Debug.Log("Was enabled!");
+            ApplyTrajectory();
         }
     }
 
@@ -75,7 +76,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         StopAllCoroutines();
     }
 
-    private void ApplyTrajectory(Rigidbody2D rb, Transform transform)
+    private void ApplyTrajectory()
     {
         rb.velocity = transform.right * bulletData.bulletSpeed;
     }
@@ -137,14 +138,18 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     }
     
     // Update the damage and penetration values
-    public void UpdateWeaponValues(float damage, int penetration)
+    public void UpdateDamageAndPenetrationValues(float damage, int penetration)
     {
-        //Debug.Log(damage);
         _damagePerHit += damage;
 
         _penetrationCount += penetration;
     }
-    
+
+    public void UpdateWhoShotThisBullet(Transform shooter)
+    {
+        _whoShotThisBullet = shooter;
+    }
+
     // If this bullet exists for too long, disable it
     IEnumerator DisableAfterTime()
     {

@@ -17,7 +17,7 @@ public abstract class PassiveAbility<T> : MonoBehaviour where T: ScriptableObjec
 
     protected virtual void OnEnable()
     {
-        player = transform.parent.gameObject;
+        player = transform.parent.parent.gameObject;
     }
 
     protected virtual void OnDisable()

@@ -17,7 +17,7 @@ MonoBehaviour:
   fireRate: 7
   magazineSize: 30
   totalReloadTime: 2.5
-  bulletType: {fileID: 11400000, guid: 0b1ee498a2aa3224b8d55f47c506790f, type: 2}
+  bulletType: {fileID: 11400000, guid: aa583555a8badd44ea23454716daa9f0, type: 2}
   bulletSpread: 2.75
   penetrationCount: 1
   bulletSpawnPoint: {fileID: 0}

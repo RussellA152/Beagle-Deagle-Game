@@ -7,9 +7,11 @@ public class SpeedBoost : PassiveAbility<SpeedBoostData>
 {
     private bool _speedIncreased = false;
 
+    [SerializeField]
     private Gun _gunScript;
 
     private IMovable _movementScript;
+    
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -17,19 +19,26 @@ public class SpeedBoost : PassiveAbility<SpeedBoostData>
         _gunScript = player.GetComponentInChildren<Gun>();
         
         _movementScript = player.GetComponent<IMovable>();
+        
     }
 
     protected override void OnDisable()
     {
-        base.OnDisable();
         StopAllCoroutines();
+        
+        base.OnDisable();
     }
 
     protected override void ActivatePassive()
     {
         StartCoroutine(CheckIfPlayerShot());
     }
-    
+
+    ///-///////////////////////////////////////////////////////////
+    /// Always check if the player has recently shot their weapon,
+    /// if not, then add a speed boost.
+    /// Otherwise remove the speed boost (if active)
+    /// 
     private IEnumerator CheckIfPlayerShot()
     {
         while (true)

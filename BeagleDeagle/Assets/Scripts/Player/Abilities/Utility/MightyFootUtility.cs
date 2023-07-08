@@ -4,19 +4,18 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class MightyFootUtility : MonoBehaviour
+public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
 {
     private int PoolKey;
     
-    [SerializeField] 
-    private MightyFootUtilityData utilityData;
-    
-    private void Start()
+    protected override void Start()
     {
-        PoolKey = utilityData.mightyFootPrefab.GetComponent<IPoolable>().PoolKey;
+        base.Start();
+        
+        PoolKey = currentUtilityData.mightyFootPrefab.GetComponent<IPoolable>().PoolKey;
 
     }
-    public void UtilityAction(GameObject player)
+    protected override void UtilityAction(GameObject player)
     {
         // Fetch a grenade from the object pool
         GameObject mightyFootGameObject = ObjectPooler.instance.GetPooledObject(PoolKey);
@@ -30,13 +29,13 @@ public class MightyFootUtility : MonoBehaviour
         
         StatusEffect<KnockBackData> knockBackComponent = mightyFootGameObject.GetComponent<StatusEffect<KnockBackData>>();
 
-        stunComponent.UpdateScriptableObject(utilityData.stunData);
-        knockBackComponent.UpdateScriptableObject(utilityData.knockBackData);
+        stunComponent.UpdateScriptableObject(currentUtilityData.stunData);
+        knockBackComponent.UpdateScriptableObject(currentUtilityData.knockBackData);
 
         // Give MightyFoot the scriptable object it needs
-        bulletComponent.UpdateScriptableObject(utilityData.mightyFootData);
+        bulletComponent.UpdateScriptableObject(currentUtilityData.mightyFootData);
 
-        bulletComponent.UpdateWeaponValues(utilityData.abilityDamage, utilityData.mightyFootData.numEnemiesCanHit);
+        bulletComponent.UpdateDamageAndPenetrationValues(currentUtilityData.abilityDamage, currentUtilityData.mightyFootData.numEnemiesCanHit);
         
         // Tell the bullet that the player is the transform that shot it
         bulletComponent.UpdateWhoShotThisBullet(transform);

@@ -7,4 +7,15 @@ public class StunData : StatusEffectData
 {
     [Range(0.1f, 15f)]
     public float stunDuration;
+
+    // public override GameObject UpdateStatusEffects(GameObject objectWithStatusEffect, GameObject activator)
+    // {
+    //     StatusEffect<StunData> stunComponent = objectWithStatusEffect.GetComponent<StatusEffect<StunData>>();
+    //     
+    //     stunComponent.UpdateScriptableObject(this);
+    //
+    //     return objectWithStatusEffect;
+    //
+    //     // ALSO ADD STUNMODIFIERS
+    // }
 }
