@@ -1,9 +1,8 @@
+using Cinemachine;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 // This script will calculate the boundaries of the screen and spawn enemies slightly off-screen
@@ -11,14 +10,17 @@ using Random = UnityEngine.Random;
 public class OffScreenSpawner : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform;
-
-    [Header("Camera Bounds (NEED TO SCALE SCALE WITH MAP SIZE)")]
+    
+    [Header("Camera Bounds (NEED TO SCALE SCALE WITH MAP SIZE)")] 
     [SerializeField]
-    private Vector3 screenBounds = new Vector2(17, 17); // This is the boundaries of the camera, (17,17) is a good value, but this value NEEDS TO BE LOWER if the map is too small
+    // The boundaries of the camera (enemies will spawn outside of this + an offset for randomness)
+    private Vector3 screenBounds = new Vector3(28,15);
+    
 
-    [Header("The Map of This Level")]
-    [SerializeField]
-    private NavMeshSurface2d mapSurface;
+    [Header("The Ground of This Level")]
+    [SerializeField] 
+    private Tilemap surfaceTileMap;
+    
 
     [Header("Boundaries of the Map")]
     private float surfaceTopBoundary; // the top boundary of the navmesh surface (i.e the walkable area for enemies)
@@ -36,10 +38,13 @@ public class OffScreenSpawner : MonoBehaviour
     [SerializeField] private float minimumYScreenOffset; // the minimum offset ADDED to the top or bottom screen boundaries
     [SerializeField] private float maximumYScreenOffset; // the maximum offset ADDED to the top or bottom screen boundaries
 
-
+    [SerializeField]
     private float rightBounds; // starting point for the right portion of the off-screen
+    [SerializeField]
     private float topBounds; // starting point for the top portion of the off-screen
+    [SerializeField]
     private float leftBounds; // starting point for the left portion of the off-screen
+    [SerializeField]
     private float bottomBounds; // starting point for the bottom portion of the off-screen
 
     [SerializeField] private bool playerCloseToLeftBoundary;
@@ -65,11 +70,12 @@ public class OffScreenSpawner : MonoBehaviour
         // bottomBounds is initialized to the -screenBounds.y when the game starts
         bottomBounds = -screenBounds.y;
 
-        // calculating all boundaries of the map (this is so that we can check if an enemy is about to spawn outside of the map)
-        surfaceTopBoundary = mapSurface.navMeshData.sourceBounds.max.z;
-        surfaceBottomBoundary = mapSurface.navMeshData.sourceBounds.min.z;
-        surfaceLeftBoundary = mapSurface.navMeshData.sourceBounds.min.x;
-        surfaceRightBoundary = mapSurface.navMeshData.sourceBounds.max.x;
+        // Calculating all boundaries of the map (this is so that we can check if an enemy is about to spawn outside of the map)
+        var cellBounds = surfaceTileMap.cellBounds;
+        surfaceTopBoundary = cellBounds.max.y;
+        surfaceBottomBoundary = cellBounds.min.y;
+        surfaceLeftBoundary = cellBounds.min.x;
+        surfaceRightBoundary = cellBounds.max.x;
 
     }
     
@@ -389,40 +395,88 @@ public class OffScreenSpawner : MonoBehaviour
             bottomBounds = -1 * (screenBounds.y - playerTransform.position.y);
         }
     }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        // Draw a box that represents the off-screen spawn location for enemies (enemies can spawn outside of this box)
-        Gizmos.DrawLine(new Vector3(-screenBounds.x,screenBounds.y), new Vector3(screenBounds.x, screenBounds.y));
-        Gizmos.DrawLine(new Vector3(-screenBounds.x, screenBounds.y), new Vector3(-screenBounds.x, -screenBounds.y));
-        Gizmos.DrawLine(new Vector3(screenBounds.x, screenBounds.y), new Vector3(screenBounds.x, -screenBounds.y));
-        Gizmos.DrawLine(new Vector3(-screenBounds.x, -screenBounds.y), new Vector3(screenBounds.x, -screenBounds.y));
-        
-    }
-
+    
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        // Draw a box that represents the off-screen spawn location for enemies (enemies can spawn outside of this box)
-        Gizmos.DrawLine(new Vector3(leftBounds,topBounds), new Vector3(rightBounds, topBounds));
+        Gizmos.color = Color.black;
+        Gizmos.DrawLine(new Vector3(leftBounds, topBounds), new Vector3(rightBounds, topBounds));
+        Gizmos.DrawLine(new Vector3(leftBounds, bottomBounds), new Vector3(rightBounds, bottomBounds));
         Gizmos.DrawLine(new Vector3(leftBounds, topBounds), new Vector3(leftBounds, bottomBounds));
         Gizmos.DrawLine(new Vector3(rightBounds, topBounds), new Vector3(rightBounds, bottomBounds));
-        Gizmos.DrawLine(new Vector3(leftBounds, bottomBounds), new Vector3(rightBounds, bottomBounds));
+        // Gizmos.DrawLine(new Vector3(-screenBounds.x,screenBounds.y), new Vector3(screenBounds.x, screenBounds.y));
+        // Gizmos.DrawLine(new Vector3(-screenBounds.x, screenBounds.y), new Vector3(-screenBounds.x, -screenBounds.y));
+        // Gizmos.DrawLine(new Vector3(screenBounds.x, screenBounds.y), new Vector3(screenBounds.x, -screenBounds.y));
+        // Gizmos.DrawLine(new Vector3(-screenBounds.x, -screenBounds.y), new Vector3(screenBounds.x, -screenBounds.y));
         
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(new Vector3(leftBounds - minimumXScreenOffset, topBounds + minimumYScreenOffset), new Vector3(rightBounds + minimumXScreenOffset, topBounds + minimumYScreenOffset));
+        Gizmos.DrawLine(new Vector3(leftBounds - minimumXScreenOffset, bottomBounds - minimumYScreenOffset), new Vector3(rightBounds + minimumXScreenOffset, bottomBounds - minimumYScreenOffset));
+        Gizmos.DrawLine(new Vector3(leftBounds - minimumXScreenOffset, topBounds + minimumYScreenOffset), new Vector3(leftBounds - minimumXScreenOffset, bottomBounds - minimumYScreenOffset));
+        Gizmos.DrawLine(new Vector3(rightBounds + minimumXScreenOffset, topBounds + minimumYScreenOffset), new Vector3(rightBounds + minimumXScreenOffset, bottomBounds - minimumYScreenOffset));
+        // Gizmos.DrawLine(new Vector3(-screenBounds.x - minimumXScreenOffset, screenBounds.y + minimumYScreenOffset), new Vector3(screenBounds.x + minimumXScreenOffset, screenBounds.y + minimumYScreenOffset));
+        // Gizmos.DrawLine(new Vector3(-screenBounds.x - minimumXScreenOffset, screenBounds.y + minimumYScreenOffset), new Vector3(-screenBounds.x - minimumXScreenOffset, -screenBounds.y - minimumYScreenOffset));
+        // Gizmos.DrawLine(new Vector3(screenBounds.x + minimumXScreenOffset, screenBounds.y + minimumYScreenOffset), new Vector3(screenBounds.x + minimumXScreenOffset, -screenBounds.y - minimumYScreenOffset));
+        // Gizmos.DrawLine(new Vector3(-screenBounds.x - minimumXScreenOffset, -screenBounds.y - minimumYScreenOffset), new Vector3(screenBounds.x + minimumXScreenOffset, -screenBounds.y - minimumYScreenOffset));
         
+
+        if (!playerCloseToLeftBoundary)
+        {
+            Gizmos.color = Color.black;
+            Gizmos.DrawCube(new Vector3(surfaceTileMap.cellBounds.min.x, 0f), new Vector3(2f,2f));
+            
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(new Vector3(surfaceTileMap.cellBounds.min.x, 0f), new Vector3(2f,2f));
+        }
+
+        if (!playerCloseToRightBoundary)
+        {
+            Gizmos.DrawCube(new Vector3(surfaceTileMap.cellBounds.max.x , 0f), new Vector3(2f,2f));
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(new Vector3(surfaceTileMap.cellBounds.max.x , 0f), new Vector3(2f,2f));
+        }
         
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawLine(new Vector3(leftBounds - maximumXScreenOffset,topBounds + maximumYScreenOffset), new Vector3(rightBounds + maximumXScreenOffset, topBounds + maximumYScreenOffset));
+        if (!playerCloseToBottomBoundary)
+        {
+            Gizmos.color = Color.black;
+            Gizmos.DrawCube(new Vector3(0f, surfaceTileMap.cellBounds.min.y), new Vector3(2f,2f));
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(new Vector3(0f, surfaceTileMap.cellBounds.min.y), new Vector3(2f,2f));
+        }
+
+        if (!playerCloseToTopBoundary)
+        {
+            Gizmos.color = Color.black;
+            Gizmos.DrawCube(new Vector3(0f, surfaceTileMap.cellBounds.max.y), new Vector3(2f,2f));
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(new Vector3(0f, surfaceTileMap.cellBounds.max.y), new Vector3(2f,2f));
+        }
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(new Vector3(leftBounds - maximumXScreenOffset, topBounds + maximumYScreenOffset), new Vector3(rightBounds + maximumXScreenOffset, topBounds + maximumYScreenOffset));
+        Gizmos.DrawLine(new Vector3(leftBounds - maximumXScreenOffset, bottomBounds - maximumYScreenOffset), new Vector3(rightBounds + maximumXScreenOffset, bottomBounds - maximumYScreenOffset));
         Gizmos.DrawLine(new Vector3(leftBounds - maximumXScreenOffset, topBounds + maximumYScreenOffset), new Vector3(leftBounds - maximumXScreenOffset, bottomBounds - maximumYScreenOffset));
         Gizmos.DrawLine(new Vector3(rightBounds + maximumXScreenOffset, topBounds + maximumYScreenOffset), new Vector3(rightBounds + maximumXScreenOffset, bottomBounds - maximumYScreenOffset));
-        Gizmos.DrawLine(new Vector3(leftBounds - maximumXScreenOffset, bottomBounds - maximumYScreenOffset), new Vector3(rightBounds + maximumXScreenOffset, bottomBounds - maximumYScreenOffset));
         
-        Gizmos.color = Color.black;
-        Gizmos.DrawCube(new Vector3(surfaceLeftBoundary + maximumXScreenOffset, surfaceTopBoundary - maximumYScreenOffset), new Vector3(5f,5f));
-        Gizmos.DrawCube(new Vector3(surfaceRightBoundary - maximumXScreenOffset, surfaceTopBoundary - maximumYScreenOffset), new Vector3(5f,5f));
-        Gizmos.DrawCube(new Vector3(surfaceLeftBoundary + maximumXScreenOffset, surfaceBottomBoundary + maximumYScreenOffset), new Vector3(5f,5f));
-        Gizmos.DrawCube(new Vector3(surfaceRightBoundary - maximumXScreenOffset, surfaceBottomBoundary + maximumYScreenOffset), new Vector3(5f,5f));
-        
+        // Gizmos.DrawLine(new Vector3(-screenBounds.x - maximumXScreenOffset,screenBounds.y + maximumYScreenOffset), new Vector3(screenBounds.x+ maximumXScreenOffset, screenBounds.y  + maximumYScreenOffset));
+        // Gizmos.DrawLine(new Vector3(-screenBounds.x - maximumXScreenOffset, screenBounds.y  + maximumYScreenOffset), new Vector3(-screenBounds.x - maximumXScreenOffset, -screenBounds.y  - maximumYScreenOffset));
+        // Gizmos.DrawLine(new Vector3(screenBounds.x + maximumXScreenOffset, screenBounds.y  + maximumYScreenOffset), new Vector3(screenBounds.x + maximumXScreenOffset, -screenBounds.y  - maximumYScreenOffset));
+        // Gizmos.DrawLine(new Vector3(-screenBounds.x - maximumXScreenOffset, -screenBounds.y  - maximumYScreenOffset), new Vector3(screenBounds.x + maximumXScreenOffset, -screenBounds.y  - maximumYScreenOffset));
+        //
+
+
+
     }
 }
