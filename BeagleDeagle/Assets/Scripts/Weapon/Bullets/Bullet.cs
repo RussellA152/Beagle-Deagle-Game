@@ -113,6 +113,10 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
                 Debug.Log(_damagePerHit);
 
                 DamageOnHit(collision.gameObject);
+                
+                Vector2 knockBackDirection = rb.velocity.normalized;
+                
+                collision.gameObject.GetComponent<IKnockBackable>().ApplyKnockBack(knockBackDirection, bulletData.knockBackPower);
             }
             // Penetrate through object
             Penetrate();
@@ -143,6 +147,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         _damagePerHit += damage;
 
         _penetrationCount += penetration;
+        
     }
 
     public void UpdateWhoShotThisBullet(Transform shooter)

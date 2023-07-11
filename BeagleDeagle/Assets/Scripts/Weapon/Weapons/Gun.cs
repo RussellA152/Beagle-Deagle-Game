@@ -188,6 +188,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         {
             // Tell BulletType to update the bullet with the data it needs
             // For example, give fire damage to the bullet, or give life steal values to the bullet
+            // Pass in the bullet gameObject and the player gameObject(to retrieve modifiers)
             IBulletUpdatable projectile = weaponData.bulletType.UpdateBulletWithData(newBullet, transform.parent.parent.gameObject);
             
             // Pass in the damage and penetration values of this gun, to the bullet being shot

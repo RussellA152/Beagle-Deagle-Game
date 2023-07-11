@@ -11,7 +11,6 @@ public class MightyFootUtilityData : UtilityAbilityData
     
     public MightyFootBulletData mightyFootData;
     public StunData stunData;
-    public KnockBackData knockBackData;
 
     [Header("Offset From Player Position")]
     public Vector2 offset; // Offset applied to Mighty Foot projectile when this ability is activated

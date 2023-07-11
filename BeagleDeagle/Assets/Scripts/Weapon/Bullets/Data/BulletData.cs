@@ -10,6 +10,10 @@ public abstract class BulletData : ScriptableObject
     public LayerMask whatBulletCanPenetrate; // What will this bullet penetrate through (Ex. Bullet penetrates through enemies, or walls to hit enemies as well)
     public LayerMask whatBulletCanDamage; // What will this bullet attempt to damage? (Ex. Player shoots a bullet that damages enemies)
     public LayerMask whatDestroysBullet; // What will destroy this bullet if it touches (Ex. Bullet touches wall and get destroyed)
+    
+    [Header("Strength of Knockback")]
+    // How much knockback should this bullet apply?
+    public Vector2 knockBackPower;
 
     [Header("Speed of Bullet")]
     public float bulletSpeed = 15f;

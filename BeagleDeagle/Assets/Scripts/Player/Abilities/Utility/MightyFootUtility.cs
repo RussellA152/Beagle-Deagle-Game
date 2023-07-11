@@ -27,10 +27,11 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
 
         StatusEffect<StunData> stunComponent = mightyFootGameObject.GetComponent<StatusEffect<StunData>>();
         
-        StatusEffect<KnockBackData> knockBackComponent = mightyFootGameObject.GetComponent<StatusEffect<KnockBackData>>();
+        //StatusEffect<KnockBackData> knockBackComponent = mightyFootGameObject.GetComponent<StatusEffect<KnockBackData>>();
 
         stunComponent.UpdateScriptableObject(currentUtilityData.stunData);
-        knockBackComponent.UpdateScriptableObject(currentUtilityData.knockBackData);
+        
+        //knockBackComponent.UpdateScriptableObject(currentUtilityData.knockBackData);
 
         // Give MightyFoot the scriptable object it needs
         bulletComponent.UpdateScriptableObject(currentUtilityData.mightyFootData);

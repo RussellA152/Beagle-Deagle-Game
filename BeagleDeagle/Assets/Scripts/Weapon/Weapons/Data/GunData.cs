@@ -28,7 +28,7 @@ public abstract class GunData : ScriptableObject
     [Header("Weapon Spread")]
     [Range(0f, 20f)]
     public float bulletSpread; // spread of bullet in X direction
-
+    
     [Header("Penetration")]
     [Range(1f, 100f)]
     public int penetrationCount; // how many enemies can this gun's bullet pass through?

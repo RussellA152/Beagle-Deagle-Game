@@ -47,6 +47,16 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     [SerializeField]
     private SpriteRenderer headSr;
 
+    [SerializeField] 
+    private SpriteRenderer weaponSr;
+
+    // [SerializeField] 
+    // private SpriteRenderer rightHandSr;
+    //
+    // [SerializeField] 
+    // private SpriteRenderer leftHandSr;
+    
+
     [Range(0, 1)]
     public float collisionOffset = 0.05f;
 
@@ -116,11 +126,13 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         if (input.x > 0f)
         {
             bodySr.flipX = false;
+            
 
         }
         else if (input.x < 0f)
         {
             bodySr.flipX = true;
+
 
         }
     }
@@ -136,13 +148,17 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         if (direction.x <= 0f)
         {
             headSr.flipX = true;
-
+            weaponSr.flipY = true;
+            // rightHandSr.flipX = true;
+            // leftHandSr.flipX = true;
         }
         // Otherwise, turn their head to the right
         else
         {
             headSr.flipX = false;
-
+            weaponSr.flipY = false;
+            // rightHandSr.flipX = false;
+            // leftHandSr.flipX = false;
         }
     }
 

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8164879991046117893}
   - component: {fileID: 8164879991046117894}
   - component: {fileID: 6630679290743430282}
-  - component: {fileID: 1374135427874974837}
   - component: {fileID: 8638057732453701793}
   - component: {fileID: 7698205712678738710}
   - component: {fileID: 8164879991046117892}
@@ -107,7 +106,7 @@ MonoBehaviour:
   onBulletHit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374135427874974837}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: KnockBackOnCollision, Assembly-CSharp
         m_MethodName: ApplyEffect
         m_Mode: 0
@@ -131,20 +130,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1374135427874974837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8164879991046117895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e3c036a5a10628469559a57835a215c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statusEffectData: {fileID: 11400000, guid: 5d07bdf4586c22f4d8b92ee58d1c6377, type: 2}
-  rb: {fileID: 7698205712678738710}
 --- !u!114 &8638057732453701793
 MonoBehaviour:
   m_ObjectHideFlags: 0

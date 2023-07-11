@@ -19,11 +19,13 @@ MonoBehaviour:
   whatBulletCanDamage:
     serializedVersion: 2
     m_Bits: 256
+  whatDestroysBullet:
+    serializedVersion: 2
+    m_Bits: 0
+  knockBackPower: {x: 15, y: 15}
   bulletSpeed: 30
   colliderDirection: 0
   sizeX: 15
   sizeY: 30
   utilityAbilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
   numEnemiesCanHit: 150
-  stunDuration: 4
-  knockBackForce: {x: 35, y: 35}

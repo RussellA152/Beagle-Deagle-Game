@@ -312,7 +312,7 @@ public class OffScreenSpawner : MonoBehaviour
     // Checking if the player is close to the boundaries of the map
     private void CheckPlayerProximityToBoundaries()
     {
-        if (playerTransform.position.x <= surfaceLeftBoundary + maximumXScreenOffset)
+        if (playerTransform.position.x <= surfaceLeftBoundary + screenBounds.x)
         {
             playerCloseToLeftBoundary = true;
         }
@@ -324,7 +324,7 @@ public class OffScreenSpawner : MonoBehaviour
         }
 
 
-        if (playerTransform.position.x >= surfaceRightBoundary - maximumXScreenOffset)
+        if (playerTransform.position.x >= surfaceRightBoundary - screenBounds.x)
         {
             playerCloseToRightBoundary = true;
 
@@ -337,7 +337,7 @@ public class OffScreenSpawner : MonoBehaviour
         }
 
 
-        if (playerTransform.position.y >= surfaceTopBoundary - maximumYScreenOffset)
+        if (playerTransform.position.y >= surfaceTopBoundary - screenBounds.y)
         {
             playerCloseToTopBoundary = true;
         }
@@ -349,7 +349,7 @@ public class OffScreenSpawner : MonoBehaviour
         }
 
 
-        if (playerTransform.position.y <= surfaceBottomBoundary + maximumYScreenOffset)
+        if (playerTransform.position.y <= surfaceBottomBoundary + screenBounds.y)
         {
             playerCloseToBottomBoundary = true;
         }
@@ -434,6 +434,7 @@ public class OffScreenSpawner : MonoBehaviour
 
         if (!playerCloseToRightBoundary)
         {
+            Gizmos.color = Color.black;
             Gizmos.DrawCube(new Vector3(surfaceTileMap.cellBounds.max.x , 0f), new Vector3(2f,2f));
         }
         else
