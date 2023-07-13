@@ -179,7 +179,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     public void Attack()
     {
         // The bullet will spawn at the barrel of the gun
-        weaponData.bulletSpawnPoint = bulletSpawnPoint;
+        //weaponData.bulletSpawnPoint = bulletSpawnPoint;
         
         // Fetch a bullet from object pooler
         GameObject newBullet = ObjectPooler.instance.GetPooledObject(poolKey);
@@ -222,7 +222,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     // This can change many stats like damage, penetration, fireRate, appearance (sprite), and more.
     public void UpdateScriptableObject(GunData scriptableObject)
     {
-        weaponData.bulletSpawnPoint = bulletSpawnPoint;
+        //weaponData.bulletSpawnPoint = bulletSpawnPoint;
 
         weaponData = scriptableObject;
         

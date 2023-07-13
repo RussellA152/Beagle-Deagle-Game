@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Responsible for executing code based on enemy states. States include: Idle, Chasing, Attack, Stunned, and Death
@@ -34,6 +35,9 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
 
     [SerializeField]
     private EnemyState state;
+
+    [SerializeField]
+    private Animator animator;
 
     private bool inAttackRange; // Is the player within this enemy's attack range?
     private bool inChaseRange; // Is the player within this enemy's chase/follow range?
@@ -82,6 +86,8 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     private void OnEnable()
     {
         state = EnemyState.Idle;
+
+        animator.runtimeAnimatorController = enemyScriptableObject.animatorController;
 
     }
 
@@ -153,10 +159,18 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     }
     protected virtual void OnIdle()
     {
+        animator.SetBool("isIdle", true);
+        animator.SetBool("isMoving", false);
+        animator.SetBool("isStunned", false);
+        animator.SetBool("isAttacking", false);
         agent.isStopped = true;
     }
     protected virtual void OnChase()
     {
+        animator.SetBool("isMoving", true);
+        animator.SetBool("isIdle", false);
+        animator.SetBool("isStunned", false);
+        animator.SetBool("isAttacking", false);
         agent.isStopped = false;
 
         if (target != null)
@@ -165,6 +179,10 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
 
     protected virtual void OnAttack()
     {
+        animator.SetBool("isMoving", false);
+        animator.SetBool("isIdle", false);
+        animator.SetBool("isAttacking", true);
+        animator.SetBool("isStunned", false);
         agent.isStopped = true;
 
         attackScript.Attack(target);
@@ -172,17 +190,28 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
 
     protected virtual void OnDeath()
     {
-        gameObject.SetActive(false);
+        agent.isStopped = true;
+        
+        animator.SetBool("isMoving", false);
+        animator.SetBool("isIdle", false);
+        animator.SetBool("isAttacking", false);
+        animator.SetTrigger("isDead");
+        
+        //gameObject.SetActive(false);
 
         RevertAllModifiersOnEnemy();
 
-        Debug.Log("I am DEAD.");
+        //Debug.Log("I am DEAD.");
     }
 
     protected virtual void OnStun()
     {
         agent.velocity = Vector2.zero;
         agent.isStopped = true;
+        animator.SetBool("isMoving", false);
+        animator.SetBool("isIdle", false);
+        animator.SetBool("isStunned", true);
+        animator.SetBool("isAttacking", false);
     }
 
     public virtual void UpdateScriptableObject(EnemyData scriptableObject)

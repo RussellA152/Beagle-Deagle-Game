@@ -33,8 +33,8 @@ public abstract class GunData : ScriptableObject
     [Range(1f, 100f)]
     public int penetrationCount; // how many enemies can this gun's bullet pass through?
     
-    [HideInInspector]
-    public Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
+    //[HideInInspector]
+    //public Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
     
     ///-///////////////////////////////////////////////////////////
     /// Return the damage of this weapon.

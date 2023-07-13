@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3711592478197892580}
+  - component: {fileID: 666978621251352622}
   - component: {fileID: 3711592478197892581}
   - component: {fileID: 508925504358572946}
   - component: {fileID: 2060393728062037017}
@@ -33,13 +34,33 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3711592478197892634}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.01, y: -0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &666978621251352622
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711592478197892634}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e94e09a0d339a447a28fad4a00ccb89, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &3711592478197892581
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -113,6 +134,7 @@ MonoBehaviour:
   damageOverTimeScript: {fileID: 7645405754992922946}
   movementScript: {fileID: 2060393728062037017}
   state: 0
+  animator: {fileID: 666978621251352622}
 --- !u!114 &2060393728062037017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 3711592478197892577}
   rb: {fileID: 3711592478197892576}
+  spriteRenderer: {fileID: 3711592478197892581}
   enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
   movementSpeedModifiers: []
 --- !u!114 &3711592478197892583

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: runner_enemy_joe
   m_EditorClassIdentifier: 
   characterName: Joe Zombie
-  animatorController: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: 8e94e09a0d339a447a28fad4a00ccb89, type: 2}
   maxHealth: 150
   movementSpeed: 5
   attackDamage: -100

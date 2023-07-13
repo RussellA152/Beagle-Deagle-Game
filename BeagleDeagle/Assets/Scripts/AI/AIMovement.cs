@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
 
     [SerializeField]
     private Rigidbody2D rb;
+
+    [SerializeField] 
+    private SpriteRenderer spriteRenderer;
 
     [SerializeField]
     private EnemyData enemyScriptableObject; // Data for enemy's movement (contains movement speed)
@@ -31,6 +35,11 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
         StopAllCoroutines();
     }
 
+    private void Update()
+    {
+        FlipSprite();
+    }
+
     ///-///////////////////////////////////////////////////////////
     /// Disable the enemy's ability to move.
     /// Then start a coroutine to wait some time and remove the stun effect
@@ -46,6 +55,8 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     /// 
     public void ApplyKnockBack(Vector2 force, Vector2 direction)
     {
+        // Prevent enemy from moving
+        // Also, this enemy will not be able to flip their sprite because they are stopped
         agent.isStopped = true;
 
         rb.AddForce(direction * force, ForceMode2D.Impulse);
@@ -70,6 +81,15 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
 
         // Allow enemy to move again
         agent.isStopped = false;
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// When this enemy's target is to their left, flip their sprite to the left.
+    /// Otherwise, keep their sprite facing right.
+    /// 
+    private void FlipSprite()
+    {
+        spriteRenderer.flipX = agent.destination.x <= 0f;
     }
 
     ///-///////////////////////////////////////////////////////////

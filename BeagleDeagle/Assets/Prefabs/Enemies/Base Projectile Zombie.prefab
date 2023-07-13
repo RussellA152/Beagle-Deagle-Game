@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3711592478197892580}
+  - component: {fileID: 6853053606488333959}
   - component: {fileID: 3711592478197892581}
   - component: {fileID: -303412525181116962}
   - component: {fileID: 7500669978799673356}
@@ -40,6 +41,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &6853053606488333959
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711592478197892634}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &3711592478197892581
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -113,6 +134,7 @@ MonoBehaviour:
   damageOverTimeScript: {fileID: -4139390413299684877}
   movementScript: {fileID: 7500669978799673356}
   state: 0
+  animator: {fileID: 6853053606488333959}
 --- !u!114 &7500669978799673356
 MonoBehaviour:
   m_ObjectHideFlags: 0
