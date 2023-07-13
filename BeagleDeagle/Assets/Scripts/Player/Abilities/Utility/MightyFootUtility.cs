@@ -40,8 +40,10 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
         
         // Tell the bullet that the player is the transform that shot it
         bulletComponent.UpdateWhoShotThisBullet(transform);
+        
+        
 
-        mightyFootGameObject.transform.position = (Vector2)player.transform.position + aimDirection; //+ new Vector2(offset.x, offset.y);
+        mightyFootGameObject.transform.position = (Vector2) (player.transform.position) + aimDirection + new Vector2(currentUtilityData.offset.x, currentUtilityData.offset.y);
 
         float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         

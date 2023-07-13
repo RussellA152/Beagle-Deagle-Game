@@ -22,10 +22,10 @@ MonoBehaviour:
   whatDestroysBullet:
     serializedVersion: 2
     m_Bits: 0
-  knockBackPower: {x: 15, y: 15}
+  knockBackPower: {x: 40, y: 40}
   bulletSpeed: 30
   colliderDirection: 0
-  sizeX: 15
-  sizeY: 30
+  sizeX: 25
+  sizeY: 35
   utilityAbilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
   numEnemiesCanHit: 150
