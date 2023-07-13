@@ -135,6 +135,7 @@ MonoBehaviour:
   movementScript: {fileID: 7500669978799673356}
   state: 0
   animator: {fileID: 6853053606488333959}
+  bodyCollider: {fileID: 6609138936841988931}
 --- !u!114 &7500669978799673356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 3711592478197892577}
   rb: {fileID: 3711592478197892576}
+  spriteRenderer: {fileID: 0}
   enemyScriptableObject: {fileID: 11400000, guid: 17ec48660538d1548b6cb75719102a7a, type: 2}
   movementSpeedModifiers: []
 --- !u!114 &3711592478197892583

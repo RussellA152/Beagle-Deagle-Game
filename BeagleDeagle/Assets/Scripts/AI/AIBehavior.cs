@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
-/// <summary>
-/// Responsible for executing code based on enemy states. States include: Idle, Chasing, Attack, Stunned, and Death
-/// Override OnAttack() and OnChase() functions to make more complex attacks and movement.
-/// </summary>
+///-///////////////////////////////////////////////////////////
+/// Responsible for executing code based on enemy states. States include: Idle, Chasing, Attack, Stunned, and Death.
+/// This script holds references to the enemy's attack, movement, and health scripts.
+/// 
 public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdatable where T: EnemyData
 {
     [SerializeField]
@@ -37,10 +36,13 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     private EnemyState state;
 
     [SerializeField]
-    private Animator animator;
+    protected Animator animator;
 
-    private bool inAttackRange; // Is the player within this enemy's attack range?
-    private bool inChaseRange; // Is the player within this enemy's chase/follow range?
+    [SerializeField] 
+    private Collider2D bodyCollider;
+
+    private bool _inAttackRange; // Is the player within this enemy's attack range?
+    private bool _inChaseRange; // Is the player within this enemy's chase/follow range?
 
     public int PoolKey => poolKey;
 
@@ -85,7 +87,11 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
 
     private void OnEnable()
     {
+        // When enemy spawns in, they start as Idle
         state = EnemyState.Idle;
+        
+        // Re-enable the enemy's body collider (we disable it when they die)
+        bodyCollider.enabled = true;
 
         animator.runtimeAnimatorController = enemyScriptableObject.animatorController;
 
@@ -93,13 +99,15 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
 
     private void Update()
     {
-        inChaseRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.chaseRange, enemyScriptableObject.chaseLayer);
+        // Check if player is within chasing range
+        _inChaseRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.chaseRange, enemyScriptableObject.chaseLayer);
 
         // Only check for attack range if the player is within chase range
-        if (inChaseRange)
-            inAttackRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.attackRange, enemyScriptableObject.attackLayer);
+        if (_inChaseRange)
+            _inAttackRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.attackRange, enemyScriptableObject.attackLayer);
        
 
+        // Update this enemy's state
         CheckState();
 
         switch (state)
@@ -145,32 +153,24 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         if (state != EnemyState.Death || state != EnemyState.Spawning)
         {
             // In chase range, but not in attack range
-            if (inChaseRange && !inAttackRange)
+            if (_inChaseRange && !_inAttackRange)
                 state = EnemyState.Chase;
 
             // In attack range
-            else if (inChaseRange && inAttackRange)
+            else if (_inChaseRange && _inAttackRange)
                 state = EnemyState.Attack;
 
             // Go idle if not in chase range and not in attack range
-            else if (!inChaseRange && !inAttackRange)
+            else if (!_inChaseRange && !_inAttackRange)
                 state = EnemyState.Idle;
         }
     }
     protected virtual void OnIdle()
     {
-        animator.SetBool("isIdle", true);
-        animator.SetBool("isMoving", false);
-        animator.SetBool("isStunned", false);
-        animator.SetBool("isAttacking", false);
         agent.isStopped = true;
     }
     protected virtual void OnChase()
     {
-        animator.SetBool("isMoving", true);
-        animator.SetBool("isIdle", false);
-        animator.SetBool("isStunned", false);
-        animator.SetBool("isAttacking", false);
         agent.isStopped = false;
 
         if (target != null)
@@ -179,54 +179,38 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
 
     protected virtual void OnAttack()
     {
-        animator.SetBool("isMoving", false);
-        animator.SetBool("isIdle", false);
-        animator.SetBool("isAttacking", true);
-        animator.SetBool("isStunned", false);
         agent.isStopped = true;
 
         attackScript.Attack(target);
     }
-
+    
+    protected virtual void OnStun()
+    {
+        agent.velocity = Vector2.zero;
+        agent.isStopped = true;
+    }
+    
     protected virtual void OnDeath()
     {
+        // Don't let enemy move, and disable their collider
         agent.isStopped = true;
-        
-        animator.SetBool("isMoving", false);
-        animator.SetBool("isIdle", false);
-        animator.SetBool("isAttacking", false);
-        animator.SetTrigger("isDead");
-        
-        //gameObject.SetActive(false);
 
+        bodyCollider.enabled = false;
+        
         RevertAllModifiersOnEnemy();
 
         //Debug.Log("I am DEAD.");
     }
 
-    protected virtual void OnStun()
+    ///-///////////////////////////////////////////////////////////
+    /// An animation event will call this function to
+    /// disable this enemy's corpse after their death animation has finished
+    /// 
+    public void DisableCorpse()
     {
-        agent.velocity = Vector2.zero;
-        agent.isStopped = true;
-        animator.SetBool("isMoving", false);
-        animator.SetBool("isIdle", false);
-        animator.SetBool("isStunned", true);
-        animator.SetBool("isAttacking", false);
+        gameObject.SetActive(false);
     }
-
-    public virtual void UpdateScriptableObject(EnemyData scriptableObject)
-    {
-        if (scriptableObject is T)
-        {
-            enemyScriptableObject = scriptableObject as T;
-        }
-        else
-        {
-            Debug.LogError("ERROR WHEN UPDATING SCRIPTABLE OBJECT! " + scriptableObject + " IS NOT A " + typeof(T));
-        }
-
-    }
-
+    
     ///-///////////////////////////////////////////////////////////
     /// Remove all modifiers when this enemy dies or their gameObject gets disabled
     /// 
@@ -245,7 +229,19 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         damageOverTimeScript.RevertAllModifiers();
     }
 
+    public virtual void UpdateScriptableObject(EnemyData scriptableObject)
+    {
+        if (scriptableObject is T)
+        {
+            enemyScriptableObject = scriptableObject as T;
+        }
+        else
+        {
+            Debug.LogError("ERROR WHEN UPDATING SCRIPTABLE OBJECT! " + scriptableObject + " IS NOT A " + typeof(T));
+        }
 
+    }
+    
     private void OnDrawGizmosSelected()
     {
         // Draw a red sphere indicating how close enemy can be to attack player

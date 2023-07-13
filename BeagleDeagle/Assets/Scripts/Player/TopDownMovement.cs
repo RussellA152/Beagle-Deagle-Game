@@ -7,9 +7,6 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 {
-    // [SerializeField]
-    // private PlayerEvents playerEvents;
-    
     [SerializeField]
     private CharacterData playerData;
 
@@ -149,16 +146,12 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         {
             headSr.flipX = true;
             weaponSr.flipY = true;
-            // rightHandSr.flipX = true;
-            // leftHandSr.flipX = true;
         }
         // Otherwise, turn their head to the right
         else
         {
             headSr.flipX = false;
             weaponSr.flipY = false;
-            // rightHandSr.flipX = false;
-            // leftHandSr.flipX = false;
         }
     }
 

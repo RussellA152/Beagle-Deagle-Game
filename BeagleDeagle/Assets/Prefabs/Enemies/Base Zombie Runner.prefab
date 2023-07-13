@@ -167,6 +167,7 @@ MonoBehaviour:
   movementScript: {fileID: 2060393728062037017}
   state: 0
   animator: {fileID: 7349097819883513746}
+  bodyCollider: {fileID: 7049058761075785383}
 --- !u!114 &2060393728062037017
 MonoBehaviour:
   m_ObjectHideFlags: 0

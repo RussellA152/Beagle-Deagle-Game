@@ -82,6 +82,12 @@ AnimationClip:
       value: {fileID: 21300000, guid: 41a48fe0c8b4cce49a10ccd2ee90be67, type: 3}
     - time: 0.15
       value: {fileID: 21300000, guid: 02bb212b70c16df4381fd6420db5a777, type: 3}
+    - time: 0.25
+      value: {fileID: 21300000, guid: ceb6665898f3e334ab8cf6846d621ac8, type: 3}
+    - time: 0.26666668
+      value: {fileID: 21300000, guid: 4be83643e2c560f4e964e4c91d084b4d, type: 3}
+    - time: 0.28333333
+      value: {fileID: 21300000, guid: ea5eddb5222021f46b7dd2cd938e130d, type: 3}
     attribute: m_Sprite
     path: Sprite Holder
     classID: 212
@@ -118,12 +124,15 @@ AnimationClip:
     - {fileID: 21300000, guid: d463ebee201d2cb43bae0e2237ba4e61, type: 3}
     - {fileID: 21300000, guid: 41a48fe0c8b4cce49a10ccd2ee90be67, type: 3}
     - {fileID: 21300000, guid: 02bb212b70c16df4381fd6420db5a777, type: 3}
+    - {fileID: 21300000, guid: ceb6665898f3e334ab8cf6846d621ac8, type: 3}
+    - {fileID: 21300000, guid: 4be83643e2c560f4e964e4c91d084b4d, type: 3}
+    - {fileID: 21300000, guid: ea5eddb5222021f46b7dd2cd938e130d, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.16666667
+    m_StopTime: 0.33333334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -280,4 +289,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.33333334
+    functionName: DisableCorpse
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
