@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0609f4a24628c1e468147ee54aa07378, type: 3}
   m_Name: projectile_enemy_police
   m_EditorClassIdentifier: 
-  characterName: Police Officer Zombie
-  animatorController: {fileID: 0}
-  maxHealth: 1000
-  movementSpeed: 6
-  attackDamage: -1
+  characterName: Police Zombie
+  animatorController: {fileID: 9100000, guid: 7ec07fe532d25ee48843c2c0f4b1a230, type: 2}
+  maxHealth: 60
+  movementSpeed: 8
+  attackDamage: -45
   attackCooldown: 2
   attackRange: 2.5
   chaseRange: 150

@@ -35,8 +35,8 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     [SerializeField]
     private EnemyState state;
 
-    [SerializeField]
-    protected Animator animator;
+    [SerializeField] 
+    private ZombieAnimationHandler animationHandlerScript;
 
     [SerializeField] 
     private Collider2D bodyCollider;
@@ -93,7 +93,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         // Re-enable the enemy's body collider (we disable it when they die)
         bodyCollider.enabled = true;
 
-        animator.runtimeAnimatorController = enemyScriptableObject.animatorController;
+        //animator.runtimeAnimatorController = enemyScriptableObject.animatorController;
 
     }
 
@@ -167,10 +167,14 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     }
     protected virtual void OnIdle()
     {
+        animationHandlerScript.PlayIdleAnimation();
+        
         agent.isStopped = true;
     }
     protected virtual void OnChase()
     {
+        animationHandlerScript.PlayMoveAnimation();
+        
         agent.isStopped = false;
 
         if (target != null)
@@ -181,17 +185,21 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     {
         agent.isStopped = true;
 
+        animationHandlerScript.PlayAttackAnimation();
         attackScript.Attack(target);
     }
     
     protected virtual void OnStun()
     {
+        animationHandlerScript.PlayStunAnimation();
         agent.velocity = Vector2.zero;
         agent.isStopped = true;
     }
     
     protected virtual void OnDeath()
     {
+        animationHandlerScript.PlayDeathAnimation();
+        
         // Don't let enemy move, and disable their collider
         agent.isStopped = true;
 

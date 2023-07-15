@@ -5,5 +5,5 @@ using UnityEngine;
 
 public class ProjectileZombieBehavior : AIBehavior<ProjectileEnemyData>
 {
-    
+
 }
