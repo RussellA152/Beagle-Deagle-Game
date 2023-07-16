@@ -126,13 +126,13 @@ public class PlayerController : MonoBehaviour
 
     private bool CheckIfMoving()
     {
-        // just checking if the player is pressing any movement keys (or moving the left stick)
+        // Checking if the player is pressing any movement keys (or moving the left stick)
         return ((Mathf.Abs(movementScript.movementInput.x) > 0f) || (Mathf.Abs(movementScript.movementInput.y) > 0f));
     }
     
     private bool CheckIfAttacking()
     {
-        // checking if the player is attacking with their weapon
+        // Checking if the player is attacking with their weapon
         if(_currentWeapon == null)
         {
             Debug.Log("WEAPON MISSING!");
@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            return _currentWeapon.CheckIfIsShooting();
+            return _currentWeapon.actuallyShooting;
         }
         
     }

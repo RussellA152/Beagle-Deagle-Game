@@ -6,6 +6,12 @@ using UnityEngine.AI;
 
 public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
 {
+    
+    [Header("Data to Use")]
+    [SerializeField]
+    private EnemyData enemyScriptableObject; // Data for enemy's movement (contains movement speed)
+    
+    [Header("Required Components")]
     [SerializeField]
     private NavMeshAgent agent;
 
@@ -15,9 +21,11 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     [SerializeField] 
     private SpriteRenderer spriteRenderer;
 
+    [Header("Required Scripts")] 
     [SerializeField]
-    private EnemyData enemyScriptableObject; // Data for enemy's movement (contains movement speed)
-
+    private ZombieAnimationHandler animationScript;
+    
+    [Header("Modifiers")]
     [SerializeField, NonReorderable]
     private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>(); // a list of modifiers being applied to this enemy's movement speed 
 
@@ -89,7 +97,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     /// 
     private void FlipSprite()
     {
-        spriteRenderer.flipX = agent.destination.x <= 0f;
+        spriteRenderer.flipX = agent.destination.x < transform.position.x;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -107,14 +115,20 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
         movementSpeedModifiers.Add(modifierToAdd);
         bonusSpeed += bonusSpeed * modifierToAdd.bonusMovementSpeed;
         agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
+        
+        // Increase or decrease the animation speed of the movement animation
+        animationScript.SetMovementAnimationSpeed(modifierToAdd.bonusMovementSpeed);
+        
     }
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
         movementSpeedModifiers.Remove(modifierToRemove);
         bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
-
         agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
+        
+        // Remove speed effect that was applied to the movement animation's speed
+        animationScript.SetMovementAnimationSpeed(-1f * modifierToRemove.bonusMovementSpeed);
     }
 
     public void RevertAllModifiers()

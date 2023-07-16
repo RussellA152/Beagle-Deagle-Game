@@ -37,7 +37,7 @@ public class WaveGenerator : MonoBehaviour
                 // Set the duration of the wave to be the HIGHEST duration of all mini waves
                 // Ex. if we have three mini waves: 1 Bat every 2 seconds for 10 seconds, 1 Skeleton every 2 seconds for 5 seconds
                 // Then the duration of the wave should be 10 seconds to accomodate for all mini waves
-                W.duration = W.GetMiniWaveData().Max(v => v.waveDuration);
+                W.duration = W.miniWaves.Max(v => v.waveDuration);
 
                 // if there is currently a wave ongoing, don't start a new wave yet
                 if (W != m_CurrentWave && m_CurrentWave.duration > 0)
@@ -54,7 +54,7 @@ public class WaveGenerator : MonoBehaviour
                 }
 
                 // for each mini wave in that wave...
-                foreach (MiniWaveData A in W.GetMiniWaveData())
+                foreach (MiniWaveData A in W.miniWaves)
                 {
                     m_CurrentWave = W;
                     // Start spawning those enemies for that mini wave

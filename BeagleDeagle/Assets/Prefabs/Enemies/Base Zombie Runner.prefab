@@ -175,13 +175,12 @@ MonoBehaviour:
   enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
   target: {fileID: 0}
   agent: {fileID: 3711592478197892577}
+  bodyCollider: {fileID: 7049058761075785383}
   attackScript: {fileID: 3711592478197892583}
   healthScript: {fileID: 3711592478197892578}
   damageOverTimeScript: {fileID: 7645405754992922946}
   movementScript: {fileID: 2060393728062037017}
-  state: 0
   animationHandlerScript: {fileID: 7778696654224442948}
-  bodyCollider: {fileID: 7049058761075785383}
 --- !u!114 &2060393728062037017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,10 +193,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93afc334c61cb6b459b611a4acf35ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
   agent: {fileID: 3711592478197892577}
   rb: {fileID: 3711592478197892576}
   spriteRenderer: {fileID: 4378581551572439470}
-  enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
+  animationScript: {fileID: 7778696654224442948}
   movementSpeedModifiers: []
 --- !u!114 &3711592478197892583
 MonoBehaviour:
@@ -212,6 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
+  animationScript: {fileID: 7778696654224442948}
   damageModifiers: []
   attackSpeedModifiers: []
 --- !u!114 &3711592478197892578

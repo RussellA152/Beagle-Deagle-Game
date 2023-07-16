@@ -9,17 +9,27 @@ using UnityEngine.AI;
 /// 
 public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdatable where T: EnemyData
 {
+    private EnemyState _state;
+    
     [SerializeField]
     private int poolKey;
 
+    [Header("Data to Use")]
     public T enemyScriptableObject;
-
+    
+    [Header("Enemy's Target")]
     [SerializeField] // TEMPORARY, WILL NEED A DIFFERENT WAY TO REFERENCE THE PLAYER *
     private Transform target; // Who this enemy will chase and attack?
-
+    
+    [Header("Required Components")]
     [SerializeField]
     private NavMeshAgent agent;
+    
+    [SerializeField] 
+    private Collider2D bodyCollider;
 
+    
+    [Header("Required Scripts")]
     [SerializeField]
     private AIAttack attackScript;
 
@@ -32,14 +42,9 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     [SerializeField]
     private AIMovement movementScript;
 
-    [SerializeField]
-    private EnemyState state;
-
     [SerializeField] 
     private ZombieAnimationHandler animationHandlerScript;
-
-    [SerializeField] 
-    private Collider2D bodyCollider;
+    
 
     private bool _inAttackRange; // Is the player within this enemy's attack range?
     private bool _inChaseRange; // Is the player within this enemy's chase/follow range?
@@ -79,7 +84,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     }
     protected virtual void Start()
     {
-        state = EnemyState.Idle;
+        _state = EnemyState.Idle;
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -88,12 +93,10 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     private void OnEnable()
     {
         // When enemy spawns in, they start as Idle
-        state = EnemyState.Idle;
+        _state = EnemyState.Idle;
         
         // Re-enable the enemy's body collider (we disable it when they die)
         bodyCollider.enabled = true;
-
-        //animator.runtimeAnimatorController = enemyScriptableObject.animatorController;
 
     }
 
@@ -110,7 +113,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         // Update this enemy's state
         CheckState();
 
-        switch (state)
+        switch (_state)
         {
             case EnemyState.Idle:
                 OnIdle();
@@ -139,30 +142,30 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     {
         if (healthScript.IsDead())
         {
-            state = EnemyState.Death;
+            _state = EnemyState.Death;
             return;
         }
 
         if (movementScript.isStunned)
         {
-            state = EnemyState.Stunned;
+            _state = EnemyState.Stunned;
             return;
         }
 
         // If the enemy is not dead or currently spawning...
-        if (state != EnemyState.Death || state != EnemyState.Spawning)
+        if (_state != EnemyState.Death || _state != EnemyState.Spawning)
         {
             // In chase range, but not in attack range
             if (_inChaseRange && !_inAttackRange)
-                state = EnemyState.Chase;
+                _state = EnemyState.Chase;
 
             // In attack range
             else if (_inChaseRange && _inAttackRange)
-                state = EnemyState.Attack;
+                _state = EnemyState.Attack;
 
             // Go idle if not in chase range and not in attack range
             else if (!_inChaseRange && !_inAttackRange)
-                state = EnemyState.Idle;
+                _state = EnemyState.Idle;
         }
     }
     protected virtual void OnIdle()

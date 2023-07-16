@@ -5,9 +5,15 @@ using UnityEngine.AI;
 
 public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
 {
+    [Header("Data to Use")]
     [SerializeField]
     private EnemyData enemyScriptableObject;
+    
+    [Header("Required Scripts")] 
+    [SerializeField]
+    private ZombieAnimationHandler animationScript;
 
+    [Header("Modifiers")]
     // A list of damage modifiers applied to the enemy's attack damage
     [SerializeField, NonReorderable]
     private List<DamageModifier> damageModifiers = new List<DamageModifier>();
@@ -48,10 +54,11 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
     ///
     IEnumerator AttackCooldown()
     {
+        // TODO: Call this function in a animation event (when the animation ends)
         canAttack = false;
         //Debug.Log("SWIPE AT TARGET!");
 
-        yield return new WaitForSeconds(enemyScriptableObject.attackCooldown * bonusAttackSpeed);
+        yield return new WaitForSeconds(enemyScriptableObject.attackCooldown);
 
         canAttack = true;
     }
@@ -92,12 +99,16 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
     {
         attackSpeedModifiers.Add(modifierToAdd);
         bonusAttackSpeed += (bonusAttackSpeed * modifierToAdd.bonusAttackSpeed);
-
+        
+        // Increase or decrease the animation speed of the movement animation
+        animationScript.SetAttackAnimationSpeed(modifierToAdd.bonusAttackSpeed);
     }
 
     public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove)
     {
         attackSpeedModifiers.Remove(modifierToRemove);
         bonusAttackSpeed /= (1 + modifierToRemove.bonusAttackSpeed);
+        
+        animationScript.SetAttackAnimationSpeed(-1f * modifierToRemove.bonusAttackSpeed);
     }
 }

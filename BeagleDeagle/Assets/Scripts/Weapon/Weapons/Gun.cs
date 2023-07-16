@@ -1,26 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 {
-    [SerializeField]
-    private PlayerEvents playerEvents;
-
-    [SerializeField]
-    private GunData weaponData;
-
     [SerializeField] 
     private Transform bulletSpawnPoint; // Where does this bullet get shot from? (i.e the barrel)
-
+    
+    [Header("Required Components")]
+    [SerializeField]
+    private PlayerEvents playerEvents;
+    [SerializeField]
+    private GunData weaponData;
     [SerializeField]
     private SpriteRenderer spriteRenderer;
 
     private float _shootInput; // Input for shooting
     
-    private bool _actuallyShooting; // is the player shooting (i.e, not idle or reloading or just moving)
+    public bool actuallyShooting { get; private set; } // is the player shooting (i.e, not idle or reloading or just moving)
     
     private int _bulletsShot; // how much ammo has the player shot since the last reload or refill?
     
@@ -35,6 +33,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
     private int poolKey;
 
+    [Header("Modifiers")]
     [SerializeField, NonReorderable]
     private List<DamageModifier> damageModifiers = new List<DamageModifier>(); // A bonus percentage applied to the gun's damage
     [SerializeField, NonReorderable]
@@ -55,9 +54,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     private float _bonusReloadSpeed = 1f;
     private float _bonusAmmoLoad = 1f;
 
-    
-    // TODO: Clean up this gun code. (I moved the code from GunData to Gun which is why this script is so cluttered)
-    
     private void Start()
     {
         playerEvents.InvokeUpdateAmmoLoadedText(Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad));
@@ -100,44 +96,46 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         if (_shootInput > 0 && CheckAmmo() && CheckIfCanFire())
         {
             Attack();
-            _actuallyShooting = true;
+            actuallyShooting = true;
         }
         else
         {
-            _actuallyShooting = false;
+            actuallyShooting = false;
         }
     }
     
-    private IEnumerator WaitReload()
+    // Update the GunData scriptable object to a new one.
+    // This can change many stats like damage, penetration, fireRate, appearance (sprite), and more.
+    public void UpdateScriptableObject(GunData scriptableObject)
     {
-        yield return new WaitForSeconds(weaponData.totalReloadTime * _bonusReloadSpeed);
-    }
-    
-    ///-///////////////////////////////////////////////////////////
-    /// When the gun is done reloading, refill all the ammo
-    /// 
-    private void RefillAmmoCompletely()
-    {
-        _bulletsLoaded = weaponData.magazineSize;
-        _bulletsShot = 0;
-    }
-    
-    ///-///////////////////////////////////////////////////////////
-    /// Add a random offset to the bullet's Y position
-    /// to simulate random spread.
-    public virtual Quaternion CalculateWeaponSpread()
-    {
-        // Calculate the spread angle
-        float spreadAngle = Random.Range(-weaponData.bulletSpread * _bonusSpread, weaponData.bulletSpread * _bonusSpread);
+        //weaponData.bulletSpawnPoint = bulletSpawnPoint;
 
-        return Quaternion.Euler(0f, 0f, spreadAngle) * bulletSpawnPoint.rotation;
+        weaponData = scriptableObject;
+        
+        RefillAmmoCompletely();
+
+        _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
+
+        spriteRenderer.sprite = weaponData.sprite;
+
+        // After swapping to new weapon, show the ammo on the HUD
+        playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Return the current gun data of this weapon
+    /// 
+    public GunData GetCurrentData()
+    {
+        return weaponData;
     }
     
+
+    #region Shooting
     
     public void OnFire(CallbackContext context)
     {
         _shootInput = context.ReadValue<float>();
-
     }
     
     public bool CheckIfCanFire()
@@ -145,37 +143,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         return Time.time - _lastTimeShot > 1f / weaponData.fireRate * _bonusFireRate;
     }
     
-    public bool CheckAmmo()
-    {
-        // If player has no ammo in reserve,
-        // then force them to reload by returning false
-        return _bulletsLoaded > 0f;
-    }
-
-    public IEnumerator Reload()
-    {
-        _isReloading = true;
-        _actuallyShooting = false;
-        
-        // Wait until reload is finished
-        yield return StartCoroutine(WaitReload());
-        
-        RefillAmmoCompletely();
-
-        _isReloading = false;
-
-        // Then call event that ammo has changed
-        playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
-    }
-
-    // Call reload function when the player presses the reload key
-    public void OnReload(CallbackContext context)
-    {
-        if(!_isReloading && _canReload)
-            StartCoroutine(Reload());
-    }
-
-    // Fetch a bullet from object pooler, then pass it into the GunData's Fire() method so it can shoot it
+    ///-///////////////////////////////////////////////////////////
+    /// Fetch a bullet from object pooler, then shoot it out
+    /// 
     public void Attack()
     {
         // The bullet will spawn at the barrel of the gun
@@ -217,43 +187,69 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
     }
     
-
-    // Update the GunData scriptable object to a new one.
-    // This can change many stats like damage, penetration, fireRate, appearance (sprite), and more.
-    public void UpdateScriptableObject(GunData scriptableObject)
+    ///-///////////////////////////////////////////////////////////
+    /// Add a random offset to the bullet's Y position
+    /// to simulate random spread.
+    public virtual Quaternion CalculateWeaponSpread()
     {
-        //weaponData.bulletSpawnPoint = bulletSpawnPoint;
+        // Calculate the spread angle
+        float spreadAngle = Random.Range(-weaponData.bulletSpread * _bonusSpread, weaponData.bulletSpread * _bonusSpread);
 
-        weaponData = scriptableObject;
-        
-        RefillAmmoCompletely();
-
-        _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
-
-        spriteRenderer.sprite = weaponData.sprite;
-
-        // After swapping to new weapon, show the ammo on the HUD
-        playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
+        return Quaternion.Euler(0f, 0f, spreadAngle) * bulletSpawnPoint.rotation;
     }
-    public GunData GetCurrentData()
-    {
-        return weaponData;
-    }
-
-    public bool CheckIfIsShooting()
-    {
-        return _actuallyShooting;
-    }
-
-    public void SetCanReload(bool condition)
-    {
-        _canReload = condition;
-    }
-
+    
     public float ReturnLastTimeShot()
     {
         return _timeElapsedSinceShot;
     }
+
+    #endregion
+
+    #region Reloading
+
+    // Call reload function when the player presses the reload key
+    public void OnReload(CallbackContext context)
+    {
+        if(!_isReloading && _canReload)
+            StartCoroutine(Reload());
+    }
+    
+    public IEnumerator Reload()
+    {
+        _isReloading = true;
+        actuallyShooting = false;
+        
+        // Wait until reload is finished
+        yield return new WaitForSeconds(weaponData.totalReloadTime * _bonusReloadSpeed);
+        
+        RefillAmmoCompletely();
+
+        _isReloading = false;
+
+        // Then call event that ammo has changed
+        playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
+    }
+    public bool CheckAmmo()
+    {
+        // If player has no ammo in reserve,
+        // then force them to reload by returning false
+        return _bulletsLoaded > 0f;
+    }
+    
+    ///-///////////////////////////////////////////////////////////
+    /// When the gun is done reloading, refill all the ammo
+    /// 
+    private void RefillAmmoCompletely()
+    {
+        _bulletsLoaded = weaponData.magazineSize;
+        _bulletsShot = 0;
+    }
+    
+    public void SetCanReload(bool condition)
+    {
+        _canReload = condition;
+    }
+    #endregion
 
     #region StatModifiers
     public void AddDamageModifier(DamageModifier modifierToAdd)

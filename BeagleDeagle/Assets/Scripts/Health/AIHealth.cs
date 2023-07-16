@@ -5,53 +5,58 @@ using UnityEngine;
 
 public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
 {
-    private float currentHealth;
-    private bool isDead;
-
+    [Header("Data to Use")]
     [SerializeField]
     private EnemyData enemyData;
+    
 
-    private float bonusMaxHealth = 1f; // a bonus percentage applied to the enemy's max health (Ex. 500 max health * 120%, would mean 120% extra max health)
-
+    [Header("Modifiers")]
     [SerializeField, NonReorderable]
     private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
+    
+    private float _bonusMaxHealth = 1f; // a bonus percentage applied to the enemy's max health (Ex. 500 max health * 120%, would mean 120% extra max health)
+    
+    // The current health of this enemy
+    private float _currentHealth;
+    // Is the enemy currently dead?
+    private bool _isDead;
 
     protected virtual void OnEnable()
     {
-        isDead = false;
-        currentHealth = enemyData.maxHealth;
+        _isDead = false;
+        _currentHealth = enemyData.maxHealth;
     }
 
     public virtual float GetCurrentHealth()
     {
-        return currentHealth;
+        return _currentHealth;
     }
 
 
     public virtual void ModifyHealth(float amount)
     {
         // Calculate the potential new health value
-        float newHealth = currentHealth + amount;
+        float newHealth = _currentHealth + amount;
 
         // Clamp the new health value between 0 and the maximum potential health (including any max health modifiers)
-        newHealth = Mathf.Clamp(newHealth, 0f, enemyData.maxHealth * bonusMaxHealth);
+        newHealth = Mathf.Clamp(newHealth, 0f, enemyData.maxHealth * _bonusMaxHealth);
 
         // Check if the new health value is zero or below
         if (newHealth <= 0f)
         {
-            currentHealth = 0f;
-            isDead = true;
+            _currentHealth = 0f;
+            _isDead = true;
         }
         else
         {
-            currentHealth = newHealth;
+            _currentHealth = newHealth;
         }
     }
 
     // do something when this entity dies
     public bool IsDead()
     {
-        return isDead;
+        return _isDead;
     }
 
     public void UpdateScriptableObject(EnemyData scriptableObject)
@@ -62,19 +67,19 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
     public void AddMaxHealthModifier(MaxHealthModifier modifierToAdd)
     {
         maxHealthModifiers.Add(modifierToAdd);
-        bonusMaxHealth += modifierToAdd.bonusMaxHealth;
+        _bonusMaxHealth += modifierToAdd.bonusMaxHealth;
     }
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
     {
         maxHealthModifiers.Remove(modifierToRemove);
-        bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
+        _bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
     }
 
     public void RevertAllModifiers()
     {
         // reset any max health modifiers applied to an enemy
-        bonusMaxHealth = 1f;
+        _bonusMaxHealth = 1f;
         maxHealthModifiers.Clear();
     }
 

@@ -8,6 +8,7 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
     // The health script of this target
     private IHealth _healthScript;
 
+    [Header("All Damage Over Time Effects Afflicted With")]
     // All damage over time effects that have been applied to this target
     [SerializeField, NonReorderable]
     private List<DamageOverTime> damageOverTimeEffects = new List<DamageOverTime>();
@@ -56,7 +57,7 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
 
         while (ticks > 0)
         {
-            // THIS ASSUMES WE ALWAYS DO DAMAGE!
+            // TODO: THIS ASSUMES WE ALWAYS DO DAMAGE!
             _healthScript.ModifyHealth(-1f * dot.damage);
 
             yield return new WaitForSeconds(dot.tickInterval);
