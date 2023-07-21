@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d5d101c15f1cc488adfb3c7686e907, type: 3}
+  m_Name: ultimate_awp
+  m_EditorClassIdentifier: 
+  abilityName: AWP Sniper
+  abilityDamage: 200
+  cooldown: 5
+  duration: 6
+  startTime: 0.5
+  awpGunData: {fileID: 11400000, guid: fa8fd2ad5ce7d5741b9621155f0030b6, type: 2}

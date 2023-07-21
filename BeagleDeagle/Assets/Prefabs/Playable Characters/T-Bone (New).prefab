@@ -177,7 +177,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1777428645546820878}
-  - component: {fileID: 6309951973812617350}
   m_Layer: 7
   m_Name: Passive Item Inventory
   m_TagString: Untagged
@@ -201,20 +200,6 @@ Transform:
   m_Father: {fileID: 1777428645584621178}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6309951973812617350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777428645546820877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71712cd2b779f4f438d9eb2d7cd0bb93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  passiveData: {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}
-  _gunScript: {fileID: 0}
 --- !u!1 &1777428645584621176
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,10 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  playerInput: {fileID: 1777428645584621182}
   currentPlayerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
-  movementScript: {fileID: 1777428645584621180}
-  healthScript: {fileID: 1777428645584621154}
 --- !u!114 &1777428645584621154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,14 +300,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
-  movementSpeedModifiers: []
-  rb: {fileID: 1777428645584621179}
   rotationRadius: 0
   pivotPoint: {fileID: 1777428646219782325}
-  capsuleCollider2D: {fileID: 3573752587559370938}
   bodySr: {fileID: 1777428645335658747}
   headSr: {fileID: 1777428646164562768}
   weaponSr: {fileID: 633001574926292174}
+  movementSpeedModifiers: []
   collisionOffset: 0.05
   movementFilter:
     useTriggers: 0
@@ -371,7 +351,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   ultimateData: {fileID: 11400000, guid: 42f995ffd0be09f4486e341d1899a190, type: 2}
-  playerGunScript: {fileID: 633001574926292169}
 --- !u!114 &1777428645584621182
 MonoBehaviour:
   m_ObjectHideFlags: 0

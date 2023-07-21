@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
+using Random = UnityEngine.Random;
 
 public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 {
@@ -9,16 +11,13 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     private Transform bulletSpawnPoint; // Where does this bullet get shot from? (i.e the barrel)
     
     [Header("Required Components")]
-    [SerializeField]
-    private PlayerEvents playerEvents;
-    [SerializeField]
-    private GunData weaponData;
-    [SerializeField]
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private PlayerEvents playerEvents;
+    [SerializeField] private GunData weaponData;
+    private SpriteRenderer _spriteRenderer;
 
     private float _shootInput; // Input for shooting
     
-    public bool actuallyShooting { get; private set; } // is the player shooting (i.e, not idle or reloading or just moving)
+    public bool ActuallyShooting { get; private set; } // is the player shooting (i.e, not idle or reloading or just moving)
     
     private int _bulletsShot; // how much ammo has the player shot since the last reload or refill?
     
@@ -31,7 +30,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     private float _lastTimeShot;
     private float _timeElapsedSinceShot;
 
-    private int poolKey;
+    private int _bulletPoolKey;
 
     [Header("Modifiers")]
     [SerializeField, NonReorderable]
@@ -54,6 +53,11 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     private float _bonusReloadSpeed = 1f;
     private float _bonusAmmoLoad = 1f;
 
+    private void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     private void Start()
     {
         playerEvents.InvokeUpdateAmmoLoadedText(Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad));
@@ -67,7 +71,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         
         _bulletsLoaded = weaponData.magazineSize;
         
-        poolKey = weaponData.bulletType.bulletPrefab.GetComponent<IPoolable>().PoolKey;
+        _bulletPoolKey = weaponData.bulletType.bulletPrefab.GetComponent<IPoolable>().PoolKey;
     }
 
     private void OnEnable()
@@ -96,11 +100,11 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         if (_shootInput > 0 && CheckAmmo() && CheckIfCanFire())
         {
             Attack();
-            actuallyShooting = true;
+            ActuallyShooting = true;
         }
         else
         {
-            actuallyShooting = false;
+            ActuallyShooting = false;
         }
     }
     
@@ -116,7 +120,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
         _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
 
-        spriteRenderer.sprite = weaponData.sprite;
+        _spriteRenderer.sprite = weaponData.sprite;
 
         // After swapping to new weapon, show the ammo on the HUD
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
@@ -152,7 +156,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         //weaponData.bulletSpawnPoint = bulletSpawnPoint;
         
         // Fetch a bullet from object pooler
-        GameObject newBullet = ObjectPooler.instance.GetPooledObject(poolKey);
+        GameObject newBullet = ObjectPooler.instance.GetPooledObject(_bulletPoolKey);
 
         if (newBullet != null)
         {
@@ -217,7 +221,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     public IEnumerator Reload()
     {
         _isReloading = true;
-        actuallyShooting = false;
+        ActuallyShooting = false;
         
         // Wait until reload is finished
         yield return new WaitForSeconds(weaponData.totalReloadTime * _bonusReloadSpeed);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,8 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
     [SerializeField]
     private EnemyData enemyScriptableObject;
     
-    [Header("Required Scripts")] 
-    [SerializeField]
-    private ZombieAnimationHandler animationScript;
+    [Header("Required Scripts")]
+    private ZombieAnimationHandler _animationScript;
 
     [Header("Modifiers")]
     // A list of damage modifiers applied to the enemy's attack damage
@@ -23,26 +23,31 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
     private List<AttackSpeedModifier> attackSpeedModifiers = new List<AttackSpeedModifier>();
 
     // A bonus percentage applied to the enemy's attack damage
-    private float bonusDamage = 1f;
+    private float _bonusDamage = 1f;
 
     // A bonus percentage applied to the enemy's attack cooldown
-    private float bonusAttackSpeed = 1f;
+    private float _bonusAttackSpeed = 1f;
 
     // Is the enemy allowed to attack?
-    private bool canAttack = true;
+    private bool _canAttack = true;
+
+    private void Awake()
+    {
+        _animationScript = GetComponent<ZombieAnimationHandler>();
+    }
 
     private void OnEnable()
     {
-        canAttack = true;
+        _canAttack = true;
     }
 
 
     public virtual void Attack(Transform target)
     {
-        if (canAttack)
+        if (_canAttack)
         {
             // TODO: This is temporary. Change to "whatEnemyAttacks" and GetComponent<IHealth>
-            target.GetComponent<PlayerHealth>().ModifyHealth(enemyScriptableObject.attackDamage * bonusDamage);
+            target.GetComponent<PlayerHealth>().ModifyHealth(enemyScriptableObject.attackDamage * _bonusDamage);
             StartCoroutine(AttackCooldown());
         }
             
@@ -50,17 +55,17 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
 
     ///-///////////////////////////////////////////////////////////
     /// Wait some time to allow attacks again.
-    /// Multiply by "bonusAttackSpeed" which can cause attacks to be slower or faster
+    /// Multiply by "_bonusAttackSpeed" which can cause attacks to be slower or faster
     ///
     IEnumerator AttackCooldown()
     {
         // TODO: Call this function in a animation event (when the animation ends)
-        canAttack = false;
+        _canAttack = false;
         //Debug.Log("SWIPE AT TARGET!");
 
         yield return new WaitForSeconds(enemyScriptableObject.attackCooldown);
 
-        canAttack = true;
+        _canAttack = true;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -69,8 +74,8 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
     public void RevertAllModifiers()
     {
         // reset any modifiers on the enemy's damage
-        bonusDamage = 1f;
-        bonusAttackSpeed = 1f;
+        _bonusDamage = 1f;
+        _bonusAttackSpeed = 1f;
 
         // remove modifiers from lists
         damageModifiers.Clear();
@@ -85,30 +90,30 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
     public void AddDamageModifier(DamageModifier modifierToAdd)
     {
         damageModifiers.Add(modifierToAdd);
-        bonusDamage += (bonusDamage * modifierToAdd.bonusDamage);
+        _bonusDamage += (_bonusDamage * modifierToAdd.bonusDamage);
 
     }
 
     public void RemoveDamageModifier(DamageModifier modifierToRemove)
     {
         damageModifiers.Remove(modifierToRemove);
-        bonusDamage /= (1 + modifierToRemove.bonusDamage);
+        _bonusDamage /= (1 + modifierToRemove.bonusDamage);
     }
 
     public void AddAttackSpeedModifier(AttackSpeedModifier modifierToAdd)
     {
         attackSpeedModifiers.Add(modifierToAdd);
-        bonusAttackSpeed += (bonusAttackSpeed * modifierToAdd.bonusAttackSpeed);
+        _bonusAttackSpeed += (_bonusAttackSpeed * modifierToAdd.bonusAttackSpeed);
         
         // Increase or decrease the animation speed of the movement animation
-        animationScript.SetAttackAnimationSpeed(modifierToAdd.bonusAttackSpeed);
+        _animationScript.SetAttackAnimationSpeed(modifierToAdd.bonusAttackSpeed);
     }
 
     public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove)
     {
         attackSpeedModifiers.Remove(modifierToRemove);
-        bonusAttackSpeed /= (1 + modifierToRemove.bonusAttackSpeed);
+        _bonusAttackSpeed /= (1 + modifierToRemove.bonusAttackSpeed);
         
-        animationScript.SetAttackAnimationSpeed(-1f * modifierToRemove.bonusAttackSpeed);
+        _animationScript.SetAttackAnimationSpeed(-1f * modifierToRemove.bonusAttackSpeed);
     }
 }

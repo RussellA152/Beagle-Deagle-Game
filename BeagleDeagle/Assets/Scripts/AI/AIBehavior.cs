@@ -22,27 +22,14 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     private Transform target; // Who this enemy will chase and attack?
     
     [Header("Required Components")]
-    [SerializeField]
     private NavMeshAgent agent;
-    
-    [SerializeField] 
     private Collider2D bodyCollider;
 
-    
     [Header("Required Scripts")]
-    [SerializeField]
     private AIAttack attackScript;
-
-    [SerializeField]
-    private AIHealth healthScript;
-
-    [SerializeField]
-    private DamageOverTimeHandler damageOverTimeScript;
-
-    [SerializeField]
     private AIMovement movementScript;
-
-    [SerializeField] 
+    private AIHealth healthScript;
+    private DamageOverTimeHandler damageOverTimeScript;
     private ZombieAnimationHandler animationHandlerScript;
     
 
@@ -53,9 +40,20 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
 
     private void Awake()
     {
+        agent = GetComponent<NavMeshAgent>();
+        
         // Prevents AI from spawning with incorrect rotation with NavMeshPlus (2D navmesh asset)
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+        
+        bodyCollider = GetComponent<Collider2D>();
+        
+        attackScript = GetComponent<AIAttack>();
+        movementScript = GetComponent<AIMovement>();
+        healthScript = GetComponent<AIHealth>();
+        damageOverTimeScript = GetComponent<DamageOverTimeHandler>();
+        animationHandlerScript = GetComponent<ZombieAnimationHandler>();
+
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -87,7 +85,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         _state = EnemyState.Idle;
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
-
+        
     }
 
     private void OnEnable()
@@ -146,7 +144,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
             return;
         }
 
-        if (movementScript.isStunned)
+        if (movementScript.IsStunned)
         {
             _state = EnemyState.Stunned;
             return;

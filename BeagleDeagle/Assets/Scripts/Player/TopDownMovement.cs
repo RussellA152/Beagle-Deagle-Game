@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,31 +8,25 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 {
-    [SerializeField]
-    private CharacterData playerData;
+    [SerializeField] private CharacterData playerData;
+    
+    private float _bonusSpeed = 1;
 
-    [SerializeField, NonReorderable]
-    private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>(); // a list of modifiers being applied to the player's movement speed 
-
-    private float bonusSpeed = 1;
-
-    public Vector2 movementInput { get; private set; }
-    Vector2 rotationInput;
+    public Vector2 MovementInput { get; private set; }
+    private Vector2 _rotationInput;
     
     [Header("Required Components")]
-    [SerializeField]
-    private Rigidbody2D rb;
+    private Rigidbody2D _rb;
+    private CapsuleCollider2D _capsuleCollider2D;
 
-    [SerializeField] 
+     
     // How far out should the weapon be from player when rotating (lower values = closer)
-    private float rotationRadius = 0.5f;
+    [SerializeField] private float rotationRadius = 0.5f;
 
-    [SerializeField] 
+    
     // Empty object that holds the weapon and player hands
-    private Transform pivotPoint;
-
-    [SerializeField] 
-    private CapsuleCollider2D capsuleCollider2D;
+    [SerializeField]  private Transform pivotPoint;
+    
     
     //[SerializeField]
     //private Animator playerAnimator;
@@ -39,13 +34,13 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     //private Animator attackAnimator;
     
     [Header("Sprite Renderers")]
-    [SerializeField]
-    private SpriteRenderer bodySr;
-    [SerializeField]
-    private SpriteRenderer headSr;
+    
+    [SerializeField] private SpriteRenderer bodySr;
+    
+    [SerializeField] private SpriteRenderer headSr;
 
-    [SerializeField] 
-    private SpriteRenderer weaponSr;
+    
+    [SerializeField] private SpriteRenderer weaponSr;
 
     // [SerializeField] 
     // private SpriteRenderer rightHandSr;
@@ -53,7 +48,9 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     // [SerializeField] 
     // private SpriteRenderer leftHandSr;
     
-
+    // A list of modifiers being applied to the player's movement speed
+    [SerializeField, NonReorderable] private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>();
+    
     [Range(0, 1)]
     public float collisionOffset = 0.05f;
 
@@ -61,29 +58,37 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     List<RaycastHit2D> _castCollisions = new List<RaycastHit2D>();
     
+    
+
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+        _capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+    }
+
     ///-///////////////////////////////////////////////////////////
     ///
     void FixedUpdate()
     {
 
-        if (movementInput != Vector2.zero)
+        if (MovementInput != Vector2.zero)
         {
             //The number of objects we can collide with if we go in this direction
-            int count = rb.Cast(movementInput, movementFilter, _castCollisions, (playerData.movementSpeed * bonusSpeed) * Time.fixedDeltaTime + collisionOffset);
+            int count = _rb.Cast(MovementInput, movementFilter, _castCollisions, (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime + collisionOffset);
 
             //if nothing is in the way, move our character
             if (count == 0)
             {
-                rb.MovePosition(rb.position + movementInput * (playerData.movementSpeed * bonusSpeed) * Time.fixedDeltaTime);
+                _rb.MovePosition(_rb.position + MovementInput * (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime);
             }
 
         }
 
-        HandleWeaponRotation(rotationInput);
+        HandleWeaponRotation(_rotationInput);
         
-        FlipSpritesWithLook(rotationInput);
+        FlipSpritesWithLook(_rotationInput);
         
-        FlipSpritesWithMovement(movementInput);
+        FlipSpritesWithMovement(MovementInput);
         
     }
 
@@ -100,7 +105,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         v = Vector2.ClampMagnitude(v, 6);
 
         // Circling around collider, instead of parent transform
-        Vector2 newLocation = (Vector2)capsuleCollider2D.bounds.center + v;
+        Vector2 newLocation = (Vector2)_capsuleCollider2D.bounds.center + v;
         
         if (direction != Vector2.zero)
         {
@@ -187,15 +192,15 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
                 // Convert that mouse position to a coordinate in world space
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-                rotationInput = worldPos - capsuleCollider2D.bounds.center;
+                _rotationInput = worldPos - _capsuleCollider2D.bounds.center;
 
 
             }
             // If the current input is a gamepad
             else if (inputValue.control.displayName == "Right Stick")
             {
-                // Read rotationInput straight from the joystick movement
-                rotationInput = inputValue.ReadValue<Vector2>();
+                // Read _rotationInput straight from the joystick movement
+                _rotationInput = inputValue.ReadValue<Vector2>();
 
             }
         }
@@ -207,7 +212,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     /// 
     public void OnMove(CallbackContext inputValue)
     {
-        movementInput = inputValue.ReadValue<Vector2>();
+        MovementInput = inputValue.ReadValue<Vector2>();
     }
 
     public void UpdateScriptableObject(CharacterData scriptableObject)
@@ -218,7 +223,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
     {
         movementSpeedModifiers.Add(modifierToAdd);
-        bonusSpeed += bonusSpeed * modifierToAdd.bonusMovementSpeed;
+        _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
 
     }
 
@@ -226,13 +231,13 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     {
         movementSpeedModifiers.Remove(modifierToRemove);
 
-        bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
+        _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
 
     }
     
     public Vector2 ReturnPlayerDirection()
     {
-        return rotationInput;
+        return _rotationInput;
     }
 
     #endregion

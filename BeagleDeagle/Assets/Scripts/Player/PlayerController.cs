@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
@@ -5,26 +6,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private PlayerState state;
-
-    [SerializeField]
-    private PlayerEvents playerEvents;
-
-    [SerializeField]
-    private PlayerInput playerInput;
-
-    [SerializeField]
-    private CharacterData currentPlayerData;
-
-    [SerializeField]
-    private TopDownMovement movementScript;
-
-    [SerializeField]
-    private PlayerHealth healthScript;
-
-    //[SerializeField]
-    //private Abilities playerAbilitiesScript;
+    [SerializeField] private PlayerState state;
+    
+    [SerializeField] private PlayerEvents playerEvents;
+    
+    private PlayerInput _playerInput;
+    
+    [SerializeField] private CharacterData currentPlayerData;
+    
+    private TopDownMovement _movementScript;
+    
+    private PlayerHealth _healthScript;
     
     private Gun _currentWeapon;
     
@@ -49,36 +41,32 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void Awake()
+    {
+        _playerInput = GetComponent<PlayerInput>();
+        _movementScript = GetComponent<TopDownMovement>();
+        _healthScript = GetComponent<PlayerHealth>();
+        _currentWeapon = GetComponentInChildren<Gun>();
+    }
+
     private void OnEnable()
     {
-        _currentWeapon = GetComponentInChildren<Gun>();
-
         playerEvents.InvokeNewWeaponEvent(_currentWeapon.GetCurrentData());
 
         playerEvents.InvokeNewStatsEvent(currentPlayerData);
 
-        playerEvents.InvokeGivePlayerInputComponentEvent(playerInput);
+        playerEvents.InvokeGivePlayerInputComponentEvent(_playerInput);
     }
 
 
     private void Start()
     {
         state = PlayerState.Idle;
-
-
-        // if(Instance != null)
-        // {
-        //     Destroy(this.gameObject);
-        //     return;
-        // }
-        // Instance = this;
         
-        //DontDestroyOnLoad(this.gameObject);
     }
 
     private void Update()
     {
-
         if (CheckIfDead())
             state = PlayerState.Death;
 
@@ -127,7 +115,7 @@ public class PlayerController : MonoBehaviour
     private bool CheckIfMoving()
     {
         // Checking if the player is pressing any movement keys (or moving the left stick)
-        return ((Mathf.Abs(movementScript.movementInput.x) > 0f) || (Mathf.Abs(movementScript.movementInput.y) > 0f));
+        return ((Mathf.Abs(_movementScript.MovementInput.x) > 0f) || (Mathf.Abs(_movementScript.MovementInput.y) > 0f));
     }
     
     private bool CheckIfAttacking()
@@ -140,7 +128,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            return _currentWeapon.actuallyShooting;
+            return _currentWeapon.ActuallyShooting;
         }
         
     }
@@ -148,7 +136,7 @@ public class PlayerController : MonoBehaviour
     private bool CheckIfDead()
     {
         // check if the player was killed
-        return healthScript.IsDead();
+        return _healthScript.IsDead();
     }
 
 }

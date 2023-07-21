@@ -6,8 +6,7 @@ using UnityEngine;
 public class SpeedBoost : PassiveAbility<SpeedBoostData>
 {
     private bool _speedIncreased = false;
-
-    [SerializeField]
+    
     private Gun _gunScript;
 
     private IMovable _movementScript;

@@ -5,8 +5,7 @@ using UnityEngine.Serialization;
 
 public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 {
-    [SerializeField]
-    private Gun playerGunScript;
+    private Gun _playerGunScript;
     
 
     private GunData _previousWeaponData;
@@ -19,6 +18,8 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
     {
         base.OnEnable();
         
+        _playerGunScript = GetComponentInChildren<Gun>();
+        
         playerEvents.onPlayerSwitchedWeapon += UpdateCurrentWeapon;
 
         playerEvents.onPlayerBulletsLoadedChanged += CheckAmmoLoad;
@@ -28,7 +29,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
     protected override void OnDisable()
     {
         base.OnDisable();
-        
+
         playerEvents.onPlayerBulletsLoadedChanged -= CheckAmmoLoad;
 
         playerEvents.onPlayerSwitchedWeapon -= UpdateCurrentWeapon;
@@ -40,10 +41,10 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 
         _isActive = true;
 
-        playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
+        _playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
         
         // Don't allow player to reload when activating AWP
-        playerGunScript.SetCanReload(false);
+        _playerGunScript.SetCanReload(false);
 
         _durationCoroutine = StartCoroutine(WeaponDuration());
 
@@ -80,7 +81,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         if (_isActive)
         {
             Debug.Log("REMOVE AWP FROM PLAYER!");
-            playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
+            _playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
             // Give back the player their gun before they received the AWP sniper
             playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
             
@@ -90,7 +91,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
             _isActive = false;
             
             // Allow the player to reload again
-            playerGunScript.SetCanReload(true);
+            _playerGunScript.SetCanReload(true);
 
         }
     }

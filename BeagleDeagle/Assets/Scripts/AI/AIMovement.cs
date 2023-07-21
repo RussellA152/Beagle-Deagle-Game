@@ -8,34 +8,37 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
 {
     
     [Header("Data to Use")]
-    [SerializeField]
-    private EnemyData enemyScriptableObject; // Data for enemy's movement (contains movement speed)
+    [SerializeField] private EnemyData enemyScriptableObject; // Data for enemy's movement (contains movement speed)
     
     [Header("Required Components")]
-    [SerializeField]
-    private NavMeshAgent agent;
+    private NavMeshAgent _agent;
+    private Rigidbody2D _rb;
+    private SpriteRenderer _spriteRenderer;
 
-    [SerializeField]
-    private Rigidbody2D rb;
-
-    [SerializeField] 
-    private SpriteRenderer spriteRenderer;
-
-    [Header("Required Scripts")] 
-    [SerializeField]
-    private ZombieAnimationHandler animationScript;
+    [Header("Required Scripts")]
+    private ZombieAnimationHandler _animationScript;
     
     [Header("Modifiers")]
-    [SerializeField, NonReorderable]
-    private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>(); // a list of modifiers being applied to this enemy's movement speed 
+    [SerializeField, NonReorderable] private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>(); // a list of modifiers being applied to this enemy's movement speed 
 
-    public bool isStunned { get; private set; } // Is this enemy stunned?
+    public bool IsStunned { get; private set; } // Is this enemy stunned?
 
-    private float bonusSpeed = 1f; // Speed multiplier on the movement speed of this enemy
+    private float _bonusSpeed = 1f; // Speed multiplier on the movement speed of this enemy
+
+    private void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+        _rb = GetComponent<Rigidbody2D>();
+        
+        // Sprite renderer is on a child gameObject on the player
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        
+        _animationScript = GetComponent<ZombieAnimationHandler>();
+    }
 
     private void OnEnable()
     {
-        agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
+        _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
     }
 
     private void OnDisable()
@@ -54,7 +57,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     /// 
     public void GetStunned(float duration)
     {       
-        if(!isStunned)
+        if(!IsStunned)
             StartCoroutine(RemoveStunCoroutine(duration));
     }
 
@@ -65,9 +68,9 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     {
         // Prevent enemy from moving
         // Also, this enemy will not be able to flip their sprite because they are stopped
-        agent.isStopped = true;
+        _agent.isStopped = true;
 
-        rb.AddForce(direction * force, ForceMode2D.Impulse);
+        _rb.AddForce(direction * force, ForceMode2D.Impulse);
 
         StartCoroutine(WaitForKnockBackToFinish());
     }
@@ -82,13 +85,13 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
         yield return new WaitForSeconds(0.1f);
 
         // Continue waiting until velocity becomes small
-        while (rb.velocity.magnitude > 0.1f) 
+        while (_rb.velocity.magnitude > 0.1f) 
         {
             yield return null;
         }
 
         // Allow enemy to move again
-        agent.isStopped = false;
+        _agent.isStopped = false;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -97,7 +100,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     /// 
     private void FlipSprite()
     {
-        spriteRenderer.flipX = agent.destination.x < transform.position.x;
+        _spriteRenderer.flipX = _agent.destination.x < transform.position.x;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -105,36 +108,36 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     /// 
     public IEnumerator RemoveStunCoroutine(float duration)
     {
-        isStunned = true;
+        IsStunned = true;
         yield return new WaitForSeconds(duration);
-        isStunned = false;
+        IsStunned = false;
     }
 
     public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
     {
         movementSpeedModifiers.Add(modifierToAdd);
-        bonusSpeed += bonusSpeed * modifierToAdd.bonusMovementSpeed;
-        agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
+        _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
+        _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
         
         // Increase or decrease the animation speed of the movement animation
-        animationScript.SetMovementAnimationSpeed(modifierToAdd.bonusMovementSpeed);
+        _animationScript.SetMovementAnimationSpeed(modifierToAdd.bonusMovementSpeed);
         
     }
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
         movementSpeedModifiers.Remove(modifierToRemove);
-        bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
-        agent.speed = enemyScriptableObject.movementSpeed * bonusSpeed;
+        _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
+        _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
         
         // Remove speed effect that was applied to the movement animation's speed
-        animationScript.SetMovementAnimationSpeed(-1f * modifierToRemove.bonusMovementSpeed);
+        _animationScript.SetMovementAnimationSpeed(-1f * modifierToRemove.bonusMovementSpeed);
     }
 
     public void RevertAllModifiers()
     {
         // Reset any movement speed modifiers on the enemy
-        bonusSpeed = 1f;
+        _bonusSpeed = 1f;
 
         // Remove speed modifiers from list when spawning
         movementSpeedModifiers.Clear();
