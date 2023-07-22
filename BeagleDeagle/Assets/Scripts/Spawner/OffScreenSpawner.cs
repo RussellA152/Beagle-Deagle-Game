@@ -1,14 +1,20 @@
 using Cinemachine;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
+
 // This script will calculate the boundaries of the screen and spawn enemies slightly off-screen
 // The point is to have enemies walk into the scene, without the player seeing the enemies spawn
 public class OffScreenSpawner : MonoBehaviour
 {
+    // private Camera _camera;
+    // private CinemachineVirtualCamera _virtualCamera;
+    
     [SerializeField] private Transform playerTransform;
     
     [Header("Camera Bounds (NEED TO SCALE SCALE WITH MAP SIZE)")] 
@@ -52,6 +58,8 @@ public class OffScreenSpawner : MonoBehaviour
     [SerializeField] private bool playerCloseToTopBoundary;
     [SerializeField] private bool playerCloseToBottomBoundary;
 
+    private Vector3 screenCenter;
+    
     private int topSpawnValue = 1; // if a value of 1 is chosen by the random number generated, then spawn the enemy above the player
     private int bottomSpawnValue = 2; // if a value of 2 is chosen by the random number generated, then spawn the enemy below the player
     private int rightSpawnValue = 3; // if a value of 3 is chosen by the random number generated, then spawn the enemy to the right of the player
@@ -85,7 +93,9 @@ public class OffScreenSpawner : MonoBehaviour
         UpdateScreenBoundaries();
 
         CheckPlayerProximityToBoundaries();
+
     }
+    
 
     private Vector2 SpawnEnemyOnTop()
     {

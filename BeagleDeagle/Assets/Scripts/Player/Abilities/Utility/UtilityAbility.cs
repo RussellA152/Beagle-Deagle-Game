@@ -6,21 +6,17 @@ using static UnityEngine.InputSystem.InputAction;
 
 public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable where T: UtilityAbilityData
 {
-    [SerializeField]
-    private PlayerEvents playerEvents;
-
-    [SerializeField]
-    protected T currentUtilityData;
+    [SerializeField] private PlayerEvents playerEvents;
+    
+    [SerializeField] protected T currentUtilityData;
 
     private bool _canUseUtility = true;
 
     private float _delayBetweenUse = 0.4f; // a small delay added between each utility use (prevents player from using too many at once)
 
-    [SerializeField, NonReorderable]
-    private List<UtilityCooldownModifier> utilityCooldownModifiers = new List<UtilityCooldownModifier>();
-
-    [SerializeField, NonReorderable]
-    private List<UtilityUsesModifier> utilityUsesModifiers = new List<UtilityUsesModifier>();
+    [Header("Modifiers")]
+    [SerializeField, NonReorderable] private List<UtilityCooldownModifier> utilityCooldownModifiers = new List<UtilityCooldownModifier>();
+    [SerializeField, NonReorderable] private List<UtilityUsesModifier> utilityUsesModifiers = new List<UtilityUsesModifier>();
     
 
     private int _utilityUses;

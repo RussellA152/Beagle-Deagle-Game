@@ -19,13 +19,11 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     private Rigidbody2D _rb;
     private CapsuleCollider2D _capsuleCollider2D;
 
-     
-    // How far out should the weapon be from player when rotating (lower values = closer)
-    [SerializeField] private float rotationRadius = 0.5f;
-
-    
+    [Header("Weapon Positioning")]
     // Empty object that holds the weapon and player hands
     [SerializeField]  private Transform pivotPoint;
+    // How far out should the weapon be from player when rotating (lower values = closer)
+    [SerializeField] private float rotationRadius = 0.5f;
     
     
     //[SerializeField]
@@ -48,9 +46,11 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     // [SerializeField] 
     // private SpriteRenderer leftHandSr;
     
+    [Header("Modifiers")]
     // A list of modifiers being applied to the player's movement speed
     [SerializeField, NonReorderable] private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>();
     
+    [Header("Collisions")]
     [Range(0, 1)]
     public float collisionOffset = 0.05f;
 

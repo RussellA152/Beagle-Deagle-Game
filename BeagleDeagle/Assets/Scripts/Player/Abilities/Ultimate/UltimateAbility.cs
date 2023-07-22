@@ -4,12 +4,9 @@ using static UnityEngine.InputSystem.InputAction;
 
 public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable where T: UltimateAbilityData
 {
-    [SerializeField]
-    protected PlayerEvents playerEvents;
+    [SerializeField] protected PlayerEvents playerEvents;
     
-    [SerializeField]
-    protected T ultimateData;
-    
+    [SerializeField] protected T ultimateData;
     
     private bool _canUseUltimate;
     
