@@ -16,5 +16,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   hitThroughWalls: 0
-  areaSpreadX: 90
-  areaSpreadY: 80
+  areaSpreadX: 70
+  areaSpreadY: 70

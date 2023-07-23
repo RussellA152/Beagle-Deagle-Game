@@ -300,8 +300,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
-  rotationRadius: 0
   pivotPoint: {fileID: 1777428646219782325}
+  rotationRadius: 0
   bodySr: {fileID: 1777428645335658747}
   headSr: {fileID: 1777428646164562768}
   weaponSr: {fileID: 633001574926292174}

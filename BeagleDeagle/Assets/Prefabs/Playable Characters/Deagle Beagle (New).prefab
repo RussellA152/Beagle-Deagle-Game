@@ -274,10 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  playerInput: {fileID: 2439171421654748753}
   currentPlayerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
-  movementScript: {fileID: 2439171421654748755}
-  healthScript: {fileID: 2439171421654748749}
 --- !u!114 &2439171421654748749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,14 +316,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
-  movementSpeedModifiers: []
-  rb: {fileID: 2439171421654748756}
-  rotationRadius: 0
   pivotPoint: {fileID: 2439171422092810394}
-  capsuleCollider2D: {fileID: 5886235219759038886}
+  rotationRadius: 0
   bodySr: {fileID: 2439171421377474772}
   headSr: {fileID: 2439171422150902655}
   weaponSr: {fileID: 3093359913422740387}
+  movementSpeedModifiers: []
   collisionOffset: 0.05
   movementFilter:
     useTriggers: 0

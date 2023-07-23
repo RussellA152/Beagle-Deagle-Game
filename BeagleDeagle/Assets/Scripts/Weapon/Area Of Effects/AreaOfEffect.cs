@@ -9,8 +9,12 @@ public class AreaOfEffect : MonoBehaviour
     [SerializeField]
     protected AreaOfEffectData areaOfEffectData;
 
-    [SerializeField]
-    private CapsuleCollider2D triggerCollider;
+    //private AreaOfEffectData _previousAreaOfEffectData;
+
+    private Outliner _outliner;
+    
+    private CapsuleCollider2D _triggerCollider;
+    
     
     // The layer mask for walls
     private int _wallLayerMask;
@@ -23,11 +27,20 @@ public class AreaOfEffect : MonoBehaviour
     
     [SerializeField] 
     private UnityEvent<GameObject> onAreaExit;
-    
+
+
+    private void Awake()
+    {
+        _triggerCollider = GetComponent<CapsuleCollider2D>();
+
+        _outliner = GetComponent<Outliner>();
+        
+    }
 
     private void Start()
     {
         _wallLayerMask = LayerMask.GetMask("Wall");
+
     }
 
     private void OnEnable()
@@ -40,7 +53,7 @@ public class AreaOfEffect : MonoBehaviour
     private void OnDestroy()
     {
         // Resetting the size of the trigger collider when destroyed
-        triggerCollider.size = new Vector2(1f, 1f);
+        _triggerCollider.size = new Vector2(1f, 1f);
     }
     
 
@@ -120,8 +133,21 @@ public class AreaOfEffect : MonoBehaviour
     /// 
     public void UpdateAOEData(AreaOfEffectData scriptableObject)
     {
-        areaOfEffectData = scriptableObject;
+        //Debug.Log("WTF:   " + scriptableObject + "     prev: " + _previousAreaOfEffectData);
+        
+        // Only update scriptable object if its a new set of values
+        //if (scriptableObject == _previousAreaOfEffectData) return;
 
-        triggerCollider.size = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY);
+        areaOfEffectData = scriptableObject;
+        
+        //_previousAreaOfEffectData = areaOfEffectData;
+
+        transform.localScale = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY);
+            
+        _outliner.UpdateOutlinerSize();
+    
+        Debug.Log("Updated AOE scriptable object!");
+
+
     }
 }
