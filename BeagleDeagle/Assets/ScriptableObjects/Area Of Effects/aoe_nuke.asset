@@ -17,4 +17,4 @@ MonoBehaviour:
     m_Bits: 256
   hitThroughWalls: 0
   areaSpreadX: 70
-  areaSpreadY: 70
+  areaSpreadY: 65

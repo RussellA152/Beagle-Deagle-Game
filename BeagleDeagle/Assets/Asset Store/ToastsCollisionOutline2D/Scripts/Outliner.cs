@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,13 +9,10 @@ public class Outliner : MonoBehaviour {
     public int circleCornerCount = 36;
     public float edgeLineOffset = 0.1f;
 
-    // The previous size of the collider (update outliner only if object has a different collider size than previously)
-    private Vector2 _previousColliderSize;
-
-    // Use this for initialization
-    void Start()
+    private LineRenderer line;
+    private void Start()
     {
-        UpdateOutlinerSize();
+        //UpdateOutlinerSize();
     }
 
     public void UpdateOutlinerSize()
@@ -29,7 +27,10 @@ public class Outliner : MonoBehaviour {
                 points[1] = new Vector3(-0.5f * collie.size.x, 0.5f * collie.size.y);
                 points[2] = new Vector3(-0.5f * collie.size.x, -0.5f * collie.size.y);
                 points[3] = new Vector3(0.5f * collie.size.x, -0.5f * collie.size.y);
-                LineRenderer line = Instantiate(linePrefab).GetComponent<LineRenderer>();
+                
+                if(line == null)
+                    line = Instantiate(linePrefab).GetComponent<LineRenderer>();
+                
                 line.loop = true;
                 line.positionCount = 4;
                 line.SetPositions(points);
@@ -43,7 +44,9 @@ public class Outliner : MonoBehaviour {
             CircleCollider2D collie = GetComponent<CircleCollider2D>();
             if (collie != null)
             {
-                LineRenderer line = Instantiate(linePrefab).GetComponent<LineRenderer>();
+                if(line == null)
+                    line = Instantiate(linePrefab).GetComponent<LineRenderer>();
+                
                 line.loop = true;
                 line.positionCount = circleCornerCount;
                 for (int i = 0; i < line.positionCount; i++)
@@ -62,7 +65,7 @@ public class Outliner : MonoBehaviour {
             {
                 for (int i = 0; i < collie.pathCount; i++)
                 {
-                    LineRenderer line = Instantiate(linePrefab).GetComponent<LineRenderer>();
+                    line = Instantiate(linePrefab).GetComponent<LineRenderer>();
                     line.loop = true;
                     line.positionCount = collie.GetPath(i).Length;
                     for (int j = 0; j < collie.GetPath(i).Length; j++)
@@ -82,7 +85,9 @@ public class Outliner : MonoBehaviour {
             if (collie != null)
             {
                 Vector3[] points = new Vector3[collie.points.Length];
-                LineRenderer line = Instantiate(linePrefab).GetComponent<LineRenderer>();
+                
+                if(line == null)
+                    line = Instantiate(linePrefab).GetComponent<LineRenderer>();
                 line.loop = false;
                 line.positionCount = collie.points.Length;
                 for (int i = 0; i < collie.points.Length; i++)
@@ -102,20 +107,30 @@ public class Outliner : MonoBehaviour {
             CapsuleCollider2D collie = GetComponent<CapsuleCollider2D>();
             if (collie != null)
             {
-                _previousColliderSize = collie.size;
-                
+
                 Vector3[] points = new Vector3[circleCornerCount + 2];
-                LineRenderer line = Instantiate(linePrefab).GetComponent<LineRenderer>();
+                
+                if(line == null)
+                    line = Instantiate(linePrefab).GetComponent<LineRenderer>();
                 line.loop = true;
                 line.positionCount = circleCornerCount + 2;
+
+                // float radius = colliderSize.x;
+                // float height = colliderSize.y - radius;
+                
                 float radius = collie.size.x;
                 float height = collie.size.y - radius;
+                
                 int offset = 1;
                 Vector3 dir = Vector3.up;
                 if (collie.direction == CapsuleDirection2D.Horizontal)
                 {
+                    // radius = colliderSize.y;
+                    // height = colliderSize.x - radius;
+                    
                     radius = collie.size.y;
                     height = collie.size.x - radius;
+                    
                     offset = 2;
                     dir = Vector3.right;
                 }
@@ -146,6 +161,7 @@ public class Outliner : MonoBehaviour {
                 line.transform.localPosition = (Vector3)collie.offset;
                 line.transform.localRotation = Quaternion.identity;
                 line.transform.localScale = Vector3.one;
+
             }
         }
     }

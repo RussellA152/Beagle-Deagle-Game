@@ -21,9 +21,9 @@ public abstract class BulletData : ScriptableObject
     [Header("Size of Bullet")]
     public CapsuleDirection2D colliderDirection; // Will this bullet's collider shape be horizontal or vertical?
     [Range(0f, 100f)]
-    public float sizeX; // What is the width of this bullet's collider?
+    public float sizeX; // What is the width of this bullet's transform scale?
     [Range(0f, 100f)]
-    public float sizeY; // What is the height of this bullet's collider?
+    public float sizeY; // What is the height of this bullet's transform scale?
     
 
     ///-///////////////////////////////////////////////////////////

@@ -25,7 +25,7 @@ MonoBehaviour:
   knockBackPower: {x: 40, y: 40}
   bulletSpeed: 30
   colliderDirection: 0
-  sizeX: 25
-  sizeY: 35
+  sizeX: 3
+  sizeY: 3
   utilityAbilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
   numEnemiesCanHit: 150

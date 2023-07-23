@@ -48,6 +48,8 @@ public class AreaOfEffect : MonoBehaviour
         AreaOfEffectManager.Instance.AddNewAreaOfEffect(areaOfEffectData);
         
         UpdateAOEData(areaOfEffectData);
+        
+        
     }
 
     private void OnDestroy()
@@ -141,10 +143,12 @@ public class AreaOfEffect : MonoBehaviour
         areaOfEffectData = scriptableObject;
         
         //_previousAreaOfEffectData = areaOfEffectData;
+        
+        //transform.localScale = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY);
 
-        transform.localScale = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY);
-            
+        _triggerCollider.size = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY); 
         _outliner.UpdateOutlinerSize();
+        
     
         Debug.Log("Updated AOE scriptable object!");
 

@@ -43,8 +43,10 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
             // Start time for this bullet to disable
             StartCoroutine(DisableAfterTime());
             
-            // Change the bullet's collider size to whatever the scriptable object has
-            bulletCollider.size = new Vector2(bulletData.sizeX, bulletData.sizeY);
+            // Change the bullet's transform scale to whatever the scriptable object has
+            transform.localScale = new Vector2(bulletData.sizeX, bulletData.sizeY);
+            
+            //bulletCollider.size = new Vector2(bulletData.sizeX, bulletData.sizeY);
             
             // Change the bullet's collider direction to whatever the scriptable object has
             bulletCollider.direction = bulletData.colliderDirection;

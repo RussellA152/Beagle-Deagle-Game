@@ -22,8 +22,9 @@ MonoBehaviour:
   whatDestroysBullet:
     serializedVersion: 2
     m_Bits: 1024
+  knockBackPower: {x: 0, y: 0}
   bulletSpeed: 70
   colliderDirection: 0
-  sizeX: 3
-  sizeY: 3
+  sizeX: 1
+  sizeY: 1
   duration: 3
