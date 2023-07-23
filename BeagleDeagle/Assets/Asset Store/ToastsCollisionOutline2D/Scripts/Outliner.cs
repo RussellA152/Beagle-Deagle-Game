@@ -10,9 +10,10 @@ public class Outliner : MonoBehaviour {
     public float edgeLineOffset = 0.1f;
 
     private LineRenderer line;
+
     private void Start()
     {
-        //UpdateOutlinerSize();
+        UpdateOutlinerSize();
     }
 
     public void UpdateOutlinerSize()
@@ -115,21 +116,21 @@ public class Outliner : MonoBehaviour {
                 line.loop = true;
                 line.positionCount = circleCornerCount + 2;
 
-                // float radius = colliderSize.x;
-                // float height = colliderSize.y - radius;
-                
-                float radius = collie.size.x;
-                float height = collie.size.y - radius;
+                float radius = transform.localScale.x;
+                float height = transform.localScale.y - radius;
+
+                // float radius = collie.size.x;
+                // float height = collie.size.y - radius;
                 
                 int offset = 1;
                 Vector3 dir = Vector3.up;
                 if (collie.direction == CapsuleDirection2D.Horizontal)
                 {
-                    // radius = colliderSize.y;
-                    // height = colliderSize.x - radius;
-                    
-                    radius = collie.size.y;
-                    height = collie.size.x - radius;
+                    radius = transform.localScale.y;
+                    height = transform.localScale.x - radius;
+
+                    // radius = collie.size.y;
+                    // height = collie.size.x - radius;
                     
                     offset = 2;
                     dir = Vector3.right;
@@ -160,9 +161,18 @@ public class Outliner : MonoBehaviour {
                 line.transform.SetParent(collie.transform);
                 line.transform.localPosition = (Vector3)collie.offset;
                 line.transform.localRotation = Quaternion.identity;
-                line.transform.localScale = Vector3.one;
-
+                
+                //line.transform.localScale = Vector3.one;
+                
+                UpdateScale();
+                
             }
         }
+    }
+
+    public void UpdateScale()
+    {
+        line.transform.localScale = new Vector2(1f / transform.localScale.x,
+            1f / transform.localScale.y);
     }
 }

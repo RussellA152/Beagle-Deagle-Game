@@ -144,12 +144,14 @@ public class AreaOfEffect : MonoBehaviour
         
         //_previousAreaOfEffectData = areaOfEffectData;
         
-        //transform.localScale = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY);
-
-        _triggerCollider.size = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY); 
-        _outliner.UpdateOutlinerSize();
+        transform.localScale = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY);
         
-    
+        _outliner.UpdateOutlinerSize();
+
+
+        //_triggerCollider.size = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY); 
+
+
         Debug.Log("Updated AOE scriptable object!");
 
 
