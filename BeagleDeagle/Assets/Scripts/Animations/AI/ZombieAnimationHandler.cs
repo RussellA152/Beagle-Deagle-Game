@@ -11,6 +11,7 @@ public class ZombieAnimationHandler : BasicAnimationHandler, IEnemyDataUpdatable
     // Enemies can be stunned (unlike player), so we need to play an animation for that
     private int _isStunned;
     
+    private int _isAttacking;
     private float _attackAnimationSpeed = 1f;
     private int _attackSpeed = Animator.StringToHash("attackSpeed");
 
@@ -19,8 +20,9 @@ public class ZombieAnimationHandler : BasicAnimationHandler, IEnemyDataUpdatable
         base.Start();
      
         // TODO: Might move this to base class 
-        animator.runtimeAnimatorController = _enemyScriptableObject.animatorController;
+        Animator.runtimeAnimatorController = _enemyScriptableObject.animatorController;
         
+        _isAttacking = Animator.StringToHash("isAttacking");
         _isStunned = Animator.StringToHash("isStunned");
         _attackSpeed = Animator.StringToHash("attackSpeed");
     }
@@ -30,47 +32,54 @@ public class ZombieAnimationHandler : BasicAnimationHandler, IEnemyDataUpdatable
         base.OnEnable();
         
         // Reset animation movement speed
-        animator.SetFloat(_attackSpeed, 1f);
+        Animator.SetFloat(_attackSpeed, 1f);
     }
 
     public override void PlayIdleAnimation()
     {
         // When idle, set all other bools to false
         base.PlayIdleAnimation();
-        animator.SetBool(_isStunned, false);
+        Animator.SetBool(_isAttacking, false);
+        Animator.SetBool(_isStunned, false);
         
         
     }
     public override void PlayMoveAnimation()
     {
         base.PlayMoveAnimation();
-        animator.SetBool(_isStunned, false);
+        Animator.SetBool(_isAttacking, false);
+        Animator.SetBool(_isStunned, false);
         
     }
 
-    public override void PlayAttackAnimation()
+    public void PlayAttackAnimation()
     {
-        base.PlayAttackAnimation();
+        // When attacking, set all other bools to false
+        Animator.SetBool(_isAttacking, true);
         
-        animator.SetBool(_isStunned, false);
+        Animator.SetBool(IsIdle, false);
+        Animator.SetBool(IsMoving, false);
+        
+        Animator.SetBool(_isStunned, false);
         
     }
 
     public void PlayStunAnimation()
     {
         // When stunned, set all other bools to false
-        animator.SetBool(_isStunned, true);
+        Animator.SetBool(_isStunned, true);
         
-        animator.SetBool(_isIdle, false);
-        animator.SetBool(_isMoving, false);
-        animator.SetBool(_isAttacking, false);
+        Animator.SetBool(IsIdle, false);
+        Animator.SetBool(IsMoving, false);
+        Animator.SetBool(_isAttacking, false);
     }
 
     public override void PlayDeathAnimation()
     {
         // Trigger death animation once, then set all bools to false
         base.PlayDeathAnimation();
-        animator.SetBool(_isStunned, false);
+        Animator.SetBool(_isAttacking, false);
+        Animator.SetBool(_isStunned, false);
 
     }
     
@@ -78,7 +87,7 @@ public class ZombieAnimationHandler : BasicAnimationHandler, IEnemyDataUpdatable
     {
         _attackAnimationSpeed += attackSpeedModifier;
         
-        animator.SetFloat(_attackSpeed, _attackAnimationSpeed);
+        Animator.SetFloat(_attackSpeed, _attackAnimationSpeed);
     }
 
     public void UpdateScriptableObject(EnemyData scriptableObject)

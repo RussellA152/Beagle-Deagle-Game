@@ -184,7 +184,7 @@ Animator:
   m_GameObject: {fileID: 5313635083943124204}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8f9b4e4f7ee713849919a04a2da0296f, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -208,10 +208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  playerInput: {fileID: 5313635083943124192}
   currentPlayerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
-  movementScript: {fileID: 5313635083943124193}
-  healthScript: {fileID: 2912267811165790606}
 --- !u!114 &2912267811165790606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,16 +249,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b349a021fc7a72a4b809632e17656f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
-  movementSpeedModifiers: []
-  rb: {fileID: 5313635083943124195}
-  body: {fileID: 5313635084664649029}
-  head: {fileID: 5313635084907708359}
-  weapon: {fileID: 5313635084010504988}
-  capsuleCollider2D: {fileID: 5747325857986632433}
+  pivotPoint: {fileID: 0}
+  rotationRadius: 0.5
   bodySr: {fileID: 5313635084664649082}
   headSr: {fileID: 5313635084907708356}
+  weaponSr: {fileID: 0}
+  movementSpeedModifiers: []
   collisionOffset: 0.05
   movementFilter:
     useTriggers: 0
@@ -290,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  utilityData: {fileID: 11400000, guid: 2ae24b0ad22356d43b0a4f479c67cc1d, type: 2}
+  currentUtilityData: {fileID: 0}
   utilityCooldownModifiers: []
   utilityUsesModifiers: []
 --- !u!114 &3866228901131709651
@@ -307,7 +301,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   ultimateData: {fileID: 11400000, guid: 42f995ffd0be09f4486e341d1899a190, type: 2}
-  playerGunScript: {fileID: 5673304368955972411}
 --- !u!114 &5313635083943124192
 MonoBehaviour:
   m_ObjectHideFlags: 0

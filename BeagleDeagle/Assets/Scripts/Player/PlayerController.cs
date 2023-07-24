@@ -17,8 +17,10 @@ public class PlayerController : MonoBehaviour
     private TopDownMovement _movementScript;
     
     private PlayerHealth _healthScript;
+
+    private PlayerAnimationHandler _animationHandlerScript;
     
-    private Gun _currentWeapon;
+    private Gun _gunScript;
     
 
     // states that an enemy can be in
@@ -46,16 +48,21 @@ public class PlayerController : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
         _movementScript = GetComponent<TopDownMovement>();
         _healthScript = GetComponent<PlayerHealth>();
-        _currentWeapon = GetComponentInChildren<Gun>();
+        _animationHandlerScript = GetComponent<PlayerAnimationHandler>();
+        _gunScript = GetComponentInChildren<Gun>();
     }
 
     private void OnEnable()
     {
-        playerEvents.InvokeNewWeaponEvent(_currentWeapon.GetCurrentData());
+        playerEvents.InvokeNewWeaponEvent(_gunScript.GetCurrentData());
 
         playerEvents.InvokeNewStatsEvent(currentPlayerData);
 
         playerEvents.InvokeGivePlayerInputComponentEvent(_playerInput);
+        
+        _movementScript.SetMovement(true);
+        _gunScript.SetCanReload(true);
+        _gunScript.SetCanShoot(true);
     }
 
 
@@ -73,12 +80,14 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case PlayerState.Idle:
+                _animationHandlerScript.PlayIdleAnimation();
                 if (CheckIfAttacking())
                     state = PlayerState.Attacking;
                 if (CheckIfMoving())
                     state = PlayerState.Moving;
                 break;
             case PlayerState.Moving:
+                _animationHandlerScript.PlayMoveAnimation();
                 if (CheckIfIdle())
                     state = PlayerState.Idle;
                 if (CheckIfAttacking())
@@ -93,15 +102,17 @@ public class PlayerController : MonoBehaviour
                     state = PlayerState.Moving;
                 break;
             case PlayerState.Attacking:
-                
-
                 if (CheckIfIdle())
                     state = PlayerState.Idle;
                 if (CheckIfMoving() && !CheckIfAttacking())
                     state = PlayerState.Moving;
                 break;
             case PlayerState.Death:
-                Destroy(this.gameObject);
+                _movementScript.SetMovement(false);
+                _gunScript.SetCanReload(false);
+                _gunScript.SetCanShoot(false);
+                _animationHandlerScript.PlayDeathAnimation();
+                //Destroy(this.gameObject);
                 break;
         }
     }
@@ -121,14 +132,14 @@ public class PlayerController : MonoBehaviour
     private bool CheckIfAttacking()
     {
         // Checking if the player is attacking with their weapon
-        if(_currentWeapon == null)
+        if(_gunScript == null)
         {
             Debug.Log("WEAPON MISSING!");
             return false;
         }
         else
         {
-            return _currentWeapon.ActuallyShooting;
+            return _gunScript.ActuallyShooting;
         }
         
     }

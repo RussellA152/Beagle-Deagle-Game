@@ -5,24 +5,27 @@ using UnityEngine;
 
 public class BasicAnimationHandler : MonoBehaviour
 {
-    [SerializeField] 
-    protected Animator animator;
+    protected Animator Animator;
     
-    protected int _isIdle;
-    protected int _isMoving;
-    protected int _isAttacking;
-    protected int _killed;
+    protected int IsIdle;
+    protected int IsMoving;
+    //protected int IsAttacking;
+    protected int Killed;
 
     private float _movementAnimationSpeed = 1f;
     private  int _movementSpeed = Animator.StringToHash("movementSpeed");
 
+    private void Awake()
+    {
+        Animator = GetComponent<Animator>();
+    }
+
     protected virtual void Start()
     {
         // All entities (player and enemy) have an idle, move, attack, and death animation
-        _isIdle = Animator.StringToHash("isIdle");
-        _isMoving = Animator.StringToHash("isMoving");
-        _isAttacking = Animator.StringToHash("isAttacking");
-        _killed = Animator.StringToHash("killed");
+        IsIdle = Animator.StringToHash("isIdle");
+        IsMoving = Animator.StringToHash("isMoving");
+        Killed = Animator.StringToHash("killed");
         _movementSpeed = Animator.StringToHash("movementSpeed");
         
     }
@@ -30,52 +33,39 @@ public class BasicAnimationHandler : MonoBehaviour
     protected virtual void OnEnable()
     {
         // Reset animation movement speed
-        animator.SetFloat(_movementSpeed, 1f);
+        Animator.SetFloat(_movementSpeed, 1f);
     }
 
 
     public virtual void PlayIdleAnimation()
     {
         // When idle, set all other bools to false
-        animator.SetBool(_isIdle, true);
+        Animator.SetBool(IsIdle, true);
         
-        animator.SetBool(_isMoving, false);
-        //animator.SetBool(_isStunned, false);
-        animator.SetBool(_isAttacking, false);
+        Animator.SetBool(IsMoving, false);
 
     }
     public virtual void PlayMoveAnimation()
     {
         // When chasing, set all other bools to false
-        animator.SetBool(_isMoving, true);
+        Animator.SetBool(IsMoving, true);
         
-        animator.SetBool(_isIdle, false);
-        animator.SetBool(_isAttacking, false);
+        Animator.SetBool(IsIdle, false);
     }
-
-    public virtual void PlayAttackAnimation()
-    {
-        // When attacking, set all other bools to false
-        animator.SetBool(_isAttacking, true);
-        
-        animator.SetBool(_isIdle, false);
-        animator.SetBool(_isMoving, false);
-
-    }
+    
     public virtual void PlayDeathAnimation()
     {
         // Trigger death animation once, then set all bools to false
-        animator.SetTrigger(_killed);
-        animator.SetBool(_isIdle, false);
-        animator.SetBool(_isMoving, false);
-        animator.SetBool(_isAttacking, false);
-        
+        Animator.SetTrigger(Killed);
+        Animator.SetBool(IsIdle, false);
+        Animator.SetBool(IsMoving, false);
+
     }
     public void SetMovementAnimationSpeed(float movementSpeedModifier)
     {
         _movementAnimationSpeed += movementSpeedModifier;
         
-        animator.SetFloat(_movementSpeed, _movementAnimationSpeed);
+        Animator.SetFloat(_movementSpeed, _movementAnimationSpeed);
     }
     
 }

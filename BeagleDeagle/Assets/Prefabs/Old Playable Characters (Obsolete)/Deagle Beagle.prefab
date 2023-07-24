@@ -139,7 +139,7 @@ Animator:
   m_GameObject: {fileID: 5313635083943124204}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8f9b4e4f7ee713849919a04a2da0296f, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -163,10 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  playerInput: {fileID: 5313635083943124192}
   currentPlayerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
-  movementScript: {fileID: 5313635083943124193}
-  healthScript: {fileID: 2912267811165790606}
 --- !u!114 &2912267811165790606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,13 +205,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
-  movementSpeedModifiers: []
-  rb: {fileID: 5313635083943124195}
-  rotationRadius: 0.5
   pivotPoint: {fileID: 0}
-  capsuleCollider2D: {fileID: 5091715681384261876}
+  rotationRadius: 0.5
   bodySr: {fileID: 5313635084664649082}
   headSr: {fileID: 5313635084907708356}
+  weaponSr: {fileID: 0}
+  movementSpeedModifiers: []
   collisionOffset: 0.05
   movementFilter:
     useTriggers: 0
@@ -242,7 +238,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7440f012e8e22724eadb35b2e8d95bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  utilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
+  playerEvents: {fileID: 0}
+  currentUtilityData: {fileID: 0}
+  utilityCooldownModifiers: []
+  utilityUsesModifiers: []
 --- !u!114 &787244964802426978
 MonoBehaviour:
   m_ObjectHideFlags: 0

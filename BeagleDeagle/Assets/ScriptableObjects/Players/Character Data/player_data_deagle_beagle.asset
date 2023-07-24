@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 
   animatorController: {fileID: 0}
-  maxHealth: 2500
+  maxHealth: 250
   movementSpeed: 10

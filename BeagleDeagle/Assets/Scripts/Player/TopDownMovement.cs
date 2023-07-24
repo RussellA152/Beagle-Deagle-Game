@@ -12,6 +12,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     
     private float _bonusSpeed = 1;
 
+    private bool _canMove;
     public Vector2 MovementInput { get; private set; }
     private Vector2 _rotationInput;
     
@@ -71,6 +72,9 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     void FixedUpdate()
     {
 
+        // Don't allow any movement if the player is not allowed to move (usually on death)
+        if (!_canMove) return;
+        
         if (MovementInput != Vector2.zero)
         {
             //The number of objects we can collide with if we go in this direction
@@ -181,6 +185,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     ///
     public void OnLook(CallbackContext inputValue)
     {
+        if (!_canMove) return;
+        
         if (inputValue.ReadValue<Vector2>() != Vector2.zero)
         {
             // If the current input is a mouse
@@ -238,6 +244,11 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     public Vector2 ReturnPlayerDirection()
     {
         return _rotationInput;
+    }
+
+    public void SetMovement(bool boolean)
+    {
+        _canMove = boolean;
     }
 
     #endregion

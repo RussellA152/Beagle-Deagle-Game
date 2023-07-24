@@ -25,6 +25,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
     private bool _isReloading;
 
+    private bool _canShoot;
     private bool _canReload;
 
     private float _lastTimeShot;
@@ -139,6 +140,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     
     public void OnFire(CallbackContext context)
     {
+        // Allow shoot input, if the player is allowed to shoot (usually disabled upon death)
+        if (!_canShoot) return;
+        
         _shootInput = context.ReadValue<float>();
     }
     
@@ -201,6 +205,11 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
         return Quaternion.Euler(0f, 0f, spreadAngle) * bulletSpawnPoint.rotation;
     }
+
+    public void SetCanShoot(bool boolean)
+    {
+        _canShoot = boolean;
+    }
     
     public float ReturnLastTimeShot()
     {
@@ -249,9 +258,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         _bulletsShot = 0;
     }
     
-    public void SetCanReload(bool condition)
+    public void SetCanReload(bool boolean)
     {
-        _canReload = condition;
+        _canReload = boolean;
     }
     #endregion
 
