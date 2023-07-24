@@ -1,18 +1,20 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 
 public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 {
     [SerializeField] private CharacterData playerData;
+
+    private TopDownInput _topDownInput;
     
     private float _bonusSpeed = 1;
-
-    private bool _canMove;
+    
+    private InputAction _movementInputAction;
+    private InputAction _rotationInputAction;
+    
     public Vector2 MovementInput { get; private set; }
     private Vector2 _rotationInput;
     
@@ -65,15 +67,34 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     {
         _rb = GetComponent<Rigidbody2D>();
         _capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+
+        _topDownInput = new TopDownInput();
+
+        _movementInputAction = _topDownInput.Player.Move;
+        _rotationInputAction = _topDownInput.Player.Look;
+        
+    }
+
+    private void OnEnable()
+    {
+        _topDownInput.Enable();
+        _movementInputAction.performed += OnMove;
+        _movementInputAction.canceled += OnMoveCancel;
+        _rotationInputAction.performed += OnLook;
+    }
+
+    private void OnDisable()
+    {
+        _topDownInput.Disable();
+        _movementInputAction.performed -= OnMove;
+        _movementInputAction.canceled -= OnMoveCancel;
+        _rotationInputAction.performed -= OnLook;
     }
 
     ///-///////////////////////////////////////////////////////////
     ///
     void FixedUpdate()
     {
-
-        // Don't allow any movement if the player is not allowed to move (usually on death)
-        if (!_canMove) return;
         
         if (MovementInput != Vector2.zero)
         {
@@ -181,16 +202,27 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
 
     #region ControllerCallbacks
+
     ///-///////////////////////////////////////////////////////////
     ///
-    public void OnLook(CallbackContext inputValue)
+    public void OnMove(CallbackContext context)
     {
-        if (!_canMove) return;
-        
-        if (inputValue.ReadValue<Vector2>() != Vector2.zero)
+        MovementInput = _movementInputAction.ReadValue<Vector2>();
+    }
+
+    public void OnMoveCancel(CallbackContext context)
+    {
+        MovementInput = Vector2.zero;
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    ///
+    public void OnLook(CallbackContext context)
+    {
+        if (_rotationInputAction.ReadValue<Vector2>() != Vector2.zero)
         {
             // If the current input is a mouse
-            if (inputValue.control.displayName == "Delta")
+            if (context.control.displayName == "Delta")
             {
                 // Find the position of the mouse on the screen
                 Vector3 mousePos = Mouse.current.position.ReadValue();
@@ -203,24 +235,16 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
             }
             // If the current input is a gamepad
-            else if (inputValue.control.displayName == "Right Stick")
+            else if (context.control.displayName == "Right Stick")
             {
                 // Read _rotationInput straight from the joystick movement
-                _rotationInput = inputValue.ReadValue<Vector2>();
+                _rotationInput = _rotationInputAction.ReadValue<Vector2>();
 
             }
         }
 
     }
-
-    ///-///////////////////////////////////////////////////////////
-    /// Get input value when player is moving
-    /// 
-    public void OnMove(CallbackContext inputValue)
-    {
-        MovementInput = inputValue.ReadValue<Vector2>();
-    }
-
+    
     public void UpdateScriptableObject(CharacterData scriptableObject)
     {
         playerData = scriptableObject;
@@ -246,9 +270,20 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         return _rotationInput;
     }
 
-    public void SetMovement(bool boolean)
+    public void AllowMovement(bool boolean)
     {
-        _canMove = boolean;
+        if (boolean)
+        {
+            _movementInputAction.Enable();
+            _rotationInputAction.Enable();
+        }
+
+        else
+        {
+            _movementInputAction.Disable();
+            _rotationInputAction.Disable();
+        }
+           
     }
 
     #endregion

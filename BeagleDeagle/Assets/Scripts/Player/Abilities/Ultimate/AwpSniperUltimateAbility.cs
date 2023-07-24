@@ -44,7 +44,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         _playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
         
         // Don't allow player to reload when activating AWP
-        _playerGunScript.SetCanReload(false);
+        _playerGunScript.AllowReload(false);
 
         _durationCoroutine = StartCoroutine(WeaponDuration());
 
@@ -91,7 +91,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
             _isActive = false;
             
             // Allow the player to reload again
-            _playerGunScript.SetCanReload(true);
+            _playerGunScript.AllowReload(true);
 
         }
     }

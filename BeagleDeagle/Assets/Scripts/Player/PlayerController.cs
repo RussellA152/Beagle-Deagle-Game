@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private PlayerHealth _healthScript;
 
     private PlayerAnimationHandler _animationHandlerScript;
-    
+
     private Gun _gunScript;
     
 
@@ -60,9 +60,9 @@ public class PlayerController : MonoBehaviour
 
         playerEvents.InvokeGivePlayerInputComponentEvent(_playerInput);
         
-        _movementScript.SetMovement(true);
-        _gunScript.SetCanReload(true);
-        _gunScript.SetCanShoot(true);
+        _movementScript.AllowMovement(true);
+        _gunScript.AllowReload(true);
+        _gunScript.AllowShoot(true);
     }
 
 
@@ -108,9 +108,9 @@ public class PlayerController : MonoBehaviour
                     state = PlayerState.Moving;
                 break;
             case PlayerState.Death:
-                _movementScript.SetMovement(false);
-                _gunScript.SetCanReload(false);
-                _gunScript.SetCanShoot(false);
+                _movementScript.AllowMovement(false);
+                _gunScript.AllowReload(false);
+                _gunScript.AllowShoot(false);
                 _animationHandlerScript.PlayDeathAnimation();
                 //Destroy(this.gameObject);
                 break;

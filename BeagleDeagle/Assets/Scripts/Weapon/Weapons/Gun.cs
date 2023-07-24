@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 using Random = UnityEngine.Random;
 
@@ -13,7 +14,11 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     [Header("Required Components")]
     [SerializeField] private PlayerEvents playerEvents;
     [SerializeField] private GunData weaponData;
+    private TopDownInput _topDownInput;
     private SpriteRenderer _spriteRenderer;
+
+    private InputAction _shootInputAction;
+    private InputAction _reloadInputAction;
 
     private float _shootInput; // Input for shooting
     
@@ -24,9 +29,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     private int _bulletsLoaded; // how much ammo is currently in the magazine?
 
     private bool _isReloading;
-
-    private bool _canShoot;
-    private bool _canReload;
+    
+    //private bool _canReload;
 
     private float _lastTimeShot;
     private float _timeElapsedSinceShot;
@@ -57,14 +61,20 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        _topDownInput = new TopDownInput();
+
+        _shootInputAction = _topDownInput.Player.Fire;
+
+        _reloadInputAction = _topDownInput.Player.Reload;
+        
+        _reloadInputAction.performed += OnReload;
     }
 
     private void Start()
     {
         playerEvents.InvokeUpdateAmmoLoadedText(Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad));
 
-        _canReload = true;
-        
         _lastTimeShot = 0f;
         _timeElapsedSinceShot = 0f;
 
@@ -83,16 +93,25 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
     }
 
+    private void OnDisable()
+    {
+        _shootInputAction.Disable();
+        _reloadInputAction.Disable();
+    }
+
     private void Update()
     {
+        // Always check if player is trying to shoot
+        _shootInput = _shootInputAction.ReadValue<float>();
+        
         //_lastTimeShot += Time.deltaTime;
         _timeElapsedSinceShot += Time.deltaTime;
 
         // If the player has no ammo loaded into their weapon, begin reloading
         // If the gun is not already reloading, begin a coroutine for the reload
-        if (_bulletsLoaded <= 0f && !_isReloading && _canReload)
+        if (_bulletsLoaded <= 0f && !_isReloading)
         {
-            StartCoroutine(Reload());
+            StartCoroutine(WaitReload());
             return;
         }
 
@@ -137,14 +156,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     
 
     #region Shooting
-    
-    public void OnFire(CallbackContext context)
-    {
-        // Allow shoot input, if the player is allowed to shoot (usually disabled upon death)
-        if (!_canShoot) return;
-        
-        _shootInput = context.ReadValue<float>();
-    }
     
     public bool CheckIfCanFire()
     {
@@ -206,9 +217,16 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         return Quaternion.Euler(0f, 0f, spreadAngle) * bulletSpawnPoint.rotation;
     }
 
-    public void SetCanShoot(bool boolean)
+    public void AllowShoot(bool boolean)
     {
-        _canShoot = boolean;
+        if (boolean)
+        {
+            _shootInputAction.Enable();
+        }
+        else
+        {
+            _shootInputAction.Disable();
+        }
     }
     
     public float ReturnLastTimeShot()
@@ -223,17 +241,24 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     // Call reload function when the player presses the reload key
     public void OnReload(CallbackContext context)
     {
-        if(!_isReloading && _canReload)
-            StartCoroutine(Reload());
+        if (!_isReloading)
+        {
+            _shootInput = 0f;
+            StartCoroutine(WaitReload());
+            
+        }
+            
     }
     
-    public IEnumerator Reload()
+    public IEnumerator WaitReload()
     {
         _isReloading = true;
         ActuallyShooting = false;
         
+        AllowShoot(false);
         // Wait until reload is finished
         yield return new WaitForSeconds(weaponData.totalReloadTime * _bonusReloadSpeed);
+        AllowShoot(true);
         
         RefillAmmoCompletely();
 
@@ -258,9 +283,16 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         _bulletsShot = 0;
     }
     
-    public void SetCanReload(bool boolean)
+    public void AllowReload(bool boolean)
     {
-        _canReload = boolean;
+        if (boolean)
+        {
+            _reloadInputAction.Enable();
+        }
+        else
+        {
+            _reloadInputAction.Disable();
+        }
     }
     #endregion
 

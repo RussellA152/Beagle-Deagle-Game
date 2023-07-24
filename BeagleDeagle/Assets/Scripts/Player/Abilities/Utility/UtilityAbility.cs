@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable where T: UtilityAbilityData
@@ -9,6 +12,10 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable where
     [SerializeField] private PlayerEvents playerEvents;
     
     [SerializeField] protected T currentUtilityData;
+
+    private TopDownInput _topDownInput;
+
+    private InputAction _utilityInputAction;
 
     private bool _canUseUtility = true;
 
@@ -23,40 +30,51 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable where
     private int _bonusUtilityUses = 0;
 
     private float _bonusUtilityCooldown = 1f;
-    
+
+    private void Awake()
+    {
+        _topDownInput = new TopDownInput();
+        _utilityInputAction = _topDownInput.Player.Utility;
+    }
+
     private void OnEnable()
     {
+        _topDownInput.Enable();
+        _utilityInputAction.performed += ActivateUtility;
         _utilityUses = currentUtilityData.maxUses;
     }
 
+    private void OnDisable()
+    {
+        _topDownInput.Disable();
+        _utilityInputAction.performed -= ActivateUtility;
+    }
+    
     protected virtual void Start()
     {
         UtilityUsesModified();
         playerEvents.InvokeUtilityNameUpdatedEvent(currentUtilityData.abilityName);
     }
 
-    public void ActivateUtility(CallbackContext inputValue)
+    public void ActivateUtility(CallbackContext context)
     {
-        if (inputValue.performed)
+        // If player has uses left on their utility ability, let them activate it 
+        // We also take into account any items that upgraded the number of uses on their utility ability
+        if (_canUseUtility && ((_utilityUses + _bonusUtilityUses) > 0))
         {
-            // If player has uses left on their utility ability, let them activate it 
-            // We also take into account any items that upgraded the number of uses on their utility ability
-            if (_canUseUtility && ((_utilityUses + _bonusUtilityUses) > 0))
-            {
-                Debug.Log("Activate utility!");
+            Debug.Log("Activate utility!");
 
-                _utilityUses--;
+            _utilityUses--;
                 
-                //onUtilityUse.Invoke(gameObject);
+            //onUtilityUse.Invoke(gameObject);
                 
-                UtilityAction(gameObject);
+            UtilityAction(gameObject);
 
-                UtilityUsesModified();
+            UtilityUsesModified();
 
-                StartCoroutine(StartUtilityCooldown());
+            StartCoroutine(StartUtilityCooldown());
 
-                StartCoroutine(StartDelayBetweenUtilityUse());
-            }
+            StartCoroutine(StartDelayBetweenUtilityUse());
         }
 
     }
@@ -92,6 +110,18 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable where
 
         UtilityUsesModified();
 
+    }
+
+    public void AllowUtility(bool boolean)
+    {
+        if (boolean)
+        {
+            _utilityInputAction.Enable();
+        }
+        else
+        {
+            _utilityInputAction.Disable();
+        }
     }
     
     public void UpdateScriptableObject(UtilityAbilityData scriptableObject)

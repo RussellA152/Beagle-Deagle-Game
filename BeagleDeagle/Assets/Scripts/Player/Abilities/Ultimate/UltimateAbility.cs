@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable where T: UltimateAbilityData
@@ -8,13 +10,33 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable whe
     
     [SerializeField] protected T ultimateData;
     
-    private bool _canUseUltimate;
+    private TopDownInput _topDownInput;
+
+    private InputAction _ultimateInputAction;
     
-    protected virtual void OnEnable()
+    private bool _canUseUltimate;
+
+    private void Awake()
     {
-        StartCooldowns();
+        _topDownInput = new TopDownInput();
+        _ultimateInputAction = _topDownInput.Player.Ultimate;
     }
 
+    protected virtual void OnEnable()
+    {
+        _topDownInput.Enable();
+
+        _ultimateInputAction.performed += ActivateUltimate;
+        StartCooldowns();
+    }
+    
+    protected virtual void OnDisable()
+    {
+        _topDownInput.Disable();
+        _ultimateInputAction.performed -= ActivateUltimate;
+        StopAllCoroutines();
+    }
+    
     protected virtual void Start()
     {
         _canUseUltimate = false;
@@ -22,29 +44,19 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable whe
         playerEvents.InvokeUltimateNameUpdatedEvent(ultimateData.abilityName);
     }
 
-    protected virtual void OnDisable()
-    {
-        StopAllCoroutines();
-    }
-
     ///-///////////////////////////////////////////////////////////
     /// When player presses 'Q' or ultimate button, 
     /// activate the ultimate ability associated with the character
-    public void ActivateUltimate(CallbackContext inputValue)
+    public void ActivateUltimate(CallbackContext context)
     {
-        if (inputValue.performed)
+        if (_canUseUltimate)
         {
-            if (_canUseUltimate)
-            {
-                Debug.Log("Activate ultimate!");
+            Debug.Log("Activate ultimate!");
 
-                //onUltimateUse.Invoke(gameObject);
+            UltimateAction(gameObject);
                 
-                UltimateAction(gameObject);
+            _canUseUltimate = false;
                 
-                _canUseUltimate = false;
-                
-            }
         }
     }
     protected abstract void UltimateAction(GameObject player);
@@ -94,6 +106,18 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable whe
         }
     
         playerEvents.InvokeUltimateAbilityCooldownEvent(0f);
+    }
+
+    public void AllowUltimate(bool boolean)
+    {
+        if (boolean)
+        {
+            _ultimateInputAction.Enable();
+        }
+        else
+        {
+            _ultimateInputAction.Disable();
+        }
     }
     public void UpdateScriptableObject(UltimateAbilityData scriptableObject)
     {
