@@ -1,14 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
+public class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager where T: EnemyData
 {
     [Header("Data to Use")]
     [SerializeField]
-    private EnemyData enemyScriptableObject;
+    private T enemyScriptableObject;
     
     [Header("Required Scripts")]
     private ZombieAnimationHandler _animationScript;
@@ -41,16 +42,28 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
         _canAttack = true;
     }
 
-
-    public virtual void Attack(Transform target)
+    private void OnDisable()
     {
-        if (_canAttack)
-        {
-            // TODO: This is temporary. Change to "whatEnemyAttacks" and GetComponent<IHealth>
-            target.GetComponent<PlayerHealth>().ModifyHealth(enemyScriptableObject.attackDamage * _bonusDamage);
-            StartCoroutine(AttackCooldown());
-        }
-            
+        StopAllCoroutines();
+    }
+
+
+    public virtual void InitiateAttack()
+    {
+        if (!_canAttack) return;
+        
+        // TODO: This is temporary. Change to "whatEnemyAttacks" and GetComponent<IHealth>
+        // target.GetComponent<PlayerHealth>().ModifyHealth(enemyScriptableObject.attackDamage * _bonusDamage);
+        // StartCoroutine(AttackCooldown());
+
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// When the enemy is finished with their attack animation, begin their attack cooldown.
+    /// 
+    public void BeginCooldown()
+    {
+        StartCoroutine(AttackCooldown());
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -59,9 +72,7 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
     ///
     IEnumerator AttackCooldown()
     {
-        // TODO: Call this function in a animation event (when the animation ends)
         _canAttack = false;
-        //Debug.Log("SWIPE AT TARGET!");
 
         yield return new WaitForSeconds(enemyScriptableObject.attackCooldown);
 
@@ -84,7 +95,14 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
 
     public void UpdateScriptableObject(EnemyData scriptableObject)
     {
-        enemyScriptableObject = scriptableObject;
+        if (scriptableObject is T)
+        {
+            enemyScriptableObject = scriptableObject as T;
+        }
+        else
+        {
+            Debug.LogError("ERROR WHEN UPDATING SCRIPTABLE OBJECT! " + scriptableObject + " IS NOT A " + typeof(T));
+        }
     }
 
     public void AddDamageModifier(DamageModifier modifierToAdd)
@@ -116,4 +134,5 @@ public class AIAttack : MonoBehaviour, IEnemyDataUpdatable, IDamager
         
         _animationScript.SetAttackAnimationSpeed(-1f * modifierToRemove.bonusAttackSpeed);
     }
+    
 }

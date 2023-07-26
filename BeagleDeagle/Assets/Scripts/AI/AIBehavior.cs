@@ -22,15 +22,15 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     private Transform target; // Who this enemy will chase and attack?
     
     [Header("Required Components")]
-    private NavMeshAgent agent;
-    private Collider2D bodyCollider;
+    private NavMeshAgent _agent;
+    private Collider2D _bodyCollider;
 
     [Header("Required Scripts")]
-    private AIAttack attackScript;
-    private AIMovement movementScript;
-    private AIHealth healthScript;
-    private DamageOverTimeHandler damageOverTimeScript;
-    private ZombieAnimationHandler animationHandlerScript;
+    private AIAttack<T> _attackScript;
+    private AIMovement _movementScript;
+    private AIHealth _healthScript;
+    private DamageOverTimeHandler _damageOverTimeScript;
+    private ZombieAnimationHandler _animationHandlerScript;
     
 
     private bool _inAttackRange; // Is the player within this enemy's attack range?
@@ -40,19 +40,19 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         
         // Prevents AI from spawning with incorrect rotation with NavMeshPlus (2D navmesh asset)
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
+        _agent.updateRotation = false;
+        _agent.updateUpAxis = false;
         
-        bodyCollider = GetComponent<Collider2D>();
+        _bodyCollider = GetComponent<Collider2D>();
         
-        attackScript = GetComponent<AIAttack>();
-        movementScript = GetComponent<AIMovement>();
-        healthScript = GetComponent<AIHealth>();
-        damageOverTimeScript = GetComponent<DamageOverTimeHandler>();
-        animationHandlerScript = GetComponent<ZombieAnimationHandler>();
+        _attackScript = GetComponent<AIAttack<T>>();
+        _movementScript = GetComponent<AIMovement>();
+        _healthScript = GetComponent<AIHealth>();
+        _damageOverTimeScript = GetComponent<DamageOverTimeHandler>();
+        _animationHandlerScript = GetComponent<ZombieAnimationHandler>();
 
     }
 
@@ -94,7 +94,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         _state = EnemyState.Idle;
         
         // Re-enable the enemy's body collider (we disable it when they die)
-        bodyCollider.enabled = true;
+        _bodyCollider.enabled = true;
 
     }
 
@@ -138,13 +138,13 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     /// 
     protected virtual void CheckState()
     {
-        if (healthScript.IsDead())
+        if (_healthScript.IsDead())
         {
             _state = EnemyState.Death;
             return;
         }
 
-        if (movementScript.IsStunned)
+        if (_movementScript.IsStunned)
         {
             _state = EnemyState.Stunned;
             return;
@@ -168,43 +168,41 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     }
     protected virtual void OnIdle()
     {
-        animationHandlerScript.PlayIdleAnimation();
+        _animationHandlerScript.PlayIdleAnimation();
         
-        agent.isStopped = true;
+        _movementScript.AllowMovement(false);
     }
     protected virtual void OnChase()
     {
-        animationHandlerScript.PlayMoveAnimation();
+        _animationHandlerScript.PlayMoveAnimation();
         
-        agent.isStopped = false;
+        _movementScript.AllowMovement(true);
 
         if (target != null)
-            agent.SetDestination(target.position);
+            _agent.SetDestination(target.position);
     }
 
     protected virtual void OnAttack()
     {
-        agent.isStopped = true;
+        _movementScript.AllowMovement(false);
 
-        animationHandlerScript.PlayAttackAnimation();
-        attackScript.Attack(target);
+        _animationHandlerScript.PlayAttackAnimation();
     }
     
     protected virtual void OnStun()
     {
-        animationHandlerScript.PlayStunAnimation();
-        agent.velocity = Vector2.zero;
-        agent.isStopped = true;
+        _animationHandlerScript.PlayStunAnimation();
+        _agent.velocity = Vector2.zero;
+        _movementScript.AllowMovement(false);
     }
     
     protected virtual void OnDeath()
     {
-        animationHandlerScript.PlayDeathAnimation();
+        _animationHandlerScript.PlayDeathAnimation();
         
         // Don't let enemy move, and disable their collider
-        agent.isStopped = true;
-
-        bodyCollider.enabled = false;
+        _movementScript.AllowMovement(false);
+        _bodyCollider.enabled = false;
         
         RevertAllModifiersOnEnemy();
 
@@ -226,16 +224,16 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     public void RevertAllModifiersOnEnemy()
     {
         // Remove all movement modifiers inside of movement script
-        movementScript.RevertAllModifiers();
+        _movementScript.RevertAllModifiers();
         
         // Remove all health modifiers inside of health script
-        healthScript.RevertAllModifiers();
+        _healthScript.RevertAllModifiers();
 
         // Remove all modifiers that affect attack stats within the attack script
-        attackScript.RevertAllModifiers();
+        _attackScript.RevertAllModifiers();
 
         // Remove all damage over time effects that the enemy may contain
-        damageOverTimeScript.RevertAllModifiers();
+        _damageOverTimeScript.RevertAllModifiers();
     }
 
     public virtual void UpdateScriptableObject(EnemyData scriptableObject)

@@ -10,17 +10,16 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private PlayerEvents playerEvents;
     
-    private PlayerInput _playerInput;
-    
+    [Header("Data to Use")]
     [SerializeField] private CharacterData currentPlayerData;
     
+    [Header("Required Scripts")]
     private TopDownMovement _movementScript;
-    
     private PlayerHealth _healthScript;
-
     private PlayerAnimationHandler _animationHandlerScript;
-
     private Gun _gunScript;
+    private IUtilityUpdatable _utilityScript;
+    private IUltimateUpdatable _ultimateScript;
     
 
     // states that an enemy can be in
@@ -45,11 +44,13 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        _playerInput = GetComponent<PlayerInput>();
         _movementScript = GetComponent<TopDownMovement>();
         _healthScript = GetComponent<PlayerHealth>();
         _animationHandlerScript = GetComponent<PlayerAnimationHandler>();
         _gunScript = GetComponentInChildren<Gun>();
+
+        _utilityScript = GetComponent<IUtilityUpdatable>();
+        _ultimateScript = GetComponent<IUltimateUpdatable>();
     }
 
     private void OnEnable()
@@ -57,12 +58,19 @@ public class PlayerController : MonoBehaviour
         playerEvents.InvokeNewWeaponEvent(_gunScript.GetCurrentData());
 
         playerEvents.InvokeNewStatsEvent(currentPlayerData);
-
-        playerEvents.InvokeGivePlayerInputComponentEvent(_playerInput);
         
         _movementScript.AllowMovement(true);
+        
         _gunScript.AllowReload(true);
         _gunScript.AllowShoot(true);
+        
+        _utilityScript.AllowUtility(true);
+        _ultimateScript.AllowUltimate(true);
+        
+        if(_gunScript == null)
+        {
+            Debug.Log("WEAPON MISSING!");
+        }
     }
 
 
@@ -108,11 +116,13 @@ public class PlayerController : MonoBehaviour
                     state = PlayerState.Moving;
                 break;
             case PlayerState.Death:
+                // Disable all movement, attacks, and abilities
                 _movementScript.AllowMovement(false);
                 _gunScript.AllowReload(false);
                 _gunScript.AllowShoot(false);
+                _utilityScript.AllowUtility(false);
+                _ultimateScript.AllowUltimate(false);
                 _animationHandlerScript.PlayDeathAnimation();
-                //Destroy(this.gameObject);
                 break;
         }
     }
@@ -132,15 +142,7 @@ public class PlayerController : MonoBehaviour
     private bool CheckIfAttacking()
     {
         // Checking if the player is attacking with their weapon
-        if(_gunScript == null)
-        {
-            Debug.Log("WEAPON MISSING!");
-            return false;
-        }
-        else
-        {
-            return _gunScript.ActuallyShooting;
-        }
+        return _gunScript.ActuallyShooting;
         
     }
 

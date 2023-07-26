@@ -142,4 +142,18 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
         // Remove speed modifiers from list when spawning
         movementSpeedModifiers.Clear();
     }
+    
+    public void AllowMovement(bool boolean)
+    {
+        if (boolean)
+        {
+            _agent.isStopped = false;
+        }
+
+        else
+        {
+            _agent.isStopped = true;
+        }
+           
+    }
 }
