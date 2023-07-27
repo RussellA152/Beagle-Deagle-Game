@@ -159,6 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c19c5e20ef6303c43a829e8f1d4529a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
 --- !u!114 &508925504358572946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6358ef6244754468e2e1d78e6d0369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _state: 0
   poolKey: 10
   enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
   target: {fileID: 0}
@@ -316,7 +318,7 @@ Transform:
   m_GameObject: {fileID: 6973724427162644150}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3711592478197892580}

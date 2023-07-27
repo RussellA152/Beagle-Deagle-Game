@@ -16,9 +16,9 @@ MonoBehaviour:
   animatorController: {fileID: 9100000, guid: 7ec07fe532d25ee48843c2c0f4b1a230, type: 2}
   maxHealth: 60
   movementSpeed: 6
-  attackDamage: -45
+  attackDamage: 50
   attackCooldown: 2
-  attackRange: 2.5
+  attackRange: 10
   chaseRange: 150
   attackLayer:
     serializedVersion: 2
@@ -26,4 +26,6 @@ MonoBehaviour:
   chaseLayer:
     serializedVersion: 2
     m_Bits: 128
-  numberOfShots: 0
+  bulletType: {fileID: 11400000, guid: 40a85cea5e0f4a24eb69c799ec73ba75, type: 2}
+  bulletPenetration: 1
+  numberOfProjectiles: 0

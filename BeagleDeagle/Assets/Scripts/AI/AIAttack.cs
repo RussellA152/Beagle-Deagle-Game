@@ -5,11 +5,11 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager where T: EnemyData
+public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager where T: EnemyData
 {
     [Header("Data to Use")]
     [SerializeField]
-    private T enemyScriptableObject;
+    protected T enemyScriptableObject;
     
     [Header("Required Scripts")]
     private ZombieAnimationHandler _animationScript;
@@ -37,9 +37,11 @@ public class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager where T:
         _animationScript = GetComponent<ZombieAnimationHandler>();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         _canAttack = true;
+        
+        BeginCooldown();
     }
 
     private void OnDisable()
@@ -48,35 +50,33 @@ public class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager where T:
     }
 
 
-    public virtual void InitiateAttack()
-    {
-        if (!_canAttack) return;
-        
-        // TODO: This is temporary. Change to "whatEnemyAttacks" and GetComponent<IHealth>
-        // target.GetComponent<PlayerHealth>().ModifyHealth(enemyScriptableObject.attackDamage * _bonusDamage);
-        // StartCoroutine(AttackCooldown());
-
-    }
+    public abstract void InitiateAttack();
 
     ///-///////////////////////////////////////////////////////////
     /// When the enemy is finished with their attack animation, begin their attack cooldown.
     /// 
     public void BeginCooldown()
     {
-        StartCoroutine(AttackCooldown());
+        if(_canAttack)
+            StartCoroutine(AttackCooldown());
     }
 
     ///-///////////////////////////////////////////////////////////
     /// Wait some time to allow attacks again.
     /// Multiply by "_bonusAttackSpeed" which can cause attacks to be slower or faster
     ///
-    IEnumerator AttackCooldown()
+    private IEnumerator AttackCooldown()
     {
         _canAttack = false;
 
         yield return new WaitForSeconds(enemyScriptableObject.attackCooldown);
 
         _canAttack = true;
+    }
+
+    public bool GetCanAttack()
+    {
+        return _canAttack;
     }
 
     ///-///////////////////////////////////////////////////////////

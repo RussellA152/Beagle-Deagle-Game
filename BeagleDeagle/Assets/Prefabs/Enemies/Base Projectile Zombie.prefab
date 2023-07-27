@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2216134336418826453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3774800650788924690}
+  m_Layer: 8
+  m_Name: Projectile Spawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3774800650788924690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216134336418826453}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3711592478197892580}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3711592478197892634
 GameObject:
   m_ObjectHideFlags: 0
@@ -39,6 +70,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4718652498922364292}
+  - {fileID: 3774800650788924690}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -74,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c19c5e20ef6303c43a829e8f1d4529a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyScriptableObject: {fileID: 11400000, guid: d97f4e9283956124cb59f55f59a122be, type: 2}
 --- !u!114 &-303412525181116962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322b9d87d0e07fe4ead6153efe410616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _state: 0
   poolKey: 11
   enemyScriptableObject: {fileID: 11400000, guid: d97f4e9283956124cb59f55f59a122be, type: 2}
   target: {fileID: 0}
@@ -132,6 +166,7 @@ MonoBehaviour:
   enemyScriptableObject: {fileID: 11400000, guid: d97f4e9283956124cb59f55f59a122be, type: 2}
   damageModifiers: []
   attackSpeedModifiers: []
+  projectileSpawnPoint: {fileID: 3774800650788924690}
 --- !u!114 &-4139390413299684877
 MonoBehaviour:
   m_ObjectHideFlags: 0

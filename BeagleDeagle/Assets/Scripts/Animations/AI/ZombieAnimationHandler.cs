@@ -6,7 +6,7 @@ using UnityEngine;
 public class ZombieAnimationHandler : BasicAnimationHandler, IEnemyDataUpdatable
 {
     // Enemy scriptable object contains a runtime animator controller
-    private EnemyData _enemyScriptableObject;
+    [SerializeField] private EnemyData _enemyScriptableObject;
     
     // Enemies can be stunned (unlike player), so we need to play an animation for that
     private int _isStunned;

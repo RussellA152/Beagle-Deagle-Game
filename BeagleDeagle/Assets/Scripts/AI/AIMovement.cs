@@ -20,11 +20,13 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     
     [Header("Modifiers")]
     [SerializeField, NonReorderable] private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>(); // a list of modifiers being applied to this enemy's movement speed 
-
+    private float _bonusSpeed = 1f; // Speed multiplier on the movement speed of this enemy
+    
+    
     public bool IsStunned { get; private set; } // Is this enemy stunned?
 
-    private float _bonusSpeed = 1f; // Speed multiplier on the movement speed of this enemy
 
+    private float _originalTransformScaleX;
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -34,6 +36,11 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         
         _animationScript = GetComponent<ZombieAnimationHandler>();
+    }
+
+    private void Start()
+    {
+        _originalTransformScaleX = transform.localScale.x;
     }
 
     private void OnEnable()
@@ -100,7 +107,12 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     /// 
     private void FlipSprite()
     {
-        _spriteRenderer.flipX = _agent.destination.x < transform.position.x;
+        if (_agent.destination.x < transform.position.x)
+            transform.localScale = new Vector3(-1f * _originalTransformScaleX, transform.localScale.y, transform.localScale.z);
+        else
+            transform.localScale = new Vector3(_originalTransformScaleX, transform.localScale.y, transform.localScale.z);
+        
+        //_spriteRenderer.flipX = _agent.destination.x < transform.position.x;
     }
 
     ///-///////////////////////////////////////////////////////////

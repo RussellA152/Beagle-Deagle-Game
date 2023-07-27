@@ -86,8 +86,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        onBulletHit.Invoke(collision.gameObject);
-        
+
         // If this bullet already hit this enemy, then don't allow penetration or damage to occur
         if (_hitEnemies.Contains(collision.transform))
         {
@@ -101,6 +100,8 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
             gameObject.SetActive(false);
             return;
         }
+        
+        onBulletHit.Invoke(collision.gameObject);
             
 
         // If this bullet hits what its allowed to
@@ -112,13 +113,17 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
                 // Add this enemy to the list of hitEnemies
                 _hitEnemies.Add(collision.transform);
 
-                Debug.Log(_damagePerHit);
+                Debug.Log(_damagePerHit + " applied to " + collision.gameObject);
 
                 DamageOnHit(collision.gameObject);
                 
                 Vector2 knockBackDirection = rb.velocity.normalized;
-                
-                collision.gameObject.GetComponent<IKnockBackable>().ApplyKnockBack(knockBackDirection, bulletData.knockBackPower);
+
+                // If the target is knockBack-able
+                if (collision.gameObject.GetComponent<IKnockBackable>() != null)
+                {
+                    collision.gameObject.GetComponent<IKnockBackable>().ApplyKnockBack(knockBackDirection, bulletData.knockBackPower);
+                }
             }
             // Penetrate through object
             Penetrate();

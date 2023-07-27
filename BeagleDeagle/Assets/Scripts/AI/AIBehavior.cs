@@ -9,7 +9,7 @@ using UnityEngine.AI;
 /// 
 public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdatable where T: EnemyData
 {
-    private EnemyState _state;
+    public EnemyState _state;
     
     [SerializeField]
     private int poolKey;
@@ -59,7 +59,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     ///-///////////////////////////////////////////////////////////
     /// All states that an enemy can be in at once
     /// 
-    enum EnemyState
+    public enum EnemyState
     {
         // Not moving towards player or anyone
         Idle,
@@ -131,6 +131,11 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
         }
     }
 
+    // public void ChangeState(EnemyState newState)
+    // {
+    //     
+    // }
+
     ///-///////////////////////////////////////////////////////////
     /// Check if the enemy meets conditions to change to a new state.
     /// For instance, if the enemy is in chase range and not in attack range,
@@ -158,11 +163,11 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
                 _state = EnemyState.Chase;
 
             // In attack range
-            else if (_inChaseRange && _inAttackRange)
+            else if (_inChaseRange && _inAttackRange && _attackScript.GetCanAttack())
                 _state = EnemyState.Attack;
 
-            // Go idle if not in chase range and not in attack range
-            else if (!_inChaseRange && !_inAttackRange)
+            // Go idle if the enemy cannot attack nor chase
+            else 
                 _state = EnemyState.Idle;
         }
     }
@@ -185,7 +190,7 @@ public abstract class AIBehavior<T> : MonoBehaviour, IPoolable, IEnemyDataUpdata
     protected virtual void OnAttack()
     {
         _movementScript.AllowMovement(false);
-
+        
         _animationHandlerScript.PlayAttackAnimation();
     }
     
