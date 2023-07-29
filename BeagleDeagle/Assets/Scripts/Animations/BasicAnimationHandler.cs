@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BasicAnimationHandler : MonoBehaviour
 {
-    protected Animator Animator;
+    public Animator animator;
     
     protected int IsIdle;
     protected int IsMoving;
@@ -17,7 +18,7 @@ public class BasicAnimationHandler : MonoBehaviour
 
     private void Awake()
     {
-        Animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     protected virtual void Start()
@@ -33,39 +34,39 @@ public class BasicAnimationHandler : MonoBehaviour
     protected virtual void OnEnable()
     {
         // Reset animation movement speed
-        Animator.SetFloat(_movementSpeed, 1f);
+        animator.SetFloat(_movementSpeed, 1f);
     }
 
 
     public virtual void PlayIdleAnimation()
     {
         // When idle, set all other bools to false
-        Animator.SetBool(IsIdle, true);
+        animator.SetBool(IsIdle, true);
         
-        Animator.SetBool(IsMoving, false);
+        animator.SetBool(IsMoving, false);
 
     }
     public virtual void PlayMoveAnimation()
     {
         // When chasing, set all other bools to false
-        Animator.SetBool(IsMoving, true);
+        animator.SetBool(IsMoving, true);
         
-        Animator.SetBool(IsIdle, false);
+        animator.SetBool(IsIdle, false);
     }
     
     public virtual void PlayDeathAnimation()
     {
         // Trigger death animation once, then set all bools to false
-        Animator.SetTrigger(Killed);
-        Animator.SetBool(IsIdle, false);
-        Animator.SetBool(IsMoving, false);
+        animator.SetTrigger(Killed);
+        animator.SetBool(IsIdle, false);
+        animator.SetBool(IsMoving, false);
 
     }
     public void SetMovementAnimationSpeed(float movementSpeedModifier)
     {
         _movementAnimationSpeed += movementSpeedModifier;
         
-        Animator.SetFloat(_movementSpeed, _movementAnimationSpeed);
+        animator.SetFloat(_movementSpeed, _movementAnimationSpeed);
     }
     
 }

@@ -170,18 +170,20 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
                 _state = EnemyState.Attack;
 
             // Go idle if the enemy cannot attack nor chase
-            else 
+            else
                 _state = EnemyState.Idle;
         }
     }
     protected virtual void OnIdle()
     {
+        MovementScript.SetCanFlip(true);
         AnimationHandlerScript.PlayIdleAnimation();
         
         MovementScript.AllowMovement(false);
     }
     protected virtual void OnChase()
     {
+        MovementScript.SetCanFlip(true);
         AnimationHandlerScript.PlayMoveAnimation();
         
         MovementScript.AllowMovement(true);
@@ -192,6 +194,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
 
     protected virtual void OnAttack()
     {
+        
         MovementScript.AllowMovement(false);
         
         AnimationHandlerScript.PlayAttackAnimation();
@@ -199,6 +202,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     
     protected virtual void OnStun()
     {
+        MovementScript.SetCanFlip(false);
         AnimationHandlerScript.PlayStunAnimation();
         _agent.velocity = Vector2.zero;
         MovementScript.AllowMovement(false);
@@ -206,6 +210,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     
     protected virtual void OnDeath()
     {
+        MovementScript.SetCanFlip(false);
         AnimationHandlerScript.PlayDeathAnimation();
         
         // Don't let enemy move, and disable their collider

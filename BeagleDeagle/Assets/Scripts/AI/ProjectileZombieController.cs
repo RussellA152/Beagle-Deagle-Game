@@ -5,5 +5,10 @@ using UnityEngine;
 
 public class ProjectileZombieController : AIController<ProjectileEnemyData>
 {
-    
+    protected override void OnAttack()
+    {
+        base.OnAttack();
+        
+        MovementScript.SetCanFlip(true);
+    }
 }

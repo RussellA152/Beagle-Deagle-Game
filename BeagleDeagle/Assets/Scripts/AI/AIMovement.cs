@@ -125,6 +125,11 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
         _target = newTarget;
     }
 
+    public void SetCanFlip(bool boolean)
+    {
+        _canFlip = boolean;
+    }
+
     ///-///////////////////////////////////////////////////////////
     /// Wait some time, then remove stun from enemy
     /// 

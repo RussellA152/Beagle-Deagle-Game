@@ -6,6 +6,8 @@ public class RunnerZombieController : AIController<RunnerEnemyData>
 {
     protected override void OnAttack()
     {
+        MovementScript.SetCanFlip(false);
+        
         // Runners will play attack animation
         base.OnAttack();
         

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Police Zombie
   animatorController: {fileID: 9100000, guid: 7ec07fe532d25ee48843c2c0f4b1a230, type: 2}
-  maxHealth: 60
+  maxHealth: 100
   movementSpeed: 6
   attackDamage: 50
   attackCooldown: 2
