@@ -19,13 +19,9 @@ public class ProjectileAttack : AIAttack<ProjectileEnemyData>
 
     public override void InitiateAttack()
     {
-        Debug.Log("Projectile Attack!");
+        // The spawn point of all projectiles is always looking at the target
+        projectileSpawnPoint.transform.right = (Vector2)Target.position - (Vector2)transform.position;
         
-        // TODO: CHANGE THIS TO NOT USE GAMEOBJECT.FIND * * * 
-        projectileSpawnPoint.transform.right = GameObject.FindObjectOfType<PlayerController>().transform.position - transform.position;
-
-
-
         
         GameObject newBullet = ObjectPooler.instance.GetPooledObject(_bulletPoolKey);
         

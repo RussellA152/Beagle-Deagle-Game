@@ -10,8 +10,9 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     [Header("Data to Use")]
     [SerializeField]
     protected T enemyScriptableObject;
+
+    [Header("Required Scripts")] 
     
-    [Header("Required Scripts")]
     private ZombieAnimationHandler _animationScript;
 
     [Header("Modifiers")]
@@ -31,6 +32,8 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
 
     // Is the enemy allowed to attack?
     private bool _canAttack = true;
+    
+    protected Transform Target;
 
     private void Awake()
     {
@@ -91,6 +94,11 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         // remove modifiers from lists
         damageModifiers.Clear();
         attackSpeedModifiers.Clear();
+    }
+    
+    public void SetTarget(Transform newTarget)
+    {
+        Target = newTarget;
     }
 
     public void UpdateScriptableObject(EnemyData scriptableObject)

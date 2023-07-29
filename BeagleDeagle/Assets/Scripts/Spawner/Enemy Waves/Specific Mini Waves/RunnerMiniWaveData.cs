@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewMiniWave", menuName = "ScriptableObjects/MiniWaveData/RunnerMiniWave")]
 public class RunnerMiniWaveData : MiniWaveData
 {
-    [RestrictedPrefab(typeof(AIBehavior<RunnerEnemyData>))]
+    [RestrictedPrefab(typeof(AIController<RunnerEnemyData>))]
     public GameObject enemyPrefab;
     
     public RunnerEnemyData enemyData;

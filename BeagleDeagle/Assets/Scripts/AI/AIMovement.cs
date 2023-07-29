@@ -22,11 +22,15 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     [SerializeField, NonReorderable] private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>(); // a list of modifiers being applied to this enemy's movement speed 
     private float _bonusSpeed = 1f; // Speed multiplier on the movement speed of this enemy
     
-    
     public bool IsStunned { get; private set; } // Is this enemy stunned?
+    
+    // Can the enemy turn around?
+    private bool _canFlip = true;
 
 
+    private Transform _target;
     private float _originalTransformScaleX;
+    
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -107,12 +111,18 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     /// 
     private void FlipSprite()
     {
-        if (_agent.destination.x < transform.position.x)
-            transform.localScale = new Vector3(-1f * _originalTransformScaleX, transform.localScale.y, transform.localScale.z);
-        else
-            transform.localScale = new Vector3(_originalTransformScaleX, transform.localScale.y, transform.localScale.z);
-        
-        //_spriteRenderer.flipX = _agent.destination.x < transform.position.x;
+        if (_canFlip)
+        {
+            if (_target.position.x < transform.position.x)
+                transform.localScale = new Vector3(-1f * _originalTransformScaleX, transform.localScale.y, transform.localScale.z);
+            else
+                transform.localScale = new Vector3(_originalTransformScaleX, transform.localScale.y, transform.localScale.z);
+        }
+    }
+
+    public void SetTarget(Transform newTarget)
+    {
+        _target = newTarget;
     }
 
     ///-///////////////////////////////////////////////////////////
