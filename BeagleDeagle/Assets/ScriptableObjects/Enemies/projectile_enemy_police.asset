@@ -17,7 +17,7 @@ MonoBehaviour:
   maxHealth: 100
   movementSpeed: 6
   attackDamage: 50
-  attackCooldown: 2
+  attackCooldown: 2.5
   attackRange: 10
   chaseRange: 150
   attackLayer:

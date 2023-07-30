@@ -6,6 +6,7 @@ public class BomberAttack : AIAttack<BomberEnemyData>
 {
     public override void InitiateAttack()
     {
+        
         Debug.Log("EXPLODE!");
         
     }

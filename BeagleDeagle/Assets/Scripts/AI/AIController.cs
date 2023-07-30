@@ -32,7 +32,6 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     protected DamageOverTimeHandler DamageOverTimeScript;
     protected ZombieAnimationHandler AnimationHandlerScript;
     
-
     private bool _inAttackRange; // Is the player within this enemy's attack range?
     private bool _inChaseRange; // Is the player within this enemy's chase/follow range?
 
@@ -65,7 +64,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
         Idle,
 
         // Enemy is spawning behind barrier or from the ground
-        Spawning,
+        //Spawning,
 
         // Moving towards player
         Chase,
@@ -158,20 +157,37 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
             return;
         }
 
-        // If the enemy is not dead or currently spawning...
-        if (_state != EnemyState.Death || _state != EnemyState.Spawning)
+        // If the enemy is not dead...
+        if (_state != EnemyState.Death)
         {
-            // In chase range, but not in attack range
-            if (_inChaseRange && !_inAttackRange)
-                _state = EnemyState.Chase;
+            if (_inChaseRange)
+            {
+                if (_inAttackRange && AttackScript.GetCanAttack())
+                {
+                    Debug.Log("attack ready!");
+                    _state = EnemyState.Attack;
+                }
+                else if (!_inAttackRange && _state == EnemyState.Attack && !AttackScript.GetCanAttack())
+                {
+                    Debug.Log("walking away!");
+                    _state = EnemyState.Idle;
+                }
+                else if(!_inAttackRange && !AnimationHandlerScript.animator.GetBool("isAttacking"))
+                {
+                    Debug.Log("chase!");
+                    _state = EnemyState.Chase;
+                }
+                else if (_inAttackRange && !AttackScript.GetCanAttack())
+                {
+                    _state = EnemyState.Idle;
+                }
 
-            // In attack range
-            else if (_inChaseRange && _inAttackRange && AttackScript.GetCanAttack())
-                _state = EnemyState.Attack;
-
-            // Go idle if the enemy cannot attack nor chase
+            }
             else
+            {
                 _state = EnemyState.Idle;
+            }
+
         }
     }
     protected virtual void OnIdle()
@@ -194,7 +210,6 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
 
     protected virtual void OnAttack()
     {
-        
         MovementScript.AllowMovement(false);
         
         AnimationHandlerScript.PlayAttackAnimation();
