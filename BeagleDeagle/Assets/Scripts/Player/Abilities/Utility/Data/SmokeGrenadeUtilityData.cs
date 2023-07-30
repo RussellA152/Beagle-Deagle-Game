@@ -10,7 +10,7 @@ public class SmokeGrenadeUtilityData : UtilityAbilityData
     [RestrictedPrefab(typeof(AreaGrenade))]
     public GameObject smokeGrenadePrefab;
     
-    public UtilityGrenadeData utilityGrenadeData;
+    [FormerlySerializedAs("utilityGrenadeData")] public UtilityExplosiveData utilityExplosiveData;
 
     public SlowData slowData;
 

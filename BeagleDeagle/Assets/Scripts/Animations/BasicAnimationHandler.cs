@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class BasicAnimationHandler : MonoBehaviour
 {
-    public Animator animator;
+    [HideInInspector] public Animator animator;
     
     protected int IsIdle;
     protected int IsMoving;

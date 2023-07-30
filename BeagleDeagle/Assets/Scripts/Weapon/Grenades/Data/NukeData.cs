@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewExplosive", menuName = "ScriptableObjects/Explosive/Nuclear Bomb")]
-public class NukeData : GrenadeData
+[CreateAssetMenu(fileName = "NewExplosive", menuName = "ScriptableObjects/TimedExplosive/Nuclear Bomb")]
+public class NukeData : ExplosiveData
 {
     [SerializeField]
     private UltimateAbilityData ultimateAbilityData;

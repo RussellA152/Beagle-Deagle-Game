@@ -44,7 +44,7 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
 
         grenade.SetActive(true);
 
-        areaGrenadeComponent.UpdateScriptableObject(currentUtilityData.utilityGrenadeData);
+        areaGrenadeComponent.UpdateScriptableObject(currentUtilityData.utilityExplosiveData);
 
         // Throw grenade in the direction player is facing
         areaGrenadeComponent.ActivateGrenade(aimDirection);

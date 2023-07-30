@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewBomberEnemy", menuName = "ScriptableObjects/CharacterData/EnemyData/BomberEnemy")]
 public class BomberEnemyData : EnemyData
 {
-    public GrenadeData explosiveData;
+    public ExplosiveData explosiveData;
 }

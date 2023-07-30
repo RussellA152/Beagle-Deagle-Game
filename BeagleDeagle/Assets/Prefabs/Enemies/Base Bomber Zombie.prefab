@@ -95,10 +95,10 @@ GameObject:
   - component: {fileID: 3711592478197892580}
   - component: {fileID: 7349097819883513746}
   - component: {fileID: 7778696654224442948}
-  - component: {fileID: 508925504358572946}
+  - component: {fileID: 4259895515871267229}
   - component: {fileID: 2060393728062037017}
+  - component: {fileID: 2362537003139928885}
   - component: {fileID: 3711592478197892578}
-  - component: {fileID: 1452773915677320547}
   - component: {fileID: 7645405754992922946}
   - component: {fileID: 3711592478197892577}
   - component: {fileID: 3711592478197892576}
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   _enemyScriptableObject: {fileID: 11400000, guid: 71d70c706a557ab40b070f97ff8e034f, type: 2}
---- !u!114 &508925504358572946
+--- !u!114 &4259895515871267229
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,12 +169,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3711592478197892634}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a6358ef6244754468e2e1d78e6d0369, type: 3}
+  m_Script: {fileID: 11500000, guid: d09f9f1b57e4b40469c99811ca7e02a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 0
-  poolKey: 10
-  enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
+  poolKey: 12
+  enemyScriptableObject: {fileID: 11400000, guid: 71d70c706a557ab40b070f97ff8e034f, type: 2}
   target: {fileID: 0}
 --- !u!114 &2060393728062037017
 MonoBehaviour:
@@ -190,6 +190,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScriptableObject: {fileID: 11400000, guid: 71d70c706a557ab40b070f97ff8e034f, type: 2}
   movementSpeedModifiers: []
+--- !u!114 &2362537003139928885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711592478197892634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea11b5276f3b7cc40895e2f9833a201a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyScriptableObject: {fileID: 11400000, guid: 71d70c706a557ab40b070f97ff8e034f, type: 2}
+  damageModifiers: []
+  attackSpeedModifiers: []
 --- !u!114 &3711592478197892578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,22 +219,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 71d70c706a557ab40b070f97ff8e034f, type: 2}
   maxHealthModifiers: []
---- !u!114 &1452773915677320547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3711592478197892634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd903fa78dac7db428e5ebe5ac95b056, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
-  damageModifiers: []
-  attackSpeedModifiers: []
-  _hitBoxes: []
 --- !u!114 &7645405754992922946
 MonoBehaviour:
   m_ObjectHideFlags: 0

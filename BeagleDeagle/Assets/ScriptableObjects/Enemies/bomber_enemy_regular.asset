@@ -15,10 +15,10 @@ MonoBehaviour:
   characterName: Bomber Zombie
   animatorController: {fileID: 9100000, guid: c448c9f56ba351b44b689c6933277582, type: 2}
   maxHealth: 75
-  movementSpeed: 7
+  movementSpeed: 9
   attackDamage: 150
-  attackCooldown: 1.5
-  attackRange: 3
+  attackCooldown: 0.5
+  attackRange: 6
   chaseRange: 150
   attackLayer:
     serializedVersion: 2
