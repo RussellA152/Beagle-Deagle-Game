@@ -101,7 +101,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     ///
     void FixedUpdate()
     {
-        
         if (MovementInput != Vector2.zero)
         {
             //The number of objects we can collide with if we go in this direction
@@ -235,15 +234,16 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     public void OnRoll(CallbackContext context)
     {
+        // TODO: Make roll use MovementInput
         Debug.Log("Roll!");
         _rb.isKinematic = false;
         _rb.AddForce(new Vector2(1000f, 0f));
 
         // Ignore collisions between "Player" and "Enemy" layers
-        // Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
-        //
-        // // Ignore collisions between "Player" and "Bullet" layers
-        // Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), true);
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
+        
+        // Ignore collisions between "Player" and "Bullet" layers
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), true);
 
         isRolling = true;
     }
@@ -305,10 +305,10 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         _rb.isKinematic = true;
         
         // Allow collisions between "Player" and "Enemy" layers
-        // Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), false);
-        //
-        // // Allow collisions between "Player" and "Bullet" layers
-        // Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), false);
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), false);
+        
+        // Allow collisions between "Player" and "Bullet" layers
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), false);
         
         // Player is no longer rolling at the end of the animation
         isRolling = false;

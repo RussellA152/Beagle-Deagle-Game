@@ -53,8 +53,14 @@ public class Nuke : TimedExplosive<NukeData>
 
         foreach (Collider2D targetCollider in hitEnemies)
         {
-            if(!CheckObstruction(targetCollider))
-                targetCollider.gameObject.GetComponent<IHealth>().ModifyHealth(-1f * explosiveData.GetDamage());
+            if (!CheckObstruction(targetCollider))
+            {
+                IHealth healthScript = targetCollider.gameObject.GetComponent<IHealth>();
+
+                healthScript?.ModifyHealth(-1f * explosiveData.GetDamage());
+
+            }
+            
 
         }
     }

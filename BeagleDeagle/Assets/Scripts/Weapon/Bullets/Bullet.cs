@@ -133,7 +133,9 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
     protected virtual void DamageOnHit(GameObject objectHit)
     {
-        objectHit.GetComponent<IHealth>().ModifyHealth(-1 * _damagePerHit);
+        IHealth healthScript = objectHit.GetComponent<IHealth>();
+        
+        healthScript?.ModifyHealth(-1 * _damagePerHit);
     }
 
     // Call this function each time this bullet hits their target

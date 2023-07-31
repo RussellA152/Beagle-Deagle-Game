@@ -9,8 +9,8 @@ public class DamageOverTimeOnCollision : StatusEffect<DamageOverTimeData>
         if (DoesThisAffectTarget(objectHit))
         {
             IDamageOverTimeHandler damageOverTimeScript = objectHit.GetComponent<IDamageOverTimeHandler>();
-        
-            damageOverTimeScript.AddDamageOverTime(statusEffectData.damageOverTime);
+
+            damageOverTimeScript?.AddDamageOverTime(statusEffectData.damageOverTime);
         }
         
     }
