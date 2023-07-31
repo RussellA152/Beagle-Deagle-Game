@@ -19,7 +19,7 @@ public class CharacterData : ScriptableObject
     public float maxHealth;
 
     [Header("Movement Speed")]
-    [Range(0f, 50f)]
+    [Range(0f, 100f)]
     public float movementSpeed;
 
 }
