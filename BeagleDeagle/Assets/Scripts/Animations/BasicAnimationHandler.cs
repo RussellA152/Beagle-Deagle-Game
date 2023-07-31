@@ -10,7 +10,6 @@ public class BasicAnimationHandler : MonoBehaviour
     
     protected int IsIdle;
     protected int IsMoving;
-    //protected int IsAttacking;
     protected int Killed;
 
     private float _movementAnimationSpeed = 1f;

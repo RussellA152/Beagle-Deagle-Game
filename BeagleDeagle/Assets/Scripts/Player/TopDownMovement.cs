@@ -14,8 +14,11 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     
     private InputAction _movementInputAction;
     private InputAction _rotationInputAction;
+    private InputAction _rollInputAction;
     
     public Vector2 MovementInput { get; private set; }
+    public bool isRolling { get; private set; }
+    
     private Vector2 _rotationInput;
     
     [Header("Required Components")]
@@ -27,13 +30,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     [SerializeField]  private Transform pivotPoint;
     // How far out should the weapon be from player when rotating (lower values = closer)
     [SerializeField] private float rotationRadius = 0.5f;
-    
-    
-    //[SerializeField]
-    //private Animator playerAnimator;
-    //[SerializeField]
-    //private Animator attackAnimator;
-    
+
     [Header("Sprite Renderers")]
     
     [SerializeField] private SpriteRenderer bodySr;
@@ -72,7 +69,9 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
         _movementInputAction = _topDownInput.Player.Move;
         _rotationInputAction = _topDownInput.Player.Look;
-        
+        _rollInputAction = _topDownInput.Player.Roll;
+
+
     }
 
     private void OnEnable()
@@ -81,6 +80,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         _movementInputAction.performed += OnMove;
         _movementInputAction.canceled += OnMoveCancel;
         _rotationInputAction.performed += OnLook;
+        _rollInputAction.performed += OnRoll;
     }
 
     private void OnDisable()
@@ -89,6 +89,12 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         _movementInputAction.performed -= OnMove;
         _movementInputAction.canceled -= OnMoveCancel;
         _rotationInputAction.performed -= OnLook;
+        _rollInputAction.performed -= OnRoll;
+    }
+
+    private void Start()
+    {
+        isRolling = false;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -184,24 +190,33 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
             weaponSr.flipY = false;
         }
     }
+    
+    public void UpdateScriptableObject(CharacterData scriptableObject)
+    {
+        playerData = scriptableObject;
+    }
 
-    ///-///////////////////////////////////////////////////////////
-    ///
-    //void UpdateMovementAnimation()
-    //{
-    //    if (movementInput != Vector2.zero)
-    //    {
-    //        playerAnimator.SetBool("isRunning", true);
-    //    }
-    //    else
-    //    {
-    //        playerAnimator.SetBool("isRunning", false);
-    //    }
+    public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
+    {
+        movementSpeedModifiers.Add(modifierToAdd);
+        _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
 
-    //}
+    }
 
+    public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
+    {
+        movementSpeedModifiers.Remove(modifierToRemove);
 
-    #region ControllerCallbacks
+        _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
+
+    }
+    
+    public Vector2 ReturnPlayerDirection()
+    {
+        return _rotationInput;
+    }
+
+    #region Inputs
 
     ///-///////////////////////////////////////////////////////////
     ///
@@ -214,6 +229,22 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     {
         MovementInput = Vector2.zero;
     }
+
+    public void OnRoll(CallbackContext context)
+    {
+        Debug.Log("Roll!");
+        _rb.isKinematic = false;
+        _rb.AddForce(new Vector2(1000f, 0f));
+
+        // Ignore collisions between "Player" and "Enemy" layers
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
+
+        // Ignore collisions between "Player" and "Bullet" layers
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), true);
+
+        isRolling = true;
+    }
+
 
     ///-///////////////////////////////////////////////////////////
     ///
@@ -244,31 +275,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         }
 
     }
-    
-    public void UpdateScriptableObject(CharacterData scriptableObject)
-    {
-        playerData = scriptableObject;
-    }
-
-    public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
-    {
-        movementSpeedModifiers.Add(modifierToAdd);
-        _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
-
-    }
-
-    public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
-    {
-        movementSpeedModifiers.Remove(modifierToRemove);
-
-        _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
-
-    }
-    
-    public Vector2 ReturnPlayerDirection()
-    {
-        return _rotationInput;
-    }
 
     public void AllowMovement(bool boolean)
     {
@@ -284,6 +290,39 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
             _rotationInputAction.Disable();
         }
            
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// At the end of the roll animation, set isRolling to false (* used in roll animation event *)
+    /// 
+    public void EndRoll()
+    {
+        // Reset velocity and don't allow player to be affected by forces anymore
+        _rb.velocity = Vector2.zero;
+        _rb.isKinematic = true;
+        
+        // Allow collisions between "Player" and "Enemy" layers
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), false);
+
+        // Allow collisions between "Player" and "Bullet" layers
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), false);
+        
+        // Player is no longer rolling at the end of the animation
+        isRolling = false;
+        
+        
+    }
+
+    public void AllowRoll(bool boolean)
+    {
+        if (boolean)
+        {
+            _rollInputAction.Enable();
+        }
+        else
+        {
+            _rollInputAction.Disable();
+        }
     }
 
     #endregion

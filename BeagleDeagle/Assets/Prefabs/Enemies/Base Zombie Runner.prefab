@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4719089374886148020}
   - component: {fileID: 853610363755119007}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Top HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5612634153314592085}
   - component: {fileID: 7146123161074487261}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bottom HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,6 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c19c5e20ef6303c43a829e8f1d4529a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   _enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
 --- !u!114 &508925504358572946
 MonoBehaviour:
@@ -420,7 +421,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6077667030926397283}
   - component: {fileID: 7262487443997933611}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Right HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -64,6 +64,15 @@ public partial class @TopDownInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Roll"",
+                    ""type"": ""Button"",
+                    ""id"": ""5fe42b6f-fd3c-4044-9a78-c865ce17c274"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Utility"",
                     ""type"": ""Button"",
                     ""id"": ""0b837552-443a-49f0-8174-8482e055af6a"",
@@ -76,15 +85,6 @@ public partial class @TopDownInput : IInputActionCollection2, IDisposable
                     ""name"": ""Ultimate"",
                     ""type"": ""Button"",
                     ""id"": ""f1461120-ecb1-46fb-bf3f-63e63c7649e1"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Throw"",
-                    ""type"": ""Button"",
-                    ""id"": ""bf76172e-3b21-497f-b1dd-b74bacff6118"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -348,7 +348,7 @@ public partial class @TopDownInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b6884caa-41fa-4114-a78f-46ab75510552"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -380,23 +380,23 @@ public partial class @TopDownInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1ac4f974-ea5e-48ce-a43c-2c8236ceb5c9"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""id"": ""f1404a93-63d2-4ed8-81af-c48e2ed12e8a"",
+                    ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Throw"",
+                    ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5bfffb92-a62f-4b6b-82ba-db007105cc93"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""id"": ""b7d4444d-75c8-413d-86f0-bfbedbc34cdd"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Throw"",
+                    ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -817,9 +817,9 @@ public partial class @TopDownInput : IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
+        m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
         m_Player_Utility = m_Player.FindAction("Utility", throwIfNotFound: true);
         m_Player_Ultimate = m_Player.FindAction("Ultimate", throwIfNotFound: true);
-        m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -895,9 +895,9 @@ public partial class @TopDownInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Reload;
+    private readonly InputAction m_Player_Roll;
     private readonly InputAction m_Player_Utility;
     private readonly InputAction m_Player_Ultimate;
-    private readonly InputAction m_Player_Throw;
     public struct PlayerActions
     {
         private @TopDownInput m_Wrapper;
@@ -906,9 +906,9 @@ public partial class @TopDownInput : IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
+        public InputAction @Roll => m_Wrapper.m_Player_Roll;
         public InputAction @Utility => m_Wrapper.m_Player_Utility;
         public InputAction @Ultimate => m_Wrapper.m_Player_Ultimate;
-        public InputAction @Throw => m_Wrapper.m_Player_Throw;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -930,15 +930,15 @@ public partial class @TopDownInput : IInputActionCollection2, IDisposable
                 @Reload.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
                 @Reload.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
                 @Reload.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
+                @Roll.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRoll;
+                @Roll.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRoll;
+                @Roll.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRoll;
                 @Utility.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUtility;
                 @Utility.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUtility;
                 @Utility.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUtility;
                 @Ultimate.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUltimate;
                 @Ultimate.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUltimate;
                 @Ultimate.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUltimate;
-                @Throw.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrow;
-                @Throw.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrow;
-                @Throw.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrow;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -955,15 +955,15 @@ public partial class @TopDownInput : IInputActionCollection2, IDisposable
                 @Reload.started += instance.OnReload;
                 @Reload.performed += instance.OnReload;
                 @Reload.canceled += instance.OnReload;
+                @Roll.started += instance.OnRoll;
+                @Roll.performed += instance.OnRoll;
+                @Roll.canceled += instance.OnRoll;
                 @Utility.started += instance.OnUtility;
                 @Utility.performed += instance.OnUtility;
                 @Utility.canceled += instance.OnUtility;
                 @Ultimate.started += instance.OnUltimate;
                 @Ultimate.performed += instance.OnUltimate;
                 @Ultimate.canceled += instance.OnUltimate;
-                @Throw.started += instance.OnThrow;
-                @Throw.performed += instance.OnThrow;
-                @Throw.canceled += instance.OnThrow;
             }
         }
     }
@@ -1079,9 +1079,9 @@ public partial class @TopDownInput : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnRoll(InputAction.CallbackContext context);
         void OnUtility(InputAction.CallbackContext context);
         void OnUltimate(InputAction.CallbackContext context);
-        void OnThrow(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

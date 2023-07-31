@@ -25,6 +25,10 @@ public class EnemyData : CharacterData
     [Header("Who to Attack?")]
     public LayerMask attackLayer; // What kind of layer does this enemy attack? (ex. Player)
     [Header("Who to Chase?")]
+    
     public LayerMask chaseLayer; // What kind of layer does this enemy follow? (ex. Player)
+    
+    [Range(0f, 1000f)]
+    public float xpOnDeath;
 
 }

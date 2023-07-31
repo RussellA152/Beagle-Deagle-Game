@@ -84,46 +84,81 @@ public class PlayerController : MonoBehaviour
     {
         if (CheckIfDead())
             state = PlayerState.Death;
+        
 
         switch (state)
         {
             case PlayerState.Idle:
+                
                 _animationHandlerScript.PlayIdleAnimation();
+                
+                _movementScript.AllowMovement(true);
+                _gunScript.AllowReload(true);
+                _gunScript.AllowShoot(true);
+                _utilityScript.AllowUtility(true);
+                _ultimateScript.AllowUltimate(true);
+                
+                
                 if (CheckIfAttacking())
                     state = PlayerState.Attacking;
                 if (CheckIfMoving())
                     state = PlayerState.Moving;
+                if (CheckIfRolling())
+                    state = PlayerState.Rolling;
                 break;
+            
             case PlayerState.Moving:
+                
                 _animationHandlerScript.PlayMoveAnimation();
                 if (CheckIfIdle())
                     state = PlayerState.Idle;
                 if (CheckIfAttacking())
                     state = PlayerState.Attacking;
+                if (CheckIfRolling())
+                    state = PlayerState.Rolling;
                 break;
+            
             case PlayerState.Rolling:
+                _animationHandlerScript.PlayRollAnimation();
+                
+                _movementScript.AllowMovement(false);
+                _gunScript.AllowReload(false);
+                _gunScript.AllowShoot(false);
+                _utilityScript.AllowUtility(false);
+                _ultimateScript.AllowUltimate(false);
+                
                 if (CheckIfIdle())
                     state = PlayerState.Idle;
                 if (CheckIfAttacking())
                     state = PlayerState.Attacking;
                 if (CheckIfMoving())
                     state = PlayerState.Moving;
+                if (CheckIfRolling())
+                    state = PlayerState.Rolling;
                 break;
+            
             case PlayerState.Attacking:
+                
                 if (CheckIfIdle())
                     state = PlayerState.Idle;
                 if (CheckIfMoving() && !CheckIfAttacking())
                     state = PlayerState.Moving;
+                if (CheckIfRolling())
+                    state = PlayerState.Rolling;
                 break;
+            
             case PlayerState.Death:
+                
                 // Disable all movement, attacks, and abilities
                 _movementScript.AllowMovement(false);
+                _movementScript.AllowRoll(false);
                 _gunScript.AllowReload(false);
                 _gunScript.AllowShoot(false);
                 _utilityScript.AllowUtility(false);
                 _ultimateScript.AllowUltimate(false);
                 _animationHandlerScript.PlayDeathAnimation();
                 break;
+            
         }
     }
 
@@ -137,6 +172,11 @@ public class PlayerController : MonoBehaviour
     {
         // Checking if the player is pressing any movement keys (or moving the left stick)
         return ((Mathf.Abs(_movementScript.MovementInput.x) > 0f) || (Mathf.Abs(_movementScript.MovementInput.y) > 0f));
+    }
+
+    private bool CheckIfRolling()
+    {
+        return _movementScript.isRolling;
     }
     
     private bool CheckIfAttacking()

@@ -102,6 +102,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         }
         
         onBulletHit.Invoke(collision.gameObject);
+        Debug.Log(gameObject + " HIT " +  collision.gameObject);
             
 
         // If this bullet hits what its allowed to

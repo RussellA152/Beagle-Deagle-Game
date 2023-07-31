@@ -87,7 +87,6 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
         
         MovementScript.SetTarget(target);
         AttackScript.SetTarget(target);
-
     }
 
     private void OnEnable()
@@ -97,7 +96,6 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
         
         // Re-enable the enemy's body collider (we disable it when they die)
         _bodyCollider.enabled = true;
-
     }
 
     private void Update()
@@ -108,7 +106,6 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
         // Only check for attack range if the player is within chase range
         if (_inChaseRange)
             _inAttackRange = Physics2D.OverlapCircle(transform.position, enemyScriptableObject.attackRange, enemyScriptableObject.attackLayer);
-       
 
         // Update this enemy's state
         CheckState();
@@ -132,12 +129,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
                 break;
         }
     }
-
-    // public void ChangeState(EnemyState newState)
-    // {
-    //     
-    // }
-
+    
     ///-///////////////////////////////////////////////////////////
     /// Check if the enemy meets conditions to change to a new state.
     /// For instance, if the enemy is in chase range and not in attack range,
@@ -233,8 +225,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
         _bodyCollider.enabled = false;
         
         RevertAllModifiersOnEnemy();
-
-        //Debug.Log("I am DEAD.");
+        
     }
 
     ///-///////////////////////////////////////////////////////////
