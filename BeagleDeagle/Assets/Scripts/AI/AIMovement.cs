@@ -49,6 +49,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
 
     private void OnEnable()
     {
+        IsStunned = false;
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
     }
 
