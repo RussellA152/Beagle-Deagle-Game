@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewMiniWave", menuName = "ScriptableObjects/MiniWaveData/ProjectileEnemyMiniWave")]
+[CreateAssetMenu(fileName = "NewMiniWave", menuName = "ScriptableObjects/MiniWaveData/Projectile Enemies")]
 public class ProjectileMiniWaveData : MiniWaveData
 {
     [RestrictedPrefab(typeof(AIController<ProjectileEnemyData>))]

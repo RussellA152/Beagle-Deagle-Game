@@ -29,7 +29,10 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
         
         Debug.Log(aimDirection);
 
-        AreaGrenade areaGrenadeComponent = grenade.GetComponent<AreaGrenade>();
+        IExplosiveUpdatable areaGrenadeComponent = grenade.GetComponent<IExplosiveUpdatable>();
+        
+        areaGrenadeComponent.SetDamage(currentUtilityData.abilityDamage);
+        areaGrenadeComponent.SetDuration(currentUtilityData.duration);
         
         Debug.Log(areaGrenadeComponent);
 
@@ -47,7 +50,7 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
         areaGrenadeComponent.UpdateScriptableObject(currentUtilityData.utilityExplosiveData);
 
         // Throw grenade in the direction player is facing
-        areaGrenadeComponent.ActivateGrenade(aimDirection);
+        areaGrenadeComponent.Activate(aimDirection);
         
     }
     

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: nukeExplosiveType
   m_EditorClassIdentifier: 
   explosivePrefab: {fileID: 8164879991046117895, guid: aa33ae65cdafcb0459a60d94822c128b, type: 3}
-  explosiveData: {fileID: 11400000, guid: 76af1c12408bb984e8e85236fff79b1d, type: 2}
+  explosiveData: {fileID: 11400000, guid: 7b04de4d71b41ae40a256eb3d35990be, type: 2}
   statusEffects: []

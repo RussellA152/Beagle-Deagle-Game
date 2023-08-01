@@ -4,5 +4,8 @@ using UnityEngine;
 
 public interface IExplosiveUpdatable : IDataUpdatable<ExplosiveData>
 {
-    public void Explode();
+    public void Activate(Vector2 aimDirection);
+    public void SetDamage(float explosiveDamage);
+
+    public void SetDuration(float explosiveDuration);
 }

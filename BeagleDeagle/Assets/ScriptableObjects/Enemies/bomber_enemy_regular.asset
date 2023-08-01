@@ -28,3 +28,4 @@ MonoBehaviour:
     m_Bits: 128
   xpOnDeath: 0
   explosiveType: {fileID: 11400000, guid: 450c842866d8fe844b7fdfdb59426a62, type: 2}
+  explosiveAoeDuration: 3

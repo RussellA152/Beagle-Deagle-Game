@@ -5,23 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewExplosive", menuName = "ScriptableObjects/Explosive/Nuclear Bomb")]
 public class NukeData : ExplosiveData
 {
-    [SerializeField]
-    private UltimateAbilityData ultimateAbilityData;
-    
-    public float explosiveRadius;
+    [Range(1f, 100f)] public float explosiveRadius;
 
     public LayerMask whatDoesExplosionHit;
-
-
-    public override float GetDamage()
-    {
-        return ultimateAbilityData.abilityDamage;
-    }
-
-    public override float GetDuration()
-    {
-        // ultimate ability duration
-        return ultimateAbilityData.duration;
-    }
+    
 
 }

@@ -6,8 +6,7 @@ using UnityEngine;
 public class RegularBulletData : BulletData
 {
     [Header("Lifetime For This Bullet")]
-    [SerializeField]
-    private float duration;
+    [SerializeField] private float duration;
 
     public override float GetLifeTime()
     {

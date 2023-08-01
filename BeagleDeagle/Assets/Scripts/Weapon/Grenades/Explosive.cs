@@ -16,7 +16,11 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
     protected GameObject areaOfEffectGameObject;
     
     private int _wallLayerMask;
-    
+
+    protected float Damage;
+
+    protected float Duration;
+
 
     private void Start()
     {
@@ -32,7 +36,9 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
         StopAllCoroutines();
     }
 
+    public abstract void Activate(Vector2 aimDirection);
 
+    
     // Wait some time, then activate the grenade's explosion
     // Then after some more time, disable this grenade
     public abstract IEnumerator Detonate();
@@ -43,6 +49,16 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
 
         // Screen shake
         Debug.Log("EXPLODE! " + name);
+    }
+
+    public void SetDamage(float explosiveDamage)
+    {
+        Damage = explosiveDamage;
+    }
+
+    public void SetDuration(float explosiveDuration)
+    {
+        Duration = explosiveDuration;
     }
 
     protected bool CheckObstruction(Collider2D targetCollider)

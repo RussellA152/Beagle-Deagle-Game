@@ -34,7 +34,7 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
         StopAllCoroutines();
     }
 
-    public void ActivateGrenade(Vector2 aimDirection)
+    public override void Activate(Vector2 aimDirection)
     {
         StartCoroutine(Detonate());
 
@@ -63,7 +63,7 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
 
         grenadeCollider.enabled = false;
 
-        yield return new WaitForSeconds(explosiveData.GetDuration());
+        yield return new WaitForSeconds(Duration);
 
         gameObject.SetActive(false);
         

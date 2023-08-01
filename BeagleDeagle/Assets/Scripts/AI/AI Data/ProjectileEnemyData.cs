@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewProjectileEnemy", menuName = "ScriptableObjects/CharacterData/EnemyData/ProjectileEnemy")]
 public class ProjectileEnemyData : EnemyData
 {
+    [Space(25f)]
+    
     [Header("Projectile Logic")]
     public BulletTypeData bulletType;
 

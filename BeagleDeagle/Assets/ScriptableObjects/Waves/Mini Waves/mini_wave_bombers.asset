@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61db9bc775a513843a189473e5ebd7db, type: 3}
+  m_Name: mini_wave_bombers
+  m_EditorClassIdentifier: 
+  miniWaveName: Bomber Wave
+  delayBetweenSpawn: 1
+  enemiesPerSpawn: 1
+  waveDuration: 5
+  enemyPrefab: {fileID: 3711592478197892634, guid: 10c2b1323b40b0b47839b417306663f4, type: 3}
+  enemyData: {fileID: 11400000, guid: 71d70c706a557ab40b070f97ff8e034f, type: 2}

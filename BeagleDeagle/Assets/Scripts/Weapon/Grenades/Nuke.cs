@@ -8,12 +8,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
     public int PoolKey => poolKey;
     
     private bool _explosionHappening = false;
-
-    private void OnEnable()
-    {
-        ActivateNuclearBomb();
-    }
-
+    
     private void OnDisable()
     {
         areaOfEffectGameObject.gameObject.SetActive(false);
@@ -22,8 +17,9 @@ public class Nuke : Explosive<NukeData>, IPoolable
         StopAllCoroutines();
     }
 
-    private void ActivateNuclearBomb()
+    public override void Activate(Vector2 aimDirection)
     {
+        transform.position = aimDirection;
         StartCoroutine(Detonate());
     }
 
@@ -40,7 +36,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
 
         Explode();
 
-        yield return new WaitForSeconds(explosiveData.GetDuration());
+        yield return new WaitForSeconds(Duration);
 
         // We destroy the nuke instead of disabling it because we don't pool nukes at the moment
         Destroy(gameObject);
@@ -60,7 +56,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
             {
                 IHealth healthScript = targetCollider.gameObject.GetComponent<IHealth>();
 
-                healthScript?.ModifyHealth(-1f * explosiveData.GetDamage());
+                healthScript?.ModifyHealth(-1f * Damage);
 
             }
             

@@ -18,12 +18,19 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
 
         nuclearBomb.transform.position = player.transform.position;
 
-        // Give the nuke the data it needs
-        nuclearBomb.GetComponent<Nuke>().UpdateScriptableObject(ultimateData.nukeData);
-        
-        nuclearBomb.GetComponent<StatusEffect<DamageOverTimeData>>().UpdateScriptableObject(ultimateData.damageOverTimeData);
+        IExplosiveUpdatable explosiveScript = nuclearBomb.GetComponent<IExplosiveUpdatable>();
 
+        // Give the nuke the data it needs
+        explosiveScript.UpdateScriptableObject(ultimateData.nukeData);
+        
+        explosiveScript.SetDamage(ultimateData.abilityDamage);
+        explosiveScript.SetDuration(ultimateData.duration);
+
+        nuclearBomb.GetComponent<StatusEffect<DamageOverTimeData>>().UpdateScriptableObject(ultimateData.damageOverTimeData);
+        
         nuclearBomb.SetActive(true);
+        
+        explosiveScript.Activate(transform.position);
 
     }
 }

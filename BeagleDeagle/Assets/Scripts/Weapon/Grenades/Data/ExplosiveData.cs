@@ -13,8 +13,8 @@ public abstract class ExplosiveData : ScriptableObject
     [Range(0f, 30f)]
     public float detonationTime; // how long until this grenade detonates?
     
-    public abstract float GetDamage();
+    //public abstract float GetDamage();
     
-    public abstract float GetDuration();
+    //public abstract float GetDuration();
 
 }

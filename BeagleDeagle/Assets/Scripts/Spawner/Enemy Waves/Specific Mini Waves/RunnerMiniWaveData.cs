@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewMiniWave", menuName = "ScriptableObjects/MiniWaveData/RunnerMiniWave")]
+[CreateAssetMenu(fileName = "NewMiniWave", menuName = "ScriptableObjects/MiniWaveData/Runner Enemies")]
 public class RunnerMiniWaveData : MiniWaveData
 {
     [RestrictedPrefab(typeof(AIController<RunnerEnemyData>))]
