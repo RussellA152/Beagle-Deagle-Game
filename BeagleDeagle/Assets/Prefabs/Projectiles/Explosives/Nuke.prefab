@@ -233,6 +233,7 @@ MonoBehaviour:
   sprite: {fileID: 3520225513382146324}
   explosiveData: {fileID: 11400000, guid: 76af1c12408bb984e8e85236fff79b1d, type: 2}
   areaOfEffectGameObject: {fileID: 5551387674908472178}
+  poolKey: 31
 --- !u!114 &5263291236087894076
 MonoBehaviour:
   m_ObjectHideFlags: 0

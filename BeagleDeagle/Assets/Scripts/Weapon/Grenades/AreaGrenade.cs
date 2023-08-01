@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaGrenade : TimedExplosive<UtilityExplosiveData>, IPoolable
+public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
 {
     [SerializeField]
     private int poolKey;

@@ -11,7 +11,6 @@ public class BulletTypeData : ScriptableObject
     
     public BulletData bulletData;
     
-    // TODO: Make this a list of StatusEffectUpdaters?
     public List<StatusEffectData> statusEffects = new List<StatusEffectData>();
     
     
@@ -23,11 +22,13 @@ public class BulletTypeData : ScriptableObject
     
     ///-///////////////////////////////////////////////////////////
     /// Pass in a bullet, then give it the data it requires.
-    /// Then, return it back to the gun.
+    /// Then, return it back to the activator.
     /// 
     public IBulletUpdatable UpdateBulletWithData(GameObject bullet, GameObject activator)
     {
-        UpdateUniqueProperties(bullet);
+        IBulletUpdatable projectile = bullet.GetComponent<IBulletUpdatable>();
+        
+        projectile.UpdateScriptableObject(bulletData);
         
         // if (statusEffects.Count > 0)
         // {
@@ -37,16 +38,7 @@ public class BulletTypeData : ScriptableObject
         //     }
         // }
 
-        return bullet.GetComponent<IBulletUpdatable>();
-    }
-
-    private GameObject UpdateUniqueProperties(GameObject bullet)
-    {
-        IBulletUpdatable projectile = bullet.GetComponent<IBulletUpdatable>();
-        
-        projectile.UpdateScriptableObject(bulletData);
-
-        return bullet;
+        return projectile;
     }
 
 }

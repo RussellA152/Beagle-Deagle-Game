@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "NewExplosive", menuName = "ScriptableObjects/TimedExplosive/SmokeGrenade")]
+[CreateAssetMenu(fileName = "NewExplosive", menuName = "ScriptableObjects/Explosive/SmokeGrenade")]
 public class UtilityExplosiveData : ExplosiveData
 {
     [SerializeField]

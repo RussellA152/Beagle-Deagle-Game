@@ -17,7 +17,7 @@ MonoBehaviour:
   maxHealth: 75
   movementSpeed: 9
   attackDamage: 150
-  attackCooldown: 2
+  attackCooldown: 0.5
   attackRange: 3.5
   chaseRange: 150
   attackLayer:
@@ -26,4 +26,5 @@ MonoBehaviour:
   chaseLayer:
     serializedVersion: 2
     m_Bits: 128
-  explosiveData: {fileID: 0}
+  xpOnDeath: 0
+  explosiveType: {fileID: 11400000, guid: 450c842866d8fe844b7fdfdb59426a62, type: 2}

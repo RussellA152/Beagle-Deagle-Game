@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Nuke : TimedExplosive<NukeData>
+public class Nuke : Explosive<NukeData>, IPoolable
 {
+    [SerializeField] private int poolKey;
+    public int PoolKey => poolKey;
+    
     private bool _explosionHappening = false;
 
     private void OnEnable()
@@ -44,7 +47,7 @@ public class Nuke : TimedExplosive<NukeData>
 
     }
 
-    protected override void Explode()
+    public override void Explode()
     {
         base.Explode();
         
@@ -82,5 +85,4 @@ public class Nuke : TimedExplosive<NukeData>
         yield return new WaitForSeconds(0.5f);
         _explosionHappening = false;
     }
-
 }

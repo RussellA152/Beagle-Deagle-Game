@@ -104,15 +104,15 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         if (MovementInput != Vector2.zero)
         {
             //The number of objects we can collide with if we go in this direction
-            int count = _rb.Cast(MovementInput, movementFilter, _castCollisions, (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime + collisionOffset);
+            // int count = _rb.Cast(MovementInput, movementFilter, _castCollisions, (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime + collisionOffset);
+            //
+            // //if nothing is in the way, move our character
+            // if (count == 0)
+            // {
+            //     _rb.MovePosition(_rb.position + MovementInput * (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime);
+            // }
             
-            //if nothing is in the way, move our character
-            if (count == 0)
-            {
-                _rb.MovePosition(_rb.position + MovementInput * (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime);
-            }
-            
-            //_rb.MovePosition(_rb.position + MovementInput * (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime);
+            _rb.MovePosition(_rb.position + MovementInput * (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime);
 
         }
 
@@ -236,7 +236,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     {
         // TODO: Make roll use MovementInput
         Debug.Log("Roll!");
-        _rb.isKinematic = false;
+        //_rb.isKinematic = false;
         _rb.AddForce(new Vector2(1000f, 0f));
 
         // Ignore collisions between "Player" and "Enemy" layers
@@ -302,7 +302,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     {
         // Reset velocity and don't allow player to be affected by forces anymore
         _rb.velocity = Vector2.zero;
-        _rb.isKinematic = true;
+        //_rb.isKinematic = true;
         
         // Allow collisions between "Player" and "Enemy" layers
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), false);
