@@ -29,7 +29,8 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
 
     private void OnDisable()
     {
-        areaOfEffectGameObject.gameObject.SetActive(false);
+        if(areaOfEffectGameObject != null)
+            areaOfEffectGameObject.gameObject.SetActive(false);
 
         sprite.SetActive(true);
 

@@ -82,6 +82,10 @@ public class ObjectPooler : MonoBehaviour
                 break;
             }
         }
+        
+        if(itemRequested == null)
+            // If key could not be found, show an error in the console
+            Debug.LogError("That item is not in the object pooler!");
 
         lock (lockObject) // Lock the critical section to ensure exclusive access
         {
@@ -104,6 +108,7 @@ public class ObjectPooler : MonoBehaviour
                     return obj;
                 }
             }
+            
         }
 
         return null;

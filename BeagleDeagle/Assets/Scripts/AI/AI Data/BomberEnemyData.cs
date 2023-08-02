@@ -9,5 +9,6 @@ public class BomberEnemyData : EnemyData
     
     public ExplosiveTypeData explosiveType;
 
-    [Range(1f, 30f)] public float explosiveAoeDuration;
+    // How long will the explosive gameObject remain (meant for explosives with AOEs)
+    [Range(0.1f, 30f)] public float explosiveDuration;
 }

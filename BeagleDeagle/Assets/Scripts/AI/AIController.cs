@@ -156,17 +156,17 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
             {
                 if (_inAttackRange && AttackScript.GetCanAttack())
                 {
-                    Debug.Log("attack ready!");
+                    //Debug.Log("attack ready!");
                     _state = EnemyState.Attack;
                 }
                 else if (!_inAttackRange && _state == EnemyState.Attack && !AttackScript.GetCanAttack())
                 {
-                    Debug.Log("walking away!");
+                    //Debug.Log("walking away!");
                     _state = EnemyState.Idle;
                 }
                 else if(!_inAttackRange && !AnimationHandlerScript.animator.GetBool("isAttacking"))
                 {
-                    Debug.Log("chase!");
+                    //Debug.Log("chase!");
                     _state = EnemyState.Chase;
                 }
                 else if (_inAttackRange && !AttackScript.GetCanAttack())

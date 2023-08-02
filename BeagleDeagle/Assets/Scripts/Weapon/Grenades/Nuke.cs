@@ -9,13 +9,6 @@ public class Nuke : Explosive<NukeData>, IPoolable
     
     private bool _explosionHappening = false;
     
-    private void OnDisable()
-    {
-        areaOfEffectGameObject.gameObject.SetActive(false);
-        sprite.SetActive(true);
-
-        StopAllCoroutines();
-    }
 
     public override void Activate(Vector2 aimDirection)
     {
@@ -30,7 +23,9 @@ public class Nuke : Explosive<NukeData>, IPoolable
         yield return new WaitForSeconds(explosiveData.detonationTime);
 
         sprite.SetActive(false);
-        areaOfEffectGameObject.gameObject.SetActive(true);
+        
+        if(areaOfEffectGameObject != null)
+            areaOfEffectGameObject.gameObject.SetActive(true);
 
         StartCoroutine(BrieflyShowGizmo());
 
@@ -39,7 +34,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
         yield return new WaitForSeconds(Duration);
 
         // We destroy the nuke instead of disabling it because we don't pool nukes at the moment
-        Destroy(gameObject);
+        gameObject.SetActive(false);
 
     }
 

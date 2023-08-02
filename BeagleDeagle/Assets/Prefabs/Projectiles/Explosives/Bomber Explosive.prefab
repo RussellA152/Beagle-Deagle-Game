@@ -24,9 +24,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3520225513382146324}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8164879991046117893}
@@ -72,9 +72,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_SortingOrder: 52
+  m_Sprite: {fileID: -9095717837082945937, guid: bd3cb4af8406d4436a2ae8c2aafe1f8d, type: 3}
+  m_Color: {r: 1, g: 0.029075107, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -84,117 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &5551387674908472178
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7589004471731816067}
-  - component: {fileID: 2574436869312057782}
-  - component: {fileID: 815719313696665929}
-  - component: {fileID: 4418311646622141623}
-  m_Layer: 0
-  m_Name: Area of Effect
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7589004471731816067
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5551387674908472178}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8164879991046117893}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2574436869312057782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5551387674908472178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 584fc77bd578a8944958f5d9ccb62ae6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  areaOfEffectData: {fileID: 11400000, guid: be83e45970c94bd41812d461c92d3c5a, type: 2}
-  onAreaEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onAreaStay:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8207622177421959506}
-        m_TargetAssemblyTypeName: SlowOnCollision, Assembly-CSharp
-        m_MethodName: ApplyEffect
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onAreaExit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8207622177421959506}
-        m_TargetAssemblyTypeName: SlowOnCollision, Assembly-CSharp
-        m_MethodName: RemoveEffectFromTarget
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &815719313696665929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5551387674908472178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e887a5c3183562f4cb6b51388cd81cfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  linePrefab: {fileID: 1591930391332016, guid: 0edb86d2b00bee44d8f9b25c00dd9da2, type: 3}
-  circleCornerCount: 36
-  edgeLineOffset: 0.1
---- !u!70 &4418311646622141623
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5551387674908472178}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1}
-  m_Direction: 0
 --- !u!1 &8164879991046117895
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,14 +93,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8164879991046117893}
-  - component: {fileID: 4722336087555608957}
-  - component: {fileID: 8207622177421959506}
-  - component: {fileID: 8164879991046117892}
-  - component: {fileID: 7698205712678738710}
+  - component: {fileID: 8384440829540624150}
   m_Layer: 11
   m_Name: Bomber Explosive
   m_TagString: Untagged
-  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -228,11 +114,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7588949015637170743}
-  - {fileID: 7589004471731816067}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4722336087555608957
+--- !u!114 &8384440829540624150
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,64 +126,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8164879991046117895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b5abd305a43f324e995048b3e62ceea, type: 3}
+  m_Script: {fileID: 11500000, guid: a61110541955836449d8e921f0338c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 3520225513382146324}
-  explosiveData: {fileID: 11400000, guid: f9b736858f8515e4881b5b31abb13121, type: 2}
-  areaOfEffectGameObject: {fileID: 5551387674908472178}
-  poolKey: 33
-  rb: {fileID: 7698205712678738710}
-  grenadeCollider: {fileID: 8164879991046117892}
-  throwSpeed: 15
---- !u!114 &8207622177421959506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8164879991046117895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a11cb0557abf71e4ea851adccf3f5caa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statusEffectData: {fileID: 11400000, guid: 8530572b7c029d943bc78d76e4c183e1, type: 2}
-  removeOnTriggerExit: 1
---- !u!70 &8164879991046117892
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8164879991046117895}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1}
-  m_Direction: 0
---- !u!50 &7698205712678738710
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8164879991046117895}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: c2cd37aec7ea54d4c8aa8beda6aec249, type: 2}
-  m_Interpolate: 1
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
+  explosiveData: {fileID: 11400000, guid: 7b04de4d71b41ae40a256eb3d35990be, type: 2}
+  areaOfEffectGameObject: {fileID: 0}
+  poolKey: 32
