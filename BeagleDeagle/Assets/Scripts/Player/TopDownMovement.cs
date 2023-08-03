@@ -101,7 +101,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     ///
     void FixedUpdate()
     {
-        if (MovementInput != Vector2.zero)
+        if (MovementInput != Vector2.zero && !isRolling)
         {
             //The number of objects we can collide with if we go in this direction
             // int count = _rb.Cast(MovementInput, movementFilter, _castCollisions, (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime + collisionOffset);
@@ -237,7 +237,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         // TODO: Make roll use MovementInput
         Debug.Log("Roll!");
         //_rb.isKinematic = false;
-        _rb.AddForce(new Vector2(1000f, 0f));
+        _rb.velocity = Vector2.zero;
+        _rb.AddForce(new Vector2(1000f * MovementInput.x, 1000f * MovementInput.y));
 
         // Ignore collisions between "Player" and "Enemy" layers
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
@@ -278,28 +279,13 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         }
 
     }
-
-    public void AllowMovement(bool boolean)
-    {
-        if (boolean)
-        {
-            _movementInputAction.Enable();
-            _rotationInputAction.Enable();
-        }
-
-        else
-        {
-            _movementInputAction.Disable();
-            _rotationInputAction.Disable();
-        }
-           
-    }
-
+    
     ///-///////////////////////////////////////////////////////////
     /// At the end of the roll animation, set isRolling to false (* used in roll animation event *)
     /// 
     public void EndRoll()
     {
+        Debug.Log("END Roll!");
         // Reset velocity and don't allow player to be affected by forces anymore
         _rb.velocity = Vector2.zero;
         //_rb.isKinematic = true;
@@ -314,6 +300,31 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         isRolling = false;
         
         
+    }
+    
+    public void AllowMovement(bool boolean)
+    {
+        if (boolean)
+        {
+            _movementInputAction.Enable();
+            _rotationInputAction.Enable();
+        }
+        
+        else
+        {
+            _movementInputAction.Disable();
+            _rotationInputAction.Disable();
+        }
+           
+    }
+
+    public void AllowRotation(bool boolean)
+    {
+        if (boolean)
+            _rotationInputAction.Enable();
+        
+        else
+            _rotationInputAction.Disable();
     }
 
     public void AllowRoll(bool boolean)

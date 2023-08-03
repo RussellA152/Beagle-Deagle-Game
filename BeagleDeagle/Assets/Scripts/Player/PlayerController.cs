@@ -121,7 +121,8 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Rolling:
                 _animationHandlerScript.PlayRollAnimation();
                 
-                _movementScript.AllowMovement(false);
+                _movementScript.AllowMovement(true);
+                _movementScript.AllowRotation(false);
                 _gunScript.AllowReload(false);
                 _gunScript.AllowShoot(false);
                 _utilityScript.AllowUtility(false);
