@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerEvents playerEvents;
     
     [Header("Data to Use")]
-    [SerializeField] private CharacterData currentPlayerData;
+    [SerializeField] private PlayerData currentPlayerData;
     
     [Header("Required Scripts")]
     private TopDownMovement _movementScript;
@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
 
     private bool CheckIfRolling()
     {
-        return _movementScript.isRolling;
+        return _movementScript.IsRolling;
     }
     
     private bool CheckIfAttacking()

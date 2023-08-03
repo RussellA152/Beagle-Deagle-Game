@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: player_data_t-bone
   m_EditorClassIdentifier: 
   characterName: 
-  animatorController: {fileID: 0}
+  animatorController: {fileID: 22100000, guid: b13a18b485bab5b45a2cf79db2f52966, type: 2}
   maxHealth: 2500
   movementSpeed: 10
+  rollPower: {x: 1000, y: 1000}
+  rollCooldown: 3

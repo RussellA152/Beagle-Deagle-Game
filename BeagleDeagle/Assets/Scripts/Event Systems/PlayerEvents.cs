@@ -17,9 +17,11 @@ public class PlayerEvents : ScriptableObject
 
     public event Action<GunData> onPlayerSwitchedWeapon; // Pass a reference to the player's current weapon data
     
-    public event Action<CharacterData> onPlayerObtainedNewCharacterStats; // Pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
+    public event Action<PlayerData> onPlayerObtainedNewCharacterStats; // Pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
 
     public event Action<int> onPlayerBulletsLoadedChanged; // Pass a reference to the player's current ammo loaded (invoked when the player's ammo changes)
+
+    public event Action<float> onPlayerRoll; // Pass a reference to the roll's current cooldown time
 
     public event Action<int> onPlayerUtilityUsesUpdated; // Pass a reference to the player's utility uses (invoked when the player uses their utility ability)
 
@@ -61,7 +63,7 @@ public class PlayerEvents : ScriptableObject
     }
 
     // When the player receives a new set of stats (New set of maxHealth, movementSpeed, etc. values)
-    public void InvokeNewStatsEvent(CharacterData newPlayerData)
+    public void InvokeNewStatsEvent(PlayerData newPlayerData)
     {
         if (onPlayerObtainedNewCharacterStats != null)
         {
@@ -75,6 +77,17 @@ public class PlayerEvents : ScriptableObject
         {
             //Debug.Log("Ammo is: " + ammoLoaded);
             onPlayerBulletsLoadedChanged(ammoLoaded);
+        }
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// When the player uses their roll ability, pass the roll cooldown to UI.
+    /// 
+    public void InvokeRollCooldownText(float timeLeft)
+    {
+        if (onPlayerRoll != null)
+        {
+            onPlayerRoll(timeLeft);
         }
     }
 

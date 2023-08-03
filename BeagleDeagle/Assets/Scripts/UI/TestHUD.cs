@@ -17,41 +17,36 @@ public class TestHUD : MonoBehaviour
     private PlayerEvents playerEvents;
 
     [Header("Text Fields")]
-    [SerializeField]
-    private TextMeshProUGUI ammoMagText;
-
-    [SerializeField]
-    private TextMeshProUGUI maxAmmoText;
-
-    [SerializeField]
-    private TextMeshProUGUI waveMessageText;
-
-    [SerializeField]
-    private TextMeshProUGUI currentHealthText;
-
-    [SerializeField]
-    private TextMeshProUGUI maxHealthText;
-
-    [SerializeField]
-    private TextMeshProUGUI utilityNameText;
-
-    [SerializeField]
-    private TextMeshProUGUI utilityUsesText;
-
-    [SerializeField]
-    private TextMeshProUGUI ultimateNameText;
-
-    [SerializeField]
-    private TextMeshProUGUI ultimateCooldownText;
+    [SerializeField] private TextMeshProUGUI ammoMagText;
+    
+    [SerializeField] private TextMeshProUGUI maxAmmoText;
+    
+    [SerializeField] private TextMeshProUGUI waveMessageText;
+    
+    [SerializeField] private TextMeshProUGUI currentHealthText;
+    
+    [SerializeField] private TextMeshProUGUI maxHealthText;
+    
+    [SerializeField] private TextMeshProUGUI rollCooldownText;
+    
+    [SerializeField] private TextMeshProUGUI utilityNameText;
+    
+    [SerializeField] private TextMeshProUGUI utilityUsesText;
+    
+    [SerializeField] private TextMeshProUGUI ultimateNameText;
+    
+    [SerializeField] private TextMeshProUGUI ultimateCooldownText;
 
 
     private void OnEnable()
     {
-        wavesBegan.changeHUDTextEvent += UpdateHudText;
+        wavesBegan.changeHUDTextEvent += UpdateWaveMessageText;
 
         playerEvents.onPlayerCurrentHealthChanged += UpdateOnPlayerCurrentHealthText;
 
         playerEvents.onPlayerMaxHealthChanged += UpdateOnPlayerMaxHealthText;
+
+        playerEvents.onPlayerRoll += UpdateRollCooldownText;
 
         playerEvents.onPlayerUtilityUsesUpdated += UpdateUtilityUsesText;
 
@@ -67,7 +62,7 @@ public class TestHUD : MonoBehaviour
 
     private void OnDisable()
     {
-        wavesBegan.changeHUDTextEvent -= UpdateHudText;
+        wavesBegan.changeHUDTextEvent -= UpdateWaveMessageText;
 
         playerEvents.onPlayerCurrentHealthChanged -= UpdateOnPlayerCurrentHealthText;
 
@@ -94,9 +89,14 @@ public class TestHUD : MonoBehaviour
         maxHealthText.text = maxHealth.ToString();
     }
 
-    public void UpdateHudText(string newText)
+    public void UpdateWaveMessageText(string newText)
     {
         waveMessageText.text = newText;
+    }
+
+    public void UpdateRollCooldownText(float rollCooldownTime)
+    {
+        rollCooldownText.text = ((int) rollCooldownTime).ToString() + " seconds";
     }
 
     public void UpdateAmmoText(int bulletsLoaded)

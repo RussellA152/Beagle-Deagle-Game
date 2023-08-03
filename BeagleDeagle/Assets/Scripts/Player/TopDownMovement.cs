@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,8 +7,8 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 {
-    [SerializeField] private CharacterData playerData;
-
+    [SerializeField] private PlayerData playerData;
+    [SerializeField] private PlayerEvents playerEvents;
     private TopDownInput _topDownInput;
     
     private float _bonusSpeed = 1;
@@ -17,7 +18,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     private InputAction _rollInputAction;
     
     public Vector2 MovementInput { get; private set; }
-    public bool isRolling { get; private set; }
+    public bool IsRolling { get; private set; }
+    private bool _canRoll = true;
     
     private Vector2 _rotationInput;
     
@@ -94,14 +96,14 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     private void Start()
     {
-        isRolling = false;
+        IsRolling = false;
     }
 
     ///-///////////////////////////////////////////////////////////
     ///
     void FixedUpdate()
     {
-        if (MovementInput != Vector2.zero && !isRolling)
+        if (MovementInput != Vector2.zero && !IsRolling)
         {
             //The number of objects we can collide with if we go in this direction
             // int count = _rb.Cast(MovementInput, movementFilter, _castCollisions, (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime + collisionOffset);
@@ -149,8 +151,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         }
         
     }
-
-
+    
     ///-///////////////////////////////////////////////////////////
     /// Flip the sprite of the player's body depending on which direction
     /// the player is moving in.
@@ -192,11 +193,12 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         }
     }
     
-    public void UpdateScriptableObject(CharacterData scriptableObject)
+    public void UpdateScriptableObject(PlayerData scriptableObject)
     {
         playerData = scriptableObject;
     }
 
+    #region MovementModifiers
     public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
     {
         movementSpeedModifiers.Add(modifierToAdd);
@@ -211,6 +213,10 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
 
     }
+    
+
+    #endregion
+    
     
     public Vector2 ReturnPlayerDirection()
     {
@@ -234,19 +240,25 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     public void OnRoll(CallbackContext context)
     {
-        // TODO: Make roll use MovementInput
-        Debug.Log("Roll!");
-        //_rb.isKinematic = false;
-        _rb.velocity = Vector2.zero;
-        _rb.AddForce(new Vector2(1000f * MovementInput.x, 1000f * MovementInput.y));
-
-        // Ignore collisions between "Player" and "Enemy" layers
-        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
+        if (_canRoll)
+        {
+            Debug.Log("Roll!");
         
-        // Ignore collisions between "Player" and "Bullet" layers
-        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), true);
+            _rb.velocity = Vector2.zero;
 
-        isRolling = true;
+            if(MovementInput != Vector2.zero)
+                _rb.AddForce(new Vector2(playerData.rollPower.x * MovementInput.x, playerData.rollPower.y * MovementInput.y));
+            else
+                _rb.AddForce(new Vector2(playerData.rollPower.x, 0f));
+
+                // Ignore collisions between "Player" and "Enemy" layers
+            Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
+        
+            // Ignore collisions between "Player" and "Bullet" layers
+            Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), true);
+
+            IsRolling = true;
+        }
     }
 
 
@@ -286,10 +298,10 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     public void EndRoll()
     {
         Debug.Log("END Roll!");
+        
         // Reset velocity and don't allow player to be affected by forces anymore
         _rb.velocity = Vector2.zero;
-        //_rb.isKinematic = true;
-        
+
         // Allow collisions between "Player" and "Enemy" layers
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), false);
         
@@ -297,11 +309,27 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), false);
         
         // Player is no longer rolling at the end of the animation
-        isRolling = false;
+        IsRolling = false;
+
+        StartCoroutine(RollCooldown());
         
-        
+
     }
-    
+
+    private IEnumerator RollCooldown()
+    {
+        // Display roll cooldown timer on the UI
+        playerEvents.InvokeRollCooldownText(0f);
+        
+        _canRoll = false;
+        
+        yield return new WaitForSeconds(playerData.rollCooldown);
+        
+        playerEvents.InvokeRollCooldownText(playerData.rollCooldown);
+        
+        _canRoll = true;
+    }
+
     public void AllowMovement(bool boolean)
     {
         if (boolean)
@@ -340,6 +368,5 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     }
 
     #endregion
-
-
+    
 }

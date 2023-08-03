@@ -7,8 +7,21 @@ using UnityEngine;
 ///-///////////////////////////////////////////////////////////
 /// Basic stats for enemies such as damage, cooldowns, and line of sight.
 /// 
-public class EnemyData : CharacterData
+public class EnemyData : ScriptableObject
 {
+    // Name to display in-game
+    public string characterName;
+    
+    public RuntimeAnimatorController animatorController;
+
+    [Header("Health")]
+    [Range(1f, 2500f)]
+    public float maxHealth;
+
+    [Header("Movement Speed")]
+    [Range(0f, 100f)]
+    public float movementSpeed;
+    
     [Header("Damage")]
     // How damage damage does this enemy apply to their target?
     [Range(-1000f, 1000f)] public float attackDamage;
