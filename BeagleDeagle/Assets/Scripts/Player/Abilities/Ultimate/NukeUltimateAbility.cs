@@ -7,7 +7,7 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
     
     protected override void UltimateAction(GameObject player)
     {
-        StartCooldowns();
+        StartCooldown();
         
         Debug.Log("Spawn nuclear bomb!");
 

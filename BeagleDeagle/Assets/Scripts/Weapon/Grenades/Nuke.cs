@@ -47,7 +47,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
 
         foreach (Collider2D targetCollider in hitEnemies)
         {
-            if (!CheckObstruction(targetCollider))
+            if (!ObstructionScript.HasObstruction(transform.position, targetCollider.gameObject, WallLayerMask))
             {
                 IHealth healthScript = targetCollider.gameObject.GetComponent<IHealth>();
 

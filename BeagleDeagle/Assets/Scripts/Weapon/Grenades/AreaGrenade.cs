@@ -6,12 +6,10 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
 {
     [SerializeField]
     private int poolKey;
-
-    [SerializeField]
-    private Rigidbody2D rb;
-
-    [SerializeField]
-    private Collider2D grenadeCollider;
+    
+    private Rigidbody2D _rb;
+    
+    private Collider2D _grenadeCollider;
     
 
     [Range(0f, 100f)]
@@ -20,6 +18,14 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
 
     public int PoolKey => poolKey; // Return the pool key (anything that is IPoolable, must have a pool key)
 
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _rb = GetComponent<Rigidbody2D>();
+        _grenadeCollider = GetComponent<Collider2D>();
+    }
+
     private void OnDisable()
     {
         areaOfEffectGameObject.gameObject.SetActive(false);
@@ -27,7 +33,7 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
         //particleAOE.SetActive(false);
         sprite.SetActive(true);
 
-        grenadeCollider.enabled = true;
+        _grenadeCollider.enabled = true;
 
         UnfreezePosition();
 
@@ -43,7 +49,7 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
         transform.rotation = Quaternion.Euler(0f, 0f, aimAngle);
 
         // Apply force to push the grenade forward in the aim direction
-        rb.AddForce(aimDirection * throwSpeed, ForceMode2D.Impulse);
+        _rb.AddForce(aimDirection * throwSpeed, ForceMode2D.Impulse);
     }
 
     // Wait some time, then activate the grenade's explosion
@@ -61,7 +67,7 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
 
         Explode();
 
-        grenadeCollider.enabled = false;
+        _grenadeCollider.enabled = false;
 
         yield return new WaitForSeconds(Duration);
 
@@ -71,13 +77,13 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
 
     private void FreezePosition()
     {
-        rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
+        _rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
 
     }
 
     private void UnfreezePosition()
     {
-        rb.constraints = RigidbodyConstraints2D.None;
+        _rb.constraints = RigidbodyConstraints2D.None;
     }
 
 }

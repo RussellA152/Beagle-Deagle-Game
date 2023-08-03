@@ -205,6 +205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8164879991046117893}
   - component: {fileID: 4722336087555608957}
+  - component: {fileID: 411679524319823067}
   - component: {fileID: 8207622177421959506}
   - component: {fileID: 8164879991046117892}
   - component: {fileID: 7698205712678738710}
@@ -251,6 +252,18 @@ MonoBehaviour:
   rb: {fileID: 7698205712678738710}
   grenadeCollider: {fileID: 8164879991046117892}
   throwSpeed: 15
+--- !u!114 &411679524319823067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8164879991046117895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b206ab9bde7910408f9de3b8c266de5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8207622177421959506
 MonoBehaviour:
   m_ObjectHideFlags: 0

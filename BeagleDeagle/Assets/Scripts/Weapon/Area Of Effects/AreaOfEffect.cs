@@ -6,10 +6,9 @@ using UnityEngine.Events;
 
 public class AreaOfEffect : MonoBehaviour
 {
-    [SerializeField]
-    protected AreaOfEffectData areaOfEffectData;
+    [SerializeField] protected AreaOfEffectData areaOfEffectData;
 
-    //private AreaOfEffectData _previousAreaOfEffectData;
+    private CheckObstruction _obstructionScript;
 
     private Outliner _outliner;
     
@@ -34,7 +33,9 @@ public class AreaOfEffect : MonoBehaviour
         _triggerCollider = GetComponent<CapsuleCollider2D>();
 
         _outliner = GetComponent<Outliner>();
-        
+
+        _obstructionScript = GetComponentInParent<CheckObstruction>();
+
     }
 
     private void Start()
@@ -98,7 +99,7 @@ public class AreaOfEffect : MonoBehaviour
         if ((areaOfEffectData.whatAreaOfEffectCollidesWith.value & (1 << collision.gameObject.layer)) > 0)
         {
             // If the target is not obstructed by a wall, and they are not already affected by the AOE's ability (smoke or radiation), then call OnAreaStay()
-            if (!CheckObstruction(transform.position, collision.gameObject) && !AreaOfEffectManager.Instance.CheckIfTargetIsAffected(areaOfEffectData, collision.gameObject))
+            if (!_obstructionScript.HasObstruction(transform.position, collision.gameObject, _wallLayerMask)  && !AreaOfEffectManager.Instance.CheckIfTargetIsAffected(areaOfEffectData, collision.gameObject))
             {
                 AreaOfEffectManager.Instance.TryAddAffectedTarget(areaOfEffectData, collision.gameObject);
 
@@ -107,28 +108,6 @@ public class AreaOfEffect : MonoBehaviour
         }
     }
     
-
-    ///-///////////////////////////////////////////////////////////
-    /// Shoot a raycast beginning from the center of the AOE towards the target
-    /// If there is wall between the AOE and target, then do not apply any effects to the target (Don't hit through walls)
-    ///
-    private bool CheckObstruction(Vector2 areaSource, GameObject target)
-    {
-        if (areaOfEffectData.hitThroughWalls)
-            return false;
-
-        // Calculate distance and direction to shoot raycast
-        Vector2 targetPosition = target.transform.position;
-        Vector2 direction = targetPosition - areaSource;
-        float distance = direction.magnitude;
-
-        // Exclude the target if there is an obstruction between the explosion source and the target
-        RaycastHit2D hit = Physics2D.Raycast(areaSource, direction.normalized, distance, _wallLayerMask);
-
-        // If true, there is an obstruction between the AOE and target
-        // If false, there is not an obstruction between AOE and target, thus we can apply the effect
-        return hit.collider != null;
-    }
 
     ///-///////////////////////////////////////////////////////////
     /// Changes the AOE effect of this instance

@@ -86,7 +86,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
             playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
             
             // Activate cooldown
-            StartCooldowns();
+            StartCooldown();
 
             _isActive = false;
             

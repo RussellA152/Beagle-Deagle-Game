@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   pivotPoint: {fileID: 1777428646219782325}
   rotationRadius: 0
   bodySr: {fileID: 1777428645335658747}

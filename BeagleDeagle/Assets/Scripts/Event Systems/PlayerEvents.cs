@@ -9,8 +9,6 @@ using UnityEngine.InputSystem;
 [CreateAssetMenu(menuName = "GameEvent/PlayerEvents")]
 public class PlayerEvents : ScriptableObject
 {
-    public event Action<PlayerInput> onPlayerInputInitialization; // Pass a reference to the player's PlayerInput component (could be useful for gameObjects that need reference, but not attached to player)
-
     public event Action<float> onPlayerCurrentHealthChanged; // Pass a reference to the player's current Health (used by HUD)
 
     public event Action<float> onPlayerMaxHealthChanged; // Pass a reference to the player's max Health (used by HUD)
@@ -21,7 +19,7 @@ public class PlayerEvents : ScriptableObject
 
     public event Action<int> onPlayerBulletsLoadedChanged; // Pass a reference to the player's current ammo loaded (invoked when the player's ammo changes)
 
-    public event Action<float> onPlayerRoll; // Pass a reference to the roll's current cooldown time
+    public event Action<float> onPlayerRollStartsCooldown; // Pass a reference to the roll's current cooldown time
 
     public event Action<int> onPlayerUtilityUsesUpdated; // Pass a reference to the player's utility uses (invoked when the player uses their utility ability)
 
@@ -38,46 +36,31 @@ public class PlayerEvents : ScriptableObject
     // Pass around the max health value to whoever needs it (ex. HUD needs to display max health at all times)
     public void InvokeMaxHealthEvent(float maxHealth)
     {
-        if(onPlayerMaxHealthChanged != null)
-        {
-            onPlayerMaxHealthChanged(maxHealth);
-        }
+        onPlayerMaxHealthChanged?.Invoke(maxHealth);
     }
     // When the player's current health changes
     // Pass around the current health value to whoever needs it (ex. HUD needs to display current health at all times)
     public void InvokeCurrentHealthEvent(float currentHealth)
     {
-        if (onPlayerCurrentHealthChanged != null)
-        {
-            onPlayerCurrentHealthChanged(currentHealth);
-        }
+        onPlayerCurrentHealthChanged?.Invoke(currentHealth);
     }
     // When the player receives a new weapon or a modification to their current weapon
     // Pass around the data for the new weapon. It will allow things like the HUD to update the ammo count
     public void InvokeNewWeaponEvent(GunData newWeaponData)
     {
-        if(onPlayerSwitchedWeapon != null)
-        {
-            onPlayerSwitchedWeapon(newWeaponData);
-        }
+        onPlayerSwitchedWeapon?.Invoke(newWeaponData);
     }
 
     // When the player receives a new set of stats (New set of maxHealth, movementSpeed, etc. values)
     public void InvokeNewStatsEvent(PlayerData newPlayerData)
     {
-        if (onPlayerObtainedNewCharacterStats != null)
-        {
-            onPlayerObtainedNewCharacterStats(newPlayerData);
-        }
+        onPlayerObtainedNewCharacterStats?.Invoke(newPlayerData);
     }
 
     public void InvokeUpdateAmmoLoadedText(int ammoLoaded)
     {
-        if(onPlayerBulletsLoadedChanged != null)
-        {
-            //Debug.Log("Ammo is: " + ammoLoaded);
-            onPlayerBulletsLoadedChanged(ammoLoaded);
-        }
+        //Debug.Log("Ammo is: " + ammoLoaded);
+        onPlayerBulletsLoadedChanged?.Invoke(ammoLoaded);
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -85,59 +68,33 @@ public class PlayerEvents : ScriptableObject
     /// 
     public void InvokeRollCooldownText(float timeLeft)
     {
-        if (onPlayerRoll != null)
-        {
-            onPlayerRoll(timeLeft);
-        }
+        onPlayerRollStartsCooldown?.Invoke(timeLeft);
     }
 
     // When the player uses a utility ability, invoke this function.
     // This should Pass around the current number of uses that the player's currently utility has (ex. HUD needs to update utility uses display)
     public void InvokeUtilityUsesUpdatedEvent(int uses)
     {
-        if(onPlayerUtilityUsesUpdated != null)
-        {
-            onPlayerUtilityUsesUpdated(uses);
-        }
+        onPlayerUtilityUsesUpdated?.Invoke(uses);
     }
     public void InvokeUtilityNameUpdatedEvent(string name)
     {
-        if (onPlayerUtilityNameChanged != null)
-        {
-            onPlayerUtilityNameChanged(name);
-        }
-    }
-
-    public void InvokeGivePlayerInputComponentEvent(PlayerInput inputComponent)
-    {
-        if (onPlayerInputInitialization != null)
-        {
-            onPlayerInputInitialization(inputComponent);
-        }
+        onPlayerUtilityNameChanged?.Invoke(name);
     }
 
     public void InvokeUltimateAbilityEnded()
     {
-        if (onPlayerUltimateEnded != null)
-        {
-            onPlayerUltimateEnded();
-        }
+        onPlayerUltimateEnded?.Invoke();
     }
 
     public void InvokeUltimateAbilityCooldownEvent(float timeLeft)
     {
-        if(onPlayerUltimateAbilityCooldown != null)
-        {
-            onPlayerUltimateAbilityCooldown(timeLeft);
-        }
+        onPlayerUltimateAbilityCooldown?.Invoke(timeLeft);
     }
 
     public void InvokeUltimateNameUpdatedEvent(string name)
     {
-        if(onPlayerUltimateAbilityNameChanged != null)
-        {
-            onPlayerUltimateAbilityNameChanged(name);
-        }
+        onPlayerUltimateAbilityNameChanged?.Invoke(name);
     }
 
 }

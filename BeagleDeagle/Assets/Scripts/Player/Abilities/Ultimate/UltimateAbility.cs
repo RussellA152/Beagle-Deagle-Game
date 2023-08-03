@@ -27,7 +27,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable whe
         _topDownInput.Enable();
 
         _ultimateInputAction.performed += ActivateUltimate;
-        StartCooldowns();
+        StartCooldown();
     }
     
     protected virtual void OnDisable()
@@ -61,22 +61,9 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable whe
     }
     protected abstract void UltimateAction(GameObject player);
     
-    protected void StartCooldowns()
+    protected void StartCooldown()
     {
-        StartCoroutine(UltimateCooldown());
         StartCoroutine(CountDownCooldown());
-    }
-
-    ///-///////////////////////////////////////////////////////////
-    /// Wait some time to allow player to use ultimate ability again
-    /// 
-    private IEnumerator UltimateCooldown()
-    {
-        yield return new WaitForSeconds(ultimateData.cooldown);
-
-        _canUseUltimate = true;
-        
-        Debug.Log("Ultimate is ready.");
     }
     
     ///-///////////////////////////////////////////////////////////
@@ -85,27 +72,21 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable whe
     /// 
     private IEnumerator CountDownCooldown()
     {
-        // Ex. 5 seconds until cooldown
-        float timeLeft = ultimateData.cooldown;
-    
-        // If the cooldown is 0 seconds or less, don't continue further
-        if (timeLeft <= 0f)
-            yield break;
-    
-        playerEvents.InvokeUltimateAbilityCooldownEvent(timeLeft);
-    
+        float remainingTime = ultimateData.cooldown;
+        playerEvents.InvokeUltimateAbilityCooldownEvent(remainingTime);
+
+        _canUseUltimate = false;
+        
         // Decrement the cooldown by 1 second
         // Invoke event system that takes in the amount of time left on the ultimate's cooldown (displays on the HUD)
-        while (timeLeft > 0f)
+        while (remainingTime > 0f)
         {
             yield return new WaitForSeconds(1f);
-    
-            timeLeft--;
-    
-            playerEvents.InvokeUltimateAbilityCooldownEvent(timeLeft);
+            remainingTime -= 1f;
+            playerEvents.InvokeUltimateAbilityCooldownEvent(remainingTime);
         }
-    
-        playerEvents.InvokeUltimateAbilityCooldownEvent(0f);
+        _canUseUltimate = true;
+        playerEvents.InvokeUltimateAbilityCooldownEvent(remainingTime);
     }
 
     public void AllowUltimate(bool boolean)

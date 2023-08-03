@@ -46,7 +46,7 @@ public class TestHUD : MonoBehaviour
 
         playerEvents.onPlayerMaxHealthChanged += UpdateOnPlayerMaxHealthText;
 
-        playerEvents.onPlayerRoll += UpdateRollCooldownText;
+        playerEvents.onPlayerRollStartsCooldown += UpdateRollStartsCooldownCooldownText;
 
         playerEvents.onPlayerUtilityUsesUpdated += UpdateUtilityUsesText;
 
@@ -94,7 +94,7 @@ public class TestHUD : MonoBehaviour
         waveMessageText.text = newText;
     }
 
-    public void UpdateRollCooldownText(float rollCooldownTime)
+    public void UpdateRollStartsCooldownCooldownText(float rollCooldownTime)
     {
         rollCooldownText.text = ((int) rollCooldownTime).ToString() + " seconds";
     }

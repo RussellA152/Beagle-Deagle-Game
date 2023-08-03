@@ -319,15 +319,21 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     private IEnumerator RollCooldown()
     {
         // Display roll cooldown timer on the UI
-        playerEvents.InvokeRollCooldownText(0f);
+        float remainingTime = playerData.rollCooldown;
+
+        playerEvents.InvokeRollCooldownText(remainingTime);
         
-        _canRoll = false;
-        
-        yield return new WaitForSeconds(playerData.rollCooldown);
-        
-        playerEvents.InvokeRollCooldownText(playerData.rollCooldown);
-        
+        while (remainingTime > 0f)
+        {
+            _canRoll = false;
+            yield return new WaitForSeconds(1f);
+            remainingTime -= 1f;
+            playerEvents.InvokeRollCooldownText(remainingTime);
+        }
+
         _canRoll = true;
+        playerEvents.InvokeRollCooldownText(remainingTime);
+
     }
 
     public void AllowMovement(bool boolean)
