@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 using Random = UnityEngine.Random;
 
-public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
+public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 {
     [SerializeField] 
     private Transform bulletSpawnPoint; // Where does this bullet get shot from? (i.e the barrel)
@@ -14,6 +14,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     [Header("Required Components")]
     [SerializeField] private PlayerEvents playerEvents;
     [SerializeField] private GunData weaponData;
+
+    public CooldownSystem CooldownSystem;
+    
     private TopDownInput _topDownInput;
     private SpriteRenderer _spriteRenderer;
 
@@ -62,6 +65,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
+        CooldownSystem = GetComponent<CooldownSystem>();
+        
         _topDownInput = new TopDownInput();
 
         _shootInputAction = _topDownInput.Player.Fire;
@@ -69,6 +74,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         _reloadInputAction = _topDownInput.Player.Reload;
         
         _reloadInputAction.performed += OnReload;
+
+        Id = 11;
+        CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
+
     }
 
     private void Start()
@@ -89,12 +98,15 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     {
         playerEvents.onPlayerSwitchedWeapon += UpdateScriptableObject;
 
+        CooldownSystem.OnCooldownEnded += OnReloadFinish;
+
         playerEvents.InvokeNewWeaponEvent(weaponData);
 
     }
 
     private void OnDisable()
     {
+        CooldownSystem.OnCooldownEnded -= OnReloadFinish;
         _shootInputAction.Disable();
         _reloadInputAction.Disable();
     }
@@ -109,9 +121,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
         // If the player has no ammo loaded into their weapon, begin reloading
         // If the gun is not already reloading, begin a coroutine for the reload
-        if (_bulletsLoaded <= 0f && !_isReloading)
+        if (_bulletsLoaded <= 0f && !CooldownSystem.IsOnCooldown(Id))
         {
-            StartCoroutine(WaitReload());
+            //StartCoroutine(WaitReload());
+            CooldownSystem.PutOnCooldown(this);
             return;
         }
 
@@ -141,6 +154,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
         _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
 
         _spriteRenderer.sprite = weaponData.sprite;
+        
+        CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
 
         // After swapping to new weapon, show the ammo on the HUD
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
@@ -219,7 +234,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
     public void AllowShoot(bool boolean)
     {
-        if (boolean)
+        if (boolean && !CooldownSystem.IsOnCooldown(Id))
         {
             _shootInputAction.Enable();
         }
@@ -241,13 +256,27 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     // Call reload function when the player presses the reload key
     public void OnReload(CallbackContext context)
     {
-        if (!_isReloading)
+        if (!CooldownSystem.IsOnCooldown(Id))
         {
             _shootInput = 0f;
-            StartCoroutine(WaitReload());
-            
+            CooldownSystem.PutOnCooldown(this);
+            ActuallyShooting = false;
+            AllowShoot(false);
+            Debug.Log("START RELOAD!");
+            //StartCoroutine(WaitReload());
+
         }
             
+    }
+
+    private void OnReloadFinish(int id)
+    {
+        if (id != Id) return;
+        
+        AllowShoot(true);
+        
+        RefillAmmoCompletely();
+
     }
     
     public IEnumerator WaitReload()
@@ -382,4 +411,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
     }
 
     #endregion
+
+    public int Id { get; set; }
+    public float CooldownDuration { get; set; }
+    public int numOfCooldowns { get; set; }
 }

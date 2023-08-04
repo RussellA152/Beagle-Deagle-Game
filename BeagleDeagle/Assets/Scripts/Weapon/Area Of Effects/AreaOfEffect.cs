@@ -114,22 +114,11 @@ public class AreaOfEffect : MonoBehaviour
     /// 
     public void UpdateAOEData(AreaOfEffectData scriptableObject)
     {
-        //Debug.Log("WTF:   " + scriptableObject + "     prev: " + _previousAreaOfEffectData);
-        
-        // Only update scriptable object if its a new set of values
-        //if (scriptableObject == _previousAreaOfEffectData) return;
-
         areaOfEffectData = scriptableObject;
-        
-        //_previousAreaOfEffectData = areaOfEffectData;
         
         transform.localScale = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY);
         
         _outliner.UpdateOutlinerSize();
-
-
-        //_triggerCollider.size = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY); 
-
 
         Debug.Log("Updated AOE scriptable object!");
 

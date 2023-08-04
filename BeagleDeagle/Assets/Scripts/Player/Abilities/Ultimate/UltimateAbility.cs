@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable where T: UltimateAbilityData
+public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IHasCooldown where T: UltimateAbilityData
 {
     [SerializeField] protected PlayerEvents playerEvents;
     
     [SerializeField] protected T ultimateData;
+
+    public CooldownSystem CooldownSystem;
     
     private TopDownInput _topDownInput;
 
@@ -19,7 +22,11 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable whe
     private void Awake()
     {
         _topDownInput = new TopDownInput();
+        CooldownSystem = GetComponent<CooldownSystem>();
         _ultimateInputAction = _topDownInput.Player.Ultimate;
+
+        Id = 10;
+        CooldownDuration = ultimateData.cooldown;
     }
 
     protected virtual void OnEnable()
@@ -49,45 +56,43 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable whe
     /// activate the ultimate ability associated with the character
     public void ActivateUltimate(CallbackContext context)
     {
-        if (_canUseUltimate)
+        if (!CooldownSystem.IsOnCooldown(Id))
         {
             Debug.Log("Activate ultimate!");
 
             UltimateAction(gameObject);
-                
-            _canUseUltimate = false;
-                
+
         }
     }
     protected abstract void UltimateAction(GameObject player);
     
     protected void StartCooldown()
     {
-        StartCoroutine(CountDownCooldown());
+        CooldownSystem.PutOnCooldown(this);
     }
     
     ///-///////////////////////////////////////////////////////////
     /// Show on the HUD, the current ultimate ability's cooldown
     /// counting down. Once it hits 0, the player can use their ultimate.
     /// 
-    private IEnumerator CountDownCooldown()
-    {
-        float remainingTime = ultimateData.cooldown;
-        playerEvents.InvokeUltimateAbilityCooldownEvent(remainingTime);
-
-        _canUseUltimate = false;
-        
-        // Decrement the cooldown by 1 second
-        // Invoke event system that takes in the amount of time left on the ultimate's cooldown (displays on the HUD)
-        while (remainingTime > 0f)
-        {
-            yield return new WaitForSeconds(1f);
-            remainingTime -= 1f;
-            playerEvents.InvokeUltimateAbilityCooldownEvent(remainingTime);
-        }
-        _canUseUltimate = true;
-        playerEvents.InvokeUltimateAbilityCooldownEvent(remainingTime);
-    }
+    // private IEnumerator CountDownCooldown()
+    // {
+    //     float remainingTime = ultimateData.cooldown;
+    //     playerEvents.InvokeUltimateAbilityCooldownEvent(remainingTime);
+    //
+    //     _canUseUltimate = false;
+    //     
+    //     // Decrement the cooldown by 1 second
+    //     // Invoke event system that takes in the amount of time left on the ultimate's cooldown (displays on the HUD)
+    //     while (remainingTime > 0f)
+    //     {
+    //         yield return new WaitForSeconds(1f);
+    //         remainingTime -= 1f;
+    //         playerEvents.InvokeUltimateAbilityCooldownEvent(remainingTime);
+    //     }
+    //     _canUseUltimate = true;
+    //     playerEvents.InvokeUltimateAbilityCooldownEvent(remainingTime);
+    // }
 
     public void AllowUltimate(bool boolean)
     {
@@ -111,5 +116,9 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable whe
             Debug.LogError("ERROR WHEN UPDATING SCRIPTABLE OBJECT! " + scriptableObject + " IS NOT A " + typeof(T));
         }
     }
+
+    public int Id { get; set; }
+    public float CooldownDuration { get; set; }
+    public int numOfCooldowns { get; set; }
 }
 

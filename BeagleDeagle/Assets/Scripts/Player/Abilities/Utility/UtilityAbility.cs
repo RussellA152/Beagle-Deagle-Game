@@ -7,11 +7,13 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable where T: UtilityAbilityData
+public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHasCooldown where T: UtilityAbilityData
 {
     [SerializeField] private PlayerEvents playerEvents;
     
     [SerializeField] protected T currentUtilityData;
+
+    public CooldownSystem CooldownSystem;
 
     private TopDownInput _topDownInput;
 
@@ -19,7 +21,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable where
 
     private bool _canUseUtility = true;
 
-    private float _delayBetweenUse = 0.4f; // a small delay added between each utility use (prevents player from using too many at once)
+    private float _delayBetweenUse = 0.6f; // a small delay added between each utility use (prevents player from using too many at once)
 
     [Header("Modifiers")]
     [SerializeField, NonReorderable] private List<UtilityCooldownModifier> utilityCooldownModifiers = new List<UtilityCooldownModifier>();
@@ -34,7 +36,13 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable where
     private void Awake()
     {
         _topDownInput = new TopDownInput();
+        CooldownSystem = GetComponent<CooldownSystem>();
         _utilityInputAction = _topDownInput.Player.Utility;
+
+        Id = 12;
+        
+        
+        CooldownDuration = currentUtilityData.cooldown;
     }
 
     private void OnEnable()
@@ -42,20 +50,25 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable where
         _topDownInput.Enable();
         _utilityInputAction.performed += ActivateUtility;
         _utilityUses = currentUtilityData.maxUses;
+
+        CooldownSystem.OnCooldownEnded += UtilityUsesModified;
+        
+        playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
+        playerEvents.InvokeUtilityNameUpdatedEvent(currentUtilityData.abilityName);
     }
 
     private void OnDisable()
     {
         _topDownInput.Disable();
         _utilityInputAction.performed -= ActivateUtility;
+        CooldownSystem.OnCooldownEnded -= UtilityUsesModified;
     }
     
     protected virtual void Start()
     {
-        UtilityUsesModified();
         playerEvents.InvokeUtilityNameUpdatedEvent(currentUtilityData.abilityName);
     }
-
+    
     public void ActivateUtility(CallbackContext context)
     {
         // If player has uses left on their utility ability, let them activate it 
@@ -65,26 +78,39 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable where
             Debug.Log("Activate utility!");
 
             _utilityUses--;
-                
-            //onUtilityUse.Invoke(gameObject);
+            
+            Debug.Log(CooldownSystem.GetRemainingDuration(Id));
                 
             UtilityAction(gameObject);
-
-            UtilityUsesModified();
-
-            StartCoroutine(StartUtilityCooldown());
-
+            
+            playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
+            
+            StartCoroutine(WaitCooldown());
             StartCoroutine(StartDelayBetweenUtilityUse());
         }
-
     }
 
     protected abstract void UtilityAction(GameObject player);
 
-    private void UtilityUsesModified()
+    private void UtilityUsesModified(int id)
     {
-        playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
+        if (id == Id)
+        {
+            _utilityUses++;
+            playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
+        }
+        
     }
+
+    IEnumerator WaitCooldown()
+    {
+        while (CooldownSystem.IsOnCooldown(Id))
+        {
+            yield return null;
+        }
+        CooldownSystem.PutOnCooldown(this);
+    }
+    
 
     ///-///////////////////////////////////////////////////////////
     /// Small delay between each use of a utility to prevent spamming.
@@ -92,24 +118,10 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable where
     private IEnumerator StartDelayBetweenUtilityUse()
     {
         _canUseUtility = false;
-
+    
         yield return new WaitForSeconds(_delayBetweenUse);
-
+    
         _canUseUtility = true;
-    }
-
-    ///-///////////////////////////////////////////////////////////
-    /// Wait some time to add another use to the utility.
-    /// Start the cooldown that comes from the Utility scriptable object.
-    /// 
-    private IEnumerator StartUtilityCooldown()
-    {
-        yield return new WaitForSeconds(currentUtilityData.cooldown * _bonusUtilityCooldown);
-
-        _utilityUses++;
-
-        UtilityUsesModified();
-
     }
 
     public void AllowUtility(bool boolean)
@@ -163,5 +175,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable where
     }
 
     #endregion
-    
+
+    public int Id { get; set; }
+    public float CooldownDuration { get; set; }
 }

@@ -5,14 +5,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager where T: EnemyData
+public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager, IHasCooldown where T: EnemyData
 {
     [Header("Data to Use")]
     [SerializeField]
     protected T enemyScriptableObject;
 
     [Header("Required Scripts")] 
-    
+    public CooldownSystem CooldownSystem;
     private ZombieAnimationHandler _animationScript;
 
     [Header("Modifiers")]
@@ -38,10 +38,16 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     private void Awake()
     {
         _animationScript = GetComponent<ZombieAnimationHandler>();
+        CooldownSystem = GetComponent<CooldownSystem>();
+
+        Id = 20;
+        CooldownDuration = enemyScriptableObject.attackCooldown;
     }
 
     protected virtual void OnEnable()
     {
+        CooldownSystem.OnCooldownEnded += OnAttackCooldownFinish;
+        
         _canAttack = true;
         
         BeginCooldown();
@@ -49,7 +55,7 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
 
     private void OnDisable()
     {
-        StopAllCoroutines();
+        CooldownSystem.OnCooldownEnded -= OnAttackCooldownFinish;
     }
 
 
@@ -60,22 +66,18 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     /// 
     public void BeginCooldown()
     {
-        if(_canAttack)
-            StartCoroutine(AttackCooldown());
-    }
-
-    ///-///////////////////////////////////////////////////////////
-    /// Wait some time to allow attacks again.
-    /// Multiply by "_bonusAttackSpeed" which can cause attacks to be slower or faster
-    ///
-    private IEnumerator AttackCooldown()
-    {
+        CooldownSystem.PutOnCooldown(this);
         _canAttack = false;
-
-        yield return new WaitForSeconds(enemyScriptableObject.attackCooldown);
-
-        _canAttack = true;
     }
+
+    public void OnAttackCooldownFinish(int id)
+    {
+        if (id == Id)
+        {
+            _canAttack = true;
+        }
+    }
+    
 
     public bool GetCanAttack()
     {
@@ -142,5 +144,8 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         
         _animationScript.SetAttackAnimationSpeed(-1f * modifierToRemove.bonusAttackSpeed);
     }
-    
+
+    public int Id { get; set; }
+    public float CooldownDuration { get; set; }
+    public int numOfCooldowns { get; set; }
 }
