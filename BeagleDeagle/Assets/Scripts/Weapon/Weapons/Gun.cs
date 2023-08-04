@@ -219,7 +219,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager
 
     public void AllowShoot(bool boolean)
     {
-        if (boolean)
+        if (boolean && !_isReloading)
         {
             _shootInputAction.Enable();
         }
