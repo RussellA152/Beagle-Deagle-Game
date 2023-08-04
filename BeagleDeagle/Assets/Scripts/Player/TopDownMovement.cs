@@ -296,6 +296,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         IsRolling = false;
 
         StartCoroutine(RollCooldown());
+        
 
     }
 
