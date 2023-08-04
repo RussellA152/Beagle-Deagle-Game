@@ -110,6 +110,14 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Moving:
                 
                 _animationHandlerScript.PlayMoveAnimation();
+                
+                _movementScript.AllowMovement(true);
+                _movementScript.AllowRotation(true);
+                _gunScript.AllowReload(true);
+                _gunScript.AllowShoot(true);
+                _utilityScript.AllowUtility(true);
+                _ultimateScript.AllowUltimate(true);
+                
                 if (CheckIfIdle())
                     state = PlayerState.Idle;
                 if (CheckIfAttacking())
@@ -139,6 +147,13 @@ public class PlayerController : MonoBehaviour
                 break;
             
             case PlayerState.Attacking:
+                
+                _movementScript.AllowMovement(true);
+                _movementScript.AllowRotation(true);
+                _gunScript.AllowReload(true);
+                _gunScript.AllowShoot(true);
+                _utilityScript.AllowUtility(true);
+                _ultimateScript.AllowUltimate(true);
                 
                 if (CheckIfIdle())
                     state = PlayerState.Idle;

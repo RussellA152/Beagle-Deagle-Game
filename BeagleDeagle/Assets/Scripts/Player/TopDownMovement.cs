@@ -34,19 +34,10 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     [SerializeField] private float rotationRadius = 0.5f;
 
     [Header("Sprite Renderers")]
-    
     [SerializeField] private SpriteRenderer bodySr;
-    
     [SerializeField] private SpriteRenderer headSr;
-
-    
     [SerializeField] private SpriteRenderer weaponSr;
 
-    // [SerializeField] 
-    // private SpriteRenderer rightHandSr;
-    //
-    // [SerializeField] 
-    // private SpriteRenderer leftHandSr;
     
     [Header("Modifiers")]
     // A list of modifiers being applied to the player's movement speed
@@ -60,8 +51,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     List<RaycastHit2D> _castCollisions = new List<RaycastHit2D>();
     
-    
-
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -72,8 +61,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         _movementInputAction = _topDownInput.Player.Move;
         _rotationInputAction = _topDownInput.Player.Look;
         _rollInputAction = _topDownInput.Player.Roll;
-
-
     }
 
     private void OnEnable()
@@ -242,17 +229,17 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     {
         if (_canRoll)
         {
-            Debug.Log("Roll!");
-        
+
             _rb.velocity = Vector2.zero;
 
+            // Add force in the direction the player is moving in, otherwise just roll in the right direction
             if(MovementInput != Vector2.zero)
                 _rb.AddForce(new Vector2(playerData.rollPower.x * MovementInput.x, playerData.rollPower.y * MovementInput.y));
             else
                 _rb.AddForce(new Vector2(playerData.rollPower.x, 0f));
 
-                // Ignore collisions between "Player" and "Enemy" layers
-            Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
+                // Ignore collisions between "Player" and "HitBox" layers
+            Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("HitBox"), true);
         
             // Ignore collisions between "Player" and "Bullet" layers
             Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), true);
@@ -297,14 +284,11 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     /// 
     public void EndRoll()
     {
-        Debug.Log("END Roll!");
-        
         // Reset velocity and don't allow player to be affected by forces anymore
         _rb.velocity = Vector2.zero;
 
-        // Allow collisions between "Player" and "Enemy" layers
-        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"), false);
-        
+        // Allow collisions between "Player" and "HitBox" layers
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("HitBox"), false);
         // Allow collisions between "Player" and "Bullet" layers
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), false);
         
