@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 3378843165075915667}
   - component: {fileID: 1777428645584621154}
   - component: {fileID: 1777428645584621153}
+  - component: {fileID: 6218275219637812029}
   - component: {fileID: 1777428645584621180}
   - component: {fileID: 611969991595103788}
   - component: {fileID: 504447593957459383}
@@ -322,6 +323,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageOverTimeEffects: []
+--- !u!114 &6218275219637812029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777428645584621176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba08b74eeb911614ca6401f78022aaad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1777428645584621180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  cooldownSystem: {fileID: 0}
   pivotPoint: {fileID: 1777428646219782325}
   rotationRadius: 0
   bodySr: {fileID: 1777428645335658747}
@@ -387,6 +401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   ultimateData: {fileID: 11400000, guid: 42f995ffd0be09f4486e341d1899a190, type: 2}
+  CooldownSystem: {fileID: 0}
 --- !u!50 &1777428645584621179
 Rigidbody2D:
   serializedVersion: 4
@@ -840,6 +855,23 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 1fbbb3d1cf289bc49b6d957359758726, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+--- !u!1 &633001574926292172 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4077318060314352049, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+  m_PrefabInstance: {fileID: 3485034837028162941}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3772758450739532324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633001574926292172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba08b74eeb911614ca6401f78022aaad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &633001574926292174 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4077318060314352051, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}

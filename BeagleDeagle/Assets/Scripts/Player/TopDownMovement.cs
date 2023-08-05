@@ -5,10 +5,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
+public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IHasCooldown
 {
     [SerializeField] private PlayerData playerData;
     [SerializeField] private PlayerEvents playerEvents;
+
+    public CooldownSystem cooldownSystem;
     private TopDownInput _topDownInput;
     
     private float _bonusSpeed = 1;
@@ -61,6 +63,11 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         _movementInputAction = _topDownInput.Player.Move;
         _rotationInputAction = _topDownInput.Player.Look;
         _rollInputAction = _topDownInput.Player.Roll;
+
+        cooldownSystem = GetComponent<CooldownSystem>();
+
+        Id = 9;
+        CooldownDuration = playerData.rollCooldown;
     }
 
     private void OnEnable()
@@ -227,7 +234,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
 
     public void OnRoll(CallbackContext context)
     {
-        if (_canRoll)
+        if (!cooldownSystem.IsOnCooldown(Id))
         {
 
             _rb.velocity = Vector2.zero;
@@ -295,30 +302,30 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
         // Player is no longer rolling at the end of the animation
         IsRolling = false;
 
-        StartCoroutine(RollCooldown());
+        cooldownSystem.PutOnCooldown(this);
+        //StartCoroutine(RollCooldown());
         
-
     }
 
-    private IEnumerator RollCooldown()
-    {
-        // Display roll cooldown timer on the UI
-        float remainingTime = playerData.rollCooldown;
-
-        playerEvents.InvokeRollCooldownText(remainingTime);
-        
-        while (remainingTime > 0f)
-        {
-            _canRoll = false;
-            yield return new WaitForSeconds(1f);
-            remainingTime -= 1f;
-            playerEvents.InvokeRollCooldownText(remainingTime);
-        }
-
-        _canRoll = true;
-        playerEvents.InvokeRollCooldownText(remainingTime);
-
-    }
+    // private IEnumerator RollCooldown()
+    // {
+    //     // Display roll cooldown timer on the UI
+    //     float remainingTime = playerData.rollCooldown;
+    //
+    //     playerEvents.InvokeRollCooldownText(remainingTime);
+    //     
+    //     while (remainingTime > 0f)
+    //     {
+    //         _canRoll = false;
+    //         yield return new WaitForSeconds(1f);
+    //         remainingTime -= 1f;
+    //         playerEvents.InvokeRollCooldownText(remainingTime);
+    //     }
+    //
+    //     _canRoll = true;
+    //     playerEvents.InvokeRollCooldownText(remainingTime);
+    //
+    // }
 
     public void AllowMovement(bool boolean)
     {
@@ -358,5 +365,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable
     }
 
     #endregion
-    
+
+    public int Id { get; set; }
+    public float CooldownDuration { get; set; }
+    public int numOfCooldowns { get; set; }
 }

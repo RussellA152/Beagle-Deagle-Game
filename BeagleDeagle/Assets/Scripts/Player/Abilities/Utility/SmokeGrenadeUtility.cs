@@ -6,10 +6,6 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
 {
     private int PoolKey;
     
-    //[SerializeField] 
-    //private SmokeGrenadeUtilityData utilityData;
-    
-    
     protected override void Start()
     {
         base.Start();
