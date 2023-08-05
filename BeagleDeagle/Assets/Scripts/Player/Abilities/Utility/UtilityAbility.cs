@@ -102,7 +102,10 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         
     }
 
-    IEnumerator WaitCooldown()
+    ///-///////////////////////////////////////////////////////////
+    /// Start a cooldown for a utility. Only one cooldown is occuring at a time.
+    /// 
+    private IEnumerator WaitCooldown()
     {
         while (CooldownSystem.IsOnCooldown(Id))
         {
