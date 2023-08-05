@@ -91,6 +91,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     private void Start()
     {
         IsRolling = false;
+        playerEvents.InvokeRollCooldown(Id);
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -236,7 +237,9 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     {
         if (!cooldownSystem.IsOnCooldown(Id))
         {
-
+            // Put roll on cooldown
+            cooldownSystem.PutOnCooldown(this);
+            
             _rb.velocity = Vector2.zero;
 
             // Add force in the direction the player is moving in, otherwise just roll in the right direction
@@ -254,8 +257,26 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
             IsRolling = true;
         }
     }
+    
+    ///-///////////////////////////////////////////////////////////
+    /// At the end of the roll animation, set isRolling to false (* used in roll animation event *)
+    /// 
+    public void EndRoll()
+    {
+        // Reset velocity and don't allow player to be affected by forces anymore
+        _rb.velocity = Vector2.zero;
 
-
+        // Allow collisions between "Player" and "HitBox" layers
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("HitBox"), false);
+        // Allow collisions between "Player" and "Bullet" layers
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), false);
+        
+        // Player is no longer rolling at the end of the animation
+        IsRolling = false;
+        
+        
+    }
+    
     ///-///////////////////////////////////////////////////////////
     ///
     public void OnLook(CallbackContext context)
@@ -285,47 +306,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         }
 
     }
-    
-    ///-///////////////////////////////////////////////////////////
-    /// At the end of the roll animation, set isRolling to false (* used in roll animation event *)
-    /// 
-    public void EndRoll()
-    {
-        // Reset velocity and don't allow player to be affected by forces anymore
-        _rb.velocity = Vector2.zero;
-
-        // Allow collisions between "Player" and "HitBox" layers
-        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("HitBox"), false);
-        // Allow collisions between "Player" and "Bullet" layers
-        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Bullet"), false);
-        
-        // Player is no longer rolling at the end of the animation
-        IsRolling = false;
-
-        cooldownSystem.PutOnCooldown(this);
-        //StartCoroutine(RollCooldown());
-        
-    }
-
-    // private IEnumerator RollCooldown()
-    // {
-    //     // Display roll cooldown timer on the UI
-    //     float remainingTime = playerData.rollCooldown;
-    //
-    //     playerEvents.InvokeRollCooldownText(remainingTime);
-    //     
-    //     while (remainingTime > 0f)
-    //     {
-    //         _canRoll = false;
-    //         yield return new WaitForSeconds(1f);
-    //         remainingTime -= 1f;
-    //         playerEvents.InvokeRollCooldownText(remainingTime);
-    //     }
-    //
-    //     _canRoll = true;
-    //     playerEvents.InvokeRollCooldownText(remainingTime);
-    //
-    // }
 
     public void AllowMovement(bool boolean)
     {
@@ -365,8 +345,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     }
 
     #endregion
-
+    
     public int Id { get; set; }
     public float CooldownDuration { get; set; }
-    public int numOfCooldowns { get; set; }
 }

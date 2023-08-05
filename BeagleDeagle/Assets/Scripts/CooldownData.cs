@@ -7,6 +7,8 @@ using UnityEngine;
 public class CooldownData
 {
     public int Id { get;  }
+
+    public float startingTime { get; private set; }
     public float RemainingTime { get; private set; }
     
 
@@ -16,6 +18,8 @@ public class CooldownData
     public CooldownData(IHasCooldown cooldown)
     {
         Id = cooldown.Id;
+        
+        startingTime = cooldown.CooldownDuration;
         RemainingTime = cooldown.CooldownDuration;
     }
 

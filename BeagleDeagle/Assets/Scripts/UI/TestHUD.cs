@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,7 +37,6 @@ public class TestHUD : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ultimateNameText;
     
     [SerializeField] private TextMeshProUGUI ultimateCooldownText;
-
 
     private void OnEnable()
     {
@@ -77,8 +77,9 @@ public class TestHUD : MonoBehaviour
         playerEvents.onPlayerUltimateAbilityCooldown -= UpdateUltimateAbilityCooldownText;
 
         playerEvents.onPlayerUltimateAbilityNameChanged -= UpdateUltimateAbilityNameText;
+        
     }
-
+    
     public void UpdateOnPlayerCurrentHealthText(float currentHealth)
     {
         currentHealthText.text = currentHealth.ToString();

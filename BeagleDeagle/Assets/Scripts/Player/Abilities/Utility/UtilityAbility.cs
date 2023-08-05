@@ -41,7 +41,6 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
         Id = 12;
         
-        
         CooldownDuration = currentUtilityData.cooldown;
     }
 
@@ -54,7 +53,6 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         CooldownSystem.OnCooldownEnded += UtilityUsesModified;
         
         playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
-        playerEvents.InvokeUtilityNameUpdatedEvent(currentUtilityData.abilityName);
     }
 
     private void OnDisable()
@@ -66,7 +64,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     
     protected virtual void Start()
     {
-        playerEvents.InvokeUtilityNameUpdatedEvent(currentUtilityData.abilityName);
+        playerEvents.InvokeUtilityCooldown(Id);
     }
     
     public void ActivateUtility(CallbackContext context)
@@ -178,7 +176,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     }
 
     #endregion
-
+    
     public int Id { get; set; }
     public float CooldownDuration { get; set; }
 }

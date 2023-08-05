@@ -64,8 +64,22 @@ public class CooldownSystem : MonoBehaviour
         //If we couldn't find it, its false
         return false;
     }
-    
-    
+
+    public float GetStartingDuration(int id)
+    {
+        foreach (CooldownData cooldown in _cooldowns)
+        {
+            if (cooldown.Id != id)
+            {
+                continue;
+            }
+
+            //return cooldown time
+            return cooldown.startingTime;
+        }
+
+        return 0f;
+    }
 
     ///-///////////////////////////////////////////////////////////
     /// Returns the specific cooldowns remaining time 

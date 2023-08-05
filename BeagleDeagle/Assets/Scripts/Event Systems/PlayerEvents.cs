@@ -28,6 +28,10 @@ public class PlayerEvents : ScriptableObject
     public event Action<float> onPlayerUltimateAbilityCooldown; // Pass a reference to how much time is left on the player's ultimate ability cooldown
 
     public event Action<string> onPlayerUltimateAbilityNameChanged; // Pass a reference to the name of the player's ultimate ability (invoked when the player obtains a new ultimate ability. Mainly for debugging)
+    
+    public event Action<int> givePlayerRollCooldownId; 
+    public event Action<int> giveUtilityCooldownId; 
+    public event Action<int> giveUltimateCooldownId; 
 
     // Call this function when the player's ultimate ability concluded
     public event Action onPlayerUltimateEnded;  
@@ -63,38 +67,32 @@ public class PlayerEvents : ScriptableObject
         onPlayerBulletsLoadedChanged?.Invoke(ammoLoaded);
     }
 
-    ///-///////////////////////////////////////////////////////////
-    /// When the player uses their roll ability, pass the roll cooldown to UI.
-    /// 
-    public void InvokeRollCooldownText(float timeLeft)
+    public void InvokeRollCooldown(int id)
     {
-        onPlayerRollStartsCooldown?.Invoke(timeLeft);
+        
+        givePlayerRollCooldownId?.Invoke(id);
     }
-
+    public void InvokeUtilityCooldown(int id)
+    {
+        
+        giveUtilityCooldownId?.Invoke(id);
+    }
+    public void InvokeUltimateCooldown(int id)
+    {
+        
+        giveUltimateCooldownId?.Invoke(id);
+    }
+    
     // When the player uses a utility ability, invoke this function.
     // This should Pass around the current number of uses that the player's currently utility has (ex. HUD needs to update utility uses display)
     public void InvokeUtilityUsesUpdatedEvent(int uses)
     {
         onPlayerUtilityUsesUpdated?.Invoke(uses);
     }
-    public void InvokeUtilityNameUpdatedEvent(string name)
-    {
-        onPlayerUtilityNameChanged?.Invoke(name);
-    }
-
+    
     public void InvokeUltimateAbilityEnded()
     {
         onPlayerUltimateEnded?.Invoke();
-    }
-
-    public void InvokeUltimateAbilityCooldownEvent(float timeLeft)
-    {
-        onPlayerUltimateAbilityCooldown?.Invoke(timeLeft);
-    }
-
-    public void InvokeUltimateNameUpdatedEvent(string name)
-    {
-        onPlayerUltimateAbilityNameChanged?.Invoke(name);
     }
 
 }
