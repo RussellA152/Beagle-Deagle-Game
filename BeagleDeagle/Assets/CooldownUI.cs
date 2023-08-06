@@ -11,8 +11,9 @@ public class CooldownUI : MonoBehaviour
     [SerializeField] private PlayerEvents playerEvents;
 
     private Canvas parentCanvas;
-
-    [Header("Reload Cooldown UI")]
+    
+    [Header("Reload Cooldown UI")] 
+    [SerializeField] private RectTransform reloadFillRecTransform;
     [SerializeField] private Image reloadFillImage;
 
     [Header("Roll Cooldown UI")] 
@@ -64,17 +65,17 @@ public class CooldownUI : MonoBehaviour
         GameObject player = GameObject.FindWithTag("Player");
         
         _playerCooldownSystem = player.GetComponent<CooldownSystem>();
-        //_playerWeaponCooldownSystem = player.GetComponentInChildren<CooldownSystem>();
-        
+
         // Don't show roll progression until player rolls for the first time
         rollSlider.gameObject.SetActive(false);
+        reloadFillRecTransform.gameObject.SetActive(false);
     }
 
     private void Update()
     {
         HideRollFill();
         
-        //ShowReloadFillOnCursor();
+        ShowReloadFillOnCursor();
         
         ReloadFill();
         RollFill();
@@ -97,20 +98,21 @@ public class CooldownUI : MonoBehaviour
                 parentCanvas.worldCamera,
                 out uiPosition);
 
-            reloadFillImage.rectTransform.localPosition = uiPosition;
+            reloadFillRecTransform.localPosition = uiPosition;
 
-            //Cursor.visible = false;
+            Cursor.visible = false;
         }
-        // else
-        // {
-        //     Cursor.visible = true;
-        // }
+        else
+        {
+            Cursor.visible = true;
+        }
         
     }
     private void ReloadFill()
     {
         if (_playerCooldownSystem.IsOnCooldown(_reloadCooldownId))
         {
+            reloadFillRecTransform.gameObject.SetActive(true);
             float reloadCooldownTime = _playerCooldownSystem.GetRemainingDuration(_reloadCooldownId) /
                                        _playerCooldownSystem.GetStartingDuration(_reloadCooldownId);
             if (reloadCooldownTime > 0f)
@@ -121,6 +123,7 @@ public class CooldownUI : MonoBehaviour
         
         else
         {
+            reloadFillRecTransform.gameObject.SetActive(false);
             reloadFillImage.fillAmount = 0f;
         }
     }
@@ -139,7 +142,7 @@ public class CooldownUI : MonoBehaviour
         _rollFillDisplayTime += Time.deltaTime;
         
         if (rollSlider.value <= 0f) {
-            if (_rollFillDisplayTime >= 0.75f)
+            if (_rollFillDisplayTime >= 0.6f)
             {
                 rollSlider.gameObject.SetActive(false);
             }
