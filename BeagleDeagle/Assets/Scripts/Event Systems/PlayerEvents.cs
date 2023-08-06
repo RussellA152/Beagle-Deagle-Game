@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 /// <summary>
 /// A series of significant events caused by player actions. Some including when the player's health changes, obtains an upgrade to their gun,
@@ -28,7 +27,8 @@ public class PlayerEvents : ScriptableObject
     public event Action<float> onPlayerUltimateAbilityCooldown; // Pass a reference to how much time is left on the player's ultimate ability cooldown
 
     public event Action<string> onPlayerUltimateAbilityNameChanged; // Pass a reference to the name of the player's ultimate ability (invoked when the player obtains a new ultimate ability. Mainly for debugging)
-    
+
+    public event Action<int> givePlayerReloadCooldownId;
     public event Action<int> givePlayerRollCooldownId; 
     public event Action<int> giveUtilityCooldownId; 
     public event Action<int> giveUltimateCooldownId; 
@@ -66,20 +66,21 @@ public class PlayerEvents : ScriptableObject
         //Debug.Log("Ammo is: " + ammoLoaded);
         onPlayerBulletsLoadedChanged?.Invoke(ammoLoaded);
     }
-
+    public void InvokeReloadCooldown(int id)
+    {
+        givePlayerReloadCooldownId?.Invoke(id);
+    }
+    
     public void InvokeRollCooldown(int id)
     {
-        
         givePlayerRollCooldownId?.Invoke(id);
     }
     public void InvokeUtilityCooldown(int id)
     {
-        
         giveUtilityCooldownId?.Invoke(id);
     }
     public void InvokeUltimateCooldown(int id)
     {
-        
         giveUltimateCooldownId?.Invoke(id);
     }
     

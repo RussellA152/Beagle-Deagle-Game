@@ -3,16 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class CooldownUI : MonoBehaviour
 {
     [SerializeField] private PlayerEvents playerEvents;
 
-    [Header("Roll Cooldown UI")]
-    [SerializeField] private Image rollFillImage;
+    private Canvas parentCanvas;
 
-    [SerializeField] private Image rollFillBorder;
+    [Header("Reload Cooldown UI")]
+    [SerializeField] private Image reloadFillImage;
+
+    [Header("Roll Cooldown UI")] 
+    [SerializeField] private Slider rollSlider;
 
     [Header("Utility Cooldown UI")]
     [SerializeField] private Image utilityFillImage;
@@ -25,15 +29,22 @@ public class CooldownUI : MonoBehaviour
     
     private CooldownSystem _playerCooldownSystem;
 
+    private int _reloadCooldownId;
     private int _rollCooldownId;
     private int _utilityCooldownId;
     private int _ultimateCooldownId;
 
     // Duration that the roll progression bar has been on the screen (after roll cooldown finishes)
     private float _rollFillDisplayTime;
-    
+
+    private void Awake()
+    {
+        parentCanvas = GetComponent<Canvas>();
+    }
+
     private void OnEnable()
     {
+        playerEvents.givePlayerReloadCooldownId += SetReloadCooldownId;
         playerEvents.givePlayerRollCooldownId += SetRollCooldownId;
         playerEvents.giveUtilityCooldownId += SetUtilityCooldownId;
         playerEvents.giveUltimateCooldownId += SetUltimateCooldownId;
@@ -42,6 +53,7 @@ public class CooldownUI : MonoBehaviour
 
     private void OnDisable()
     {
+        playerEvents.givePlayerReloadCooldownId -= SetReloadCooldownId;
         playerEvents.givePlayerRollCooldownId -= SetRollCooldownId;
         playerEvents.giveUtilityCooldownId -= SetUtilityCooldownId;
         playerEvents.giveUltimateCooldownId -= SetUltimateCooldownId;
@@ -52,31 +64,84 @@ public class CooldownUI : MonoBehaviour
         GameObject player = GameObject.FindWithTag("Player");
         
         _playerCooldownSystem = player.GetComponent<CooldownSystem>();
+        //_playerWeaponCooldownSystem = player.GetComponentInChildren<CooldownSystem>();
         
         // Don't show roll progression until player rolls for the first time
-        rollFillImage.enabled = false;
-        rollFillBorder.enabled = false;
+        rollSlider.gameObject.SetActive(false);
     }
 
     private void Update()
     {
         HideRollFill();
         
+        //ShowReloadFillOnCursor();
+        
+        ReloadFill();
         RollFill();
         UtilityFill();
         UltimateFill();
     }
 
+    #region Reload Cooldown
+
+    private void ShowReloadFillOnCursor()
+    {
+        if (_playerCooldownSystem.IsOnCooldown(_reloadCooldownId))
+        {
+            Vector2 mousePosition = Mouse.current.position.ReadValue();
+            Vector2 uiPosition;
+
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                parentCanvas.transform as RectTransform,
+                mousePosition,
+                parentCanvas.worldCamera,
+                out uiPosition);
+
+            reloadFillImage.rectTransform.localPosition = uiPosition;
+
+            //Cursor.visible = false;
+        }
+        // else
+        // {
+        //     Cursor.visible = true;
+        // }
+        
+    }
+    private void ReloadFill()
+    {
+        if (_playerCooldownSystem.IsOnCooldown(_reloadCooldownId))
+        {
+            float reloadCooldownTime = _playerCooldownSystem.GetRemainingDuration(_reloadCooldownId) /
+                                       _playerCooldownSystem.GetStartingDuration(_reloadCooldownId);
+            if (reloadCooldownTime > 0f)
+            {
+                reloadFillImage.fillAmount = reloadCooldownTime;
+            }
+        }
+        
+        else
+        {
+            reloadFillImage.fillAmount = 0f;
+        }
+    }
+
+    private void SetReloadCooldownId(int id)
+    {
+        _reloadCooldownId = id;
+    }
+    
+
+    #endregion
+    
     #region Roll Cooldown
     private void HideRollFill()
     {
         _rollFillDisplayTime += Time.deltaTime;
         
-        if (rollFillImage.fillAmount <= 0f) {
+        if (rollSlider.value <= 0f) {
             if (_rollFillDisplayTime >= 0.75f)
             {
-                rollFillImage.enabled = false;
-                rollFillBorder.enabled = false;
+                rollSlider.gameObject.SetActive(false);
             }
         }
         else
@@ -89,20 +154,19 @@ public class CooldownUI : MonoBehaviour
     {
         if (_playerCooldownSystem.IsOnCooldown(_rollCooldownId))
         {
-            rollFillImage.enabled = true;
-            rollFillBorder.enabled = true;
+            rollSlider.gameObject.SetActive(true);
             
             float rollCooldownTime = _playerCooldownSystem.GetRemainingDuration(_rollCooldownId) /
                                      _playerCooldownSystem.GetStartingDuration(_rollCooldownId);
             if (rollCooldownTime > 0f)
             {
-                rollFillImage.fillAmount = rollCooldownTime;
+                rollSlider.value = rollCooldownTime;
             }
         }
         
         else
         {
-            rollFillImage.fillAmount = 0f;
+            rollSlider.value = 0f;
         }
         
     }

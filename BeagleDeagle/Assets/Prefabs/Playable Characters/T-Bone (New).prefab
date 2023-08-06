@@ -385,6 +385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   currentUtilityData: {fileID: 11400000, guid: 2ae24b0ad22356d43b0a4f479c67cc1d, type: 2}
+  CooldownSystem: {fileID: 0}
   utilityCooldownModifiers: []
   utilityUsesModifiers: []
 --- !u!114 &504447593957459383
@@ -855,23 +856,6 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 1fbbb3d1cf289bc49b6d957359758726, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
---- !u!1 &633001574926292172 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4077318060314352049, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
-  m_PrefabInstance: {fileID: 3485034837028162941}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3772758450739532324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633001574926292172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba08b74eeb911614ca6401f78022aaad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &633001574926292174 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4077318060314352051, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}

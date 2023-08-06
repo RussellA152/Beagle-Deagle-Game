@@ -65,7 +65,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
-        CooldownSystem = GetComponent<CooldownSystem>();
+        // Fetch cooldown system component from the player gameObject (always the parent of their gun)
+        CooldownSystem = GetComponentInParent<CooldownSystem>();
         
         _topDownInput = new TopDownInput();
 
@@ -83,6 +84,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
     private void Start()
     {
         playerEvents.InvokeUpdateAmmoLoadedText(Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad));
+        playerEvents.InvokeReloadCooldown(Id);
 
         _lastTimeShot = 0f;
         _timeElapsedSinceShot = 0f;
