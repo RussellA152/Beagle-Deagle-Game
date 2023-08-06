@@ -28,16 +28,6 @@ public class TestHUD : MonoBehaviour
     
     [SerializeField] private TextMeshProUGUI maxHealthText;
     
-    [SerializeField] private TextMeshProUGUI rollCooldownText;
-    
-    [SerializeField] private TextMeshProUGUI utilityNameText;
-    
-    [SerializeField] private TextMeshProUGUI utilityUsesText;
-    
-    [SerializeField] private TextMeshProUGUI ultimateNameText;
-    
-    [SerializeField] private TextMeshProUGUI ultimateCooldownText;
-
     private void OnEnable()
     {
         wavesBegan.changeHUDTextEvent += UpdateWaveMessageText;
@@ -46,17 +36,8 @@ public class TestHUD : MonoBehaviour
 
         playerEvents.onPlayerMaxHealthChanged += UpdateOnPlayerMaxHealthText;
 
-        playerEvents.onPlayerRollStartsCooldown += UpdateRollStartsCooldownCooldownText;
-
-        playerEvents.onPlayerUtilityUsesUpdated += UpdateUtilityUsesText;
-
-        playerEvents.onPlayerUtilityNameChanged += UpdateUtilityNameText;
-
         playerEvents.onPlayerBulletsLoadedChanged += UpdateAmmoText;
 
-        playerEvents.onPlayerUltimateAbilityCooldown += UpdateUltimateAbilityCooldownText;
-
-        playerEvents.onPlayerUltimateAbilityNameChanged += UpdateUltimateAbilityNameText;
 
     }
 
@@ -68,15 +49,8 @@ public class TestHUD : MonoBehaviour
 
         playerEvents.onPlayerMaxHealthChanged -= UpdateOnPlayerMaxHealthText;
 
-        playerEvents.onPlayerUtilityUsesUpdated -= UpdateUtilityUsesText;
-
-        playerEvents.onPlayerUtilityNameChanged -= UpdateUtilityNameText;
-
         playerEvents.onPlayerBulletsLoadedChanged -= UpdateAmmoText;
-
-        playerEvents.onPlayerUltimateAbilityCooldown -= UpdateUltimateAbilityCooldownText;
-
-        playerEvents.onPlayerUltimateAbilityNameChanged -= UpdateUltimateAbilityNameText;
+        
         
     }
     
@@ -94,36 +68,10 @@ public class TestHUD : MonoBehaviour
     {
         waveMessageText.text = newText;
     }
-
-    public void UpdateRollStartsCooldownCooldownText(float rollCooldownTime)
-    {
-        rollCooldownText.text = ((int) rollCooldownTime).ToString() + " seconds";
-    }
-
+    
     public void UpdateAmmoText(int bulletsLoaded)
     {
         ammoMagText.text = bulletsLoaded.ToString();
-    }
-
-    public void UpdateUtilityUsesText(int uses)
-    {
-        utilityUsesText.text = uses.ToString();
-    }
-
-    public void UpdateUtilityNameText(string name)
-    {
-        utilityNameText.text = name;
-    }
-
-    public void UpdateUltimateAbilityCooldownText(float timeLeft)
-    {
-        ultimateCooldownText.text = ((int) timeLeft).ToString() + " seconds";
-    }
-
-    public void UpdateUltimateAbilityNameText(string name)
-    {
-        Debug.Log("Name is: " + name);
-        ultimateNameText.text = name;
     }
 
 }
