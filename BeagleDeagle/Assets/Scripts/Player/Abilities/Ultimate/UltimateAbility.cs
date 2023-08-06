@@ -48,6 +48,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
         _canUseUltimate = false;
         
         playerEvents.InvokeUltimateCooldown(Id);
+        playerEvents.InvokeNewUltimate(ultimateData);
     }
 
     ///-///////////////////////////////////////////////////////////

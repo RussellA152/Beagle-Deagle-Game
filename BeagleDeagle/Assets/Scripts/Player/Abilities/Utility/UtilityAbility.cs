@@ -61,6 +61,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     protected virtual void Start()
     {
         playerEvents.InvokeUtilityCooldown(Id);
+        playerEvents.InvokeNewUtility(currentUtilityData);
         playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
     }
     

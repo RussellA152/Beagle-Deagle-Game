@@ -18,16 +18,11 @@ public class PlayerEvents : ScriptableObject
 
     public event Action<int> onPlayerBulletsLoadedChanged; // Pass a reference to the player's current ammo loaded (invoked when the player's ammo changes)
 
-    public event Action<float> onPlayerRollStartsCooldown; // Pass a reference to the roll's current cooldown time
-
+    public event Action<UtilityAbilityData> onPlayerObtainedNewUtility; 
     public event Action<int> onPlayerUtilityUsesUpdated; // Pass a reference to the player's utility uses (invoked when the player uses their utility ability)
-
-    public event Action<string> onPlayerUtilityNameChanged; // Pass a reference to the name of the player's utility ability (invoked when the player obtains a new utility ability. Mainly for debugging)
-
-    public event Action<float> onPlayerUltimateAbilityCooldown; // Pass a reference to how much time is left on the player's ultimate ability cooldown
-
-    public event Action<string> onPlayerUltimateAbilityNameChanged; // Pass a reference to the name of the player's ultimate ability (invoked when the player obtains a new ultimate ability. Mainly for debugging)
-
+    
+    
+    public event Action<UltimateAbilityData> onPlayerObtainedNewUltimate; 
     public event Action<int> givePlayerReloadCooldownId;
     public event Action<int> givePlayerRollCooldownId; 
     public event Action<int> giveUtilityCooldownId; 
@@ -83,7 +78,16 @@ public class PlayerEvents : ScriptableObject
     {
         giveUltimateCooldownId?.Invoke(id);
     }
+
+    public void InvokeNewUtility(UtilityAbilityData newUtilityData)
+    {
+        onPlayerObtainedNewUtility?.Invoke(newUtilityData);
+    }
     
+    public void InvokeNewUltimate(UltimateAbilityData newUltimateData)
+    {
+        onPlayerObtainedNewUltimate?.Invoke(newUltimateData);
+    }
     // When the player uses a utility ability, invoke this function.
     // This should Pass around the current number of uses that the player's currently utility has (ex. HUD needs to update utility uses display)
     public void InvokeUtilityUsesUpdatedEvent(int uses)

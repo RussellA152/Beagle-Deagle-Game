@@ -19,14 +19,20 @@ public class TestHUD : MonoBehaviour
 
     [Header("Text Fields")]
     [SerializeField] private TextMeshProUGUI ammoMagText;
-    
-    [SerializeField] private TextMeshProUGUI maxAmmoText;
-    
+
     [SerializeField] private TextMeshProUGUI waveMessageText;
-    
-    [SerializeField] private TextMeshProUGUI currentHealthText;
+
+    [SerializeField] private Image healthBar;
+    //[SerializeField] private TextMeshProUGUI currentHealthText;
     
     [SerializeField] private TextMeshProUGUI maxHealthText;
+
+    [SerializeField] private Image utilityImage;
+    [SerializeField] private Image utilityImageFill;
+    
+    [SerializeField] private Image ultimateImage;
+    [SerializeField] private Image ultimateImageFill;
+    
     
     private void OnEnable()
     {
@@ -34,11 +40,12 @@ public class TestHUD : MonoBehaviour
 
         playerEvents.onPlayerCurrentHealthChanged += UpdateOnPlayerCurrentHealthText;
 
-        playerEvents.onPlayerMaxHealthChanged += UpdateOnPlayerMaxHealthText;
+        //playerEvents.onPlayerMaxHealthChanged
+
+        playerEvents.onPlayerObtainedNewUltimate += UpdateUltimateImage;
+        playerEvents.onPlayerObtainedNewUtility += UpdateUtilityImage;
 
         playerEvents.onPlayerBulletsLoadedChanged += UpdateAmmoText;
-
-
     }
 
     private void OnDisable()
@@ -47,31 +54,41 @@ public class TestHUD : MonoBehaviour
 
         playerEvents.onPlayerCurrentHealthChanged -= UpdateOnPlayerCurrentHealthText;
 
-        playerEvents.onPlayerMaxHealthChanged -= UpdateOnPlayerMaxHealthText;
-
+        //playerEvents.onPlayerMaxHealthChanged -= UpdateOnPlayerMaxHealthText;
+        
+        playerEvents.onPlayerObtainedNewUltimate -= UpdateUltimateImage;
+        playerEvents.onPlayerObtainedNewUtility -= UpdateUtilityImage;
+        
         playerEvents.onPlayerBulletsLoadedChanged -= UpdateAmmoText;
-        
-        
     }
     
-    public void UpdateOnPlayerCurrentHealthText(float currentHealth)
+    private void UpdateOnPlayerCurrentHealthText(float currentHealth)
     {
-        currentHealthText.text = currentHealth.ToString();
+        //healthBar.fillAmount = currentHealth / ;
+        //currentHealthText.text = currentHealth.ToString();
     }
+    
 
-    public void UpdateOnPlayerMaxHealthText(float maxHealth)
-    {
-        maxHealthText.text = maxHealth.ToString();
-    }
-
-    public void UpdateWaveMessageText(string newText)
+    private void UpdateWaveMessageText(string newText)
     {
         waveMessageText.text = newText;
     }
     
-    public void UpdateAmmoText(int bulletsLoaded)
+    private void UpdateAmmoText(int bulletsLoaded)
     {
         ammoMagText.text = bulletsLoaded.ToString();
+    }
+
+    private void UpdateUtilityImage(UtilityAbilityData utility)
+    {
+        utilityImage.sprite = utility.abilitySprite;
+        utilityImageFill.sprite = utility.abilitySprite;
+    }
+    
+    private void UpdateUltimateImage(UltimateAbilityData ultimate)
+    {
+        ultimateImage.sprite = ultimate.abilitySprite;
+        ultimateImageFill.sprite = ultimate.abilitySprite;
     }
 
 }

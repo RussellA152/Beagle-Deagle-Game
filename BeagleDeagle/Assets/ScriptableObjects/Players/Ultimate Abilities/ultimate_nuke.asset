@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ultimate_nuke
   m_EditorClassIdentifier: 
   abilityName: Nuclear Bomb
+  abilitySprite: {fileID: 21300000, guid: 47147c2120c657a49b8ef77fc8a073fc, type: 3}
   abilityDamage: 200
   cooldown: 3
   duration: 6
