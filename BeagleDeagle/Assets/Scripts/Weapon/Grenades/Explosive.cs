@@ -55,7 +55,6 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
         // Play explosion sound
 
         // Screen shake
-        Debug.Log("EXPLODE! " + name);
     }
 
     public void SetDamage(float explosiveDamage)
@@ -67,33 +66,7 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
     {
         Duration = explosiveDuration;
     }
-
-    // protected bool CheckObstruction(Collider2D targetCollider)
-    // {
-    //     if (explosiveData.hitThroughWalls)
-    //     {
-    //         return false;
-    //     }
-    //     
-    //     Vector3 targetPosition = targetCollider.transform.position;
-    //     Vector3 direction = targetPosition - transform.position;
-    //     float distance = direction.magnitude;
-    //
-    //     // Exclude the target if there is an obstruction between the explosion source and the target
-    //     RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, distance, _wallLayerMask);
-    //
-    //     if (hit.collider != null)
-    //     {
-    //         Debug.Log("OBSTRUCTION FOUND!");
-    //         // There is an obstruction, so skip this target
-    //         return true;
-    //     }
-    //     else
-    //     {
-    //         // If no obstruction found, allow this target to be affected by the explosion
-    //         return false;
-    //     }
-    // }
+    
 
     public void UpdateScriptableObject(ExplosiveData scriptableObject)
     {

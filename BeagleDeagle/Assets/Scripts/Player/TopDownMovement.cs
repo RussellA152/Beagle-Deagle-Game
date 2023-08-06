@@ -222,12 +222,12 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
     ///-///////////////////////////////////////////////////////////
     ///
-    public void OnMove(CallbackContext context)
+    private void OnMove(CallbackContext context)
     {
         MovementInput = _movementInputAction.ReadValue<Vector2>();
     }
 
-    public void OnMoveCancel(CallbackContext context)
+    private void OnMoveCancel(CallbackContext context)
     {
         _rb.velocity = Vector2.zero;
         MovementInput = Vector2.zero;
@@ -283,25 +283,25 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     {
         if (_rotationInputAction.ReadValue<Vector2>() != Vector2.zero)
         {
-            // If the current input is a mouse
-            if (context.control.displayName == "Delta")
+            switch (context.control.displayName)
             {
-                // Find the position of the mouse on the screen
-                Vector3 mousePos = Mouse.current.position.ReadValue();
+                // If the current input is a mouse
+                case "Delta":
+                {
+                    // Find the position of the mouse on the screen
+                    Vector3 mousePos = Mouse.current.position.ReadValue();
 
-                // Convert that mouse position to a coordinate in world space
-                Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+                    // Convert that mouse position to a coordinate in world space
+                    Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-                _rotationInput = worldPos - _capsuleCollider2D.bounds.center;
-
-
-            }
-            // If the current input is a gamepad
-            else if (context.control.displayName == "Right Stick")
-            {
-                // Read _rotationInput straight from the joystick movement
-                _rotationInput = _rotationInputAction.ReadValue<Vector2>();
-
+                    _rotationInput = worldPos - _capsuleCollider2D.bounds.center;
+                    break;
+                }
+                // If the current input is a gamepad
+                case "Right Stick":
+                    // Read _rotationInput straight from the joystick movement
+                    _rotationInput = _rotationInputAction.ReadValue<Vector2>();
+                    break;
             }
         }
 

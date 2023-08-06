@@ -51,8 +51,6 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         _utilityUses = currentUtilityData.maxUses;
 
         CooldownSystem.OnCooldownEnded += UtilityUsesModified;
-        
-        playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
     }
 
     private void OnDisable()
@@ -65,6 +63,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     protected virtual void Start()
     {
         playerEvents.InvokeUtilityCooldown(Id);
+        playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
     }
     
     public void ActivateUtility(CallbackContext context)
