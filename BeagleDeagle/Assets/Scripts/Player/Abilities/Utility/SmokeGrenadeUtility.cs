@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
 {
-    private int PoolKey;
+    private int _poolKey;
     
     protected override void Start()
     {
         base.Start();
         
-        PoolKey = currentUtilityData.smokeGrenadePrefab.GetComponent<IPoolable>().PoolKey;
+        _poolKey = currentUtilityData.smokeGrenadePrefab.GetComponent<IPoolable>().PoolKey;
 
     }
     
     protected override void UtilityAction(GameObject player)
     {
         // Fetch a grenade from the object pool
-        GameObject grenade = ObjectPooler.instance.GetPooledObject(PoolKey);
+        GameObject grenade = ObjectPooler.instance.GetPooledObject(_poolKey);
         
         
         // Find direction that player is looking in

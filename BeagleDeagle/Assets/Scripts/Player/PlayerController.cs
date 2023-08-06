@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
                 
                 _movementScript.AllowMovement(true);
                 _movementScript.AllowRotation(false);
-                _gunScript.AllowReload(false);
+                //_gunScript.AllowReload(false);
                 _gunScript.AllowShoot(false);
                 _utilityScript.AllowUtility(false);
                 _ultimateScript.AllowUltimate(false);
