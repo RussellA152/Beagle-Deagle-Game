@@ -71,13 +71,11 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         // We also take into account any items that upgraded the number of uses on their utility ability
         if (_canUseUtility && ((_utilityUses + _bonusUtilityUses) > 0))
         {
-            Debug.Log("Activate utility!");
-
             _utilityUses--;
             
             Debug.Log(CooldownSystem.GetRemainingDuration(Id));
                 
-            UtilityAction(gameObject);
+            UtilityAction();
             
             playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
             
@@ -86,7 +84,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         }
     }
 
-    protected abstract void UtilityAction(GameObject player);
+    protected abstract void UtilityAction();
 
     private void UtilityUsesModified(int id)
     {

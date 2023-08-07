@@ -5,6 +5,8 @@ using UnityEngine;
 public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
 {
     private int _poolKey;
+
+    private TopDownMovement _playerMovementScript;
     
     protected override void Start()
     {
@@ -12,16 +14,17 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
         
         _poolKey = currentUtilityData.smokeGrenadePrefab.GetComponent<IPoolable>().PoolKey;
 
+        _playerMovementScript = gameObject.GetComponent<TopDownMovement>();
     }
     
-    protected override void UtilityAction(GameObject player)
+    protected override void UtilityAction()
     {
         // Fetch a grenade from the object pool
-        GameObject grenade = ObjectPooler.instance.GetPooledObject(_poolKey);
+        GameObject grenade = ObjectPooler.Instance.GetPooledObject(_poolKey);
         
         
         // Find direction that player is looking in
-        Vector2 aimDirection = player.GetComponent<TopDownMovement>().ReturnPlayerDirection().normalized;
+        Vector2 aimDirection = _playerMovementScript.ReturnPlayerDirection().normalized;
         
         Debug.Log(aimDirection);
 
@@ -39,7 +42,7 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
         slowComponent.UpdateScriptableObject(currentUtilityData.slowData);
 
         // Make grenade spawn at player's position
-        grenade.transform.position = player.transform.position;
+        grenade.transform.position = gameObject.transform.position;
 
         grenade.SetActive(true);
 

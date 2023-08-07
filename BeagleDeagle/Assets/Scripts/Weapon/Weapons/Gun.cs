@@ -190,7 +190,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
         //weaponData.bulletSpawnPoint = bulletSpawnPoint;
         
         // Fetch a bullet from object pooler
-        GameObject newBullet = ObjectPooler.instance.GetPooledObject(_bulletPoolKey);
+        GameObject newBullet = ObjectPooler.Instance.GetPooledObject(_bulletPoolKey);
 
         if (newBullet != null)
         {

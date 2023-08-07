@@ -7,6 +7,8 @@ using UnityEngine;
 public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
 {
     private int PoolKey;
+
+    private TopDownMovement _playerMovementScript;
     
     protected override void Start()
     {
@@ -14,14 +16,16 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
         
         PoolKey = currentUtilityData.mightyFootPrefab.GetComponent<IPoolable>().PoolKey;
 
+        _playerMovementScript = gameObject.GetComponent<TopDownMovement>();
+
     }
-    protected override void UtilityAction(GameObject player)
+    protected override void UtilityAction()
     {
         // Fetch a grenade from the object pool
-        GameObject mightyFootGameObject = ObjectPooler.instance.GetPooledObject(PoolKey);
+        GameObject mightyFootGameObject = ObjectPooler.Instance.GetPooledObject(PoolKey);
         
         // Find direction that player is looking in
-        Vector2 aimDirection = player.GetComponent<TopDownMovement>().ReturnPlayerDirection().normalized;
+        Vector2 aimDirection = _playerMovementScript.ReturnPlayerDirection().normalized;
 
         MightyFootBullet bulletComponent = mightyFootGameObject.GetComponent<MightyFootBullet>();
 
@@ -43,7 +47,7 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
         
         
 
-        mightyFootGameObject.transform.position = (Vector2) (player.transform.position) + aimDirection + new Vector2(currentUtilityData.offset.x, currentUtilityData.offset.y);
+        mightyFootGameObject.transform.position = (Vector2) (gameObject.transform.position) + aimDirection + new Vector2(currentUtilityData.offset.x, currentUtilityData.offset.y);
 
         float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         

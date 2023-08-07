@@ -9,31 +9,31 @@ public class ObjectPoolItem
 
     public GameObject objectToPool;
 
-    public bool shouldExpand; // should this item be allowed to instaniate more objects if needed?
+    public bool shouldExpand; // Should this item be allowed to instantiate more objects if needed?
 
     public Transform container; 
 
     [NonReorderable]
-    public List<GameObject> pooled;
+    public List<GameObject> pooled; // All objects in the respective pool
 
     [HideInInspector]
-    public int poolKey; // this is a cached reference of the pool key that belongs to the IPoolable gameobject
+    public int poolKey; // A cached reference of the pool key that belongs to the IPoolable gameObject
 
 }
 
 public class ObjectPooler : MonoBehaviour
 {
-    public static ObjectPooler instance;
+    public static ObjectPooler Instance;
 
     [NonReorderable]
     public List<ObjectPoolItem> itemsToPool;
 
-    private object lockObject = new object(); // Create a private lock object for synchronization
+    private object _lockObject = new object(); // Create a private lock object for synchronization
 
 
     void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
     // Start is called before the first frame update
@@ -83,11 +83,11 @@ public class ObjectPooler : MonoBehaviour
             }
         }
         
+        // If key could not be found, show an error in the console
         if(itemRequested == null)
-            // If key could not be found, show an error in the console
             Debug.LogError("That item is not in the object pooler!");
 
-        lock (lockObject) // Lock the critical section to ensure exclusive access
+        lock (_lockObject) // Lock the critical section to ensure exclusive access
         {
             if (itemRequested != null)
             {
@@ -110,7 +110,6 @@ public class ObjectPooler : MonoBehaviour
             }
             
         }
-
         return null;
     }
 }

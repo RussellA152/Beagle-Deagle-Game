@@ -15,15 +15,16 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     
     private float _bonusSpeed = 1;
     
+    // Input actions needed for movement
     private InputAction _movementInputAction;
     private InputAction _rotationInputAction;
     private InputAction _rollInputAction;
     
+    // Input from user for movement and rotation
     public Vector2 MovementInput { get; private set; }
-    public bool IsRolling { get; private set; }
-    private bool _canRoll = true;
-    
     private Vector2 _rotationInput;
+    public bool IsRolling { get; private set; }
+    
     
     [Header("Required Components")]
     private Rigidbody2D _rb;
@@ -45,21 +46,19 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     // A list of modifiers being applied to the player's movement speed
     [SerializeField, NonReorderable] private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>();
     
-    [Header("Collisions")]
-    [Range(0, 1)]
-    public float collisionOffset = 0.05f;
-
-    public ContactFilter2D movementFilter;
-
-    List<RaycastHit2D> _castCollisions = new List<RaycastHit2D>();
+    //[Header("Collisions")]
+    //[Range(0, 1)]
+    //public float collisionOffset = 0.05f;
+    //public ContactFilter2D movementFilter;
+    //List<RaycastHit2D> _castCollisions = new List<RaycastHit2D>();
     
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _capsuleCollider2D = GetComponent<CapsuleCollider2D>();
-
+        
+        // Set up input for user to control movement
         _topDownInput = new TopDownInput();
-
         _movementInputAction = _topDownInput.Player.Move;
         _rotationInputAction = _topDownInput.Player.Look;
         _rollInputAction = _topDownInput.Player.Roll;
@@ -287,7 +286,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
             {
                 // If the current input is a mouse
                 case "Delta":
-                {
                     // Find the position of the mouse on the screen
                     Vector3 mousePos = Mouse.current.position.ReadValue();
 
@@ -296,7 +294,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
                     _rotationInput = worldPos - _capsuleCollider2D.bounds.center;
                     break;
-                }
+                
                 // If the current input is a gamepad
                 case "Right Stick":
                     // Read _rotationInput straight from the joystick movement

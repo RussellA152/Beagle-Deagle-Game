@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 ///-///////////////////////////////////////////////////////////
 /// Basic stats for enemies such as damage, cooldowns, and line of sight.
 /// 

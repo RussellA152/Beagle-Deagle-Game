@@ -8,8 +8,10 @@ public class ProjectileEnemyData : EnemyData
     [Space(25f)]
     
     [Header("Projectile Logic")]
+    // What kind of bullet will this enemy shoot? Ex. regular, fire
     public BulletTypeData bulletType;
 
+    // How much penetration does this enemy's bullet have?
     [Range(1, 50)]
     public int bulletPenetration;
     

@@ -12,7 +12,6 @@ public class AreaOfEffectManager : MonoBehaviour
     // Key: The area of effect that will be applied to target (ex. Slowing Smoke)
     // Value: Another dictionary whose key is the target that is being affected by the area of effect,
     // and the value that indicates the number of same area of effects that the target is standing in
-
     private readonly Dictionary<AreaOfEffectData, Dictionary<GameObject, int>> _areaOfEffectOverlappingTargets =
         new Dictionary<AreaOfEffectData, Dictionary<GameObject, int>>();
 
@@ -99,7 +98,6 @@ public class AreaOfEffectManager : MonoBehaviour
         affectedTargetsHashSet.Remove(target);
 
     }
-
 
     ///-///////////////////////////////////////////////////////////
     /// Return true if the target is inside of the affectedTarget's hashset

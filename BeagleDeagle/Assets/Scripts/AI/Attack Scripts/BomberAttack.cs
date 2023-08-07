@@ -14,7 +14,7 @@ public class BomberAttack : AIAttack<BomberEnemyData>
     public override void InitiateAttack()
     {
         // Fetch an explosive GameObject from the object pooler   
-        GameObject explosivePrefab = ObjectPooler.instance.GetPooledObject(enemyScriptableObject.explosiveType.explosivePrefab.GetComponent<IPoolable>().PoolKey);
+        GameObject explosivePrefab = ObjectPooler.Instance.GetPooledObject(enemyScriptableObject.explosiveType.explosivePrefab.GetComponent<IPoolable>().PoolKey);
 
         // Tell explosive type to give the explosiveData scriptableObject to this prefab
         IExplosiveUpdatable explosiveScript = enemyScriptableObject.explosiveType.UpdateExplosiveWithData(explosivePrefab);

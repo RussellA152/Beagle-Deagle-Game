@@ -16,8 +16,6 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     private TopDownInput _topDownInput;
 
     private InputAction _ultimateInputAction;
-    
-    private bool _canUseUltimate;
 
     private void Awake()
     {
@@ -45,8 +43,6 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     
     protected virtual void Start()
     {
-        _canUseUltimate = false;
-        
         playerEvents.InvokeUltimateCooldown(Id);
         playerEvents.InvokeNewUltimate(ultimateData);
     }
@@ -60,11 +56,11 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
         {
             Debug.Log("Activate ultimate!");
 
-            UltimateAction(gameObject);
+            UltimateAction();
 
         }
     }
-    protected abstract void UltimateAction(GameObject player);
+    protected abstract void UltimateAction();
     
     protected void StartCooldown()
     {

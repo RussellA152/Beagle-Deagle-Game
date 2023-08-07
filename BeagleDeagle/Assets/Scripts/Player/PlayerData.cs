@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-// We can use ScriptableObjects for enemies  that are very similar to each other
-// This is useful if we have enemies that have the same behavior, and only different stats
-// Ex. A fat zombie and regular zombie have the same behavior, but only different animations, movement speed, and health
+///-///////////////////////////////////////////////////////////
+/// The health, movement, and animations for a player character.
+/// 
 [CreateAssetMenu(fileName = "NewPlayer", menuName = "ScriptableObjects/CharacterData/Player")]
 public class PlayerData : ScriptableObject
 {

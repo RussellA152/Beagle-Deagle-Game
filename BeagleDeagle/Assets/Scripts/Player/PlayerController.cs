@@ -22,22 +22,22 @@ public class PlayerController : MonoBehaviour
     private IUltimateUpdatable _ultimateScript;
     
 
-    // states that an enemy can be in
+    // States that a player can be in
     private enum PlayerState
     {
-        // not moving
+        // Not moving
         Idle,
 
-        // walking around
+        // Walking around
         Moving,
 
-        // player used "roll" ability
+        // Player used "roll" ability
         Rolling,
 
-        // player is shooting or using their weapon in general
+        // Player is shooting or using their weapon in general
         Attacking,
         
-        // player was killed
+        // Player was killed
         Death
 
     }
@@ -55,18 +55,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+        // Tell all listeners the current player and gun stats/data they have
         playerEvents.InvokeNewWeaponEvent(_gunScript.GetCurrentData());
-
         playerEvents.InvokeNewStatsEvent(currentPlayerData);
-        
-        _movementScript.AllowMovement(true);
-        
-        _gunScript.AllowReload(true);
-        _gunScript.AllowShoot(true);
-        
-        _utilityScript.AllowUtility(true);
-        _ultimateScript.AllowUltimate(true);
-        
+
         if(_gunScript == null)
         {
             Debug.Log("WEAPON MISSING!");
@@ -82,9 +74,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // Switch to death state if the player's health reached 0
         if (CheckIfDead())
             state = PlayerState.Death;
-        
 
         switch (state)
         {
@@ -92,6 +84,7 @@ public class PlayerController : MonoBehaviour
                 
                 _animationHandlerScript.PlayIdleAnimation();
                 
+                // Allow all movement and attacks
                 _movementScript.AllowMovement(true);
                 _gunScript.AllowReload(true);
                 _gunScript.AllowShoot(true);
@@ -111,6 +104,7 @@ public class PlayerController : MonoBehaviour
                 
                 _animationHandlerScript.PlayMoveAnimation();
                 
+                // Allow all movement and attacks
                 _movementScript.AllowMovement(true);
                 _movementScript.AllowRotation(true);
                 _gunScript.AllowReload(true);
@@ -129,9 +123,12 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Rolling:
                 _animationHandlerScript.PlayRollAnimation();
                 
+                // Allow movement input
                 _movementScript.AllowMovement(true);
+                // Don't allow player to rotate weapon or body
                 _movementScript.AllowRotation(false);
-                //_gunScript.AllowReload(false);
+                
+                // Don't allow any abilities or attacks
                 _gunScript.AllowShoot(false);
                 _utilityScript.AllowUtility(false);
                 _ultimateScript.AllowUltimate(false);
@@ -148,6 +145,7 @@ public class PlayerController : MonoBehaviour
             
             case PlayerState.Attacking:
                 
+                // Allow all movement and attacks
                 _movementScript.AllowMovement(true);
                 _movementScript.AllowRotation(true);
                 _gunScript.AllowReload(true);
@@ -180,7 +178,7 @@ public class PlayerController : MonoBehaviour
 
     private bool CheckIfIdle()
     {
-        // if the player is not moving and not attacking
+        // If the player is not moving and not attacking
         return (!CheckIfMoving() && !CheckIfAttacking());
     }
 
@@ -204,7 +202,7 @@ public class PlayerController : MonoBehaviour
 
     private bool CheckIfDead()
     {
-        // check if the player was killed
+        // Check if the player was killed
         return _healthScript.IsDead();
     }
 

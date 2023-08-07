@@ -105,7 +105,7 @@ public class WaveGenerator : MonoBehaviour
                     Vector2 randomPosition = offScreenSpawnerScript.PickRandomLocationOnMap();
 
                     // fetch an enemy from the object pool and place them at the random position
-                    GameObject newEnemy = ObjectPooler.instance.GetPooledObject(enemyPoolKey);
+                    GameObject newEnemy = ObjectPooler.Instance.GetPooledObject(enemyPoolKey);
 
                     newEnemy.transform.position = randomPosition;
 

@@ -23,7 +23,7 @@ public class ProjectileAttack : AIAttack<ProjectileEnemyData>
         projectileSpawnPoint.transform.right = (Vector2)Target.position - (Vector2)transform.position;
         
         // Fetch a bullet from the object pooler
-        GameObject newBullet = ObjectPooler.instance.GetPooledObject(_bulletPoolKey);
+        GameObject newBullet = ObjectPooler.Instance.GetPooledObject(_bulletPoolKey);
         
         if (newBullet != null)
         {

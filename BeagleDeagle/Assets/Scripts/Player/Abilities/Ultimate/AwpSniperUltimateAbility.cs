@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 {
     private Gun _playerGunScript;
     
-
     private GunData _previousWeaponData;
     
     private bool _isActive;
@@ -35,12 +33,10 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         playerEvents.onPlayerSwitchedWeapon -= UpdateCurrentWeapon;
     }
     
-    protected override void UltimateAction(GameObject player)
+    protected override void UltimateAction()
     {
-        Debug.Log("Give player an awp!");
-
+        // Give the player an AWP Sniper as their new gun
         _isActive = true;
-
         _playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
         
         // Don't allow player to reload when activating AWP
@@ -55,8 +51,6 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         // Only check ammo load when the gun that the player has is the AWP sniper
         if(_isActive &&  ammoLoad <= 0)
         {
-            Debug.Log("AWP IS OUT OF AMMO!");
-            
             StopCoroutine(_durationCoroutine);
             
             ReturnOriginalWeapon();
@@ -80,8 +74,8 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         // Only give back original weapon if the player has the AWP
         if (_isActive)
         {
-            Debug.Log("REMOVE AWP FROM PLAYER!");
             _playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
+            
             // Give back the player their gun before they received the AWP sniper
             playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
             

@@ -5,10 +5,9 @@ using UnityEngine;
 
 public abstract class PassiveAbility<T> : MonoBehaviour where T: ScriptableObject
 {
-    protected GameObject player;
+    protected GameObject Player;
     
-    [SerializeField] 
-    protected T passiveData;
+    [SerializeField]  protected T passiveData;
 
     private void Start()
     {
@@ -17,7 +16,8 @@ public abstract class PassiveAbility<T> : MonoBehaviour where T: ScriptableObjec
 
     protected virtual void OnEnable()
     {
-        player = transform.parent.parent.gameObject;
+        // Passive ability scripts have another parent, so the parent.parent would be the Player gameObject with all the components attached
+        Player = transform.parent.parent.gameObject;
     }
 
     protected virtual void OnDisable()

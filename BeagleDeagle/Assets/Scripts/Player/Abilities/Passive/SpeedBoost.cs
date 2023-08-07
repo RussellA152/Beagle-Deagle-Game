@@ -15,9 +15,10 @@ public class SpeedBoost : PassiveAbility<SpeedBoostData>
     {
         base.OnEnable();
         
-        _gunScript = player.GetComponentInChildren<Gun>();
+        // Fetch gun script from the gun gameObject
+        _gunScript = Player.GetComponentInChildren<Gun>();
         
-        _movementScript = player.GetComponent<IMovable>();
+        _movementScript = Player.GetComponent<IMovable>();
         
     }
 
@@ -42,7 +43,6 @@ public class SpeedBoost : PassiveAbility<SpeedBoostData>
     {
         while (true)
         {
-            //Debug.Log("while loop!");
             if (!_speedIncreased && _gunScript.ReturnLastTimeShot() >= passiveData.minimumTimeRequired)
             {
                 _speedIncreased = true;
@@ -50,22 +50,19 @@ public class SpeedBoost : PassiveAbility<SpeedBoostData>
                 _movementScript.AddMovementSpeedModifier(passiveData.movementSpeedModifier);
            
             }
-            // Otherwise, if the player did receive a speed increase, and they started shooting...
-            // Then revert speed back to what it was
             else if (_speedIncreased && _gunScript.ReturnLastTimeShot() < passiveData.minimumTimeRequired)
             {
                 _speedIncreased = false;
 
                 _movementScript.RemoveMovementSpeedModifier(passiveData.movementSpeedModifier);
             }
-            
             yield return null;
         }
     }
 
     protected override void RemovePassive()
     {
-        IMovable movementScript = player.GetComponent<IMovable>();
+        IMovable movementScript = Player.GetComponent<IMovable>();
 
         movementScript.RemoveMovementSpeedModifier(passiveData.movementSpeedModifier);
         
