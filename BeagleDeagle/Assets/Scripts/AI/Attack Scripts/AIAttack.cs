@@ -33,6 +33,7 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     // Is the enemy allowed to attack?
     private bool _canAttack = true;
     
+    // The object the enemy wants to attack (usually player)
     protected Transform Target;
 
     private void Awake()
@@ -46,10 +47,9 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
 
     protected virtual void OnEnable()
     {
+        // When cooldown ends, allow attack
         CooldownSystem.OnCooldownEnded += OnAttackCooldownFinish;
-        
-        _canAttack = true;
-        
+
         BeginCooldown();
     }
 
@@ -59,6 +59,9 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     }
 
 
+    ///-///////////////////////////////////////////////////////////
+    /// Perform an attack against the target
+    /// 
     public abstract void InitiateAttack();
 
     ///-///////////////////////////////////////////////////////////
@@ -70,6 +73,9 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         _canAttack = false;
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Allow the enemy to attack again when the attack cooldown finishes
+    /// 
     public void OnAttackCooldownFinish(int id)
     {
         if (id == Id)
@@ -78,7 +84,6 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         }
     }
     
-
     public bool GetCanAttack()
     {
         return _canAttack;
@@ -115,6 +120,7 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         }
     }
 
+    #region AttackModifiers
     public void AddDamageModifier(DamageModifier modifierToAdd)
     {
         damageModifiers.Add(modifierToAdd);
@@ -145,7 +151,8 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         _animationScript.SetAttackAnimationSpeed(-1f * modifierToRemove.bonusAttackSpeed);
     }
 
+    #endregion
+    
     public int Id { get; set; }
     public float CooldownDuration { get; set; }
-    public int numOfCooldowns { get; set; }
 }

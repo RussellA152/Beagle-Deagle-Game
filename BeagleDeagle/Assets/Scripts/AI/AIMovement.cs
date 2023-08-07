@@ -29,6 +29,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
 
 
     private Transform _target;
+    // The x scale that the enemy was instaniated with
     private float _originalTransformScaleX;
     
     private void Awake()
@@ -44,12 +45,14 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
 
     private void Start()
     {
+        // Save the value of the x scale so that the enemy knows their original orientation
         _originalTransformScaleX = transform.localScale.x;
     }
 
     private void OnEnable()
     {
         IsStunned = false;
+        // Set the speed of the enemy
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
     }
 
@@ -141,6 +144,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
         IsStunned = false;
     }
 
+    #region MovementModifiers
     public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
     {
         movementSpeedModifiers.Add(modifierToAdd);
@@ -170,6 +174,9 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
         // Remove speed modifiers from list when spawning
         movementSpeedModifiers.Clear();
     }
+
+    #endregion
+    
     
     public void AllowMovement(bool boolean)
     {

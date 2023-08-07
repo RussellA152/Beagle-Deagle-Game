@@ -5,81 +5,61 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
 {
-    [SerializeField]
-    private PlayerEvents playerEvents;
+    [SerializeField] private PlayerEvents playerEvents;
+    
+    [SerializeField] private PlayerData playerData;
 
-    //private IPlayerStatModifier playerStatModifierScript;
+    private float _bonusMaxHealth = 1f; // a bonus percentage applied to the player's max health (Ex. 500 max health * 120%, would mean 120% extra max health)
 
-    private float bonusMaxHealth = 1f; // a bonus percentage applied to the player's max health (Ex. 500 max health * 120%, would mean 120% extra max health)
-
-    private float currentHealth;
-    //private float maxHealth; // we make a local variable in here so that we don't affect original SO data
-    private bool isDead;
-
-    [SerializeField]
-    private PlayerData playerData;
+    private float _currentHealth;
+    
+    private bool _isDead;
 
     [SerializeField, NonReorderable]
     private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
-
-    //[SerializeField, NonReorderable]
-    //private List<DamageOverTime> damageOverTimeEffects = new List<DamageOverTime>(); // All DOT's that have been applied to the player
-
+    
     private void Start()
     {
-        InitializeHealth();
+        _isDead = false;
 
+        _currentHealth = playerData.maxHealth * _bonusMaxHealth;
+
+        // Tell all listeners the value of the player's current and max health
+        playerEvents.InvokeCurrentHealthEvent(_currentHealth);
+        playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * _bonusMaxHealth);
     }
-
-    public void InitializeHealth()
-    {
-        isDead = false;
-
-        currentHealth = playerData.maxHealth * bonusMaxHealth;
-
-        playerEvents.InvokeCurrentHealthEvent(currentHealth);
-
-        playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * bonusMaxHealth);
-    }
-
-    public float GetCurrentHealth()
-    {
-        return currentHealth;
-    }
-
+    
     public virtual void ModifyHealth(float amount)
     {
         // Calculate the potential new health value
-        float newHealth = currentHealth + amount;
+        float newHealth = _currentHealth + amount;
 
         // Clamp the new health value between 0 and the maximum potential health (including any max health modifiers)
-        newHealth = Mathf.Clamp(newHealth, 0f, playerData.maxHealth * bonusMaxHealth);
+        newHealth = Mathf.Clamp(newHealth, 0f, playerData.maxHealth * _bonusMaxHealth);
 
         // Check if the new health value is zero or below
         if (newHealth <= 0f)
         {
-            currentHealth = 0f;
-            isDead = true;
+            _currentHealth = 0f;
+            _isDead = true;
         }
         else
         {
-            currentHealth = newHealth;
+            _currentHealth = newHealth;
         }
-        
-        playerEvents.InvokeCurrentHealthEvent(currentHealth);
+        // Current health has changed, so update all listeners with the new value
+        playerEvents.InvokeCurrentHealthEvent(_currentHealth);
     }
-
-
-    public void MaxHealthWasModified()
+    
+    public float GetCurrentHealth()
     {
-        // Invoke max health event
-        playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * bonusMaxHealth);
+        return _currentHealth;
     }
 
-    // do something when this entity dies
+    // Do something when this entity dies
     public bool IsDead()
     {
-        return isDead;
+        return _isDead;
     }
 
     public void UpdateScriptableObject(PlayerData scriptableObject)
@@ -88,15 +68,18 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
 
     }
 
+    #region HealthModifiers
     public void AddMaxHealthModifier(MaxHealthModifier modifierToAdd)
     {
         maxHealthModifiers.Add(modifierToAdd);
-        bonusMaxHealth += modifierToAdd.bonusMaxHealth;
+        _bonusMaxHealth += modifierToAdd.bonusMaxHealth;
     }
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
     {
         maxHealthModifiers.Remove(modifierToRemove);
-        bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
+        _bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
     }
+    #endregion
+    
 }

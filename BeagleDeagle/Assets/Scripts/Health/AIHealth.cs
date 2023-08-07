@@ -6,18 +6,19 @@ using UnityEngine;
 public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
 {
     [Header("Data to Use")]
-    [SerializeField]
-    private EnemyData enemyData;
+    [SerializeField] private EnemyData enemyData;
     
 
     [Header("Modifiers")]
     [SerializeField, NonReorderable]
     private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
     
-    private float _bonusMaxHealth = 1f; // a bonus percentage applied to the enemy's max health (Ex. 500 max health * 120%, would mean 120% extra max health)
+    // a bonus percentage applied to the enemy's max health (Ex. 500 max health * 120%, would mean 120% extra max health)
+    private float _bonusMaxHealth = 1f;
     
     // The current health of this enemy
     private float _currentHealth;
+    
     // Is the enemy currently dead?
     private bool _isDead;
 
@@ -52,8 +53,7 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
             _currentHealth = newHealth;
         }
     }
-
-    // do something when this entity dies
+    
     public bool IsDead()
     {
         return _isDead;
@@ -64,6 +64,7 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
         enemyData = scriptableObject;
     }
 
+    #region HealthModifiers
     public void AddMaxHealthModifier(MaxHealthModifier modifierToAdd)
     {
         maxHealthModifiers.Add(modifierToAdd);
@@ -82,5 +83,6 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
         _bonusMaxHealth = 1f;
         maxHealthModifiers.Clear();
     }
-
+    #endregion
+    
 }

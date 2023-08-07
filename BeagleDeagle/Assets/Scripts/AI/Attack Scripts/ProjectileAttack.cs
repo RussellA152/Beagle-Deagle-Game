@@ -22,9 +22,8 @@ public class ProjectileAttack : AIAttack<ProjectileEnemyData>
         // The spawn point of all projectiles is always looking at the target
         projectileSpawnPoint.transform.right = (Vector2)Target.position - (Vector2)transform.position;
         
-        
+        // Fetch a bullet from the object pooler
         GameObject newBullet = ObjectPooler.instance.GetPooledObject(_bulletPoolKey);
-        
         
         if (newBullet != null)
         {
@@ -39,13 +38,9 @@ public class ProjectileAttack : AIAttack<ProjectileEnemyData>
 
             // Set the position to be at the barrel of the gun
             newBullet.transform.position = projectileSpawnPoint.position;
-
             newBullet.transform.rotation = projectileSpawnPoint.rotation;
-
-
-            newBullet.gameObject.SetActive(true);
             
+            newBullet.gameObject.SetActive(true);
         }
-
     }
 }

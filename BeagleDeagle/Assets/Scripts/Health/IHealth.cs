@@ -4,15 +4,23 @@ using UnityEngine;
 
 public interface IHealth
 {
-    public float GetCurrentHealth();
 
-    // Add or subtract from health count
+    ///-///////////////////////////////////////////////////////////
+    /// Add or subtract from this entity's current health value
+    /// 
     public void ModifyHealth(float amount);
 
     public void AddMaxHealthModifier(MaxHealthModifier modifierToAdd);
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove);
+    
+    ///-///////////////////////////////////////////////////////////
+    /// Return the current health value of this entity
+    /// 
+    public float GetCurrentHealth();
 
-    // Do something when this entity dies
+    ///-///////////////////////////////////////////////////////////
+    /// Do something when this entity dies
+    /// 
     public bool IsDead();
 }

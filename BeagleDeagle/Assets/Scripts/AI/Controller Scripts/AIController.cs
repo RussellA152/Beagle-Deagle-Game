@@ -83,8 +83,10 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     {
         _state = EnemyState.Idle;
 
+        // Target is almost always the player
         target = GameObject.FindGameObjectWithTag("Player").transform;
         
+        // Give movement and attack script the target of this enemy
         MovementScript.SetTarget(target);
         AttackScript.SetTarget(target);
     }
@@ -154,21 +156,24 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
         {
             if (_inChaseRange)
             {
+                // If target is in attack range and the enemy's attack is off cooldown, then attack
                 if (_inAttackRange && AttackScript.GetCanAttack())
                 {
-                    //Debug.Log("attack ready!");
                     _state = EnemyState.Attack;
                 }
+                // If the target is not in attack range, and the enemy is still attacking and the attack is on cooldown
+                // Make the enemy go back to idle so they can change to another state
                 else if (!_inAttackRange && _state == EnemyState.Attack && !AttackScript.GetCanAttack())
                 {
-                    //Debug.Log("walking away!");
                     _state = EnemyState.Idle;
                 }
+                // If the target is not in attack range, and the enemy is not playing their attack animation...
+                // Then the enemy is no longer attacking the target, and can start chasing them
                 else if(!_inAttackRange && !AnimationHandlerScript.animator.GetBool("isAttacking"))
                 {
-                    //Debug.Log("chase!");
                     _state = EnemyState.Chase;
                 }
+                // If the target is in attack range, but the enemy's attack is on cooldown, then go to Idle state
                 else if (_inAttackRange && !AttackScript.GetCanAttack())
                 {
                     _state = EnemyState.Idle;
@@ -184,6 +189,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     }
     protected virtual void OnIdle()
     {
+        // Allow enemy to turn around, but freeze their movement
         MovementScript.SetCanFlip(true);
         AnimationHandlerScript.PlayIdleAnimation();
         
@@ -191,17 +197,20 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     }
     protected virtual void OnChase()
     {
+        // Allow enemy to turn around and move around
         MovementScript.SetCanFlip(true);
         AnimationHandlerScript.PlayMoveAnimation();
         
         MovementScript.AllowMovement(true);
 
+        // If there's a target, then move towards them
         if (target != null)
             _agent.SetDestination(target.position);
     }
 
     protected virtual void OnAttack()
     {
+        // Don't allow enemy to move during attacks and play the attack animation
         MovementScript.AllowMovement(false);
         
         AnimationHandlerScript.PlayAttackAnimation();
@@ -209,21 +218,26 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     
     protected virtual void OnStun()
     {
+        // Don't allow enemies to turn around nor move
         MovementScript.SetCanFlip(false);
         AnimationHandlerScript.PlayStunAnimation();
+        
         _agent.velocity = Vector2.zero;
         MovementScript.AllowMovement(false);
     }
     
     protected virtual void OnDeath()
     {
+        // Don't let enemy to move
         MovementScript.SetCanFlip(false);
+        MovementScript.AllowMovement(false);
+        
         AnimationHandlerScript.PlayDeathAnimation();
         
-        // Don't let enemy move, and disable their collider
-        MovementScript.AllowMovement(false);
+        // Turn off collider upon death
         _bodyCollider.enabled = false;
         
+        // Remove all modifiers placed on the enemy
         RevertAllModifiersOnEnemy();
         
     }

@@ -5,30 +5,26 @@ using UnityEngine;
 
 public class RunnerAttack : AIAttack<RunnerEnemyData>
 {
-    // The collider that will touch this enemy's target
-    //private Collider2D _hitBox;
-
-    public BoxCollider2D[] _hitBoxes;
+    // All hitBoxes on this enemy
+    private BoxCollider2D[] _hitBoxes;
     
     // A list of all colliders that weres damaged by this enemy's attack
     private List<Collider2D> _collidersDamaged = new List<Collider2D>();
 
     private void Start()
     {
-        // Grab all hitboxes inside of the enemy
+        // Grab all hitBoxes inside of the enemy
         _hitBoxes = GetComponentsInChildren<BoxCollider2D>();
-        
-        //Debug.Log(_hitBox);
     }
 
     public override void InitiateAttack()
     {
-        // For each hitbox on the enemy, check if any of them collided with something
+        // For each hitBox on the enemy, check if any of them collided with something
+        // We check this in the Update() of AIController
         foreach (BoxCollider2D hitBox in _hitBoxes)
         {
             CheckHitBox(hitBox);
         }
-
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -55,7 +51,6 @@ public class RunnerAttack : AIAttack<RunnerEnemyData>
                 _collidersDamaged.Add(collidersToDamage[i]);
                 collidersToDamage[i].gameObject.GetComponent<IHealth>().ModifyHealth(-1f * enemyScriptableObject.attackDamage);
             }
-                
         }
     }
 

@@ -7,9 +7,10 @@ using UnityEngine;
 // Or, an enemy might change its data to go from a regular zombie, to a slow fat zombie.
 public interface IDataUpdatable<T> where T: ScriptableObject
 {
-    // Give a new scriptable object data to the entity
+    ///-///////////////////////////////////////////////////////////
+    /// Give a new scriptable object to whatever may need it.
+    /// For example, a gun, explosive, or character like a player or enemy may need new
+    /// data during gameplay.
     public void UpdateScriptableObject(T scriptableObject);
-
-    // Return the current scriptable object data on the entity
-    //public T GetCurrentData();
+    
 }
