@@ -94,6 +94,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
         _bulletsLoaded = weaponData.magazineSize;
         
         _bulletPoolKey = weaponData.bulletType.bulletPrefab.GetComponent<IPoolable>().PoolKey;
+        
+        playerEvents.InvokeNewWeaponEvent(weaponData);
     }
 
     private void OnEnable()

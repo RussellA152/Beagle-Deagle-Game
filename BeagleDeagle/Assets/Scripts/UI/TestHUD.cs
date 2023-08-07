@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 /// <summary>
@@ -34,8 +35,13 @@ public class TestHUD : MonoBehaviour
     [Header("Ultimate UI")]
     [SerializeField] private Image ultimateImage;
     [SerializeField] private Image ultimateImageFill;
+
+    [SerializeField] private RectTransform bulletPanel;
+    [SerializeField] private GameObject bulletTESTSprite;
+    private List<Image> _bulletImages = new List<Image>();
     
     private float _playerMaxHealth;
+    private int _currentAmmoCount;
     
     private void OnEnable()
     {
@@ -49,6 +55,8 @@ public class TestHUD : MonoBehaviour
         playerEvents.onPlayerObtainedNewUtility += UpdateUtilityImage;
 
         playerEvents.onPlayerBulletsLoadedChanged += UpdateAmmoText;
+
+        playerEvents.onPlayerSwitchedWeapon += AddBulletsToHUD;
     }
 
     private void OnDisable()
@@ -63,6 +71,7 @@ public class TestHUD : MonoBehaviour
         playerEvents.onPlayerObtainedNewUtility -= UpdateUtilityImage;
         
         playerEvents.onPlayerBulletsLoadedChanged -= UpdateAmmoText;
+        playerEvents.onPlayerSwitchedWeapon -= AddBulletsToHUD;
     }
     
     private void UpdatePlayerCurrentHealthText(float currentHealth)
@@ -86,6 +95,7 @@ public class TestHUD : MonoBehaviour
     private void UpdateAmmoText(int bulletsLoaded)
     {
         ammoMagText.text = bulletsLoaded.ToString();
+        _currentAmmoCount = bulletsLoaded;
     }
 
     private void UpdateUtilityImage(UtilityAbilityData utility)
@@ -98,6 +108,17 @@ public class TestHUD : MonoBehaviour
     {
         ultimateImage.sprite = ultimate.abilitySprite;
         ultimateImageFill.sprite = ultimate.abilitySprite;
+    }
+
+    private void AddBulletsToHUD(GunData gunData)
+    {
+        for (int i = 0; i < gunData.magazineSize; i++)
+        {
+            Debug.Log("Make a bullet image!");
+            // var createImage = Instantiate(bulletTESTSprite);
+            // bulletTESTSprite.GetComponent<Image>().sprite = 
+            // createImage.transform.SetParent(bulletPanel.transform, false);
+        }
     }
 
 }
