@@ -37,11 +37,13 @@ public class TestHUD : MonoBehaviour
     [SerializeField] private Image ultimateImageFill;
 
     [SerializeField] private RectTransform bulletPanel;
-    [SerializeField] private GameObject bulletTESTSprite;
-    private List<Image> _bulletImages = new List<Image>();
+    [SerializeField] private GameObject bulletDisplayPrefab;
+    [SerializeField] private Sprite bulletTESTSprite;
+    private List<GameObject> _bulletImages = new List<GameObject>();
     
     private float _playerMaxHealth;
-    private int _currentAmmoCount;
+    
+    private int _maxAmmoCount;
     
     private void OnEnable()
     {
@@ -54,9 +56,8 @@ public class TestHUD : MonoBehaviour
         playerEvents.onPlayerObtainedNewUltimate += UpdateUltimateImage;
         playerEvents.onPlayerObtainedNewUtility += UpdateUtilityImage;
 
-        playerEvents.onPlayerBulletsLoadedChanged += UpdateAmmoText;
-
         playerEvents.onPlayerSwitchedWeapon += AddBulletsToHUD;
+        playerEvents.onPlayerBulletsLoadedChanged += UpdateAmmoText;
     }
 
     private void OnDisable()
@@ -77,7 +78,7 @@ public class TestHUD : MonoBehaviour
     private void UpdatePlayerCurrentHealthText(float currentHealth)
     {
         healthBar.fillAmount = currentHealth / _playerMaxHealth;
-        currentHealthText.text = currentHealth.ToString() + " /";
+        currentHealthText.text = currentHealth.ToString();
     }
 
     private void UpdatePlayerMaxHealthText(float maxHealth)
@@ -95,7 +96,24 @@ public class TestHUD : MonoBehaviour
     private void UpdateAmmoText(int bulletsLoaded)
     {
         ammoMagText.text = bulletsLoaded.ToString();
-        _currentAmmoCount = bulletsLoaded;
+
+        //int bulletDifference = _maxAmmoCount - bulletsLoaded;
+        int bulletDifference = bulletsLoaded - _maxAmmoCount;
+        
+        if (_bulletImages.Count > 0f)
+        {
+            if (bulletDifference < 0)
+            {
+                _bulletImages[bulletsLoaded].SetActive(false);
+            }
+            else
+            {
+                for (int i = Mathf.Abs(bulletDifference); i < _maxAmmoCount; i++)
+                {
+                    _bulletImages[i].SetActive(true);
+                }
+            }
+        }
     }
 
     private void UpdateUtilityImage(UtilityAbilityData utility)
@@ -112,12 +130,19 @@ public class TestHUD : MonoBehaviour
 
     private void AddBulletsToHUD(GunData gunData)
     {
-        for (int i = 0; i < gunData.magazineSize; i++)
+        _maxAmmoCount = gunData.magazineSize;
+        
+        Sprite bulletSprite = gunData.bulletType.bulletPrefab.GetComponent<SpriteRenderer>().sprite;
+
+        for (int i = 0; i < _maxAmmoCount; i++)
         {
-            Debug.Log("Make a bullet image!");
-            // var createImage = Instantiate(bulletTESTSprite);
-            // bulletTESTSprite.GetComponent<Image>().sprite = 
-            // createImage.transform.SetParent(bulletPanel.transform, false);
+            GameObject bulletDisplay = Instantiate(bulletDisplayPrefab);
+
+            bulletDisplay.GetComponent<Image>().sprite = bulletSprite;
+            
+            bulletDisplay.transform.SetParent(bulletPanel.transform, false);
+            
+            _bulletImages.Add(bulletDisplay);
         }
     }
 

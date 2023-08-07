@@ -83,7 +83,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
     private void Start()
     {
+        playerEvents.InvokeNewWeaponEvent(weaponData);
+        
         playerEvents.InvokeUpdateAmmoLoadedText(Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad));
+        
         playerEvents.InvokeReloadCooldown(Id);
 
         _lastTimeShot = 0f;
@@ -95,7 +98,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
         
         _bulletPoolKey = weaponData.bulletType.bulletPrefab.GetComponent<IPoolable>().PoolKey;
         
-        playerEvents.InvokeNewWeaponEvent(weaponData);
     }
 
     private void OnEnable()
@@ -103,8 +105,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
         playerEvents.onPlayerSwitchedWeapon += UpdateScriptableObject;
 
         CooldownSystem.OnCooldownEnded += OnReloadFinish;
-
-        playerEvents.InvokeNewWeaponEvent(weaponData);
 
     }
 
@@ -280,26 +280,11 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
         AllowShoot(true);
         
         RefillAmmoCompletely();
+        
+        playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
 
     }
     
-    public IEnumerator WaitReload()
-    {
-        _isReloading = true;
-        ActuallyShooting = false;
-        
-        AllowShoot(false);
-        // Wait until reload is finished
-        yield return new WaitForSeconds(weaponData.totalReloadTime * _bonusReloadSpeed);
-        AllowShoot(true);
-        
-        RefillAmmoCompletely();
-
-        _isReloading = false;
-
-        // Then call event that ammo has changed
-        playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
-    }
     public bool CheckAmmo()
     {
         // If player has no ammo in reserve,
