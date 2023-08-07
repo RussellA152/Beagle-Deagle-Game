@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class AbilityData : ScriptableObject
 {
     public string abilityName;
 
+    // What icon will this ability have on the HUD?
     public Sprite abilitySprite;
     
     [Range(0, 1000f)]

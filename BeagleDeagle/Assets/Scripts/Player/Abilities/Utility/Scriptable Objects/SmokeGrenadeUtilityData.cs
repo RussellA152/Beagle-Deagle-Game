@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "NewUtility", menuName = "ScriptableObjects/Ability/Utility/SmokeGrenade")]
 public class SmokeGrenadeUtilityData : UtilityAbilityData
@@ -10,8 +9,9 @@ public class SmokeGrenadeUtilityData : UtilityAbilityData
     [RestrictedPrefab(typeof(AreaGrenade))]
     public GameObject smokeGrenadePrefab;
     
-    [FormerlySerializedAs("utilityGrenadeData")] public UtilityExplosiveData utilityExplosiveData;
+    public UtilityExplosiveData utilityExplosiveData;
 
+    // The slow effect of this smoke grenade
     public SlowData slowData;
 
 }

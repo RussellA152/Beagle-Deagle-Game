@@ -8,8 +8,16 @@ public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: St
     [SerializeField]
     protected T statusEffectData;
 
+    ///-///////////////////////////////////////////////////////////
+    /// Apply an effect to the object that was hit by the status effect.
+    /// Example effects are slow, stun, and damage over time.
+    /// 
     public abstract void ApplyEffect(GameObject objectHit);
 
+    ///-///////////////////////////////////////////////////////////
+    /// Check if the target is able to be affected by this specific status effect.
+    /// For example, the radiation from the nuke does not apply to the player, so they do not get damaged.
+    /// 
     protected bool DoesThisAffectTarget(GameObject objectHit)
     {
         if ((statusEffectData.whatStatusEffectHits.value & (1 << objectHit.layer)) > 0)

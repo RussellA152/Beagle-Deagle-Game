@@ -319,7 +319,9 @@ public class OffScreenSpawner : MonoBehaviour
     }
 
 
-    // Checking if the player is close to the boundaries of the map
+    ///-///////////////////////////////////////////////////////////
+    /// Check if the player is close the boundaries of the map
+    /// 
     private void CheckPlayerProximityToBoundaries()
     {
         if (playerTransform.position.x <= surfaceLeftBoundary + screenBounds.x)
@@ -372,7 +374,9 @@ public class OffScreenSpawner : MonoBehaviour
 
     }
 
-    // Update camera/screen boundaries while player is moving
+    ///-///////////////////////////////////////////////////////////
+    /// Update camera/screen boundaries while player is moving
+    /// 
     private void UpdateScreenBoundaries()
     {
         // Because the player is moving all around, the boundaries of the screen must update relative to their position

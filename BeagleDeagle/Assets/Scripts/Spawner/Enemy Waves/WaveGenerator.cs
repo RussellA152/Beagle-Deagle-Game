@@ -15,20 +15,20 @@ public class WaveGenerator : MonoBehaviour
 
     public List<WaveData> waves;
 
-    private WaveData m_CurrentWave;
-    public WaveData CurrentWave { get { return m_CurrentWave; } }
+    private WaveData _mCurrentWave;
+    public WaveData CurrentWave { get { return _mCurrentWave; } }
 
-    private float m_DelayFactor = 1.0f;
+    private float _mDelayFactor = 1.0f;
 
-    private bool wavesCompleted = false;
+    private bool _wavesCompleted = false;
 
 
 
     IEnumerator StartWaves()
     {
-        m_DelayFactor = 1.0f;
+        _mDelayFactor = 1.0f;
 
-        while (!wavesCompleted)
+        while (!_wavesCompleted)
         {
 
             // for each wave...
@@ -40,23 +40,23 @@ public class WaveGenerator : MonoBehaviour
                 W.duration = W.miniWaves.Max(v => v.waveDuration);
 
                 // if there is currently a wave ongoing, don't start a new wave yet
-                if (W != m_CurrentWave && m_CurrentWave.duration > 0)
+                if (W != _mCurrentWave && _mCurrentWave.duration > 0)
                 {
                     // wait until the current wave is finished
-                    yield return new WaitForSeconds(m_CurrentWave.duration);
+                    yield return new WaitForSeconds(_mCurrentWave.duration);
                 }
 
-                // only print a message to the screen if the message isn't blank
+                // Only print a message to the screen if the message isn't blank
                 if (W.message != "")
                 {
-                    //textElement.text = W.message;  // print the message to a Text Mesh Pro Element on a Canvas
                     waveBegan.InvokeEvent(W.message);
                 }
 
-                // for each mini wave in that wave...
+                // For each mini wave in that wave...
                 foreach (MiniWaveData A in W.miniWaves)
                 {
-                    m_CurrentWave = W;
+                    _mCurrentWave = W;
+                    
                     // Start spawning those enemies for that mini wave
                     // We use a coroutine so we can have multiple mini waves concurrently spawning enemies
                     StartCoroutine(StartMiniWave(A));
@@ -70,9 +70,9 @@ public class WaveGenerator : MonoBehaviour
 
                 yield return null;  // prevents crash if all delays are 0
             }
-            wavesCompleted = true;
+            _wavesCompleted = true;
 
-            m_DelayFactor *= difficultyFactor;
+            _mDelayFactor *= difficultyFactor;
             yield return null;  // prevents crash if all delays are 0
         }
         Debug.Log("WAVES SETUP COMPLETE!");
@@ -85,17 +85,17 @@ public class WaveGenerator : MonoBehaviour
 
         GameObject enemyPrefab = A.GetEnemyPrefab();
 
-        // while this mini wave's still has duration left
+        // While this mini wave's still has duration left
         while (elapsedTime < A.waveDuration)
         {
-            // spawn an enemy per delay (ex. 1 zombie per second)
+            // Spawn an enemy per delay (ex. 1 zombie per second)
             if (A.delayBetweenSpawn > 0)
-                yield return new WaitForSeconds(A.delayBetweenSpawn * m_DelayFactor);
+                yield return new WaitForSeconds(A.delayBetweenSpawn * _mDelayFactor);
 
-            // check if there is an enemy to spawn
+            // Check if there is an enemy to spawn
             if (enemyPrefab != null && A.enemiesPerSpawn > 0)
             {
-                // all enemies of the same type, have the same pool key
+                // All enemies of the same type, have the same pool key
                 // For example, the basic zombie runner has a pool key of 0
                 int enemyPoolKey = enemyPrefab.GetComponent<IPoolable>().PoolKey;
 
@@ -124,7 +124,7 @@ public class WaveGenerator : MonoBehaviour
                     newEnemy.SetActive(true);
                 }
             }
-            // update elapsed time
+            // Update elapsed time
             elapsedTime = Time.time - startTime;
         }
 
@@ -133,7 +133,7 @@ public class WaveGenerator : MonoBehaviour
     void Start()
     {
         // Set the current wave to the first wave
-        m_CurrentWave = waves[0];
+        _mCurrentWave = waves[0];
 
         StartCoroutine(StartWaves());
 
