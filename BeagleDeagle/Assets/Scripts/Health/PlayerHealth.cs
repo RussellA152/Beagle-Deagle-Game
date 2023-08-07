@@ -42,7 +42,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
         playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * bonusMaxHealth);
     }
 
-    public virtual float GetCurrentHealth()
+    public float GetCurrentHealth()
     {
         return currentHealth;
     }
@@ -59,14 +59,14 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
         if (newHealth <= 0f)
         {
             currentHealth = 0f;
-            playerEvents.InvokeCurrentHealthEvent(currentHealth);
             isDead = true;
         }
         else
         {
             currentHealth = newHealth;
-            playerEvents.InvokeCurrentHealthEvent(currentHealth);
         }
+        
+        playerEvents.InvokeCurrentHealthEvent(currentHealth);
     }
 
 

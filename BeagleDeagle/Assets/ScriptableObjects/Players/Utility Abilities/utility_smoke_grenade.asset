@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityName: Smoke Grenade
   abilitySprite: {fileID: 21300000, guid: 0e070a402f896ad4d8253bb6d4617414, type: 3}
   abilityDamage: 0
-  cooldown: 5
+  cooldown: 12
   duration: 5
   maxUses: 2
   smokeGrenadePrefab: {fileID: 8164879991046117895, guid: cd6eec6d40152204db89a362109b5df2, type: 3}

@@ -17,30 +17,33 @@ public class TestHUD : MonoBehaviour
     [SerializeField]
     private PlayerEvents playerEvents;
 
-    [Header("Text Fields")]
-    [SerializeField] private TextMeshProUGUI ammoMagText;
-
     [SerializeField] private TextMeshProUGUI waveMessageText;
 
+    [Header("Health UI")]
     [SerializeField] private Image healthBar;
-    //[SerializeField] private TextMeshProUGUI currentHealthText;
-    
+    [SerializeField] private TextMeshProUGUI currentHealthText;
     [SerializeField] private TextMeshProUGUI maxHealthText;
+    
+    [Header("Ammo UI")]
+    [SerializeField] private TextMeshProUGUI ammoMagText;
 
+    [Header("Utility UI")]
     [SerializeField] private Image utilityImage;
     [SerializeField] private Image utilityImageFill;
     
+    [Header("Ultimate UI")]
     [SerializeField] private Image ultimateImage;
     [SerializeField] private Image ultimateImageFill;
     
+    private float _playerMaxHealth;
     
     private void OnEnable()
     {
         wavesBegan.changeHUDTextEvent += UpdateWaveMessageText;
 
-        playerEvents.onPlayerCurrentHealthChanged += UpdateOnPlayerCurrentHealthText;
+        playerEvents.onPlayerCurrentHealthChanged += UpdatePlayerCurrentHealthText;
 
-        //playerEvents.onPlayerMaxHealthChanged
+        playerEvents.onPlayerMaxHealthChanged += UpdatePlayerMaxHealthText;
 
         playerEvents.onPlayerObtainedNewUltimate += UpdateUltimateImage;
         playerEvents.onPlayerObtainedNewUtility += UpdateUtilityImage;
@@ -52,9 +55,9 @@ public class TestHUD : MonoBehaviour
     {
         wavesBegan.changeHUDTextEvent -= UpdateWaveMessageText;
 
-        playerEvents.onPlayerCurrentHealthChanged -= UpdateOnPlayerCurrentHealthText;
+        playerEvents.onPlayerCurrentHealthChanged -= UpdatePlayerCurrentHealthText;
 
-        //playerEvents.onPlayerMaxHealthChanged -= UpdateOnPlayerMaxHealthText;
+        playerEvents.onPlayerMaxHealthChanged -= UpdatePlayerMaxHealthText;
         
         playerEvents.onPlayerObtainedNewUltimate -= UpdateUltimateImage;
         playerEvents.onPlayerObtainedNewUtility -= UpdateUtilityImage;
@@ -62,10 +65,16 @@ public class TestHUD : MonoBehaviour
         playerEvents.onPlayerBulletsLoadedChanged -= UpdateAmmoText;
     }
     
-    private void UpdateOnPlayerCurrentHealthText(float currentHealth)
+    private void UpdatePlayerCurrentHealthText(float currentHealth)
     {
-        //healthBar.fillAmount = currentHealth / ;
-        //currentHealthText.text = currentHealth.ToString();
+        healthBar.fillAmount = currentHealth / _playerMaxHealth;
+        currentHealthText.text = currentHealth.ToString() + " /";
+    }
+
+    private void UpdatePlayerMaxHealthText(float maxHealth)
+    {
+        _playerMaxHealth = maxHealth;
+        maxHealthText.text = maxHealth.ToString();
     }
     
 

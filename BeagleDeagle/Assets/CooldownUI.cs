@@ -188,11 +188,15 @@ public class CooldownUI : MonoBehaviour
         {
             float utilityCooldownTime = _playerCooldownSystem.GetRemainingDuration(_utilityCooldownId) /
                                         _playerCooldownSystem.GetStartingDuration(_utilityCooldownId);
-            if (utilityCooldownTime > 0f)
+            if (_playerCooldownSystem.GetRemainingDuration(_utilityCooldownId) < 10f)
             {
-                utilityFillImage.fillAmount = utilityCooldownTime;
                 utilityCooldownText.text = _playerCooldownSystem.GetRemainingDuration(_utilityCooldownId).ToString("F1");
             }
+            else
+            {
+                utilityCooldownText.text = Mathf.RoundToInt(_playerCooldownSystem.GetRemainingDuration(_utilityCooldownId)).ToString();
+            }
+            utilityFillImage.fillAmount = utilityCooldownTime;
         }
         
         else
@@ -222,11 +226,16 @@ public class CooldownUI : MonoBehaviour
         {
             float ultimateCooldownTime = _playerCooldownSystem.GetRemainingDuration(_ultimateCooldownId) /
                                          _playerCooldownSystem.GetStartingDuration(_ultimateCooldownId);
-            if (ultimateCooldownTime > 0f)
+            if (_playerCooldownSystem.GetRemainingDuration(_ultimateCooldownId) < 10f)
             {
-                ultimateFillImage.fillAmount = ultimateCooldownTime;
                 ultimateCooldownText.text = _playerCooldownSystem.GetRemainingDuration(_ultimateCooldownId).ToString("F1");
-            } 
+            }
+            else
+            {
+                ultimateCooldownText.text = Mathf.RoundToInt(_playerCooldownSystem.GetRemainingDuration(_ultimateCooldownId)).ToString();
+            }
+            
+            ultimateFillImage.fillAmount = ultimateCooldownTime;
         }
         
         else
