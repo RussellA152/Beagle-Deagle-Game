@@ -26,7 +26,8 @@ public class TestHUD : MonoBehaviour
     [SerializeField] private TextMeshProUGUI maxHealthText;
     
     [Header("Ammo UI")]
-    [SerializeField] private TextMeshProUGUI ammoMagText;
+    [SerializeField] private TextMeshProUGUI currentAmmoMagText;
+    [SerializeField] private TextMeshProUGUI maxAmmoMagText;
 
     [Header("Utility UI")]
     [SerializeField] private Image utilityImage;
@@ -36,14 +37,29 @@ public class TestHUD : MonoBehaviour
     [SerializeField] private Image ultimateImage;
     [SerializeField] private Image ultimateImageFill;
 
+    [Header("Bullet Stack UI")]
     [SerializeField] private RectTransform bulletPanel;
     [SerializeField] private GameObject bulletDisplayPrefab;
-    [SerializeField] private Sprite bulletTESTSprite;
-    private List<GameObject> _bulletImages = new List<GameObject>();
+    private List<Image> _bulletImages = new List<Image>();
     
+    // HUD remembers the value of the max health and max ammo magazine size
     private float _playerMaxHealth;
-    
     private int _maxAmmoCount;
+    
+    private void Awake()
+    {
+        // Allocate 100 bullet images to use ( * may need to increase if we have weapons that have more than 100 bullets)
+        for (int i = 0; i < 100; i++)
+        {
+            GameObject bulletDisplay = Instantiate(bulletDisplayPrefab);
+            
+            bulletDisplay.SetActive(false);
+
+            bulletDisplay.transform.SetParent(bulletPanel.transform, false);
+            
+            _bulletImages.Add(bulletDisplay.GetComponent<Image>());
+        }
+    }
     
     private void OnEnable()
     {
@@ -74,7 +90,7 @@ public class TestHUD : MonoBehaviour
         playerEvents.onPlayerBulletsLoadedChanged -= UpdateAmmoText;
         playerEvents.onPlayerSwitchedWeapon -= AddBulletsToHUD;
     }
-    
+
     private void UpdatePlayerCurrentHealthText(float currentHealth)
     {
         healthBar.fillAmount = currentHealth / _playerMaxHealth;
@@ -95,7 +111,7 @@ public class TestHUD : MonoBehaviour
     
     private void UpdateAmmoText(int bulletsLoaded)
     {
-        ammoMagText.text = bulletsLoaded.ToString();
+        currentAmmoMagText.text = bulletsLoaded.ToString();
 
         //int bulletDifference = _maxAmmoCount - bulletsLoaded;
         int bulletDifference = bulletsLoaded - _maxAmmoCount;
@@ -104,13 +120,13 @@ public class TestHUD : MonoBehaviour
         {
             if (bulletDifference < 0)
             {
-                _bulletImages[bulletsLoaded].SetActive(false);
+                _bulletImages[bulletsLoaded].gameObject.SetActive(false);
             }
             else
             {
                 for (int i = Mathf.Abs(bulletDifference); i < _maxAmmoCount; i++)
                 {
-                    _bulletImages[i].SetActive(true);
+                    _bulletImages[i].gameObject.SetActive(true);
                 }
             }
         }
@@ -130,20 +146,31 @@ public class TestHUD : MonoBehaviour
 
     private void AddBulletsToHUD(GunData gunData)
     {
+        Debug.Log("WEAPON WAS CHANGED!");
         _maxAmmoCount = gunData.magazineSize;
+        
+        // Player received new weapon, so update the maximum magazine size text
+        maxAmmoMagText.text = gunData.magazineSize.ToString();
         
         Sprite bulletSprite = gunData.bulletType.bulletPrefab.GetComponent<SpriteRenderer>().sprite;
 
-        for (int i = 0; i < _maxAmmoCount; i++)
+        // Change all bullet images to have a new sprite of the current gun's bullet
+        for (int i = 0; i < _bulletImages.Count; i++)
         {
-            GameObject bulletDisplay = Instantiate(bulletDisplayPrefab);
+            _bulletImages[i].GetComponent<Image>().sprite = bulletSprite;
+            
+            if (i < _maxAmmoCount)
+            {
+                _bulletImages[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                _bulletImages[i].gameObject.SetActive(false);
+            }
 
-            bulletDisplay.GetComponent<Image>().sprite = bulletSprite;
-            
-            bulletDisplay.transform.SetParent(bulletPanel.transform, false);
-            
-            _bulletImages.Add(bulletDisplay);
+
         }
+        
     }
 
 }
