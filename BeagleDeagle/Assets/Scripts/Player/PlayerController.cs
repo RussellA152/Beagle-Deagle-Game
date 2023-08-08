@@ -86,7 +86,6 @@ public class PlayerController : MonoBehaviour
                 
                 // Allow all movement and attacks
                 _movementScript.AllowMovement(true);
-                _gunScript.AllowReload(true);
                 _gunScript.AllowShoot(true);
                 _utilityScript.AllowUtility(true);
                 _ultimateScript.AllowUltimate(true);
@@ -107,7 +106,6 @@ public class PlayerController : MonoBehaviour
                 // Allow all movement and attacks
                 _movementScript.AllowMovement(true);
                 _movementScript.AllowRotation(true);
-                _gunScript.AllowReload(true);
                 _gunScript.AllowShoot(true);
                 _utilityScript.AllowUtility(true);
                 _ultimateScript.AllowUltimate(true);
@@ -148,7 +146,6 @@ public class PlayerController : MonoBehaviour
                 // Allow all movement and attacks
                 _movementScript.AllowMovement(true);
                 _movementScript.AllowRotation(true);
-                _gunScript.AllowReload(true);
                 _gunScript.AllowShoot(true);
                 _utilityScript.AllowUtility(true);
                 _ultimateScript.AllowUltimate(true);

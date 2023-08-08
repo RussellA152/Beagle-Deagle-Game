@@ -125,9 +125,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
         // If the player has no ammo loaded into their weapon, begin reloading
         // If the gun is not already reloading, begin a coroutine for the reload
-        if (_bulletsLoaded <= 0f && !CooldownSystem.IsOnCooldown(Id))
+        if (_bulletsLoaded <= 0f && !CooldownSystem.IsOnCooldown(Id) && _reloadInputAction.enabled)
         {
-            //StartCoroutine(WaitReload());
             CooldownSystem.PutOnCooldown(this);
             return;
         }
@@ -161,6 +160,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
         
         CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
 
+        Debug.Log("Ammo loaded: " + _bulletsLoaded);
+        
         // After swapping to new weapon, show the ammo on the HUD
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
     }
@@ -186,9 +187,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
     /// 
     public void Attack()
     {
-        // The bullet will spawn at the barrel of the gun
-        //weaponData.bulletSpawnPoint = bulletSpawnPoint;
-        
         // Fetch a bullet from object pooler
         GameObject newBullet = ObjectPooler.Instance.GetPooledObject(_bulletPoolKey);
 
@@ -216,7 +214,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
             _bulletsLoaded--;
         }
-        
 
         // Player has shot gun, so reset timeElapsedSinceShot to 0 seconds
         _timeElapsedSinceShot = 0f;
@@ -403,5 +400,4 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
     public int Id { get; set; }
     public float CooldownDuration { get; set; }
-    public int numOfCooldowns { get; set; }
 }

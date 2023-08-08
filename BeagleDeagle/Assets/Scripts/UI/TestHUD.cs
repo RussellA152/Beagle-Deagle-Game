@@ -111,6 +111,7 @@ public class TestHUD : MonoBehaviour
     
     private void UpdateAmmoText(int bulletsLoaded)
     {
+        Debug.Log("HUD AMMO: " + bulletsLoaded);
         currentAmmoMagText.text = bulletsLoaded.ToString();
 
         //int bulletDifference = _maxAmmoCount - bulletsLoaded;

@@ -11,6 +11,8 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
     private bool _isActive;
 
     private Coroutine _durationCoroutine;
+
+    private float _returnOriginalWeaponDelay = 0.5f;
     
     protected override void OnEnable()
     {
@@ -54,7 +56,8 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         {
             StopCoroutine(_durationCoroutine);
             
-            ReturnOriginalWeapon();
+            StartCoroutine(ReturnOriginalWeapon());
+            //ReturnOriginalWeapon();
 
         }
     }
@@ -70,15 +73,20 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         }
     }
 
-    private void ReturnOriginalWeapon()
+    private IEnumerator ReturnOriginalWeapon()
     {
         // Only give back original weapon if the player has the AWP
         if (_isActive)
         {
-            _playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
+            // Wait a little before giving the player their original weapon back
+            // * Without this, the ammo display will show 0 current ammo because we shot the weapon and tried to give a new gun to the player *
+            yield return new WaitForSeconds(_returnOriginalWeaponDelay);
             
             // Give back the player their gun before they received the AWP sniper
             playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
+            
+            _playerGunScript.UpdateScriptableObject(_previousWeaponData);
+            
             
             // Activate cooldown
             StartCooldown();
@@ -100,7 +108,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         if (_isActive)
         {
             yield return new WaitForSeconds(ultimateData.duration);
-            ReturnOriginalWeapon();
+            StartCoroutine(ReturnOriginalWeapon());
 
         }
 
