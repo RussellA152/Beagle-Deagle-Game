@@ -15,7 +15,7 @@ MonoBehaviour:
   physicsMaterial: {fileID: 0}
   hitThroughWalls: 0
   detonationTime: 3
-  ultimateAbilityData: {fileID: 11400000, guid: 8d978ad8039192b42b0c5c89926fcb38, type: 2}
+  aoeData: {fileID: 11400000, guid: 76c3dbea33a66a444949fba4a83bc5c6, type: 2}
   explosiveRadius: 15
   whatDoesExplosionHit:
     serializedVersion: 2

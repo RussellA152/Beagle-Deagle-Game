@@ -15,3 +15,4 @@ MonoBehaviour:
   physicsMaterial: {fileID: 6200000, guid: c2cd37aec7ea54d4c8aa8beda6aec249, type: 2}
   hitThroughWalls: 0
   detonationTime: 0.6
+  aoeData: {fileID: 11400000, guid: be83e45970c94bd41812d461c92d3c5a, type: 2}

@@ -37,9 +37,11 @@ public class TestHUD : MonoBehaviour
     [SerializeField] private Image ultimateImage;
     [SerializeField] private Image ultimateImageFill;
 
-    [Header("Bullet Stack UI")]
+    [Header("Weapon Information UI")] 
+    [SerializeField] private Image weaponImage;
     [SerializeField] private RectTransform bulletPanel;
     [SerializeField] private GameObject bulletDisplayPrefab;
+    private int _bulletImageCount = 100;
     private List<Image> _bulletImages = new List<Image>();
     
     // HUD remembers the value of the max health and max ammo magazine size
@@ -49,14 +51,12 @@ public class TestHUD : MonoBehaviour
     private void Awake()
     {
         // Allocate 100 bullet images to use ( * may need to increase if we have weapons that have more than 100 bullets)
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < _bulletImageCount; i++)
         {
-            GameObject bulletDisplay = Instantiate(bulletDisplayPrefab);
+            GameObject bulletDisplay = Instantiate(bulletDisplayPrefab, bulletPanel.transform, false);
             
             bulletDisplay.SetActive(false);
 
-            bulletDisplay.transform.SetParent(bulletPanel.transform, false);
-            
             _bulletImages.Add(bulletDisplay.GetComponent<Image>());
         }
     }
@@ -111,20 +111,20 @@ public class TestHUD : MonoBehaviour
     
     private void UpdateAmmoText(int bulletsLoaded)
     {
-        Debug.Log("HUD AMMO: " + bulletsLoaded);
         currentAmmoMagText.text = bulletsLoaded.ToString();
-
-        //int bulletDifference = _maxAmmoCount - bulletsLoaded;
+        
         int bulletDifference = bulletsLoaded - _maxAmmoCount;
         
         if (_bulletImages.Count > 0f)
         {
+            // If the player lost ammo, disable a bullet from the UI
             if (bulletDifference < 0)
             {
                 _bulletImages[bulletsLoaded].gameObject.SetActive(false);
             }
             else
             {
+                // If the player gained ammo, display a bullet on the UI
                 for (int i = Mathf.Abs(bulletDifference); i < _maxAmmoCount; i++)
                 {
                     _bulletImages[i].gameObject.SetActive(true);
@@ -147,18 +147,19 @@ public class TestHUD : MonoBehaviour
 
     private void AddBulletsToHUD(GunData gunData)
     {
-        Debug.Log("WEAPON WAS CHANGED!");
+        // Player received new weapon, so update the maximum magazine size text and variable
         _maxAmmoCount = gunData.magazineSize;
-        
-        // Player received new weapon, so update the maximum magazine size text
         maxAmmoMagText.text = gunData.magazineSize.ToString();
+
+        // Change the weapon image to use the sprite of the player's new gun
+        weaponImage.sprite = gunData.sprite;
         
         Sprite bulletSprite = gunData.bulletType.bulletPrefab.GetComponent<SpriteRenderer>().sprite;
 
         // Change all bullet images to have a new sprite of the current gun's bullet
         for (int i = 0; i < _bulletImages.Count; i++)
         {
-            _bulletImages[i].GetComponent<Image>().sprite = bulletSprite;
+            _bulletImages[i].sprite = bulletSprite;
             
             if (i < _maxAmmoCount)
             {

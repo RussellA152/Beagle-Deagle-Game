@@ -15,7 +15,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
     [SerializeField] private PlayerEvents playerEvents;
     [SerializeField] private GunData weaponData;
 
-    public CooldownSystem CooldownSystem;
+    private CooldownSystem _cooldownSystem;
     
     private TopDownInput _topDownInput;
     private SpriteRenderer _spriteRenderer;
@@ -66,7 +66,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
         // Fetch cooldown system component from the player gameObject (always the parent of their gun)
-        CooldownSystem = GetComponentInParent<CooldownSystem>();
+        _cooldownSystem = GetComponentInParent<CooldownSystem>();
         
         _topDownInput = new TopDownInput();
 
@@ -104,13 +104,13 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
     {
         playerEvents.onPlayerSwitchedWeapon += UpdateScriptableObject;
 
-        CooldownSystem.OnCooldownEnded += OnReloadFinish;
+        _cooldownSystem.OnCooldownEnded += OnReloadFinish;
 
     }
 
     private void OnDisable()
     {
-        CooldownSystem.OnCooldownEnded -= OnReloadFinish;
+        _cooldownSystem.OnCooldownEnded -= OnReloadFinish;
         _shootInputAction.Disable();
         _reloadInputAction.Disable();
     }
@@ -125,9 +125,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
         // If the player has no ammo loaded into their weapon, begin reloading
         // If the gun is not already reloading, begin a coroutine for the reload
-        if (_bulletsLoaded <= 0f && !CooldownSystem.IsOnCooldown(Id) && _reloadInputAction.enabled)
+        if (_bulletsLoaded <= 0f && !_cooldownSystem.IsOnCooldown(Id) && _reloadInputAction.enabled)
         {
-            CooldownSystem.PutOnCooldown(this);
+            _cooldownSystem.PutOnCooldown(this);
             return;
         }
 
@@ -235,7 +235,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
     public void AllowShoot(bool boolean)
     {
-        if (boolean && !CooldownSystem.IsOnCooldown(Id))
+        if (boolean && !_cooldownSystem.IsOnCooldown(Id))
         {
             _shootInputAction.Enable();
         }
@@ -257,10 +257,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
     // Call reload function when the player presses the reload key
     public void OnReload(CallbackContext context)
     {
-        if (!CooldownSystem.IsOnCooldown(Id))
+        if (!_cooldownSystem.IsOnCooldown(Id))
         {
             _shootInput = 0f;
-            CooldownSystem.PutOnCooldown(this);
+            _cooldownSystem.PutOnCooldown(this);
             ActuallyShooting = false;
             AllowShoot(false);
             Debug.Log("START RELOAD!");

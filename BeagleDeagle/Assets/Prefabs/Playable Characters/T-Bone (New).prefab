@@ -356,21 +356,6 @@ MonoBehaviour:
   headSr: {fileID: 1777428646164562768}
   weaponSr: {fileID: 633001574926292174}
   movementSpeedModifiers: []
-  collisionOffset: 0.05
-  movementFilter:
-    useTriggers: 0
-    useLayerMask: 0
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 0
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
 --- !u!114 &611969991595103788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -778,10 +763,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1777428646219782325}
     m_Modifications:
-    - target: {fileID: 4077318059066061062, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.06
-      objectReference: {fileID: 0}
     - target: {fileID: 4077318060314352049, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: m_Name
       value: Gun

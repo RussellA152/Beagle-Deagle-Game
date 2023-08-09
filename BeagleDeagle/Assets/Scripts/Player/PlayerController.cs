@@ -70,6 +70,13 @@ public class PlayerController : MonoBehaviour
     {
         state = PlayerState.Idle;
         
+        // Allow player to do all their abilities at the start of the game
+        _movementScript.AllowMovement(true);
+        _movementScript.AllowRotation(true);
+        _gunScript.AllowShoot(true);
+        _gunScript.AllowReload(true);
+        _utilityScript.AllowUtility(true);
+        _ultimateScript.AllowUltimate(true);
     }
 
     private void Update()

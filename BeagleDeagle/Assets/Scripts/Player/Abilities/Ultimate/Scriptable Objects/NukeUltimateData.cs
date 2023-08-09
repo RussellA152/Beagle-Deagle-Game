@@ -13,6 +13,7 @@ public class NukeUltimateData : UltimateAbilityData
     [Header("Grenade Data")]
     public NukeData nukeData;
 
+    // TODO: USE EXPLOSIVE TYPE FOR THIS
     public DamageOverTimeData damageOverTimeData;
 
     
