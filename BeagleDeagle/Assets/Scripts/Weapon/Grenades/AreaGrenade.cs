@@ -28,7 +28,7 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
 
     private void OnDisable()
     {
-        areaOfEffectGameObject.gameObject.SetActive(false);
+        AreaOfEffectScript.gameObject.SetActive(false);
         
         //particleAOE.SetActive(false);
         sprite.SetActive(true);
@@ -58,12 +58,12 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
     // Then after some more time, disable this grenade
     public override IEnumerator Detonate()
     {
-        yield return new WaitForSeconds(explosiveData.detonationTime);
+        yield return new WaitForSeconds(ExplosiveData.detonationTime);
 
         sprite.SetActive(false);
 
         //particleAOE.SetActive(true);
-        areaOfEffectGameObject.gameObject.SetActive(true);
+        AreaOfEffectScript.gameObject.SetActive(true);
 
         FreezePosition();
 

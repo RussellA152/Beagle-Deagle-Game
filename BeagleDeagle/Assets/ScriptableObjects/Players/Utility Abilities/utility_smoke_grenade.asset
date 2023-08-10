@@ -18,6 +18,4 @@ MonoBehaviour:
   cooldown: 12
   duration: 5
   maxUses: 2
-  smokeGrenadePrefab: {fileID: 8164879991046117895, guid: cd6eec6d40152204db89a362109b5df2, type: 3}
-  utilityExplosiveData: {fileID: 11400000, guid: f9b736858f8515e4881b5b31abb13121, type: 2}
-  slowData: {fileID: 11400000, guid: 8530572b7c029d943bc78d76e4c183e1, type: 2}
+  explosiveType: {fileID: 11400000, guid: e0d96ed173a9c944aadcd4d2b423af74, type: 2}

@@ -10,7 +10,7 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
         StartCooldown();
 
         // Spawn a nuke at the player's location
-        GameObject nuclearBomb = Instantiate(ultimateData.nukePrefab);
+        GameObject nuclearBomb = Instantiate(ultimateData.explosiveType.explosivePrefab);
 
         nuclearBomb.SetActive(false);
 
@@ -19,13 +19,14 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
         IExplosiveUpdatable explosiveScript = nuclearBomb.GetComponent<IExplosiveUpdatable>();
 
         // Give the nuke the data it needs
-        explosiveScript.UpdateScriptableObject(ultimateData.nukeData);
+        explosiveScript.UpdateScriptableObject(ultimateData.explosiveType.explosiveData);
         
         // Set the damage of the nuke blast and the duration the nuke lingers for
         explosiveScript.SetDamage(ultimateData.abilityDamage);
         explosiveScript.SetDuration(ultimateData.duration);
 
-        nuclearBomb.GetComponent<StatusEffect<DamageOverTimeData>>().UpdateScriptableObject(ultimateData.damageOverTimeData);
+        nuclearBomb.GetComponent<IStatusEffect>().UpdateWeaponType(ultimateData.explosiveType);
+        //nuclearBomb.GetComponent<StatusEffect<DamageOverTimeData>>().UpdateScriptableObject(ultimateData.damageOverTimeData);
         
         nuclearBomb.SetActive(true);
         explosiveScript.Activate(transform.position);

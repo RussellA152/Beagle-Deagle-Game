@@ -1,23 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "NewBulletType", menuName = "ScriptableObjects/BulletType")]
-public class BulletTypeData : ScriptableObject
+public class BulletTypeData : WeaponType
 {
     [RestrictedPrefab(typeof(IBulletUpdatable))]
     public GameObject bulletPrefab;
     
     public BulletData bulletData;
     
-    public List<StatusEffectData> statusEffects = new List<StatusEffectData>();
-    
-    
-    // TODO: Make MightyFoot use this script or deriving scripts, also create ExplosiveType and probably AOEType
-    
-    
-    // Summary: What I am trying to do is have a bullet get updated with the bullet information, and also any other effects it may have (ex. fire, stun, etc.)
+    //public List<StatusEffectData> statusEffects = new List<StatusEffectData>();
     
     
     ///-///////////////////////////////////////////////////////////
@@ -30,15 +25,15 @@ public class BulletTypeData : ScriptableObject
         
         projectile.UpdateScriptableObject(bulletData);
         
-        // if (statusEffects.Count > 0)
-        // {
-        //     foreach (StatusEffectData statusEffects in statusEffects)
-        //     {
-        //         statusEffects.UpdateStatusEffects(bullet, activator);
-        //     }
-        // }
 
         return projectile;
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Return the first instance of a specific status effect type, inside of the bullet type's list
+    /// 
+    // public T GetBulletTypeStatusEffect<T>()
+    // {
+    //     return statusEffects.OfType<T>().FirstOrDefault();
+    // }
 }

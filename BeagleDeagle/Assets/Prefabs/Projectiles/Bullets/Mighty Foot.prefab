@@ -155,7 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a471a590a0af95f4ca6d3ce982297639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusEffectData: {fileID: 11400000, guid: f99b7cfa7568bb84dab1dca6fc954872, type: 2}
+  weaponType: {fileID: 0}
+  statusEffectData: {fileID: 0}
 --- !u!50 &7698205712678738710
 Rigidbody2D:
   serializedVersion: 4

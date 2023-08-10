@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IStatusEffect : IDataUpdatable<StatusEffectData>
 {
-    
+    public void UpdateWeaponType(WeaponType weaponTypeScriptableObject);
 }

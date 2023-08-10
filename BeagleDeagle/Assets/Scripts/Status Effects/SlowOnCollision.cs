@@ -10,9 +10,9 @@ public class SlowOnCollision : StatusEffect<SlowData>
     {
         if (DoesThisAffectTarget(objectHit))
         {
-            objectHit.GetComponent<IMovable>().AddMovementSpeedModifier(statusEffectData.movementSpeedEffect);
+            objectHit.GetComponent<IMovable>().AddMovementSpeedModifier(StatusEffectData.movementSpeedEffect);
         
-            objectHit.GetComponent<IDamager>().AddAttackSpeedModifier(statusEffectData.attackSpeedEffect);
+            objectHit.GetComponent<IDamager>().AddAttackSpeedModifier(StatusEffectData.attackSpeedEffect);
         }
         
     }
@@ -22,9 +22,9 @@ public class SlowOnCollision : StatusEffect<SlowData>
     {
         if (DoesThisAffectTarget(objectHit) && removeOnTriggerExit)
         {
-            objectHit.GetComponent<IMovable>().RemoveMovementSpeedModifier(statusEffectData.movementSpeedEffect);
+            objectHit.GetComponent<IMovable>().RemoveMovementSpeedModifier(StatusEffectData.movementSpeedEffect);
         
-            objectHit.GetComponent<IDamager>().RemoveAttackSpeedModifier(statusEffectData.attackSpeedEffect);
+            objectHit.GetComponent<IDamager>().RemoveAttackSpeedModifier(StatusEffectData.attackSpeedEffect);
         }
         
     }

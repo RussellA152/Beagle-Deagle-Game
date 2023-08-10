@@ -6,13 +6,11 @@ using UnityEngine.Serialization;
 
 public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T: ExplosiveData
 {
-    [SerializeField] protected T explosiveData;
+    protected T ExplosiveData;
     
     [SerializeField] protected GameObject sprite;
-    
-    [SerializeField] protected GameObject areaOfEffectGameObject;
 
-    [SerializeField] private AreaOfEffect _areaOfEffectScript;
+    protected AreaOfEffect AreaOfEffectScript;
 
     protected CheckObstruction ObstructionScript;
     
@@ -25,7 +23,8 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
     protected virtual void Awake()
     {
         ObstructionScript = GetComponentInParent<CheckObstruction>();
-        _areaOfEffectScript = areaOfEffectGameObject.GetComponent<AreaOfEffect>();
+        AreaOfEffectScript =
+            GetComponentInChildren<AreaOfEffect>();
     }
 
     private void Start()
@@ -35,8 +34,8 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
 
     private void OnDisable()
     {
-        if(areaOfEffectGameObject != null)
-            areaOfEffectGameObject.gameObject.SetActive(false);
+        if(AreaOfEffectScript != null)
+            AreaOfEffectScript.gameObject.SetActive(false);
 
         sprite.SetActive(true);
 
@@ -45,7 +44,7 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
 
     public virtual void Activate(Vector2 aimDirection)
     {
-        _areaOfEffectScript.UpdateAOEData(explosiveData.aoeData);
+        AreaOfEffectScript.UpdateAOEData(ExplosiveData.aoeData);
     }
 
     
@@ -75,7 +74,7 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
     {
         if (scriptableObject is T)
         {
-            explosiveData = scriptableObject as T;
+            ExplosiveData = scriptableObject as T;
         }
         else
         {

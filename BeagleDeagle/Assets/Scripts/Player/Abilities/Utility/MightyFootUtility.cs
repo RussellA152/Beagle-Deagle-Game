@@ -14,7 +14,7 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
     {
         base.Start();
         
-        PoolKey = currentUtilityData.mightyFootPrefab.GetComponent<IPoolable>().PoolKey;
+        PoolKey = currentUtilityData.bulletType.bulletPrefab.GetComponent<IPoolable>().PoolKey;
 
         _playerMovementScript = gameObject.GetComponent<TopDownMovement>();
 
@@ -28,19 +28,14 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
         Vector2 aimDirection = _playerMovementScript.ReturnPlayerDirection().normalized;
 
         MightyFootBullet bulletComponent = mightyFootGameObject.GetComponent<MightyFootBullet>();
-
-        StatusEffect<StunData> stunComponent = mightyFootGameObject.GetComponent<StatusEffect<StunData>>();
         
-        //StatusEffect<KnockBackData> knockBackComponent = mightyFootGameObject.GetComponent<StatusEffect<KnockBackData>>();
-
-        stunComponent.UpdateScriptableObject(currentUtilityData.stunData);
-        
-        //knockBackComponent.UpdateScriptableObject(currentUtilityData.knockBackData);
 
         // Give MightyFoot the scriptable object it needs
-        bulletComponent.UpdateScriptableObject(currentUtilityData.mightyFootData);
+        bulletComponent.UpdateScriptableObject(currentUtilityData.bulletType.bulletData);
 
-        bulletComponent.UpdateDamageAndPenetrationValues(currentUtilityData.abilityDamage, currentUtilityData.mightyFootData.numEnemiesCanHit);
+        bulletComponent.GetComponent<IStatusEffect>().UpdateWeaponType(currentUtilityData.bulletType);
+        
+        bulletComponent.UpdateDamageAndPenetrationValues(currentUtilityData.abilityDamage, currentUtilityData.numberOfEnemiesCanHit);
         
         // Tell the bullet that the player is the transform that shot it
         bulletComponent.UpdateWhoShotThisBullet(transform);

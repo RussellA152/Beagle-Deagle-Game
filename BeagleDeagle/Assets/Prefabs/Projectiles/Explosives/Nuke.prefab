@@ -231,10 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a61110541955836449d8e921f0338c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosiveData: {fileID: 0}
   sprite: {fileID: 3520225513382146324}
-  areaOfEffectGameObject: {fileID: 5551387674908472178}
-  _areaOfEffectScript: {fileID: 0}
   poolKey: 31
 --- !u!114 &5263291236087894076
 MonoBehaviour:
@@ -248,7 +245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34027b9d94afcaa4286ec175a3cabc0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusEffectData: {fileID: 11400000, guid: a02b25fbc92f9fa46b6ff7f42d39026d, type: 2}
+  weaponType: {fileID: 0}
+  statusEffectData: {fileID: 0}
 --- !u!114 &2095971044348423413
 MonoBehaviour:
   m_ObjectHideFlags: 0

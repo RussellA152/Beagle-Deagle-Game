@@ -5,8 +5,9 @@ using System;
 
 public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: StatusEffectData
 {
-    [SerializeField]
-    protected T statusEffectData;
+
+    private WeaponType _weaponType;
+    protected T StatusEffectData;
 
     ///-///////////////////////////////////////////////////////////
     /// Apply an effect to the object that was hit by the status effect.
@@ -20,7 +21,7 @@ public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: St
     /// 
     protected bool DoesThisAffectTarget(GameObject objectHit)
     {
-        if ((statusEffectData.whatStatusEffectHits.value & (1 << objectHit.layer)) > 0)
+        if ((StatusEffectData.whatStatusEffectHits.value & (1 << objectHit.layer)) > 0)
         {
             return true;
         }
@@ -29,17 +30,25 @@ public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: St
             return false;
         }
     }
-        
-
+    
     public void UpdateScriptableObject(StatusEffectData scriptableObject)
     {
         if (scriptableObject is T)
         {
-            statusEffectData = scriptableObject as T;
+            StatusEffectData = scriptableObject as T;
         }
         else
         {
             Debug.LogError("ERROR WHEN UPDATING SCRIPTABLE OBJECT! " + scriptableObject + " IS NOT A " + typeof(T));
         }
+    }
+
+    public void UpdateWeaponType(WeaponType weaponTypeScriptableObject)
+    {
+        _weaponType = weaponTypeScriptableObject;
+        
+        // Retrieve status effect data from explosive type
+        // Examples: StunData, DamageOverTimeData, SlowData
+        StatusEffectData = _weaponType.GetStatusEffectData<T>();
     }
 }

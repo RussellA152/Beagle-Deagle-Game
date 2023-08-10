@@ -21,12 +21,12 @@ public class Nuke : Explosive<NukeData>, IPoolable
     // Then after some more time, disable this grenade
     public override IEnumerator Detonate()
     {
-        yield return new WaitForSeconds(explosiveData.detonationTime);
+        yield return new WaitForSeconds(ExplosiveData.detonationTime);
 
         sprite.SetActive(false);
         
-        if(areaOfEffectGameObject != null)
-            areaOfEffectGameObject.gameObject.SetActive(true);
+        if(AreaOfEffectScript != null)
+            AreaOfEffectScript.gameObject.SetActive(true);
 
         StartCoroutine(BrieflyShowGizmo());
 
@@ -44,7 +44,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
         base.Explode();
         
         // Big explosion hurt all enemies
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, explosiveData.explosiveRadius, explosiveData.whatDoesExplosionHit);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, ExplosiveData.explosiveRadius, ExplosiveData.whatDoesExplosionHit);
 
         foreach (Collider2D targetCollider in hitEnemies)
         {
@@ -66,7 +66,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
         {
             Gizmos.color = Color.red;
 
-            Gizmos.DrawWireSphere(transform.position, explosiveData.explosiveRadius);
+            Gizmos.DrawWireSphere(transform.position, ExplosiveData.explosiveRadius);
         }
         
     }

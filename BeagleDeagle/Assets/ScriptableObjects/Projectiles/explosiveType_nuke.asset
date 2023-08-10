@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b93352e6756d2b447a3fd214e45754e4, type: 3}
+  m_Name: explosiveType_nuke
+  m_EditorClassIdentifier: 
+  statusEffects:
+  - {fileID: 11400000, guid: a02b25fbc92f9fa46b6ff7f42d39026d, type: 2}
+  explosivePrefab: {fileID: 8164879991046117895, guid: aa33ae65cdafcb0459a60d94822c128b, type: 3}
+  explosiveData: {fileID: 11400000, guid: 76af1c12408bb984e8e85236fff79b1d, type: 2}

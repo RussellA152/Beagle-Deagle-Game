@@ -245,10 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5abd305a43f324e995048b3e62ceea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosiveData: {fileID: 0}
   sprite: {fileID: 3520225513382146324}
-  areaOfEffectGameObject: {fileID: 5551387674908472178}
-  _areaOfEffectScript: {fileID: 0}
   poolKey: 30
   throwSpeed: 15
 --- !u!114 &411679524319823067
@@ -275,7 +272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11cb0557abf71e4ea851adccf3f5caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusEffectData: {fileID: 11400000, guid: 8530572b7c029d943bc78d76e4c183e1, type: 2}
+  weaponType: {fileID: 0}
+  statusEffectData: {fileID: 0}
   removeOnTriggerExit: 1
 --- !u!70 &8164879991046117892
 CapsuleCollider2D:
