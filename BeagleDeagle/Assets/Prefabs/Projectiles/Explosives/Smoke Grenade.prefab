@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 584fc77bd578a8944958f5d9ccb62ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areaOfEffectData: {fileID: 11400000, guid: be83e45970c94bd41812d461c92d3c5a, type: 2}
+  areaOfEffectData: {fileID: 0}
   onAreaEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -245,12 +245,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5abd305a43f324e995048b3e62ceea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosiveData: {fileID: 0}
   sprite: {fileID: 3520225513382146324}
-  explosiveData: {fileID: 11400000, guid: f9b736858f8515e4881b5b31abb13121, type: 2}
   areaOfEffectGameObject: {fileID: 5551387674908472178}
+  _areaOfEffectScript: {fileID: 0}
   poolKey: 30
-  rb: {fileID: 7698205712678738710}
-  grenadeCollider: {fileID: 8164879991046117892}
   throwSpeed: 15
 --- !u!114 &411679524319823067
 MonoBehaviour:

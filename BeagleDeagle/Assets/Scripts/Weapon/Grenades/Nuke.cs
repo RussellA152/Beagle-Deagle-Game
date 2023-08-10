@@ -12,6 +12,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
 
     public override void Activate(Vector2 aimDirection)
     {
+        base.Activate(aimDirection);
         transform.position = aimDirection;
         StartCoroutine(Detonate());
     }

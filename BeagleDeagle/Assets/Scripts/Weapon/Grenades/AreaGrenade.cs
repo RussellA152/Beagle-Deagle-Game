@@ -42,6 +42,8 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
 
     public override void Activate(Vector2 aimDirection)
     {
+        base.Activate(aimDirection);
+        
         StartCoroutine(Detonate());
 
         // Rotate the grenade based on the aim direction

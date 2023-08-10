@@ -6,14 +6,13 @@ using UnityEngine.Serialization;
 
 public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T: ExplosiveData
 {
-    [SerializeField]
-    protected T explosiveData;
+    [SerializeField] protected T explosiveData;
     
-    [SerializeField]
-    protected GameObject sprite;
+    [SerializeField] protected GameObject sprite;
     
-    [SerializeField]
-    protected GameObject areaOfEffectGameObject;
+    [SerializeField] protected GameObject areaOfEffectGameObject;
+
+    [SerializeField] private AreaOfEffect _areaOfEffectScript;
 
     protected CheckObstruction ObstructionScript;
     
@@ -26,6 +25,7 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
     protected virtual void Awake()
     {
         ObstructionScript = GetComponentInParent<CheckObstruction>();
+        _areaOfEffectScript = areaOfEffectGameObject.GetComponent<AreaOfEffect>();
     }
 
     private void Start()
@@ -43,7 +43,10 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
         StopAllCoroutines();
     }
 
-    public abstract void Activate(Vector2 aimDirection);
+    public virtual void Activate(Vector2 aimDirection)
+    {
+        _areaOfEffectScript.UpdateAOEData(explosiveData.aoeData);
+    }
 
     
     // Wait some time, then activate the grenade's explosion

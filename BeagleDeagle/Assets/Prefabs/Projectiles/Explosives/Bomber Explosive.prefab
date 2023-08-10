@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a61110541955836449d8e921f0338c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosiveData: {fileID: 11400000, guid: 7b04de4d71b41ae40a256eb3d35990be, type: 2}
+  explosiveData: {fileID: 0}
   sprite: {fileID: 3520225513382146324}
   areaOfEffectGameObject: {fileID: 0}
   poolKey: 32

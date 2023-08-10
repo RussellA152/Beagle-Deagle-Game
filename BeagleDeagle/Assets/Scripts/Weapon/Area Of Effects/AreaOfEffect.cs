@@ -46,9 +46,8 @@ public class AreaOfEffect : MonoBehaviour
 
     private void OnEnable()
     {
-        AreaOfEffectManager.Instance.AddNewAreaOfEffect(areaOfEffectData);
-        
-        UpdateAOEData(areaOfEffectData);
+
+        //UpdateAOEData(areaOfEffectData);
         
         
     }
@@ -115,6 +114,8 @@ public class AreaOfEffect : MonoBehaviour
     public void UpdateAOEData(AreaOfEffectData scriptableObject)
     {
         areaOfEffectData = scriptableObject;
+        
+        AreaOfEffectManager.Instance.AddNewAreaOfEffect(areaOfEffectData);
         
         transform.localScale = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY);
         
