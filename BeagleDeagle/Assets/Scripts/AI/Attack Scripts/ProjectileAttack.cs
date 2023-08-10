@@ -14,7 +14,7 @@ public class ProjectileAttack : AIAttack<ProjectileEnemyData>
         base.OnEnable();
         
         // TODO: See if we can call this function less?
-        _bulletPoolKey = enemyScriptableObject.bulletType.bulletPrefab.GetComponent<IPoolable>().PoolKey;
+        _bulletPoolKey = enemyScriptableObject.bulletPrefab.GetComponent<IPoolable>().PoolKey;
     }
 
     public override void InitiateAttack()
@@ -27,14 +27,15 @@ public class ProjectileAttack : AIAttack<ProjectileEnemyData>
         
         if (newBullet != null)
         {
-            // Tell BulletType to update the bullet with the data it needs
-            // For example, give fire damage to the bullet, or give life steal values to the bullet
-            // Pass in the bullet gameObject and the player gameObject(to retrieve modifiers)
-            IBulletUpdatable projectile = enemyScriptableObject.bulletType.UpdateBulletWithData(newBullet, transform.gameObject);
+            IBulletUpdatable projectile = newBullet.GetComponent<IBulletUpdatable>();
             
+            projectile.UpdateScriptableObject(enemyScriptableObject.bulletData);
+
             // Pass in the damage and penetration values of this gun, to the bullet being shot
             // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
             projectile.UpdateDamageAndPenetrationValues(enemyScriptableObject.attackDamage, enemyScriptableObject.bulletPenetration);
+            
+            projectile.UpdateWhoShotThisBullet(transform);
 
             // Set the position to be at the barrel of the gun
             newBullet.transform.position = projectileSpawnPoint.position;

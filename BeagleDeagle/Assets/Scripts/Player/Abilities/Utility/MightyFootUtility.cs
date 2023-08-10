@@ -14,7 +14,7 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
     {
         base.Start();
         
-        PoolKey = currentUtilityData.bulletType.bulletPrefab.GetComponent<IPoolable>().PoolKey;
+        PoolKey = currentUtilityData.mightyFootPrefab.GetComponent<IPoolable>().PoolKey;
 
         _playerMovementScript = gameObject.GetComponent<TopDownMovement>();
 
@@ -31,11 +31,14 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
         
 
         // Give MightyFoot the scriptable object it needs
-        bulletComponent.UpdateScriptableObject(currentUtilityData.bulletType.bulletData);
+        bulletComponent.UpdateScriptableObject(currentUtilityData.mightyFootData);
 
-        bulletComponent.GetComponent<IStatusEffect>().UpdateWeaponType(currentUtilityData.bulletType);
+        foreach (IStatusEffect statusEffect in bulletComponent.GetComponents<IStatusEffect>())
+        {
+            statusEffect.UpdateWeaponType(currentUtilityData.statusEffects);
+        }
         
-        bulletComponent.UpdateDamageAndPenetrationValues(currentUtilityData.abilityDamage, currentUtilityData.numberOfEnemiesCanHit);
+        bulletComponent.UpdateDamageAndPenetrationValues(currentUtilityData.abilityDamage, currentUtilityData.mightyFootData.numberOfEnemiesCanHit);
         
         // Tell the bullet that the player is the transform that shot it
         bulletComponent.UpdateWhoShotThisBullet(transform);

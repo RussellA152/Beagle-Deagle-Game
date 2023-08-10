@@ -1,13 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "NewUtility", menuName = "ScriptableObjects/Ability/Utility/SmokeGrenade")]
 public class SmokeGrenadeUtilityData : UtilityAbilityData
 {
-    [Header("Explosive Data")] 
-    // Prefab of smoke grenade will come from ExplosiveType
-    public ExplosiveTypeData explosiveType;
+    [RestrictedPrefab(typeof(AreaGrenade))]
+    // The smoke grenade to spawn
+    public GameObject smokeGrenadePrefab;
+
+    // The data the smoke grenade will use
+    public UtilityExplosiveData smokeGrenadeData;
+    
+    // The data of the status effects that the smoke grenade will have ( * MUST BE COMPATIBLE WITH PREFAB * )
+    public StatusEffectTypes statusEffects;
 
 }
 

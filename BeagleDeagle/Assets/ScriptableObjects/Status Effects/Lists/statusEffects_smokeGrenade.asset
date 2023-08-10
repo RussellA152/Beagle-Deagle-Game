@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b93352e6756d2b447a3fd214e45754e4, type: 3}
-  m_Name: explosiveType_smokeGrenade
+  m_Script: {fileID: 11500000, guid: eb2bc520727d1fb409bc67799e9881b8, type: 3}
+  m_Name: statusEffects_smokeGrenade
   m_EditorClassIdentifier: 
   statusEffects:
   - {fileID: 11400000, guid: 8530572b7c029d943bc78d76e4c183e1, type: 2}
-  explosivePrefab: {fileID: 8164879991046117895, guid: cd6eec6d40152204db89a362109b5df2, type: 3}
-  explosiveData: {fileID: 11400000, guid: f9b736858f8515e4881b5b31abb13121, type: 2}

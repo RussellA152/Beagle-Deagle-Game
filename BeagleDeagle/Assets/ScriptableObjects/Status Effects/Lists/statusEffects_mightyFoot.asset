@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 900b9e45894de5549ac8ab62d84ee581, type: 3}
-  m_Name: bulletType_mightyFoot
+  m_Script: {fileID: 11500000, guid: eb2bc520727d1fb409bc67799e9881b8, type: 3}
+  m_Name: statusEffects_mightyFoot
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 8164879991046117895, guid: 4690bf3bda783ed4f8a0174326ca84cb, type: 3}
-  bulletData: {fileID: 11400000, guid: 7d16991d98ac3644980c8574734b32fc, type: 2}
   statusEffects:
   - {fileID: 11400000, guid: f99b7cfa7568bb84dab1dca6fc954872, type: 2}

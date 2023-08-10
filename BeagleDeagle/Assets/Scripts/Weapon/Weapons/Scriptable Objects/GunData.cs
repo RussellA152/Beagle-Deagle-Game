@@ -22,8 +22,14 @@ public abstract class GunData : ScriptableObject
     [Range(0f, 30f)]
     public float totalReloadTime;
 
-    // What kind of bullet will this gun shoot (ex. regular, fire, radiation... etc.)
-    public BulletTypeData bulletType;
+    [Header("Bullet Data")] 
+    [RestrictedPrefab(typeof(IBulletUpdatable))]
+    // What bullet will this gun shoot?
+    public GameObject bulletPrefab;
+    // What data does this bullet use?
+    public BulletData bulletData;
+    // What are the status effects of this bullet? (* PREFAB MUST BE COMPATIBLE * )
+    public StatusEffectTypes statusEffects;
     
     [Header("Weapon Spread")]
     [Range(0f, 20f)]
@@ -32,9 +38,6 @@ public abstract class GunData : ScriptableObject
     [Header("Penetration")]
     [Range(1f, 100f)]
     public int penetrationCount; // how many enemies can this gun's bullet pass through?
-    
-    //[HideInInspector]
-    //public Transform bulletSpawnPoint; // where does this bullet get shot from? (i.e the barrel)
     
     ///-///////////////////////////////////////////////////////////
     /// Return the damage of this weapon.

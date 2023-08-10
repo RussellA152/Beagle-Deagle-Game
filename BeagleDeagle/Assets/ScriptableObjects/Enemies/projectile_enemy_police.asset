@@ -26,6 +26,9 @@ MonoBehaviour:
   chaseLayer:
     serializedVersion: 2
     m_Bits: 128
+  xpOnDeath: 0
+  bulletPrefab: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
+  bulletData: {fileID: 11400000, guid: be1d615a5892cc443a06ea3aed7be291, type: 2}
   bulletType: {fileID: 11400000, guid: 40a85cea5e0f4a24eb69c799ec73ba75, type: 2}
   bulletPenetration: 1
   numberOfProjectiles: 0

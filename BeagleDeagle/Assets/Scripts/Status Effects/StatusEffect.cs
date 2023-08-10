@@ -6,7 +6,7 @@ using System;
 public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: StatusEffectData
 {
 
-    private WeaponType _weaponType;
+    private StatusEffectTypes _statusEffectTypes;
     protected T StatusEffectData;
 
     ///-///////////////////////////////////////////////////////////
@@ -43,12 +43,12 @@ public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: St
         }
     }
 
-    public void UpdateWeaponType(WeaponType weaponTypeScriptableObject)
+    public void UpdateWeaponType(StatusEffectTypes statusEffectTypesScriptableObject)
     {
-        _weaponType = weaponTypeScriptableObject;
+        _statusEffectTypes = statusEffectTypesScriptableObject;
         
         // Retrieve status effect data from explosive type
         // Examples: StunData, DamageOverTimeData, SlowData
-        StatusEffectData = _weaponType.GetStatusEffectData<T>();
+        StatusEffectData = _statusEffectTypes.GetStatusEffectData<T>();
     }
 }

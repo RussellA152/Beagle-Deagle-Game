@@ -27,5 +27,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   xpOnDeath: 0
-  explosiveType: {fileID: 11400000, guid: f4e5d2376fbde1541b67fa98b4fbc7fe, type: 2}
+  explosivePrefab: {fileID: 8164879991046117895, guid: 7b69bf609bb9e114aa6b929f6eb799c8, type: 3}
+  explosiveData: {fileID: 11400000, guid: 7b04de4d71b41ae40a256eb3d35990be, type: 2}
+  statusEffects: {fileID: 0}
   explosiveDuration: 0.5

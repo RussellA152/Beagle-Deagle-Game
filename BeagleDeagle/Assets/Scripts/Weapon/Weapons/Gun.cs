@@ -96,7 +96,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
         
         _bulletsLoaded = weaponData.magazineSize;
         
-        _bulletPoolKey = weaponData.bulletType.bulletPrefab.GetComponent<IPoolable>().PoolKey;
+        _bulletPoolKey = weaponData.bulletPrefab.GetComponent<IPoolable>().PoolKey;
         
     }
 
@@ -195,8 +195,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
             // Tell BulletType to update the bullet with the data it needs
             // For example, give fire damage to the bullet, or give life steal values to the bullet
             // Pass in the bullet gameObject and the player gameObject(to retrieve modifiers)
-            IBulletUpdatable projectile = weaponData.bulletType.UpdateBulletWithData(newBullet, transform.parent.parent.gameObject);
+            IBulletUpdatable projectile = newBullet.GetComponent<IBulletUpdatable>(); //weaponData.statusEffects.UpdateBulletWithData(newBullet, transform.parent.parent.gameObject);
             
+            projectile.UpdateScriptableObject(weaponData.bulletData);
             // Pass in the damage and penetration values of this gun, to the bullet being shot
             // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
             projectile.UpdateDamageAndPenetrationValues(weaponData.GetDamage() * _bonusDamage, weaponData.penetrationCount + _bonusPenetration);

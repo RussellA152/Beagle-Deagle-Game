@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WeaponType : ScriptableObject
+[CreateAssetMenu(fileName = "NewStatusEffectList", menuName = "ScriptableObjects/StatusEffectsList")]
+public class StatusEffectTypes : ScriptableObject
 {
     public List<StatusEffectData> statusEffects = new List<StatusEffectData>();
         

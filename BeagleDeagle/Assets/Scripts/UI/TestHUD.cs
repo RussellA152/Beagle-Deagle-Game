@@ -154,7 +154,7 @@ public class TestHUD : MonoBehaviour
         // Change the weapon image to use the sprite of the player's new gun
         weaponImage.sprite = gunData.sprite;
         
-        Sprite bulletSprite = gunData.bulletType.bulletPrefab.GetComponent<SpriteRenderer>().sprite;
+        Sprite bulletSprite = gunData.bulletPrefab.GetComponent<SpriteRenderer>().sprite;
 
         // Change all bullet images to have a new sprite of the current gun's bullet
         for (int i = 0; i < _bulletImages.Count; i++)
