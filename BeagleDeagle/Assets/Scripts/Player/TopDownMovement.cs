@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 
 public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IHasCooldown
@@ -28,13 +29,14 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     
     [Header("Required Components")]
     private Rigidbody2D _rb;
-    private CapsuleCollider2D _capsuleCollider2D;
+    [SerializeField] private CapsuleCollider2D aimCollider;
 
     [Header("Weapon Positioning")]
     // Empty object that holds the weapon and player hands
     [SerializeField]  private Transform pivotPoint;
     // How far out should the weapon be from player when rotating (lower values = closer)
-    [SerializeField] private float rotationRadius = 0.5f;
+    [Range(0.1f, 0.5f)]
+    [SerializeField] private float rotationRadius = 0.1f;
 
     [Header("Sprite Renderers")]
     [SerializeField] private SpriteRenderer bodySr;
@@ -55,8 +57,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _capsuleCollider2D = GetComponent<CapsuleCollider2D>();
-        
+
         // Set up input for user to control movement
         _topDownInput = new TopDownInput();
         _movementInputAction = _topDownInput.Player.Move;
@@ -133,7 +134,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         v = Vector2.ClampMagnitude(v, 6);
 
         // Circling around collider, instead of parent transform
-        Vector2 newLocation = (Vector2)_capsuleCollider2D.bounds.center + v;
+        Vector2 newLocation = (Vector2)aimCollider.bounds.center + v;
         
         if (direction != Vector2.zero)
         {
@@ -142,6 +143,19 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
             // Rotate towards w/ stick movement
             float zRotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             pivotPoint.rotation = Quaternion.Euler(0f, 0f, zRotation);
+
+            Vector3 localScale = Vector3.one;
+
+            if (zRotation > 90 || zRotation < -90)
+            {
+                localScale.y = -1f;
+            }
+            else
+            {
+                localScale.y = +1f;
+            }
+
+            pivotPoint.localScale = localScale;
         }
         
     }
@@ -177,13 +191,11 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         if (direction.x <= 0f)
         {
             headSr.flipX = true;
-            weaponSr.flipY = true;
         }
         // Otherwise, turn their head to the right
         else
         {
             headSr.flipX = false;
-            weaponSr.flipY = false;
         }
     }
     
@@ -292,7 +304,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
                     // Convert that mouse position to a coordinate in world space
                     Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-                    _rotationInput = worldPos - _capsuleCollider2D.bounds.center;
+                    _rotationInput = worldPos - aimCollider.bounds.center;
                     break;
                 
                 // If the current input is a gamepad
