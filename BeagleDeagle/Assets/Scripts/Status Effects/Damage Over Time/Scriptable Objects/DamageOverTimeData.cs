@@ -6,14 +6,4 @@ using UnityEngine;
 public class DamageOverTimeData : StatusEffectData
 {
     public DamageOverTime damageOverTime;
-    
-    // public override GameObject UpdateStatusEffects(GameObject objectWithStatusEffect, GameObject activator)
-    // {
-    //     StatusEffect<DamageOverTimeData> damageOverTimeComponent = objectWithStatusEffect.GetComponent<StatusEffect<DamageOverTimeData>>();
-    //     
-    //     damageOverTimeComponent.UpdateScriptableObject(this);
-    //
-    //     return objectWithStatusEffect;
-    //
-    // }
 }

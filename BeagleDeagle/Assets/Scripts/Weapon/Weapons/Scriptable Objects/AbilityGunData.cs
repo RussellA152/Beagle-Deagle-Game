@@ -6,8 +6,7 @@ using UnityEngine;
 public class AbilityGunData : GunData
 {
     [Header("Ability That Activates This")]
-    [SerializeField]
-    private AbilityData abilityData;
+    [SerializeField] private AbilityData abilityData;
 
     public override float GetDamage()
     {
