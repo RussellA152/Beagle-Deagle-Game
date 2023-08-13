@@ -13,7 +13,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
     public CooldownSystem cooldownSystem;
     private TopDownInput _topDownInput;
-    
+
     private float _bonusSpeed = 1;
     
     // Input actions needed for movement
