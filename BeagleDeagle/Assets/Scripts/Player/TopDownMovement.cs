@@ -12,7 +12,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     [SerializeField] private PlayerEvents playerEvents;
 
     public CooldownSystem cooldownSystem;
-    private TopDownInput _topDownInput;
+
+    private PlayerInput _playerInput;
 
     private float _bonusSpeed = 1;
     
@@ -58,11 +59,12 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     {
         _rb = GetComponent<Rigidbody2D>();
 
+        _playerInput = GetComponent<PlayerInput>();
+
         // Set up input for user to control movement
-        _topDownInput = new TopDownInput();
-        _movementInputAction = _topDownInput.Player.Move;
-        _rotationInputAction = _topDownInput.Player.Look;
-        _rollInputAction = _topDownInput.Player.Roll;
+        _movementInputAction = _playerInput.currentActionMap.FindAction("Move");
+        _rotationInputAction = _playerInput.currentActionMap.FindAction("Look");
+        _rollInputAction = _playerInput.currentActionMap.FindAction("Roll");
 
         cooldownSystem = GetComponent<CooldownSystem>();
 
@@ -72,7 +74,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
     private void OnEnable()
     {
-        _topDownInput.Enable();
         _movementInputAction.performed += OnMove;
         _movementInputAction.canceled += OnMoveCancel;
         _rotationInputAction.performed += OnLook;
@@ -81,7 +82,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
     private void OnDisable()
     {
-        _topDownInput.Disable();
         _movementInputAction.performed -= OnMove;
         _movementInputAction.canceled -= OnMoveCancel;
         _rotationInputAction.performed -= OnLook;

@@ -13,15 +13,17 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
 
     public CooldownSystem CooldownSystem;
     
-    private TopDownInput _topDownInput;
+    private PlayerInput _playerInput;
+    //private TopDownInput _topDownInput;
 
     private InputAction _ultimateInputAction;
 
     private void Awake()
     {
-        _topDownInput = new TopDownInput();
+        //_topDownInput = new TopDownInput();
+        _playerInput = GetComponent<PlayerInput>();
         CooldownSystem = GetComponent<CooldownSystem>();
-        _ultimateInputAction = _topDownInput.Player.Ultimate;
+        _ultimateInputAction = _playerInput.currentActionMap.FindAction("Ultimate");
 
         Id = 10;
         CooldownDuration = ultimateData.cooldown;
@@ -29,14 +31,11 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
 
     protected virtual void OnEnable()
     {
-        _topDownInput.Enable();
-
         _ultimateInputAction.performed += ActivateUltimate;
     }
     
     protected virtual void OnDisable()
     {
-        _topDownInput.Disable();
         _ultimateInputAction.performed -= ActivateUltimate;
         StopAllCoroutines();
     }

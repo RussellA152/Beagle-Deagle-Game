@@ -13,7 +13,8 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
     public CooldownSystem CooldownSystem;
 
-    private TopDownInput _topDownInput;
+    private PlayerInput _playerInput;
+    //private TopDownInput _topDownInput;
 
     private InputAction _utilityInputAction;
 
@@ -33,9 +34,10 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
     private void Awake()
     {
-        _topDownInput = new TopDownInput();
+        _playerInput = GetComponent<PlayerInput>();
         CooldownSystem = GetComponent<CooldownSystem>();
-        _utilityInputAction = _topDownInput.Player.Utility;
+
+        _utilityInputAction = _playerInput.currentActionMap.FindAction("Utility");
 
         Id = 12;
         
@@ -44,7 +46,6 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
     private void OnEnable()
     {
-        _topDownInput.Enable();
         _utilityInputAction.performed += ActivateUtility;
         _utilityUses = currentUtilityData.maxUses;
 
@@ -53,7 +54,6 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
     private void OnDisable()
     {
-        _topDownInput.Disable();
         _utilityInputAction.performed -= ActivateUtility;
         CooldownSystem.OnCooldownEnded -= UtilityUsesModified;
     }

@@ -16,8 +16,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
     [SerializeField] private GunData weaponData;
 
     private CooldownSystem _cooldownSystem;
-    
-    private TopDownInput _topDownInput;
+
+    private PlayerInput _playerInput;
+    //private TopDownInput _topDownInput;
     private SpriteRenderer _spriteRenderer;
 
     private InputAction _shootInputAction;
@@ -63,16 +64,18 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
     private void Awake()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-
+        // PlayerInput component is located in parent gameObject (the Player)
+        _playerInput = GetComponentInParent<PlayerInput>();
+        
         // Fetch cooldown system component from the player gameObject (always the parent of their gun)
         _cooldownSystem = GetComponentInParent<CooldownSystem>();
         
-        _topDownInput = new TopDownInput();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        
 
-        _shootInputAction = _topDownInput.Player.Fire;
+        _shootInputAction = _playerInput.currentActionMap.FindAction("Fire");
+        _reloadInputAction = _playerInput.currentActionMap.FindAction("Reload");
 
-        _reloadInputAction = _topDownInput.Player.Reload;
         
         _reloadInputAction.performed += OnReload;
 
