@@ -26,6 +26,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     public Vector2 MovementInput { get; private set; }
     private Vector2 _rotationInput;
     public bool IsRolling { get; private set; }
+    private bool _canRotate;
     
     
     [Header("Required Components")]
@@ -111,8 +112,9 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
             _rb.MovePosition(_rb.position + MovementInput * (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime);
 
         }
-
-        HandleWeaponRotation(_rotationInput);
+        
+        if(_canRotate)
+            HandleWeaponRotation(_rotationInput);
         
         FlipSpritesWithLook(_rotationInput);
         
@@ -153,6 +155,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
             {
                 localScale.y = +1f;
             }
+            
+            Debug.Log("change scale!");
 
             weaponAimTransform.localScale = localScale;
         }
@@ -272,25 +276,29 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
     private void RollDirection()
     {
-        StartCoroutine(RotateGun());
-
+        Vector2 originalWeaponScale = weaponAimTransform.localScale;
         if (MovementInput.x >= 0f)
         {
             headSr.flipX = false;
             bodySr.flipX = false;
+            weaponAimTransform.localScale = new Vector3(1f, 1f, 1f);
+
         }
         else
         {
             headSr.flipX = true;
             bodySr.flipX = true;
+            weaponAimTransform.localScale = new Vector3(1f, -1f, 1f);
             
         }
+        
+        StartCoroutine(RotateGun(originalWeaponScale));
     }
 
     ///-///////////////////////////////////////////////////////////
     /// While the player is rolling, rotate their gun 360 degrees
     /// 
-    IEnumerator RotateGun()
+    IEnumerator RotateGun(Vector2 originalScale)
     {
         float endZRot;
         
@@ -303,6 +311,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
             endZRot = 360f;
 
         Quaternion startRotation = weaponAimTransform.transform.rotation;
+        
         // The time it takes to complete the rotation in seconds
         // TODO: Make roll duration?
         float duration = .5f;
@@ -319,8 +328,13 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         }
 
         // Ensure the final rotation is exactly what you expect
-        Vector3 finalEulerOffset = Vector3.forward * endZRot;
-        weaponAimTransform.transform.rotation = Quaternion.Euler(finalEulerOffset) * startRotation;
+        //Vector3 finalEulerOffset = Vector3.forward * endZRot;
+        //weaponAimTransform.transform.rotation = Quaternion.Euler(finalEulerOffset) * startRotation;
+        
+        float zRotation = Mathf.Atan2(_rotationInput.y, _rotationInput.x) * Mathf.Rad2Deg;
+        weaponAimTransform.rotation = Quaternion.Euler(0f, 0f, zRotation);
+
+        weaponAimTransform.localScale = originalScale;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -395,6 +409,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         
         else
             _rotationInputAction.Disable();
+
+        _canRotate = boolean;
     }
 
     public void AllowRoll(bool boolean)
