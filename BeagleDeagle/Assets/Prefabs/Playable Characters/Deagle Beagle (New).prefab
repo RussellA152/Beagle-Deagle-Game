@@ -368,11 +368,10 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   cooldownSystem: {fileID: 0}
   aimCollider: {fileID: 5886235219759038886}
-  pivotPoint: {fileID: 2439171422092810394}
+  weaponAimTransform: {fileID: 2439171422092810394}
   rotationRadius: 0.1
   bodySr: {fileID: 2439171421377474772}
   headSr: {fileID: 2439171422150902655}
-  weaponSr: {fileID: 0}
   movementSpeedModifiers: []
 --- !u!114 &4636272489488665696
 MonoBehaviour:

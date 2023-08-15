@@ -31,10 +31,10 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     [Header("Required Components")]
     private Rigidbody2D _rb;
     [SerializeField] private CapsuleCollider2D aimCollider;
-
+    
     [Header("Weapon Positioning")]
     // Empty object that holds the weapon and player hands
-    [SerializeField]  private Transform pivotPoint;
+    [SerializeField]  private Transform weaponAimTransform;
     // How far out should the weapon be from player when rotating (lower values = closer)
     [Range(0.1f, 0.5f)]
     [SerializeField] private float rotationRadius = 0.1f;
@@ -42,9 +42,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     [Header("Sprite Renderers")]
     [SerializeField] private SpriteRenderer bodySr;
     [SerializeField] private SpriteRenderer headSr;
-    [SerializeField] private SpriteRenderer weaponSr;
 
-    
+
     [Header("Modifiers")]
     // A list of modifiers being applied to the player's movement speed
     [SerializeField, NonReorderable] private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>();
@@ -138,11 +137,11 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         
         if (direction != Vector2.zero)
         {
-            pivotPoint.position = Vector2.Lerp(pivotPoint.position, newLocation, 40 * Time.deltaTime);
+            weaponAimTransform.position = Vector2.Lerp(weaponAimTransform.position, newLocation, 40 * Time.deltaTime);
         
             // Rotate towards w/ stick movement
             float zRotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            pivotPoint.rotation = Quaternion.Euler(0f, 0f, zRotation);
+            weaponAimTransform.rotation = Quaternion.Euler(0f, 0f, zRotation);
 
             Vector3 localScale = Vector3.one;
 
@@ -155,7 +154,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
                 localScale.y = +1f;
             }
 
-            pivotPoint.localScale = localScale;
+            weaponAimTransform.localScale = localScale;
         }
         
     }
@@ -166,13 +165,13 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     /// 
     private void FlipSpritesWithMovement(Vector2 input)
     {
-        if (input.x > 0f)
+        if (input.x > 0f && !IsRolling)
         {
             bodySr.flipX = false;
             
 
         }
-        else if (input.x < 0f)
+        else if (input.x < 0f && !IsRolling)
         {
             bodySr.flipX = true;
 
@@ -188,12 +187,12 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     {
         // If mouse cursor, or joystick is moving to the left of the player,
         // then turn their head to the left
-        if (direction.x <= 0f)
+        if (direction.x <= 0f && !IsRolling)
         {
             headSr.flipX = true;
         }
         // Otherwise, turn their head to the right
-        else
+        else if(!IsRolling)
         {
             headSr.flipX = false;
         }
@@ -258,8 +257,10 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
                 _rb.AddForce(new Vector2(playerData.rollPower.x * MovementInput.x, playerData.rollPower.y * MovementInput.y));
             else
                 _rb.AddForce(new Vector2(playerData.rollPower.x, 0f));
+            
+            RollDirection();
 
-                // Ignore collisions between "Player" and "HitBox" layers
+            // Ignore collisions between "Player" and "HitBox" layers
             Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("HitBox"), true);
         
             // Ignore collisions between "Player" and "Bullet" layers
@@ -268,12 +269,66 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
             IsRolling = true;
         }
     }
-    
+
+    private void RollDirection()
+    {
+        StartCoroutine(RotateGun());
+
+        if (MovementInput.x >= 0f)
+        {
+            headSr.flipX = false;
+            bodySr.flipX = false;
+        }
+        else
+        {
+            headSr.flipX = true;
+            bodySr.flipX = true;
+            
+        }
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// While the player is rolling, rotate their gun 360 degrees
+    /// 
+    IEnumerator RotateGun()
+    {
+        float endZRot;
+        
+        if (MovementInput.x >= 0f)
+            // Negative value for clockwise rotation
+            endZRot = -360f;
+            
+        else
+            // Positive value for counter-clockwise rotation
+            endZRot = 360f;
+
+        Quaternion startRotation = weaponAimTransform.transform.rotation;
+        // The time it takes to complete the rotation in seconds
+        // TODO: Make roll duration?
+        float duration = .5f;
+        
+        float t = 0;
+
+        while (t < 1f)
+        {
+            t = Mathf.Min(1f, t + Time.deltaTime / duration);
+            Vector3 newEulerOffset = Vector3.forward * (endZRot * t);
+            // global z rotation
+            weaponAimTransform.transform.rotation = Quaternion.Euler(newEulerOffset) * startRotation;
+            yield return null;
+        }
+
+        // Ensure the final rotation is exactly what you expect
+        Vector3 finalEulerOffset = Vector3.forward * endZRot;
+        weaponAimTransform.transform.rotation = Quaternion.Euler(finalEulerOffset) * startRotation;
+    }
+
     ///-///////////////////////////////////////////////////////////
     /// At the end of the roll animation, set isRolling to false (* used in roll animation event *)
     /// 
     public void EndRoll()
     {
+
         // Reset velocity and don't allow player to be affected by forces anymore
         _rb.velocity = Vector2.zero;
 

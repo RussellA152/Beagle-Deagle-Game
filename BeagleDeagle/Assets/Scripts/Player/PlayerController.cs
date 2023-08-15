@@ -126,13 +126,13 @@ public class PlayerController : MonoBehaviour
                 break;
             
             case PlayerState.Rolling:
+                _movementScript.AllowRotation(false);
                 _animationHandlerScript.PlayRollAnimation();
                 
                 // Allow movement input
                 _movementScript.AllowMovement(true);
                 // Don't allow player to rotate weapon or body
-                _movementScript.AllowRotation(false);
-                
+
                 // Don't allow any abilities or attacks
                 _gunScript.AllowShoot(false);
                 _utilityScript.AllowUtility(false);

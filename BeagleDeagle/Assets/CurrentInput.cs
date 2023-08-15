@@ -18,10 +18,8 @@ public class CurrentInput : MonoBehaviour
 
     private void Awake()
     {
-        _playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
-
         // Create singleton instance
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
@@ -30,6 +28,9 @@ public class CurrentInput : MonoBehaviour
         Instance = this;
 
         DontDestroyOnLoad(gameObject);
+        
+        _playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
+        
     }
 
     private void OnEnable()
@@ -100,6 +101,6 @@ public class CurrentInput : MonoBehaviour
                 break;
         }
         
-        OnPlayerChangedController.Invoke(_currentControllerType);
+        OnPlayerChangedController?.Invoke(_currentControllerType);
     }
 }

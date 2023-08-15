@@ -17,13 +17,15 @@ public class ChangeButtonPrompt : MonoBehaviour
     {
         _imageToChange = GetComponent<Image>();
     }
+    
 
-    private void OnEnable()
+    private void Start()
     {
+        // Subscribing at start because OnEnable() gets a null reference
         CurrentInput.Instance.OnPlayerChangedController += ChangeButtonImageSprite;
     }
-
-    private void OnDisable()
+    
+    private void OnDestroy()
     {
         CurrentInput.Instance.OnPlayerChangedController -= ChangeButtonImageSprite;
     }
