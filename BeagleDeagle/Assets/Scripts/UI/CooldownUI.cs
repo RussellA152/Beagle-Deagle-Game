@@ -15,6 +15,7 @@ public class CooldownUI : MonoBehaviour
     [Header("Reload Cooldown UI")] 
     [SerializeField] private RectTransform reloadFillRecTransform;
     [SerializeField] private Image reloadFillImage;
+    [SerializeField] private RectTransform reloadOnGamepadPosition;
 
     [Header("Roll Cooldown UI")] 
     [SerializeField] private Slider rollSlider;
@@ -37,6 +38,8 @@ public class CooldownUI : MonoBehaviour
 
     // Duration that the roll progression bar has been on the screen (after roll cooldown finishes)
     private float _rollFillDisplayTime;
+
+    [SerializeField] private bool _useMousePosition;
 
     private void Awake()
     {
@@ -66,6 +69,8 @@ public class CooldownUI : MonoBehaviour
         
         _playerCooldownSystem = player.GetComponent<CooldownSystem>();
 
+        CurrentInput.Instance.OnPlayerChangedController += ChangeControllerType;
+
         // Don't show roll progression until player rolls for the first time
         rollSlider.gameObject.SetActive(false);
         reloadFillRecTransform.gameObject.SetActive(false);
@@ -83,30 +88,57 @@ public class CooldownUI : MonoBehaviour
         UltimateFill();
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// If user is playing with keyboard controls, then "_useMousePosition" is set to true, and the reload cooldown progression circle
+    /// will be placed on the mouse cursor's position. Otherwise, the progression circle will be placed in a fixed position on the canvas
+    /// 
+    private void ChangeControllerType(CurrentInput.ControllerType controllerType)
+    {
+        switch (controllerType)
+        {
+            case CurrentInput.ControllerType.Keyboard:
+                _useMousePosition = true;
+                break;
+            case CurrentInput.ControllerType.Xbox:
+                _useMousePosition = false;
+                break;
+            case CurrentInput.ControllerType.Playstation:
+                _useMousePosition = false;
+                break;
+        }
+    }
+
     #region Reload Cooldown
 
     private void ShowReloadFillOnCursor()
     {
         if (_playerCooldownSystem.IsOnCooldown(_reloadCooldownId))
         {
-            Vector2 mousePosition = Mouse.current.position.ReadValue();
-            Vector2 uiPosition;
+            if (_useMousePosition)
+            {
+                Vector2 mousePosition = Mouse.current.position.ReadValue();
+                Vector2 uiPosition;
 
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                parentCanvas.transform as RectTransform,
-                mousePosition,
-                parentCanvas.worldCamera,
-                out uiPosition);
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    parentCanvas.transform as RectTransform,
+                    mousePosition,
+                    parentCanvas.worldCamera,
+                    out uiPosition);
 
-            reloadFillRecTransform.localPosition = uiPosition;
+                reloadFillRecTransform.localPosition = uiPosition;
 
-            Cursor.visible = false;
+                Cursor.visible = false;
+            }
+            else
+            {
+                reloadFillRecTransform.localPosition = reloadOnGamepadPosition.localPosition;
+            }
         }
         else
         {
             Cursor.visible = true;
         }
-        
+
     }
     private void ReloadFill()
     {

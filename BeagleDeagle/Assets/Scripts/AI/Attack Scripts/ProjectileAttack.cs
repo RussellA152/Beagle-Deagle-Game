@@ -30,6 +30,17 @@ public class ProjectileAttack : AIAttack<ProjectileEnemyData>
             IBulletUpdatable projectile = newBullet.GetComponent<IBulletUpdatable>();
             
             projectile.UpdateScriptableObject(enemyScriptableObject.bulletData);
+            
+            
+            // Update bullet's status effects with data, only if this enemy's bullets has status effects
+            if (enemyScriptableObject.statusEffects != null)
+            {
+                foreach (IStatusEffect statusEffect in newBullet.GetComponents<IStatusEffect>())
+                {
+                    Debug.Log("update!");
+                    statusEffect.UpdateWeaponType(enemyScriptableObject.statusEffects);
+                }
+            }
 
             // Pass in the damage and penetration values of this gun, to the bullet being shot
             // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
