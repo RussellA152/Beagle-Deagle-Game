@@ -22,25 +22,25 @@ public class ChangeButtonPrompt : MonoBehaviour
     private void Start()
     {
         // Subscribing at start because OnEnable() gets a null reference
-        CurrentInput.Instance.OnPlayerChangedController += ChangeButtonImageSprite;
+        PlayerControllerTypeManager.Instance.OnPlayerChangedController += ChangeButtonImageSprite;
     }
     
     private void OnDestroy()
     {
-        CurrentInput.Instance.OnPlayerChangedController -= ChangeButtonImageSprite;
+        PlayerControllerTypeManager.Instance.OnPlayerChangedController -= ChangeButtonImageSprite;
     }
 
-    private void ChangeButtonImageSprite(CurrentInput.ControllerType controllerType)
+    private void ChangeButtonImageSprite(PlayerControllerTypeManager.ControllerType controllerType)
     {
         switch (controllerType)
         {
-            case CurrentInput.ControllerType.Keyboard:
+            case PlayerControllerTypeManager.ControllerType.Keyboard:
                 _imageToChange.sprite = keyboardSprite;
                 break;
-            case CurrentInput.ControllerType.Xbox:
+            case PlayerControllerTypeManager.ControllerType.Xbox:
                 _imageToChange.sprite = xboxSprite;
                 break;
-            case CurrentInput.ControllerType.Playstation:
+            case PlayerControllerTypeManager.ControllerType.Playstation:
                 _imageToChange.sprite = playstationSprite;
                 break;
         }

@@ -8,28 +8,51 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameEvent/PlayerEvents")]
 public class PlayerEvents : ScriptableObject
 {
-    public event Action<float> onPlayerCurrentHealthChanged; // Pass a reference to the player's current Health (used by HUD)
-
-    public event Action<float> onPlayerMaxHealthChanged; // Pass a reference to the player's max Health (used by HUD)
-
-    public event Action<GunData> onPlayerSwitchedWeapon; // Pass a reference to the player's current weapon data
+    // Pass a reference to the player gameObject
+    public event Action<GameObject> givePlayerGameObject;
     
-    public event Action<PlayerData> onPlayerObtainedNewCharacterStats; // Pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
+    // Pass a reference to the player's current Health (used by HUD)
+    public event Action<float> onPlayerCurrentHealthChanged;
 
-    public event Action<int> onPlayerBulletsLoadedChanged; // Pass a reference to the player's current ammo loaded (invoked when the player's ammo changes)
+    // Pass a reference to the player's max Health (used by HUD)
+    public event Action<float> onPlayerMaxHealthChanged;
 
-    public event Action<UtilityAbilityData> onPlayerObtainedNewUtility; 
-    public event Action<int> onPlayerUtilityUsesUpdated; // Pass a reference to the player's utility uses (invoked when the player uses their utility ability)
+    // Pass a reference to the player's current weapon data
+    public event Action<GunData> onPlayerSwitchedWeapon;
+    
+    // Pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
+    public event Action<PlayerData> onPlayerObtainedNewCharacterStats;
+
+    // Pass a reference to the player's current ammo loaded (invoked when the player's ammo changes)
+    public event Action<int> onPlayerBulletsLoadedChanged;
+
+    // Pass a reference to the player's current utility data (ex. player is currently using Mighty Foot)
+    public event Action<UtilityAbilityData> onPlayerObtainedNewUtility;
+    
+    // Pass a reference to the player's utility uses (invoked when the player uses their utility ability)
+    public event Action<int> onPlayerUtilityUsesUpdated;
     
     
+    // Pass a reference to the player's current ultimate data (ex. player is currently using Nuke)
     public event Action<UltimateAbilityData> onPlayerObtainedNewUltimate; 
+    
+    // Give references to the player's specific cooldown IDs (these are needed by the Cooldown UI script)
     public event Action<int> givePlayerReloadCooldownId;
     public event Action<int> givePlayerRollCooldownId; 
     public event Action<int> giveUtilityCooldownId; 
     public event Action<int> giveUltimateCooldownId; 
 
     // Call this function when the player's ultimate ability concluded
-    public event Action onPlayerUltimateEnded;  
+    public event Action onPlayerUltimateEnded;
+
+    ///-///////////////////////////////////////////////////////////
+    /// In the PlayerController, pass a reference to the gameObject of the player. We use this instead
+    /// of GameObject.FindObjectWithTag("Player")
+    /// 
+    public void InvokeFindPlayer(GameObject playerGameObject)
+    {
+        givePlayerGameObject?.Invoke(playerGameObject);
+    }
 
     // When the player's max health changes
     // Pass around the max health value to whoever needs it (ex. HUD needs to display max health at all times)

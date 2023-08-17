@@ -53,6 +53,10 @@ public class CooldownUI : MonoBehaviour
         playerEvents.giveUtilityCooldownId += SetUtilityCooldownId;
         playerEvents.giveUltimateCooldownId += SetUltimateCooldownId;
         playerEvents.onPlayerUtilityUsesUpdated += ModifyUtilityUses;
+
+        playerEvents.givePlayerGameObject += GetPlayerCooldownSystem;
+
+
     }
 
     private void OnDisable()
@@ -61,15 +65,14 @@ public class CooldownUI : MonoBehaviour
         playerEvents.givePlayerRollCooldownId -= SetRollCooldownId;
         playerEvents.giveUtilityCooldownId -= SetUtilityCooldownId;
         playerEvents.giveUltimateCooldownId -= SetUltimateCooldownId;
+        
+        playerEvents.givePlayerGameObject -= GetPlayerCooldownSystem;
     }
 
     private void Start()
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        
-        _playerCooldownSystem = player.GetComponent<CooldownSystem>();
-
-        CurrentInput.Instance.OnPlayerChangedController += ChangeControllerType;
+        // Subscribe in Start because OnEnable doesn't work consistently
+        PlayerControllerTypeManager.Instance.OnPlayerChangedController += ChangeControllerType;
 
         // Don't show roll progression until player rolls for the first time
         rollSlider.gameObject.SetActive(false);
@@ -89,20 +92,29 @@ public class CooldownUI : MonoBehaviour
     }
 
     ///-///////////////////////////////////////////////////////////
+    /// Get a reference of the player, then get their CooldownSystem component
+    /// so the UI can display their cooldown timers
+    /// 
+    private void GetPlayerCooldownSystem(GameObject player)
+    {
+        _playerCooldownSystem = player.GetComponent<CooldownSystem>();
+    }
+
+    ///-///////////////////////////////////////////////////////////
     /// If user is playing with keyboard controls, then "_useMousePosition" is set to true, and the reload cooldown progression circle
     /// will be placed on the mouse cursor's position. Otherwise, the progression circle will be placed in a fixed position on the canvas
     /// 
-    private void ChangeControllerType(CurrentInput.ControllerType controllerType)
+    private void ChangeControllerType(PlayerControllerTypeManager.ControllerType controllerType)
     {
         switch (controllerType)
         {
-            case CurrentInput.ControllerType.Keyboard:
+            case PlayerControllerTypeManager.ControllerType.Keyboard:
                 _useMousePosition = true;
                 break;
-            case CurrentInput.ControllerType.Xbox:
+            case PlayerControllerTypeManager.ControllerType.Xbox:
                 _useMousePosition = false;
                 break;
-            case CurrentInput.ControllerType.Playstation:
+            case PlayerControllerTypeManager.ControllerType.Playstation:
                 _useMousePosition = false;
                 break;
         }

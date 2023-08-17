@@ -55,10 +55,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        // Tell all listeners the current player and gun stats/data they have
-        playerEvents.InvokeNewWeaponEvent(_gunScript.GetCurrentData());
-        playerEvents.InvokeNewStatsEvent(currentPlayerData);
-
         if(_gunScript == null)
         {
             Debug.Log("WEAPON MISSING!");
@@ -69,6 +65,13 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         state = PlayerState.Idle;
+        
+        // Tell all listeners that this is the player gameObject
+        playerEvents.InvokeFindPlayer(gameObject);
+        
+        // Tell all listeners the current player and gun stats/data they have
+        playerEvents.InvokeNewWeaponEvent(_gunScript.GetCurrentData());
+        playerEvents.InvokeNewStatsEvent(currentPlayerData);
         
         // Allow player to do all their abilities at the start of the game
         _movementScript.AllowMovement(true);

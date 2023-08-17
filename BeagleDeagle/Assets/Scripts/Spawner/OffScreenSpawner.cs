@@ -14,8 +14,9 @@ public class OffScreenSpawner : MonoBehaviour
 {
     // private Camera _camera;
     // private CinemachineVirtualCamera _virtualCamera;
+    [SerializeField] private PlayerEvents playerEvents;
     
-    [SerializeField] private Transform playerTransform;
+    private Transform _playerTransform;
     
     [Header("Camera Bounds (NEED TO SCALE SCALE WITH MAP SIZE)")] 
     [SerializeField]
@@ -66,6 +67,16 @@ public class OffScreenSpawner : MonoBehaviour
     private int leftSpawnValue = 4; // if a value of 4 is chosen by the random number generated, then spawn the enemy to the left of the player
 
 
+    private void OnEnable()
+    {
+        playerEvents.givePlayerGameObject += SetPlayerTransform;
+    }
+
+    private void OnDisable()
+    {
+        playerEvents.givePlayerGameObject += SetPlayerTransform;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -95,8 +106,12 @@ public class OffScreenSpawner : MonoBehaviour
         CheckPlayerProximityToBoundaries();
 
     }
-    
 
+    private void SetPlayerTransform(GameObject pGameObject)
+    {
+        _playerTransform = pGameObject.transform;
+    }
+    
     private Vector2 SpawnEnemyOnTop()
     {
         // generate a random position anywhere on the x axis of the off-screen (left, right, or center)
@@ -324,7 +339,7 @@ public class OffScreenSpawner : MonoBehaviour
     /// 
     private void CheckPlayerProximityToBoundaries()
     {
-        if (playerTransform.position.x <= surfaceLeftBoundary + screenBounds.x)
+        if (_playerTransform.position.x <= surfaceLeftBoundary + screenBounds.x)
         {
             playerCloseToLeftBoundary = true;
         }
@@ -336,7 +351,7 @@ public class OffScreenSpawner : MonoBehaviour
         }
 
 
-        if (playerTransform.position.x >= surfaceRightBoundary - screenBounds.x)
+        if (_playerTransform.position.x >= surfaceRightBoundary - screenBounds.x)
         {
             playerCloseToRightBoundary = true;
 
@@ -349,7 +364,7 @@ public class OffScreenSpawner : MonoBehaviour
         }
 
 
-        if (playerTransform.position.y >= surfaceTopBoundary - screenBounds.y)
+        if (_playerTransform.position.y >= surfaceTopBoundary - screenBounds.y)
         {
             playerCloseToTopBoundary = true;
         }
@@ -361,7 +376,7 @@ public class OffScreenSpawner : MonoBehaviour
         }
 
 
-        if (playerTransform.position.y <= surfaceBottomBoundary + screenBounds.y)
+        if (_playerTransform.position.y <= surfaceBottomBoundary + screenBounds.y)
         {
             playerCloseToBottomBoundary = true;
         }
@@ -387,26 +402,26 @@ public class OffScreenSpawner : MonoBehaviour
         // Think of it like this as well -> if the player is moving far to the right, then the left and right boundaries of the camera
         // must also move right, meaning the leftBound and rightBound values would become larger
 
-        if (playerTransform.position.x >= 0)
+        if (_playerTransform.position.x >= 0)
         {
             // rightBounds and topBounds are getting larger
-            rightBounds = screenBounds.x + playerTransform.position.x;
-            topBounds = screenBounds.y + playerTransform.position.y;
+            rightBounds = screenBounds.x + _playerTransform.position.x;
+            topBounds = screenBounds.y + _playerTransform.position.y;
 
             // leftBounds are getting larger
-            leftBounds = -screenBounds.x + playerTransform.position.x;
-            bottomBounds = -screenBounds.y + playerTransform.position.y;
+            leftBounds = -screenBounds.x + _playerTransform.position.x;
+            bottomBounds = -screenBounds.y + _playerTransform.position.y;
         }
         // If the player's x transform is less than 0...
-        else if (playerTransform.position.x < 0)
+        else if (_playerTransform.position.x < 0)
         {
             // rightBounds will be getting smaller, because the player is moving in the negative side of the x-axis
-            rightBounds = screenBounds.x + playerTransform.position.x;
-            topBounds = screenBounds.y + playerTransform.position.y;
+            rightBounds = screenBounds.x + _playerTransform.position.x;
+            topBounds = screenBounds.y + _playerTransform.position.y;
 
             // leftBounds will be getting smaller / the negative value is higher
-            leftBounds = -1 * (screenBounds.x - playerTransform.position.x);
-            bottomBounds = -1 * (screenBounds.y - playerTransform.position.y);
+            leftBounds = -1 * (screenBounds.x - _playerTransform.position.x);
+            bottomBounds = -1 * (screenBounds.y - _playerTransform.position.y);
         }
     }
     
