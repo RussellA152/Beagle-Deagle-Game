@@ -45,6 +45,20 @@ public class CooldownSystem : MonoBehaviour
     {
         _cooldowns.Add(new CooldownData(cooldown));
     }
+    
+    public void StopCooldown(int id)
+    {
+        foreach (CooldownData cooldown in _cooldowns)
+        {
+            if (cooldown.Id != id)
+            {
+                continue;
+            }
+
+            cooldown.EndTimer();
+
+        }
+    }
 
     ///-///////////////////////////////////////////////////////////
     /// Checks if cooldown at the indicated Id is on cooldown

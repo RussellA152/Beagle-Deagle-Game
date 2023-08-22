@@ -161,6 +161,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
         _spriteRenderer.sprite = weaponData.sprite;
         
+        // Stop reloading if player switched to a new gun (ammo will refill anyways)
+        _cooldownSystem.StopCooldown(Id);
+        
         CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
 
         Debug.Log("Ammo loaded: " + _bulletsLoaded);

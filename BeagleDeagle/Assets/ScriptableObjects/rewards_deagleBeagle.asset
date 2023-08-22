@@ -12,44 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f1042b87f5c1f54e98e9f88cd6dfc62, type: 3}
   m_Name: rewards_deagleBeagle
   m_EditorClassIdentifier: 
-  levelRewards:
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
-  - dataToGive: {fileID: 0}
-    levelGiven: 0
+  gunRewards:
+  - DataToGive: {fileID: 11400000, guid: fa8fd2ad5ce7d5741b9621155f0030b6, type: 2}
+    LevelGiven: 5
+  utilityRewards: []
+  ultimateRewards: []

@@ -33,4 +33,9 @@ public class CooldownData
 
         return RemainingTime == 0f;
     }
+
+    public void EndTimer()
+    {
+        RemainingTime = 0f;
+    }
 }
