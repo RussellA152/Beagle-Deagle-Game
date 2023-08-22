@@ -155,8 +155,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
             {
                 localScale.y = +1f;
             }
-            
-            Debug.Log("change scale!");
 
             weaponAimTransform.localScale = localScale;
         }
