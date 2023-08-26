@@ -40,7 +40,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         // Give the player an AWP Sniper as their new gun
         _isActive = true;
         _playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
-        playerEvents.InvokeNewWeaponEvent(ultimateData.awpGunData);
+        //playerEvents.InvokeNewWeaponEvent(ultimateData.awpGunData);
         
         // Don't allow player to reload when activating AWP
         _playerGunScript.AllowReload(false);
@@ -83,7 +83,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
             yield return new WaitForSeconds(_returnOriginalWeaponDelay);
             
             // Give back the player their gun before they received the AWP sniper
-            playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
+            //playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
             
             _playerGunScript.UpdateScriptableObject(_previousWeaponData);
             

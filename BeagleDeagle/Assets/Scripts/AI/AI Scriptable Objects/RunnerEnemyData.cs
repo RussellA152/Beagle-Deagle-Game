@@ -7,6 +7,7 @@ public class RunnerEnemyData : EnemyData
 {
     [Space(25f)]
     
+    [Header("Melee Attack Logic")]
     // What layer can this enemy's hitBox damage (ex. Player)
     public LayerMask whatHitBoxDamages;
 }

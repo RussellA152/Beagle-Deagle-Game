@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-/// <summary>
+///-///////////////////////////////////////////////////////////
 /// A series of significant events caused by player actions. Some including when the player's health changes, obtains an upgrade to their gun,
 /// uses their abilities, or shoots their weapon.
-/// </summary>
+/// 
 [CreateAssetMenu(menuName = "GameEvent/PlayerEvents")]
 public class PlayerEvents : ScriptableObject
 {
@@ -112,7 +112,7 @@ public class PlayerEvents : ScriptableObject
         onPlayerObtainedNewUltimate?.Invoke(newUltimateData);
     }
     // When the player uses a utility ability, invoke this function.
-    // This should Pass around the current number of uses that the player's currently utility has (ex. HUD needs to update utility uses display)
+    // This should pass around the current number of uses that the player's currently utility has (ex. HUD needs to update utility uses display)
     public void InvokeUtilityUsesUpdatedEvent(int uses)
     {
         onPlayerUtilityUsesUpdated?.Invoke(uses);

@@ -86,7 +86,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
     private void Start()
     {
-        playerEvents.InvokeNewWeaponEvent(weaponData);
+        UpdateScriptableObject(weaponData);
         
         playerEvents.InvokeUpdateAmmoLoadedText(Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad));
         
@@ -105,7 +105,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
     private void OnEnable()
     {
-        playerEvents.onPlayerSwitchedWeapon += UpdateScriptableObject;
+        //playerEvents.onPlayerSwitchedWeapon += UpdateScriptableObject;
 
         _cooldownSystem.OnCooldownEnded += OnReloadFinish;
 
@@ -170,6 +170,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
         
         // After swapping to new weapon, show the ammo on the HUD
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
+        
+        playerEvents.InvokeNewWeaponEvent(weaponData);
     }
 
     ///-///////////////////////////////////////////////////////////

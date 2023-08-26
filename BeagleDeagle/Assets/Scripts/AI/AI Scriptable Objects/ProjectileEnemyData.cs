@@ -8,7 +8,7 @@ public class ProjectileEnemyData : EnemyData
 {
     [Space(25f)] 
     
-    [Header("Projectile Logic")]
+    [Header("Projectile Attack Logic")]
     [RestrictedPrefab(typeof(IBulletUpdatable))]
     public GameObject bulletPrefab;
 

@@ -37,9 +37,10 @@ public class TimeManager : MonoBehaviour
 
     private void Update()
     {
+        // Check if the game still has time left
         if (ElapsedTime >= targetGameDuration && !_gameConcludedFromTime)
         {
-            Debug.Log("Time ENDED!");
+            Debug.Log("Game Time ENDED!");
             _gameConcludedFromTime = true;
             
             onGameTimeConcluded?.Invoke();
