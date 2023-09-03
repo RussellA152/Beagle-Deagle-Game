@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: rewards_deagleBeagle
   m_EditorClassIdentifier: 
   gunRewards:
-  - Description: AWP now deals X...
+  - LevelGiven: 5
     IsChosen: 1
-    LevelGiven: 5
+    Description: AWP now deals X...
     gunData: {fileID: 11400000, guid: fa8fd2ad5ce7d5741b9621155f0030b6, type: 2}
-  - Description: AK-47 now deals X...
+  - LevelGiven: 5
     IsChosen: 1
-    LevelGiven: 5
+    Description: AK-47 now deals X...
     gunData: {fileID: 11400000, guid: 1fbbb3d1cf289bc49b6d957359758726, type: 2}
   utilityRewards:
-  - Description: Smoke now deals  X...
+  - LevelGiven: 5
     IsChosen: 0
-    LevelGiven: 5
+    Description: Smoke now deals  X...
     utilityAbilityData: {fileID: 11400000, guid: 2ae24b0ad22356d43b0a4f479c67cc1d, type: 2}
   ultimateRewards: []

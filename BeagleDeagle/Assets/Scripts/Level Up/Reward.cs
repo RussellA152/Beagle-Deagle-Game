@@ -9,16 +9,17 @@ using UnityEngine;
 /// 
 public abstract class Reward
 {
-    [TextArea(2,3)]
-    public string Description;
-
-    // Will this reward be one of many other choices when the player reaches the level requirement?
-    public bool IsChosen;
-
-    // What level is the reward given at?
-    [Range(1, 20)]
+    [Range(1, 20),Tooltip("What level is the reward given at?")]
     public int LevelGiven;
     
+    
+    [Tooltip("Will this reward be one of many other choices when the player reaches the level requirement?")]
+    public bool IsChosen;
+    
+    
+    [Space(10), TextArea(2,3)]
+    public string Description;
+
     public abstract void GiveDataToPlayer(GameObject recipientGameObject);
 
 }

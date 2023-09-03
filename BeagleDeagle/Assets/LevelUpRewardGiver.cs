@@ -11,12 +11,8 @@ public class LevelUpRewardGiver : MonoBehaviour
 
     private GameObject _playerGameObject;
 
-    // Scripts that the Giver will give scriptableObjects to
-    private IGunDataUpdatable _gunScript;
-    private IUtilityUpdatable _utilityScript;
-    private IUltimateUpdatable _ultimateScript;
+    [SerializeField] private RewardChoiceUI rewardChoiceUI;
     
-
     private void OnEnable()
     {
         playerEvents.givePlayerGameObject += FindPlayer;
@@ -26,22 +22,15 @@ public class LevelUpRewardGiver : MonoBehaviour
     {
         //_rewardsToGive = levelUpRewards.GetRewardsList();
         Invoke(nameof(GiveRewardAtLevel), 3f);
-        
-        
+
+
     }
 
+    // Find the player gameObject which will be given to the rewards so they can give
+    // player scripts some scriptableObjects
     private void FindPlayer(GameObject pGameObject)
     {
         _playerGameObject = pGameObject;
-        
-        
-        Debug.Log(_playerGameObject.GetComponentInChildren<IDataUpdatable<GunData>>());
-
-        _gunScript = _playerGameObject.GetComponentInChildren<IGunDataUpdatable>();
-
-        _utilityScript = _playerGameObject.GetComponent<IUtilityUpdatable>();
-
-        _ultimateScript = _playerGameObject.GetComponent<IUltimateUpdatable>();
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -87,6 +76,8 @@ public class LevelUpRewardGiver : MonoBehaviour
         foreach (Reward potentialReward in rewardsList)
         {
             Debug.Log($"{potentialReward.Description} is a potential reward for the player.");
+            
+            rewardChoiceUI.AddChoiceButton(potentialReward);
         }
     }
     

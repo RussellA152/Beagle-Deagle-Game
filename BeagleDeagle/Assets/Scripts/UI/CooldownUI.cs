@@ -39,7 +39,7 @@ public class CooldownUI : MonoBehaviour
     // Duration that the roll progression bar has been on the screen (after roll cooldown finishes)
     private float _rollFillDisplayTime;
 
-    [SerializeField] private bool _useMousePosition;
+    private bool _useMousePosition;
 
     private void Awake()
     {
