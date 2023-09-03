@@ -14,7 +14,7 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
     {
         base.Start();
         
-        PoolKey = currentUtilityData.mightyFootPrefab.GetComponent<IPoolable>().PoolKey;
+        PoolKey = utilityData.mightyFootPrefab.GetComponent<IPoolable>().PoolKey;
 
         _playerMovementScript = gameObject.GetComponent<TopDownMovement>();
 
@@ -31,21 +31,21 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
         
 
         // Give MightyFoot the scriptable object it needs
-        bulletComponent.UpdateScriptableObject(currentUtilityData.mightyFootData);
+        bulletComponent.UpdateScriptableObject(utilityData.mightyFootData);
 
         foreach (IStatusEffect statusEffect in bulletComponent.GetComponents<IStatusEffect>())
         {
-            statusEffect.UpdateWeaponType(currentUtilityData.statusEffects);
+            statusEffect.UpdateWeaponType(utilityData.statusEffects);
         }
         
-        bulletComponent.UpdateDamageAndPenetrationValues(currentUtilityData.abilityDamage, currentUtilityData.mightyFootData.numberOfEnemiesCanHit);
+        bulletComponent.UpdateDamageAndPenetrationValues(utilityData.abilityDamage, utilityData.mightyFootData.numberOfEnemiesCanHit);
         
         // Tell the bullet that the player is the transform that shot it
         bulletComponent.UpdateWhoShotThisBullet(transform);
         
         
 
-        mightyFootGameObject.transform.position = (Vector2) (gameObject.transform.position) + aimDirection + new Vector2(currentUtilityData.offset.x, currentUtilityData.offset.y);
+        mightyFootGameObject.transform.position = (Vector2) (gameObject.transform.position) + aimDirection + new Vector2(utilityData.offset.x, utilityData.offset.y);
 
         float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         

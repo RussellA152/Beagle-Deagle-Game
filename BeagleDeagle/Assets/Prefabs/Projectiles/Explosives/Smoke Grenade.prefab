@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
+  m_Color: {r: 0.7264151, g: 0.7229886, b: 0.7229886, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -272,8 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11cb0557abf71e4ea851adccf3f5caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: {fileID: 0}
-  statusEffectData: {fileID: 0}
   removeOnTriggerExit: 1
 --- !u!70 &8164879991046117892
 CapsuleCollider2D:

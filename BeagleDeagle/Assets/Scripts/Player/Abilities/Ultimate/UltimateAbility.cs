@@ -82,6 +82,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
         if (scriptableObject is T)
         {
             ultimateData = scriptableObject as T;
+            playerEvents.InvokeNewUltimate(ultimateData);
         }
         else
         {

@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 
 public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHasCooldown where T: UtilityAbilityData
 {
     [SerializeField] private PlayerEvents playerEvents;
     
-    [SerializeField] protected T currentUtilityData;
+    [SerializeField] protected T utilityData;
 
     public CooldownSystem CooldownSystem;
 
@@ -41,13 +42,13 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
         Id = 12;
         
-        CooldownDuration = currentUtilityData.cooldown;
+        CooldownDuration = utilityData.cooldown;
     }
 
     private void OnEnable()
     {
         _utilityInputAction.performed += ActivateUtility;
-        _utilityUses = currentUtilityData.maxUses;
+        _utilityUses = utilityData.maxUses;
 
         CooldownSystem.OnCooldownEnded += UtilityUsesModified;
     }
@@ -61,7 +62,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     protected virtual void Start()
     {
         playerEvents.InvokeUtilityCooldown(Id);
-        playerEvents.InvokeNewUtility(currentUtilityData);
+        playerEvents.InvokeNewUtility(utilityData);
         playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
     }
     
@@ -137,7 +138,8 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     {
         if (scriptableObject is T)
         {
-            currentUtilityData = scriptableObject as T;
+            utilityData = scriptableObject as T;
+            playerEvents.InvokeNewUtility(utilityData);
         }
         else
         {

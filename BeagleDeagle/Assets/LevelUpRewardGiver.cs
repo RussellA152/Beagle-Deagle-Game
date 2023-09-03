@@ -26,11 +26,16 @@ public class LevelUpRewardGiver : MonoBehaviour
     {
         //_rewardsToGive = levelUpRewards.GetRewardsList();
         Invoke(nameof(GiveRewardAtLevel), 3f);
+        
+        
     }
 
     private void FindPlayer(GameObject pGameObject)
     {
         _playerGameObject = pGameObject;
+        
+        
+        Debug.Log(_playerGameObject.GetComponentInChildren<IDataUpdatable<GunData>>());
 
         _gunScript = _playerGameObject.GetComponentInChildren<IGunDataUpdatable>();
 
@@ -58,28 +63,30 @@ public class LevelUpRewardGiver : MonoBehaviour
     // TODO: Use above method when player ranks up with event system!
     private void GiveRewardAtLevel()
     {
-        foreach (GunReward gunReward in levelUpRewards.gunRewards)
+        List<Reward> potentialRewards = new List<Reward>();
+        foreach (Reward reward in levelUpRewards.allRewards)
         {
-            if (gunReward.LevelGiven == 5)
+            if (reward.LevelGiven == 5)
             {
-                _gunScript.UpdateScriptableObject(gunReward.GetData());
+                if (reward.IsChosen)
+                {
+                    potentialRewards.Add(reward);
+                }
+                else
+                {
+                    reward.GiveDataToPlayer(_playerGameObject);
+                }
+                
             }
         }
-        
-        foreach (UtilityReward utilityReward in levelUpRewards.utilityRewards)
+        ChooseReward(potentialRewards);
+    }
+
+    private void ChooseReward(List<Reward> rewardsList)
+    {
+        foreach (Reward potentialReward in rewardsList)
         {
-            if (utilityReward.LevelGiven == 5)
-            {
-                _utilityScript.UpdateScriptableObject(utilityReward.GetData());
-            }
-        }
-        
-        foreach (UltimateReward ultimateReward in levelUpRewards.ultimateRewards)
-        {
-            if (ultimateReward.LevelGiven == 5)
-            {
-                _ultimateScript.UpdateScriptableObject(ultimateReward.GetData());
-            }
+            Debug.Log($"{potentialReward.Description} is a potential reward for the player.");
         }
     }
     
