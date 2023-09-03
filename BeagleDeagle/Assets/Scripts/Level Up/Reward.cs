@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 ///-///////////////////////////////////////////////////////////
@@ -12,14 +13,15 @@ public abstract class Reward
     [Range(1, 20),Tooltip("What level is the reward given at?")]
     public int LevelGiven;
     
-    
     [Tooltip("Will this reward be one of many other choices when the player reaches the level requirement?")]
     public bool IsChosen;
-    
-    
+
+    public Image Icon;
+
     [Space(10), TextArea(2,3)]
     public string Description;
 
+    public abstract string GetRewardName();
     public abstract void GiveDataToPlayer(GameObject recipientGameObject);
 
 }
@@ -32,6 +34,11 @@ public class GunReward: Reward
     {
         gunData = data;
         LevelGiven = level;
+    }
+
+    public override string GetRewardName()
+    {
+        return "Weapon Upgrade";
     }
 
     public override void GiveDataToPlayer(GameObject recipientGameObject)
@@ -51,6 +58,10 @@ public class UtilityReward: Reward
         utilityAbilityData = data;
         LevelGiven = level;
     }
+    public override string GetRewardName()
+    {
+        return "Utility Ability Upgrade";
+    }
     
     public override void GiveDataToPlayer(GameObject recipientGameObject)
     {
@@ -69,6 +80,11 @@ public class UltimateReward: Reward
         LevelGiven = level;
     }
 
+    public override string GetRewardName()
+    {
+        return "Ultimate Ability Upgrade";
+    }
+    
     public override void GiveDataToPlayer(GameObject recipientGameObject)
     {
         recipientGameObject.GetComponent<IUltimateUpdatable>().UpdateScriptableObject(ultimateAbilityData);

@@ -71,6 +71,9 @@ public class LevelUpRewardGiver : MonoBehaviour
         ChooseReward(potentialRewards);
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// If the reward was optional, then tell RewardChoiceUI script to display all optional
+    /// rewards on a UI panel for the player to click and choose.
     private void ChooseReward(List<Reward> rewardsList)
     {
         foreach (Reward potentialReward in rewardsList)
