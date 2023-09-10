@@ -6,10 +6,10 @@ using TMPro;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-/// <summary>
-/// TEMPORARY. I AM USING THIS ONLY TO SEE/DEBUG THE AMMO OF THE PLAYER'S GUN AT ALL TIMES
-/// </summary>
-public class TestHUD : MonoBehaviour
+///-///////////////////////////////////////////////////////////
+/// Display the current health, weapon, ammo, and abilities of the player.
+/// 
+public class PlayerStatsUI : MonoBehaviour
 {
     [Header("Event Systems")]
     [SerializeField]

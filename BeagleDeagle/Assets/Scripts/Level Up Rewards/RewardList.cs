@@ -15,7 +15,7 @@ public class RewardList : ScriptableObject
     [SerializeField, NonReorderable, Space(20)]
     private List<UltimateReward> ultimateRewards = new List<UltimateReward>();
 
-    [HideInInspector] public List<Reward> allRewards = new List<Reward>();
+    public readonly List<Reward> allRewards = new List<Reward>();
 
     // Add all gun, utility ability, and ultimate ability scriptable objects to 1 list
     private void OnEnable()
