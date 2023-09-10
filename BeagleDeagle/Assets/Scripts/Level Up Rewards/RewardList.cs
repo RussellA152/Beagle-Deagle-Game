@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewReward", menuName = "ScriptableObjects/LevelUpReward")]
-public class LevelUpReward : ScriptableObject
+public class RewardList : ScriptableObject
 {
     [SerializeField, NonReorderable]
     private List<GunReward> gunRewards = new List<GunReward>();

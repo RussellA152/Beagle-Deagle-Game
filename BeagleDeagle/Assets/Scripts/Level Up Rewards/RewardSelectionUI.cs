@@ -8,7 +8,7 @@ using UnityEngine.UI;
 ///-///////////////////////////////////////////////////////////
 /// Display choices of rewards for the player to click on. Whichever was chosen
 /// will be given to the player, the rest will be ignored.
-public class RewardChoiceUI : MonoBehaviour
+public class RewardSelectionUI : MonoBehaviour
 {
     [SerializeField] private PlayerEvents playerEvents;
     
@@ -48,16 +48,16 @@ public class RewardChoiceUI : MonoBehaviour
 
         GameObject newButton = Instantiate(choicePrefab, transform, false);
 
-        RewardChoice buttonRewardChoiceScript = newButton.GetComponent<RewardChoice>();
+        RewardChoiceUIElement buttonRewardChoiceUIElementScript = newButton.GetComponent<RewardChoiceUIElement>();
         
-        _allButtons.Add(buttonRewardChoiceScript.GetButton());
+        _allButtons.Add(buttonRewardChoiceUIElementScript.GetButton());
         
         // Change the name, description, and icon image of the button to whatever the reward uses
-        buttonRewardChoiceScript.SetName(rewardChoice.GetRewardName());
-        buttonRewardChoiceScript.SetDescription(rewardChoice.Description);
-        buttonRewardChoiceScript.SetIcon(rewardChoice.Icon);
+        buttonRewardChoiceUIElementScript.SetName(rewardChoice.GetRewardName());
+        buttonRewardChoiceUIElementScript.SetDescription(rewardChoice.Description);
+        buttonRewardChoiceUIElementScript.SetIcon(rewardChoice.Icon);
         
-        buttonRewardChoiceScript.GetButton().onClick.AddListener(() => GiveRewardToPlayerOnClick(rewardChoice));
+        buttonRewardChoiceUIElementScript.GetButton().onClick.AddListener(() => GiveRewardToPlayerOnClick(rewardChoice));
 
     }
 

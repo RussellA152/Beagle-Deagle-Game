@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class LevelUpRewardGiver : MonoBehaviour
 {
     [SerializeField] private PlayerEvents playerEvents;
 
-    [SerializeField] private LevelUpReward levelUpRewards;
+    [SerializeField] private RewardList rewardsList;
 
     private GameObject _playerGameObject;
 
-    [SerializeField] private RewardChoiceUI rewardChoiceUI;
+    [SerializeField] private RewardSelectionUI rewardSelectionUI;
     
     private void OnEnable()
     {
@@ -53,7 +54,7 @@ public class LevelUpRewardGiver : MonoBehaviour
     private void GiveRewardAtLevel()
     {
         List<Reward> potentialRewards = new List<Reward>();
-        foreach (Reward reward in levelUpRewards.allRewards)
+        foreach (Reward reward in rewardsList.allRewards)
         {
             if (reward.LevelGiven == 5)
             {
@@ -80,7 +81,7 @@ public class LevelUpRewardGiver : MonoBehaviour
         {
             Debug.Log($"{potentialReward.Description} is a potential reward for the player.");
             
-            rewardChoiceUI.AddChoiceButton(potentialReward);
+            rewardSelectionUI.AddChoiceButton(potentialReward);
         }
     }
     

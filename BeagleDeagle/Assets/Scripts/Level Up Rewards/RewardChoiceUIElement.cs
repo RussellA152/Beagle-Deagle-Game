@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RewardChoice : MonoBehaviour
+public class RewardChoiceUIElement : MonoBehaviour
 {
     private Button _button;
     private Image _image;
