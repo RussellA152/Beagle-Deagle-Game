@@ -18,6 +18,9 @@ public class PlayerStatsUI : MonoBehaviour
     [SerializeField]
     private PlayerEvents playerEvents;
 
+    // Needed to know basic stats and values specific to each character (xp needed to rank up)
+    //private PlayerData _playerData;
+
     [SerializeField] private TextMeshProUGUI waveMessageText;
 
     [Header("Health UI")]
@@ -68,9 +71,13 @@ public class PlayerStatsUI : MonoBehaviour
     {
         wavesBegan.changeHUDTextEvent += UpdateWaveMessageText;
 
+        //playerEvents.onPlayerObtainedNewCharacterStats += GetPlayerStats;
+        
         playerEvents.onPlayerCurrentHealthChanged += UpdatePlayerCurrentHealthText;
 
         playerEvents.onPlayerMaxHealthChanged += UpdatePlayerMaxHealthText;
+
+        playerEvents.getPlayerXpNeededUntilLevelUp += UpdateXpImage;
 
         playerEvents.onPlayerObtainedNewUltimate += UpdateUltimateImage;
         playerEvents.onPlayerObtainedNewUtility += UpdateUtilityImage;
@@ -82,10 +89,14 @@ public class PlayerStatsUI : MonoBehaviour
     private void OnDisable()
     {
         wavesBegan.changeHUDTextEvent -= UpdateWaveMessageText;
+        
+        //playerEvents.onPlayerObtainedNewCharacterStats -= GetPlayerStats;
 
         playerEvents.onPlayerCurrentHealthChanged -= UpdatePlayerCurrentHealthText;
 
         playerEvents.onPlayerMaxHealthChanged -= UpdatePlayerMaxHealthText;
+        
+        playerEvents.getPlayerXpNeededUntilLevelUp -= UpdateXpImage;
         
         playerEvents.onPlayerObtainedNewUltimate -= UpdateUltimateImage;
         playerEvents.onPlayerObtainedNewUtility -= UpdateUtilityImage;
@@ -93,6 +104,11 @@ public class PlayerStatsUI : MonoBehaviour
         playerEvents.onPlayerBulletsLoadedChanged -= UpdateAmmoText;
         playerEvents.onPlayerSwitchedWeapon -= AddBulletsToHUD;
     }
+
+    // private void GetPlayerStats(PlayerData data)
+    // {
+    //     _playerData = data;
+    // }
 
     private void UpdatePlayerCurrentHealthText(float currentHealth)
     {
@@ -136,9 +152,9 @@ public class PlayerStatsUI : MonoBehaviour
         }
     }
 
-    private void UpdateXpImage(int amount)
+    private void UpdateXpImage(float xpNeededLeft)
     {
-        
+        xpImageFill.fillAmount = xpNeededLeft;
     }
 
     private void UpdateUtilityImage(UtilityAbilityData utility)

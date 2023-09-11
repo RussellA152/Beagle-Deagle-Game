@@ -20,7 +20,7 @@ public class PlayerEvents : ScriptableObject
     // Pass a reference to the player's current weapon data
     public event Action<GunData> onPlayerSwitchedWeapon;
 
-    public event Action<int> onPlayerCurrentXpChanged;
+    public event Action<float> getPlayerXpNeededUntilLevelUp;
 
     public event Action<int> onPlayerLeveledUp;
 
@@ -77,10 +77,10 @@ public class PlayerEvents : ScriptableObject
         onPlayerSwitchedWeapon?.Invoke(newWeaponData);
     }
 
-    // When the player's xp amount changes, tell all listeners how much xp the player now currently has
-    public void InvokeCurrentXpEvent(int amount)
+    // When the player's xp amount changes, tell all listeners how close the player is to their next rank (ex. 50% needed left)
+    public void InvokeXpNeededLeftEvent(float xpNeededLeft)
     {
-        onPlayerCurrentXpChanged?.Invoke(amount);
+        getPlayerXpNeededUntilLevelUp?.Invoke(xpNeededLeft);
     }
 
     public void InvokePlayerLeveledUpEvent(int newLevel)

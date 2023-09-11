@@ -16,10 +16,10 @@ public class PlayerLevelUp : MonoBehaviour
     [SerializeField] private EnemyEvents enemyEvents;
     
     // The current rank that the player is at
-    [SerializeField] private int _currentLevel = 1;
+    private int _currentLevel = 1;
 
     // How much xp does the player currently have (resets on rank up)
-    [SerializeField] private int _currentXpUntilNextLevel;
+    private int _currentXpUntilNextLevel;
 
     private void OnEnable()
     {
@@ -37,7 +37,7 @@ public class PlayerLevelUp : MonoBehaviour
     /// 
     private void GainXpFromEnemyKill(int amount)
     {
-        playerEvents.InvokeCurrentXpEvent(_currentXpUntilNextLevel += amount);
+        _currentXpUntilNextLevel += amount;
 
         int xpRequiredForRankUp = playerData.xpNeededPerLevel[_currentLevel - 1];
         
@@ -49,6 +49,8 @@ public class PlayerLevelUp : MonoBehaviour
             // Tell all listeners that the player has reached a new rank
             playerEvents.InvokePlayerLeveledUpEvent(++_currentLevel);
         }
+        
+        playerEvents.InvokeXpNeededLeftEvent( (float) _currentXpUntilNextLevel/xpRequiredForRankUp);
     }
 
 }
