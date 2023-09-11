@@ -325,6 +325,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4300eba4cc8b0db4b92185572846a421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  enemyEvents: {fileID: 11400000, guid: e5d63ef152feead4eb09d0bad482c6a9, type: 2}
+  _currentXpUntilNextLevel: 0
 --- !u!114 &2439171421654748749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,7 +403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  currentUtilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
+  utilityData: {fileID: 0}
   CooldownSystem: {fileID: 0}
   utilityCooldownModifiers: []
   utilityUsesModifiers: []

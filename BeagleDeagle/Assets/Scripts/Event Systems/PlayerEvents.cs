@@ -19,7 +19,11 @@ public class PlayerEvents : ScriptableObject
 
     // Pass a reference to the player's current weapon data
     public event Action<GunData> onPlayerSwitchedWeapon;
-    
+
+    public event Action<int> onPlayerCurrentXpChanged;
+
+    public event Action<int> onPlayerLeveledUp;
+
     // Pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
     public event Action<PlayerData> onPlayerObtainedNewCharacterStats;
 
@@ -71,6 +75,17 @@ public class PlayerEvents : ScriptableObject
     public void InvokeNewWeaponEvent(GunData newWeaponData)
     {
         onPlayerSwitchedWeapon?.Invoke(newWeaponData);
+    }
+
+    // When the player's xp amount changes, tell all listeners how much xp the player now currently has
+    public void InvokeCurrentXpEvent(int amount)
+    {
+        onPlayerCurrentXpChanged?.Invoke(amount);
+    }
+
+    public void InvokePlayerLeveledUpEvent(int newLevel)
+    {
+        onPlayerLeveledUp?.Invoke(newLevel);
     }
 
     // When the player receives a new set of stats (New set of maxHealth, movementSpeed, etc. values)

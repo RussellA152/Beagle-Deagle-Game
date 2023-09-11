@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db53577188b32941a633f33e5026826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyEvents: {fileID: 11400000, guid: e5d63ef152feead4eb09d0bad482c6a9, type: 2}
   enemyData: {fileID: 11400000, guid: 71d70c706a557ab40b070f97ff8e034f, type: 2}
   maxHealthModifiers: []
 --- !u!114 &7645405754992922946

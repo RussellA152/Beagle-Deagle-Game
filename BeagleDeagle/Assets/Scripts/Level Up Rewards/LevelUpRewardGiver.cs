@@ -17,14 +17,13 @@ public class LevelUpRewardGiver : MonoBehaviour
     private void OnEnable()
     {
         playerEvents.givePlayerGameObject += FindPlayer;
+        playerEvents.onPlayerLeveledUp += GiveRewardAtLevel;
     }
 
-    private void Start()
+    private void OnDisable()
     {
-        //_rewardsToGive = levelUpRewards.GetRewardsList();
-        Invoke(nameof(GiveRewardAtLevel), 3f);
-
-
+        playerEvents.givePlayerGameObject -= FindPlayer;
+        playerEvents.onPlayerLeveledUp -= GiveRewardAtLevel;
     }
 
     // Find the player gameObject which will be given to the rewards so they can give
@@ -35,28 +34,17 @@ public class LevelUpRewardGiver : MonoBehaviour
     }
 
     ///-///////////////////////////////////////////////////////////
-    /// When the player levels up, check if their rewards list has a reward at that level.
-    /// If so, give them that reward.
+    /// When player ranks up, give them a reward based on the new level they reached.
     /// 
-    // private void GiveRewardAtLevel(int newLevel)
-    // {
-    //     foreach (Reward levelReward in levelUpRewards.levelRewards)
-    //     {
-    //         if (newLevel == levelReward.levelGiven)
-    //         {
-    //             GiveRewardToPlayer(levelReward);
-    //         }
-    //         
-    //     }
-    // }
-    
-    // TODO: Use above method when player ranks up with event system!
-    private void GiveRewardAtLevel()
+    private void GiveRewardAtLevel(int newLevel)
     {
+        Debug.Log($"Player has reached rank {newLevel}, give them a reward!");
         List<Reward> potentialRewards = new List<Reward>();
+        
+        // Check all rewards that are given at this level
         foreach (Reward reward in rewardsList.allRewards)
         {
-            if (reward.LevelGiven == 5)
+            if (reward.LevelGiven == newLevel)
             {
                 if (reward.IsChosen)
                 {

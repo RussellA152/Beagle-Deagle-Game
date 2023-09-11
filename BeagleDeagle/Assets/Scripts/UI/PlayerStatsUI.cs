@@ -29,6 +29,9 @@ public class PlayerStatsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currentAmmoMagText;
     [SerializeField] private TextMeshProUGUI maxAmmoMagText;
 
+    [Header("Xp UI")] 
+    [SerializeField] private Image xpImageFill;
+
     [Header("Utility UI")]
     [SerializeField] private Image utilityImage;
     [SerializeField] private Image utilityImageFill;
@@ -131,6 +134,11 @@ public class PlayerStatsUI : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void UpdateXpImage(int amount)
+    {
+        
     }
 
     private void UpdateUtilityImage(UtilityAbilityData utility)

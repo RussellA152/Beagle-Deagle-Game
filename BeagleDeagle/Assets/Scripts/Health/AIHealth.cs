@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
 {
+    [SerializeField] private EnemyEvents enemyEvents;
+    
     [Header("Data to Use")]
     [SerializeField] private EnemyData enemyData;
     
@@ -47,6 +49,9 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
         {
             _currentHealth = 0f;
             _isDead = true;
+            
+            // Give the player a certain amount of xp upon death
+            enemyEvents.InvokeGiveXp(enemyData.xpOnDeath);
         }
         else
         {

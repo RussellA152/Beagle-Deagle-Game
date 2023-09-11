@@ -309,7 +309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4300eba4cc8b0db4b92185572846a421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEvents: {fileID: 0}
+  playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  enemyEvents: {fileID: 11400000, guid: e5d63ef152feead4eb09d0bad482c6a9, type: 2}
+  _currentXpUntilNextLevel: 0
 --- !u!114 &1777428645584621154
 MonoBehaviour:
   m_ObjectHideFlags: 0

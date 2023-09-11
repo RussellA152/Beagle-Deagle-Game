@@ -39,6 +39,6 @@ public class EnemyData : ScriptableObject
     public LayerMask chaseLayer; // What kind of layer does this enemy follow? (ex. Player)
     
     [Range(0f, 1000f), Space(20)]
-    public float xpOnDeath;
+    public int xpOnDeath;
 
 }
