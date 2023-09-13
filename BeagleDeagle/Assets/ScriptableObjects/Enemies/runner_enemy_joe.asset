@@ -26,7 +26,7 @@ MonoBehaviour:
   chaseLayer:
     serializedVersion: 2
     m_Bits: 128
-  xpOnDeath: 100
+  xpOnDeath: 1000
   whatHitBoxDamages:
     serializedVersion: 2
     m_Bits: 128

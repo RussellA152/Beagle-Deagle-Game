@@ -34,6 +34,7 @@ public class PlayerStatsUI : MonoBehaviour
 
     [Header("Xp UI")] 
     [SerializeField] private Image xpImageFill;
+    [SerializeField] private TMP_Text levelText;
 
     [Header("Utility UI")]
     [SerializeField] private Image utilityImage;
@@ -71,13 +72,12 @@ public class PlayerStatsUI : MonoBehaviour
     {
         wavesBegan.changeHUDTextEvent += UpdateWaveMessageText;
 
-        //playerEvents.onPlayerObtainedNewCharacterStats += GetPlayerStats;
-        
         playerEvents.onPlayerCurrentHealthChanged += UpdatePlayerCurrentHealthText;
 
         playerEvents.onPlayerMaxHealthChanged += UpdatePlayerMaxHealthText;
 
         playerEvents.getPlayerXpNeededUntilLevelUp += UpdateXpImage;
+        playerEvents.onPlayerLeveledUp += UpdateCurrentLevelText;
 
         playerEvents.onPlayerObtainedNewUltimate += UpdateUltimateImage;
         playerEvents.onPlayerObtainedNewUtility += UpdateUtilityImage;
@@ -89,14 +89,13 @@ public class PlayerStatsUI : MonoBehaviour
     private void OnDisable()
     {
         wavesBegan.changeHUDTextEvent -= UpdateWaveMessageText;
-        
-        //playerEvents.onPlayerObtainedNewCharacterStats -= GetPlayerStats;
 
         playerEvents.onPlayerCurrentHealthChanged -= UpdatePlayerCurrentHealthText;
 
         playerEvents.onPlayerMaxHealthChanged -= UpdatePlayerMaxHealthText;
         
         playerEvents.getPlayerXpNeededUntilLevelUp -= UpdateXpImage;
+        playerEvents.onPlayerLeveledUp -= UpdateCurrentLevelText;
         
         playerEvents.onPlayerObtainedNewUltimate -= UpdateUltimateImage;
         playerEvents.onPlayerObtainedNewUtility -= UpdateUtilityImage;
@@ -155,6 +154,11 @@ public class PlayerStatsUI : MonoBehaviour
     private void UpdateXpImage(float xpNeededLeft)
     {
         xpImageFill.fillAmount = xpNeededLeft;
+    }
+
+    private void UpdateCurrentLevelText(int newLevel)
+    {
+        levelText.text = "LVL " + newLevel.ToString();
     }
 
     private void UpdateUtilityImage(UtilityAbilityData utility)

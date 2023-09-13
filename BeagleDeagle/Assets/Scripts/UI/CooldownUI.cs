@@ -38,6 +38,8 @@ public class CooldownUI : MonoBehaviour
 
     // Duration that the roll progression bar has been on the screen (after roll cooldown finishes)
     private float _rollFillDisplayTime;
+    // How long after roll cooldown finishes should the roll fill show on screen? 
+    private float _rollFillLingerTime = 0.35f;
 
     private bool _useMousePosition;
 
@@ -186,7 +188,7 @@ public class CooldownUI : MonoBehaviour
         _rollFillDisplayTime += Time.deltaTime;
         
         if (rollSlider.value <= 0f) {
-            if (_rollFillDisplayTime >= 0.6f)
+            if (_rollFillDisplayTime >= _rollFillLingerTime)
             {
                 rollSlider.gameObject.SetActive(false);
             }
