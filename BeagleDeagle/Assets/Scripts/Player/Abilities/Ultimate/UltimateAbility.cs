@@ -14,7 +14,6 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     public CooldownSystem CooldownSystem;
     
     private PlayerInput _playerInput;
-    //private TopDownInput _topDownInput;
 
     private InputAction _ultimateInputAction;
 

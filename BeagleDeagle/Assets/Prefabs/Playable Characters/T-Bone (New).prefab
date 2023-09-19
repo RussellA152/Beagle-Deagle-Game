@@ -312,7 +312,6 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   enemyEvents: {fileID: 11400000, guid: e5d63ef152feead4eb09d0bad482c6a9, type: 2}
-  _currentXpUntilNextLevel: 0
 --- !u!114 &1777428645584621154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -818,6 +817,10 @@ PrefabInstance:
     - target: {fileID: 4077318060314352049, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: m_Name
       value: Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077318060314352049, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4077318060314352050, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: m_RootOrder

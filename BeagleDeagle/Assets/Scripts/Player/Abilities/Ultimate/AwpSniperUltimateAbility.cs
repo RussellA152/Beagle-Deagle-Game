@@ -6,7 +6,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 {
     private Gun _playerGunScript;
     
-    private GunData _previousWeaponData;
+    [SerializeField] private GunData _previousWeaponData;
     
     private bool _isActive;
 
@@ -19,8 +19,10 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         base.OnEnable();
         
         _playerGunScript = GetComponentInChildren<Gun>();
-        
-        playerEvents.onPlayerSwitchedWeapon += UpdateCurrentWeapon;
+
+
+        playerEvents.getAllPreviousWeapons += UpdateCurrentWeapon;
+        //playerEvents.onPlayerSwitchedWeapon += UpdateCurrentWeapon;
 
         playerEvents.onPlayerBulletsLoadedChanged += CheckAmmoLoad;
 
@@ -31,20 +33,22 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         base.OnDisable();
 
         playerEvents.onPlayerBulletsLoadedChanged -= CheckAmmoLoad;
-
-        playerEvents.onPlayerSwitchedWeapon -= UpdateCurrentWeapon;
+        playerEvents.getAllPreviousWeapons -= UpdateCurrentWeapon;
+        //playerEvents.onPlayerSwitchedWeapon -= UpdateCurrentWeapon;
     }
     
     protected override void UltimateAction()
     {
         // Give the player an AWP Sniper as their new gun
         _isActive = true;
+
         _playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
         //playerEvents.InvokeNewWeaponEvent(ultimateData.awpGunData);
         
+        _playerGunScript.AllowWeaponReceive(false);
         // Don't allow player to reload when activating AWP
         _playerGunScript.AllowReload(false);
-        
+
         _durationCoroutine = StartCoroutine(WeaponDuration());
 
     }
@@ -63,13 +67,14 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
     }
     
     // Save a reference to the gun the player had before receiving AWP sniper
-    private void UpdateCurrentWeapon(GunData gunData)
+    private void UpdateCurrentWeapon(List<GunData> allPreviousWeapons)
     {
+        GunData mostRecentWeapon = allPreviousWeapons[allPreviousWeapons.Count - 1];
         // Check the current weapon that the player has
         // Don't update this value if the player received an AWP sniper
-        if(gunData != ultimateData.awpGunData)
+        if(mostRecentWeapon != ultimateData.awpGunData)
         {
-            _previousWeaponData = gunData;
+            _previousWeaponData = mostRecentWeapon;
         }
     }
 
@@ -84,7 +89,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
             
             // Give back the player their gun before they received the AWP sniper
             //playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
-            
+            _playerGunScript.AllowWeaponReceive(true);
             _playerGunScript.UpdateScriptableObject(_previousWeaponData);
             
             

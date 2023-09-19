@@ -34,7 +34,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
     private bool _isReloading;
     
-    //private bool _canReload;
+    // Is the player allowed to receive new weapons?
+    private bool _canReceiveNewWeapon = true;
+    [SerializeField] private List<GunData> _previousWeapons = new List<GunData>();
+    private Coroutine _weaponReceiveCoroutine;
 
     private float _lastTimeShot;
     private float _timeElapsedSinceShot;
@@ -105,14 +108,14 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
     private void OnEnable()
     {
-        //playerEvents.onPlayerSwitchedWeapon += UpdateScriptableObject;
-
         _cooldownSystem.OnCooldownEnded += OnReloadFinish;
 
     }
 
     private void OnDisable()
     {
+        _previousWeapons.Clear();
+        
         _cooldownSystem.OnCooldownEnded -= OnReloadFinish;
         _shootInputAction.Disable();
         _reloadInputAction.Disable();
@@ -147,31 +150,63 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
         }
     }
     
-    // Update the GunData scriptable object to a new one.
+    // Update the GunData scriptable object to a new one (If the player is allowed to. It can be disabled by AWP sniper or by dying)
     // This can change many stats like damage, penetration, fireRate, appearance (sprite), and more.
     public void UpdateScriptableObject(GunData scriptableObject)
     {
-        //weaponData.bulletSpawnPoint = bulletSpawnPoint;
+        // Tell all listeners all previous weapons that this player has received and will receive
+        if (!_previousWeapons.Contains(scriptableObject))
+        {
+            _previousWeapons.Add(scriptableObject);
+            
+            playerEvents.InvokeAllPreviousWeaponsEvent(_previousWeapons);
 
+        }
+
+        if (_weaponReceiveCoroutine != null)
+            StopCoroutine(_weaponReceiveCoroutine);
+        
+        _weaponReceiveCoroutine = StartCoroutine(WaitForWeaponUpdate(scriptableObject));
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Wait until the player is allowed to receive a new weapon update.
+    /// 
+    private IEnumerator WaitForWeaponUpdate(GunData scriptableObject)
+    {
+        while (!_canReceiveNewWeapon)
+        {
+            yield return null;
+        }
+    
         weaponData = scriptableObject;
         
         RefillAmmoCompletely();
-
+    
         _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
-
+    
         _spriteRenderer.sprite = weaponData.sprite;
         
         // Stop reloading if player switched to a new gun (ammo will refill anyways)
         _cooldownSystem.StopCooldown(Id);
         
         CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
-
+    
         Debug.Log("Ammo loaded: " + _bulletsLoaded);
         
         // After swapping to new weapon, show the ammo on the HUD
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
         
         playerEvents.InvokeNewWeaponEvent(weaponData);
+
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Allows or doesn't allow player to swap weapons.
+    /// 
+    public void AllowWeaponReceive(bool boolean)
+    {
+        _canReceiveNewWeapon = boolean;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -182,7 +217,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
         return weaponData;
     }
     
-
     #region Shooting
     
     public bool CheckIfCanFire()
@@ -210,7 +244,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
             {
                 foreach (IStatusEffect statusEffect in newBullet.GetComponents<IStatusEffect>())
                 {
-                    Debug.Log("update!");
                     statusEffect.UpdateWeaponType(weaponData.statusEffects);
                 }
             }
@@ -283,10 +316,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
             ActuallyShooting = false;
             AllowShoot(false);
             Debug.Log("START RELOAD!");
-            //StartCoroutine(WaitReload());
-
         }
-            
     }
 
     private void OnReloadFinish(int id)

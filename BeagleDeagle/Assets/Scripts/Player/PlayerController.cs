@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
         _movementScript.AllowRotation(true);
         _gunScript.AllowShoot(true);
         _gunScript.AllowReload(true);
+        _gunScript.AllowWeaponReceive(true);
         _utilityScript.AllowUtility(true);
         _ultimateScript.AllowUltimate(true);
     }
