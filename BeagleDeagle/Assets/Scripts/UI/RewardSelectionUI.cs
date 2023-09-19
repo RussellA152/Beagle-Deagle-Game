@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 ///-///////////////////////////////////////////////////////////
@@ -11,10 +12,17 @@ using UnityEngine.UI;
 public class RewardSelectionUI : MonoBehaviour
 {
     [SerializeField] private PlayerEvents playerEvents;
+
+    [SerializeField] private Image optionalRewardPanel;
     
     [SerializeField] private GameObject choicePrefab;
-
-    private Image _imageBackground;
+    
+    // Text box that will display the description of mandatory rewards (rewards that the player has no choice to receive)
+    [SerializeField] private TMP_Text mandatoryRewardDescription;
+    
+    [SerializeField, Range(0.1f, 5f)] 
+    private float rewardDescriptionDisplayTime = 3f;
+    
 
     private List<Button> _allButtons = new List<Button>();
 
@@ -27,13 +35,25 @@ public class RewardSelectionUI : MonoBehaviour
     private void OnEnable()
     {
         playerEvents.givePlayerGameObject += FindPlayer;
+
+        playerEvents.onPlayerReceivedOptionalRewards += AddChoiceButton;
+        playerEvents.onPlayerReceivedMandatoryReward += DisplayMandatoryRewardDescription;
+    }
+
+    private void OnDisable()
+    {
+        playerEvents.givePlayerGameObject -= FindPlayer;
+
+        playerEvents.onPlayerReceivedOptionalRewards -= AddChoiceButton;
+        playerEvents.onPlayerReceivedMandatoryReward -= DisplayMandatoryRewardDescription;
     }
 
     private void Start()
     {
-        _imageBackground = GetComponent<Image>();
+        // Hide description text and reward panel
+        mandatoryRewardDescription.gameObject.SetActive(false);
+        optionalRewardPanel.enabled = false;
         
-        _imageBackground.enabled = false;
         _rewardWasChosen = false;
     }
 
@@ -42,22 +62,25 @@ public class RewardSelectionUI : MonoBehaviour
         _playerGameObject = pGameObject;
     }
 
-    public void AddChoiceButton(Reward rewardChoice)
+    public void AddChoiceButton(List<Reward> rewardChoices)
     {
-        _imageBackground.enabled = true;
+        optionalRewardPanel.enabled = true;
 
-        GameObject newButton = Instantiate(choicePrefab, transform, false);
+        foreach (Reward potentialReward in rewardChoices)
+        {
+            GameObject newButton = Instantiate(choicePrefab, optionalRewardPanel.transform, false);
 
-        RewardChoiceUIElement buttonRewardChoiceUIElementScript = newButton.GetComponent<RewardChoiceUIElement>();
+            RewardChoiceUIElement buttonRewardChoiceUIElementScript = newButton.GetComponent<RewardChoiceUIElement>();
         
-        _allButtons.Add(buttonRewardChoiceUIElementScript.GetButton());
+            _allButtons.Add(buttonRewardChoiceUIElementScript.GetButton());
         
-        // Change the name, description, and icon image of the button to whatever the reward uses
-        buttonRewardChoiceUIElementScript.SetName(rewardChoice.GetRewardName());
-        buttonRewardChoiceUIElementScript.SetDescription(rewardChoice.Description);
-        buttonRewardChoiceUIElementScript.SetIcon(rewardChoice.Icon);
+            // Change the name, description, and icon image of the button to whatever the reward uses
+            buttonRewardChoiceUIElementScript.SetName(potentialReward.GetRewardName());
+            buttonRewardChoiceUIElementScript.SetDescription(potentialReward.Description);
+            buttonRewardChoiceUIElementScript.SetIcon(potentialReward.Icon);
         
-        buttonRewardChoiceUIElementScript.GetButton().onClick.AddListener(() => GiveRewardToPlayerOnClick(rewardChoice));
+            buttonRewardChoiceUIElementScript.GetButton().onClick.AddListener(() => GiveRewardToPlayerOnClick(potentialReward));
+        }
 
     }
 
@@ -70,11 +93,12 @@ public class RewardSelectionUI : MonoBehaviour
 
         _rewardWasChosen = true;
         
+        // Have reward give its data to the player
         chosenReward.GiveDataToPlayer(_playerGameObject);
         
         RemoveAllButtons();
     }
-
+    
     ///-///////////////////////////////////////////////////////////
     /// When player picks one reward, then delete all buttons from the UI
     /// 
@@ -87,6 +111,28 @@ public class RewardSelectionUI : MonoBehaviour
             Destroy(buttonChoice.gameObject);
         }
 
-        _imageBackground.enabled = false;
+        optionalRewardPanel.enabled = false;
     }
+
+    private void DisplayMandatoryRewardDescription(Reward mandatoryReward)
+    {
+        StartCoroutine(RemoveDescriptionAfterTime(mandatoryReward));
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// When the player receives a "mandatory" reward (meaning the player will always receive that reward, no choices),
+    /// a text box will appear above the player's head with the description of the reward. Shortly after, it will disappear again.
+    private IEnumerator RemoveDescriptionAfterTime(Reward mandatoryReward)
+    {
+        // Change text
+        mandatoryRewardDescription.gameObject.SetActive(true);
+        mandatoryRewardDescription.text = mandatoryReward.Description;
+        
+        yield return new WaitForSeconds(rewardDescriptionDisplayTime);
+        
+        // Remove text,then disable text object
+        mandatoryRewardDescription.text = string.Empty;
+        mandatoryRewardDescription.gameObject.SetActive(false);
+    }
+    
 }

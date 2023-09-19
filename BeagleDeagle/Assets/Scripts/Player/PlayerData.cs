@@ -14,6 +14,9 @@ public class PlayerData : ScriptableObject
     
     public RuntimeAnimatorController animatorController;
 
+    // What set of rewards does this character receive?
+    public RewardList rewardsList;
+
     [Header("Health")]
     [Range(1f, 2500f)] public float maxHealth;
 
@@ -22,6 +25,7 @@ public class PlayerData : ScriptableObject
     public Vector2 rollPower;
     [Range(0.1f, 30f)] public float rollCooldown;
 
-    [Space(20)]
-    public List<int> xpNeededPerLevel = new List<int>();
+    [Space(20)] 
+    // How much xp does the player require at each level? (Ex. Level 2 requires 'x' amount of xp)
+    public int[] xpNeededPerLevel;
 }

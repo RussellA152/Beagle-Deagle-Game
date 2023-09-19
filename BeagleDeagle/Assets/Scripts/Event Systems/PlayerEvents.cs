@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 ///-///////////////////////////////////////////////////////////
@@ -20,9 +21,17 @@ public class PlayerEvents : ScriptableObject
     // Pass a reference to the player's current weapon data
     public event Action<GunData> onPlayerSwitchedWeapon;
 
+    // Tell all listeners how much xp the player needs left to reach the next rank
     public event Action<float> getPlayerXpNeededUntilLevelUp;
 
+    // When the player ranks up, tell all listeners what rank the player just reached
     public event Action<int> onPlayerLeveledUp;
+
+    // When the player ranks up and obtains mandatory rewards, tell all listeners what mandatory reward the player has received
+    public event Action<Reward> onPlayerReceivedMandatoryReward;
+
+    // When the player ranks up, if they received optional rewards, tell all listeners what choices the player has for rewards (i.e. optional rewards)
+    public event Action<List<Reward>> onPlayerReceivedOptionalRewards; 
 
     // Pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
     public event Action<PlayerData> onPlayerObtainedNewCharacterStats;
@@ -86,6 +95,16 @@ public class PlayerEvents : ScriptableObject
     public void InvokePlayerLeveledUpEvent(int newLevel)
     {
         onPlayerLeveledUp?.Invoke(newLevel);
+    }
+
+    public void InvokePlayerReceivedMandatoryRewardEvent(Reward receivedReward)
+    {
+        onPlayerReceivedMandatoryReward?.Invoke(receivedReward);
+    }
+    
+    public void InvokePlayerReceivedPotentialRewardsEvent(List<Reward> rewardChoices)
+    {
+        onPlayerReceivedOptionalRewards?.Invoke(rewardChoices);
     }
 
     // When the player receives a new set of stats (New set of maxHealth, movementSpeed, etc. values)

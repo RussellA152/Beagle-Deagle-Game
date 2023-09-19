@@ -16,7 +16,7 @@ public class PlayerLevelUp : MonoBehaviour
     [SerializeField] private EnemyEvents enemyEvents;
     
     // The current rank that the player is at
-    private int _currentLevel = 19;
+    private int _currentLevel = 1;
 
     // How much xp does the player currently have (resets on rank up)
     private int _currentXpUntilNextLevel;
@@ -48,24 +48,68 @@ public class PlayerLevelUp : MonoBehaviour
     /// 
     private void GainXpFromEnemyKill(int amount)
     {
-
+        if (!_allowXpGain) return;
+        
         _currentXpUntilNextLevel += amount;
 
         int xpRequiredForRankUp = playerData.xpNeededPerLevel[_currentLevel - 1];
         
         // If the player has more than enough xp needed to level up and still has levels left to reach, then reset their xp and add any difference
-        if (_currentLevel < playerData.xpNeededPerLevel.Count && _currentXpUntilNextLevel >= xpRequiredForRankUp)
+        if (_currentLevel < playerData.xpNeededPerLevel.Length && _currentXpUntilNextLevel >= xpRequiredForRankUp)
         {
             _currentXpUntilNextLevel -= xpRequiredForRankUp;
             
             // Tell all listeners that the player has reached a new rank
             playerEvents.InvokePlayerLeveledUpEvent(++_currentLevel);
-
-
+            
+            GiveRewardAtLevel(_currentLevel);
+            
         }
         
+        // If the player has reached the max rank, then do not allow any further xp gain
+        // Also, set currentXpUntilNextLevel equal to the xpRequiredForRankUp (will display a full xp bar at all times)
+        if (_currentLevel >= playerData.xpNeededPerLevel.Length)
+        {
+            _currentXpUntilNextLevel = xpRequiredForRankUp;
+            _allowXpGain = false;
+        }
+
         playerEvents.InvokeXpNeededLeftEvent( (float) _currentXpUntilNextLevel/xpRequiredForRankUp);
         
+    }
+    
+    private void GiveRewardAtLevel(int newLevel)
+    {
+        Debug.Log($"Player has reached rank {newLevel}, give them a reward!");
+        
+        List<Reward> optionalRewards = new List<Reward>();
+        
+        // Check all rewards that are given at this level
+        foreach (Reward reward in playerData.rewardsList.allRewards)
+        {
+            // If player meets the reward's level requirement...
+            if (reward.LevelGiven == newLevel)
+            {
+                // If the reward is optional, add it to "potentialRewards" list
+                if (reward.IsChosen)
+                {
+                    // * The reward that the user chooses will give its data to the player *
+                    optionalRewards.Add(reward);
+                }
+                // Otherwise, have the mandatory reward give its data to the player
+                else
+                {
+                    reward.GiveDataToPlayer(gameObject);
+                    
+                    // UI will display the description of this mandatory reward
+                    playerEvents.InvokePlayerReceivedMandatoryRewardEvent(reward);
+                }
+                
+            }
+        }
+        // If there are optional rewards to give, then tell the UI to display the choices
+        if(optionalRewards.Count > 0)
+            playerEvents.InvokePlayerReceivedPotentialRewardsEvent(optionalRewards);
     }
 
 }
