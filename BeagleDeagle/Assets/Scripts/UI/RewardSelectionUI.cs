@@ -13,6 +13,9 @@ public class RewardSelectionUI : MonoBehaviour
 {
     [SerializeField] private PlayerEvents playerEvents;
 
+    // When the rewards menu appears, pause the game
+    [SerializeField] private GamePauser gamePauser;
+
     [SerializeField] private Image optionalRewardPanel;
     
     [SerializeField] private GameObject choicePrefab;
@@ -64,6 +67,8 @@ public class RewardSelectionUI : MonoBehaviour
 
     public void AddChoiceButton(List<Reward> rewardChoices)
     {
+        gamePauser.PauseGame();
+        
         optionalRewardPanel.enabled = true;
 
         foreach (Reward potentialReward in rewardChoices)
@@ -112,6 +117,8 @@ public class RewardSelectionUI : MonoBehaviour
         }
 
         optionalRewardPanel.enabled = false;
+        
+        gamePauser.ResumeGame();
     }
 
     private void DisplayMandatoryRewardDescription(Reward mandatoryReward)

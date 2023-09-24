@@ -21,8 +21,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         _playerGunScript = GetComponentInChildren<Gun>();
 
 
-        playerEvents.getAllPreviousWeapons += UpdateCurrentWeapon;
-        //playerEvents.onPlayerSwitchedWeapon += UpdateCurrentWeapon;
+        playerEvents.getAllWeaponDataUpdates += UpdateCurrentWeapon;
 
         playerEvents.onPlayerBulletsLoadedChanged += CheckAmmoLoad;
 
@@ -33,8 +32,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         base.OnDisable();
 
         playerEvents.onPlayerBulletsLoadedChanged -= CheckAmmoLoad;
-        playerEvents.getAllPreviousWeapons -= UpdateCurrentWeapon;
-        //playerEvents.onPlayerSwitchedWeapon -= UpdateCurrentWeapon;
+        playerEvents.getAllWeaponDataUpdates -= UpdateCurrentWeapon;
     }
     
     protected override void UltimateAction()
@@ -43,8 +41,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         _isActive = true;
 
         _playerGunScript.UpdateScriptableObject(ultimateData.awpGunData);
-        //playerEvents.InvokeNewWeaponEvent(ultimateData.awpGunData);
-        
+
         _playerGunScript.AllowWeaponReceive(false);
         // Don't allow player to reload when activating AWP
         _playerGunScript.AllowReload(false);
@@ -65,8 +62,11 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 
         }
     }
-    
-    // Save a reference to the gun the player had before receiving AWP sniper
+
+    ///-///////////////////////////////////////////////////////////
+    /// Ultimate ability will remember what weapon the player had before swapping to the AWP sniper.
+    /// If the player's weapon gets updated while ulting, they will switch back to that new updated weapon.
+    /// 
     private void UpdateCurrentWeapon(List<GunData> allPreviousWeapons)
     {
         GunData mostRecentWeapon = allPreviousWeapons[allPreviousWeapons.Count - 1];
@@ -88,7 +88,6 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
             yield return new WaitForSeconds(_returnOriginalWeaponDelay);
             
             // Give back the player their gun before they received the AWP sniper
-            //playerEvents.InvokeNewWeaponEvent(_previousWeaponData);
             _playerGunScript.AllowWeaponReceive(true);
             _playerGunScript.UpdateScriptableObject(_previousWeaponData);
             

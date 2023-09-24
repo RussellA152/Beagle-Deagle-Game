@@ -15,8 +15,8 @@ public class TimeUI : MonoBehaviour
 
     private void DisplayTime()
     {
-        int minutes = Mathf.FloorToInt(TimeManager.Instance.ElapsedTime / 60f);
-        int seconds = Mathf.FloorToInt(TimeManager.Instance.ElapsedTime % 60f);
+        int minutes = Mathf.FloorToInt(GameTimeManager.Instance.ElapsedTime / 60f);
+        int seconds = Mathf.FloorToInt(GameTimeManager.Instance.ElapsedTime % 60f);
 
         string formattedTime = $"{minutes:D}:{seconds:00}";
         timeText.text = formattedTime;

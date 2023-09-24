@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 using Random = UnityEngine.Random;
 
@@ -36,7 +37,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
     
     // Is the player allowed to receive new weapons?
     private bool _canReceiveNewWeapon = true;
-    [SerializeField] private List<GunData> _previousWeapons = new List<GunData>();
+    [FormerlySerializedAs("_previousWeapons")] [SerializeField] private List<GunData> _previousWeaponDatas = new List<GunData>();
     private Coroutine _weaponReceiveCoroutine;
 
     private float _lastTimeShot;
@@ -114,7 +115,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
 
     private void OnDisable()
     {
-        _previousWeapons.Clear();
+        _previousWeaponDatas.Clear();
         
         _cooldownSystem.OnCooldownEnded -= OnReloadFinish;
         _shootInputAction.Disable();
@@ -155,14 +156,15 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
     public void UpdateScriptableObject(GunData scriptableObject)
     {
         // Tell all listeners all previous weapons that this player has received and will receive
-        if (!_previousWeapons.Contains(scriptableObject))
+        if (!_previousWeaponDatas.Contains(scriptableObject))
         {
-            _previousWeapons.Add(scriptableObject);
+            _previousWeaponDatas.Add(scriptableObject);
             
-            playerEvents.InvokeAllPreviousWeaponsEvent(_previousWeapons);
+            playerEvents.InvokeGiveAllUpdatedWeaponsEvent(_previousWeaponDatas);
 
         }
 
+        // If the player is already trying to receive another weapon, cancel that previous coroutine
         if (_weaponReceiveCoroutine != null)
             StopCoroutine(_weaponReceiveCoroutine);
         
@@ -180,19 +182,19 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown
         }
     
         weaponData = scriptableObject;
-        
+    
+        // Refill all ammo 
         RefillAmmoCompletely();
     
         _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
     
+        // Change weapon sprite
         _spriteRenderer.sprite = weaponData.sprite;
         
         // Stop reloading if player switched to a new gun (ammo will refill anyways)
         _cooldownSystem.StopCooldown(Id);
         
         CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
-    
-        Debug.Log("Ammo loaded: " + _bulletsLoaded);
         
         // After swapping to new weapon, show the ammo on the HUD
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);

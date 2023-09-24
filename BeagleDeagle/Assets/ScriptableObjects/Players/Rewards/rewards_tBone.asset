@@ -13,15 +13,20 @@ MonoBehaviour:
   m_Name: rewards_tBone
   m_EditorClassIdentifier: 
   gunRewards:
-  - LevelGiven: 2
+  - LevelGiven: 6
     IsChosen: 0
     Icon: {fileID: 0}
     Description: +25% Magazine Size!
     gunData: {fileID: 11400000, guid: 5c1a3c650afa74a4bbf272339501a52d, type: 2}
-  - LevelGiven: 3
+  - LevelGiven: 6
     IsChosen: 0
     Icon: {fileID: 0}
     Description: +25% Magazine Size!
     gunData: {fileID: 11400000, guid: 69d700199811a274d88b49318497d4bb, type: 2}
+  - LevelGiven: 2
+    IsChosen: 1
+    Icon: {fileID: 0}
+    Description: +25% Magazine Size!
+    gunData: {fileID: 11400000, guid: fa8fd2ad5ce7d5741b9621155f0030b6, type: 2}
   utilityRewards: []
   ultimateRewards: []

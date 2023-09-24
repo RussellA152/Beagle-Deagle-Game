@@ -22,7 +22,7 @@ public class PlayerEvents : ScriptableObject
     public event Action<GunData> onPlayerSwitchedWeapon;
 
     // Pass a reference to all weapon datas given to the player
-    public event Action<List<GunData>> getAllPreviousWeapons;
+    public event Action<List<GunData>> getAllWeaponDataUpdates;
 
     // Tell all listeners how much xp the player needs left to reach the next rank
     public event Action<float> getPlayerXpNeededUntilLevelUp;
@@ -89,9 +89,11 @@ public class PlayerEvents : ScriptableObject
         onPlayerSwitchedWeapon?.Invoke(newWeaponData);
     }
     
-    public void InvokeAllPreviousWeaponsEvent(List<GunData> allPreviousWeapons)
+    // When the player receives a new weapon or modification to their current weapon,
+    // they will be added to a list. Pass that list to anything that needs to remember any previous weapon upgrades (especially needed by AWP sniper ultimate ability)
+    public void InvokeGiveAllUpdatedWeaponsEvent(List<GunData> allWeaponUpdates)
     {
-        getAllPreviousWeapons?.Invoke(allPreviousWeapons);
+        getAllWeaponDataUpdates?.Invoke(allWeaponUpdates);
     }
 
     // When the player's xp amount changes, tell all listeners how close the player is to their next rank (ex. 50% needed left)
