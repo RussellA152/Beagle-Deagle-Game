@@ -51,7 +51,8 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
             _isDead = true;
             
             // Give the player a certain amount of xp upon death
-            enemyEvents.InvokeGiveXp(enemyData.xpOnDeath);
+            // TODO: Give xp to this enemy's killer
+            //enemyEvents.InvokeGiveXp(enemyData.xpOnDeath);
         }
         else
         {

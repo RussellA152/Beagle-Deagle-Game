@@ -8,7 +8,9 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerState state;
     
+    [Header("Event Systems")]
     [SerializeField] private PlayerEvents playerEvents;
+    [SerializeField] private GameEvents gameEvents;
     
     [Header("Data to Use")]
     [SerializeField] private PlayerData currentPlayerData;
@@ -20,7 +22,8 @@ public class PlayerController : MonoBehaviour
     private Gun _gunScript;
     private IUtilityUpdatable _utilityScript;
     private IUltimateUpdatable _ultimateScript;
-    
+    private IHasInput[] _allInputScripts;
+
 
     // States that a player can be in
     private enum PlayerState
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        // Fetch all script dependencies
         _movementScript = GetComponent<TopDownMovement>();
         _healthScript = GetComponent<PlayerHealth>();
         _animationHandlerScript = GetComponent<PlayerAnimationHandler>();
@@ -51,6 +55,9 @@ public class PlayerController : MonoBehaviour
 
         _utilityScript = GetComponent<IUtilityUpdatable>();
         _ultimateScript = GetComponent<IUltimateUpdatable>();
+
+        _allInputScripts = GetComponentsInChildren<IHasInput>();
+        
     }
 
     private void OnEnable()
@@ -59,8 +66,16 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("WEAPON MISSING!");
         }
+
+        gameEvents.OnGamePause += DisableAllPlayerInput;
+        gameEvents.OnGameResumeAfterPause += EnableAllPlayerInput;
     }
 
+    private void OnDisable()
+    {
+        gameEvents.OnGamePause -= DisableAllPlayerInput;
+        gameEvents.OnGameResumeAfterPause -= EnableAllPlayerInput;
+    }
 
     private void Start()
     {
@@ -173,6 +188,7 @@ public class PlayerController : MonoBehaviour
                 
                 // Disable all movement, attacks, and abilities
                 _movementScript.AllowMovement(false);
+                _movementScript.AllowRotation(false);
                 _movementScript.AllowRoll(false);
                 _gunScript.AllowReload(false);
                 _gunScript.AllowShoot(false);
@@ -213,6 +229,31 @@ public class PlayerController : MonoBehaviour
         // Check if the player was killed
         return _healthScript.IsDead();
     }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Enable/Reenable all input for player abilities (i.e shooting, reloading, moving, etc.)
+    /// 
+    private void EnableAllPlayerInput()
+    {
+        foreach (IHasInput inputScript in _allInputScripts)
+        {
+            inputScript.AllowInput(true);
+        }
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Disable all input for player abilities (i.e shooting, reloading, moving, etc.)
+    /// 
+    private void DisableAllPlayerInput()
+    {
+        foreach (IHasInput inputScript in _allInputScripts)
+        {
+            inputScript.AllowInput(false);
+            
+            Debug.Log(inputScript);
+        }
+    }
+    
 
 }
 

@@ -283,6 +283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  gameEvents: {fileID: 11400000, guid: 4314cd15feeb5de469dda4a888348c8a, type: 2}
   currentPlayerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
 --- !u!114 &3378843165075915667
 MonoBehaviour:
@@ -404,7 +405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   ultimateData: {fileID: 11400000, guid: 42f995ffd0be09f4486e341d1899a190, type: 2}
-  CooldownSystem: {fileID: 0}
+  _previousWeaponData: {fileID: 0}
 --- !u!50 &1777428645584621179
 Rigidbody2D:
   serializedVersion: 4

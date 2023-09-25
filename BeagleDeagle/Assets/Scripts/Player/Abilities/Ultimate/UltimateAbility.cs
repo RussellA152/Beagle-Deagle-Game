@@ -5,23 +5,25 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IHasCooldown where T: UltimateAbilityData
+public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IHasCooldown, IHasInput where T: UltimateAbilityData
 {
     [SerializeField] protected PlayerEvents playerEvents;
     
     [SerializeField] protected T ultimateData;
 
-    public CooldownSystem CooldownSystem;
+    private CooldownSystem _cooldownSystem;
     
     private PlayerInput _playerInput;
 
     private InputAction _ultimateInputAction;
 
+    private bool _canUseUltimate = true;
+
     private void Awake()
     {
         //_topDownInput = new TopDownInput();
         _playerInput = GetComponent<PlayerInput>();
-        CooldownSystem = GetComponent<CooldownSystem>();
+        _cooldownSystem = GetComponent<CooldownSystem>();
         _ultimateInputAction = _playerInput.currentActionMap.FindAction("Ultimate");
 
         Id = 10;
@@ -50,7 +52,9 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     /// activate the ultimate ability associated with the character
     public void ActivateUltimate(CallbackContext context)
     {
-        if (!CooldownSystem.IsOnCooldown(Id))
+        // If the ultimate is not on cooldown, and the player is allowed to use ultimate ("if player is not in a state that disables ultimate
+        // like the 'Dead' state")
+        if (!_cooldownSystem.IsOnCooldown(Id) && _canUseUltimate)
         {
             Debug.Log("Activate ultimate!");
 
@@ -62,20 +66,14 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     
     protected void StartCooldown()
     {
-        CooldownSystem.PutOnCooldown(this);
+        _cooldownSystem.PutOnCooldown(this);
     }
 
     public void AllowUltimate(bool boolean)
     {
-        if (boolean)
-        {
-            _ultimateInputAction.Enable();
-        }
-        else
-        {
-            _ultimateInputAction.Disable();
-        }
+        _canUseUltimate = boolean;
     }
+    
     public void UpdateScriptableObject(UltimateAbilityData scriptableObject)
     {
         if (scriptableObject is T)
@@ -91,5 +89,16 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     
     public int Id { get; set; }
     public float CooldownDuration { get; set; }
+    public void AllowInput(bool boolean)
+    {
+        if (boolean)
+        {
+            _ultimateInputAction.Enable();
+        }
+        else
+        {
+            _ultimateInputAction.Disable();
+        }
+    }
 }
 

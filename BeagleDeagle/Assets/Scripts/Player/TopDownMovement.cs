@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 
-public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IHasCooldown
+public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IHasCooldown, IHasInput
 {
     [SerializeField] private PlayerData playerData;
     [SerializeField] private PlayerEvents playerEvents;
@@ -24,9 +24,12 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     
     // Input from user for movement and rotation
     public Vector2 MovementInput { get; private set; }
+    private bool _canMove = true;
     private Vector2 _rotationInput;
+    private bool _canRotate = true;
     public bool IsRolling { get; private set; }
-    private bool _canRotate;
+    private bool _canRoll = true;
+    
     
     
     [Header("Required Components")]
@@ -236,7 +239,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     ///
     private void OnMove(CallbackContext context)
     {
-        MovementInput = _movementInputAction.ReadValue<Vector2>();
+        if(_canMove)
+            MovementInput = _movementInputAction.ReadValue<Vector2>();
     }
 
     private void OnMoveCancel(CallbackContext context)
@@ -247,7 +251,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
     public void OnRoll(CallbackContext context)
     {
-        if (!cooldownSystem.IsOnCooldown(Id))
+        if (!cooldownSystem.IsOnCooldown(Id) && _canRoll)
         {
             // Put roll on cooldown
             cooldownSystem.PutOnCooldown(this);
@@ -386,45 +390,39 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
     public void AllowMovement(bool boolean)
     {
-        if (boolean)
-        {
-            _movementInputAction.Enable();
-            _rotationInputAction.Enable();
-        }
-        
-        else
-        {
-            _movementInputAction.Disable();
-            _rotationInputAction.Disable();
-        }
-           
+        _canMove = boolean;
+
     }
 
     public void AllowRotation(bool boolean)
     {
-        if (boolean)
-            _rotationInputAction.Enable();
-        
-        else
-            _rotationInputAction.Disable();
-
         _canRotate = boolean;
     }
 
     public void AllowRoll(bool boolean)
     {
-        if (boolean)
-        {
-            _rollInputAction.Enable();
-        }
-        else
-        {
-            _rollInputAction.Disable();
-        }
+        _canRoll = boolean;
     }
 
     #endregion
     
     public int Id { get; set; }
     public float CooldownDuration { get; set; }
+    
+    public void AllowInput(bool boolean)
+    {
+        if (boolean)
+        {
+            _movementInputAction.Enable();
+            _rotationInputAction.Enable();
+            _rollInputAction.Enable();
+        }
+        
+        else
+        {
+            _movementInputAction.Disable();
+            _rotationInputAction.Disable();
+            _rollInputAction.Disable();
+        }
+    }
 }

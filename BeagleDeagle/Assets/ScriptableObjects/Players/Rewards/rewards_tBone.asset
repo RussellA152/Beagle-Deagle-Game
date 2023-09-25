@@ -23,10 +23,5 @@ MonoBehaviour:
     Icon: {fileID: 0}
     Description: +25% Magazine Size!
     gunData: {fileID: 11400000, guid: 69d700199811a274d88b49318497d4bb, type: 2}
-  - LevelGiven: 2
-    IsChosen: 1
-    Icon: {fileID: 0}
-    Description: +25% Magazine Size!
-    gunData: {fileID: 11400000, guid: fa8fd2ad5ce7d5741b9621155f0030b6, type: 2}
   utilityRewards: []
   ultimateRewards: []

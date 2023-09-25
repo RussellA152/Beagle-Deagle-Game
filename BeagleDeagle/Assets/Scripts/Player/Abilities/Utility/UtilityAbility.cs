@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 
-public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHasCooldown where T: UtilityAbilityData
+public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHasCooldown, IHasInput where T: UtilityAbilityData
 {
     [SerializeField] private PlayerEvents playerEvents;
     
@@ -21,8 +21,12 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
     private bool _canUseUtility = true;
 
-    private float _delayBetweenUse = 0.6f; // a small delay added between each utility use (prevents player from using too many at once)
+    // A small delay added between each utility use (prevents player from using too many at once)
+    private float _delayBetweenUse = 0.6f; 
 
+    // Don't allow player to use utility if the use delay is active
+    private bool _onDelayCooldown = true;
+    
     [Header("Modifiers")]
     [SerializeField, NonReorderable] private List<UtilityCooldownModifier> utilityCooldownModifiers = new List<UtilityCooldownModifier>();
     [SerializeField, NonReorderable] private List<UtilityUsesModifier> utilityUsesModifiers = new List<UtilityUsesModifier>();
@@ -70,7 +74,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     {
         // If player has uses left on their utility ability, let them activate it 
         // We also take into account any items that upgraded the number of uses on their utility ability
-        if (_canUseUtility && ((_utilityUses + _bonusUtilityUses) > 0))
+        if (_canUseUtility && _onDelayCooldown && ((_utilityUses + _bonusUtilityUses) > 0))
         {
             _utilityUses--;
             
@@ -115,23 +119,16 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     /// 
     private IEnumerator StartDelayBetweenUtilityUse()
     {
-        _canUseUtility = false;
+        _onDelayCooldown = false;
     
         yield return new WaitForSeconds(_delayBetweenUse);
     
-        _canUseUtility = true;
+        _onDelayCooldown = true;
     }
 
     public void AllowUtility(bool boolean)
     {
-        if (boolean)
-        {
-            _utilityInputAction.Enable();
-        }
-        else
-        {
-            _utilityInputAction.Disable();
-        }
+        _canUseUtility = boolean;
     }
     
     public void UpdateScriptableObject(UtilityAbilityData scriptableObject)
@@ -177,4 +174,15 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     
     public int Id { get; set; }
     public float CooldownDuration { get; set; }
+    public void AllowInput(bool boolean)
+    {
+        if (boolean)
+        {
+            _utilityInputAction.Enable();
+        }
+        else
+        {
+            _utilityInputAction.Disable();
+        }
+    }
 }

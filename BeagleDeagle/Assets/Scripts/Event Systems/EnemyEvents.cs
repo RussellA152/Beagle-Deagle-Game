@@ -10,14 +10,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameEvent/EnemyEvents")]
 public class EnemyEvents : ScriptableObject
 {
-    // Pass the amount of xp that an enemy will grant upon death
-    public event Action<int> onEnemyDeathXp;
+    // Pass the amount of xp that an enemy will grant upon death to the gameObject that killed them
+    public event Action<GameObject, int> onEnemyDeathXp;
 
     ///-///////////////////////////////////////////////////////////
     /// When an enemy is killed, pass the amount of xp that they should give.
     /// 
-    public void InvokeGiveXp(int xpAmount)
+    public void InvokeGiveXp( GameObject recipient, int xpAmount)
     {
-        onEnemyDeathXp?.Invoke(xpAmount);
+        onEnemyDeathXp?.Invoke(recipient, xpAmount);
     }
 }
