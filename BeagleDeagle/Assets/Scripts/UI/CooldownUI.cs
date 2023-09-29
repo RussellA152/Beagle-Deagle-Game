@@ -149,7 +149,7 @@ public class CooldownUI : MonoBehaviour
                 reloadFillRecTransform.localPosition = reloadOnGamepadPosition.localPosition;
             }
         }
-        else
+        else if(_useMousePosition)
         {
             Cursor.visible = true;
         }

@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 ///-///////////////////////////////////////////////////////////
 /// Display choices of rewards for the player to click on. Whichever was chosen
@@ -67,9 +68,10 @@ public class RewardSelectionUI : MonoBehaviour
 
     public void AddChoiceButton(List<Reward> rewardChoices)
     {
-        gamePauser.PauseGame();
+        gamePauser.PauseGameAutomatically();
         
         optionalRewardPanel.enabled = true;
+        
 
         foreach (Reward potentialReward in rewardChoices)
         {
@@ -86,6 +88,9 @@ public class RewardSelectionUI : MonoBehaviour
         
             buttonRewardChoiceUIElementScript.GetButton().onClick.AddListener(() => GiveRewardToPlayerOnClick(potentialReward));
         }
+        
+        // Set UI EventSystem's "firstSelected" gameObject to the first reward choice button
+        EventSystem.current.SetSelectedGameObject(_allButtons[0].gameObject);
 
     }
 

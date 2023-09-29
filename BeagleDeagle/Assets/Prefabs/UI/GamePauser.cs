@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using static UnityEngine.InputSystem.InputAction;
 
 public class GamePauser : MonoBehaviour
@@ -17,7 +18,8 @@ public class GamePauser : MonoBehaviour
 
     // Is the game already paused?
     private bool _pauseDelayed;
-    private bool _gamePaused;
+    private bool _gamePausedManually;
+    private bool _gamePausedAutomatically;
 
     // When the game is paused, put a small delay before the game can be unpaused
     private float _gameResumeDelay = 0.5f;
@@ -62,23 +64,39 @@ public class GamePauser : MonoBehaviour
     private void PauseManually(CallbackContext context)
     {
         // Pause the game only if the game is not already paused
-        if (_gamePaused) return;
+        if (_gamePausedManually || _gamePausedAutomatically) return;
+
+        _gamePausedManually = true;
         
+        EventSystem.current.SetSelectedGameObject(resumeButton.gameObject);
+
         pauseMenuGameObject.SetActive(true);
+        
+        PauseGame();
+    }
+
+    public void PauseGameAutomatically()
+    {
+        // Don't pause if already paused
+        if (_gamePausedManually || _gamePausedAutomatically) return;
+
+        _gamePausedAutomatically = true;
         
         PauseGame();
     }
 
     private void ResumeManually(CallbackContext context)
     {
+        // Only allow resume if the game was paused by the player's manual input
+        if (_gamePausedAutomatically) return;
+        
         ResumeButton();
     }
     
     private void ResumeButton()
     {
-        // Unpause game only if it was already paused
-        // and if the pause delay is not ongoing
-        if (!_gamePaused || _pauseDelayed) return;
+        // Unpause if the pause delay is not ongoing
+        if (_pauseDelayed) return;
         
         // Hide pause menu
         pauseMenuGameObject.SetActive(false);
@@ -86,11 +104,9 @@ public class GamePauser : MonoBehaviour
         ResumeGame();
     }
 
-    public void PauseGame()
+    private void PauseGame()
     {
         Time.timeScale = 0f;
-
-        _gamePaused = true;
 
         // Begin pause delay after pausing the game
         StartCoroutine(GamePauseDelay());
@@ -112,9 +128,10 @@ public class GamePauser : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1f;
-        
-        _gamePaused = false;
 
+        _gamePausedManually = false;
+        _gamePausedAutomatically = false;
+        
         // Tell all listeners that the game was unpaused
         gameEvents.InvokeOnGameResumeEvent();
     }

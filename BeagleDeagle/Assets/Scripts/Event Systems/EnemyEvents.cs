@@ -11,13 +11,13 @@ using UnityEngine;
 public class EnemyEvents : ScriptableObject
 {
     // Pass the amount of xp that an enemy will grant upon death to the gameObject that killed them
-    public event Action<GameObject, int> onEnemyDeathXp;
+    public event Action<int> onEnemyDeathXp;
 
     ///-///////////////////////////////////////////////////////////
     /// When an enemy is killed, pass the amount of xp that they should give.
     /// 
-    public void InvokeGiveXp( GameObject recipient, int xpAmount)
+    public void InvokeGiveXp(int xpAmount)
     {
-        onEnemyDeathXp?.Invoke(recipient, xpAmount);
+        onEnemyDeathXp?.Invoke(xpAmount);
     }
 }

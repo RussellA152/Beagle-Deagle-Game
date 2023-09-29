@@ -46,11 +46,8 @@ public class PlayerLevelUp : MonoBehaviour
     /// Whenever an enemy dies, gain an "amount" of xp.
     /// Then, invoke an event that the player's current xp count has changed.
     /// 
-    private void GainXpFromEnemyKill(GameObject recipient, int amount)
+    private void GainXpFromEnemyKill(int amount)
     {
-        // Only receive xp if this player was the killer
-        if (recipient != gameObject) return;
-        
         if (!_allowXpGain) return;
         
         _currentXpUntilNextLevel += amount;
