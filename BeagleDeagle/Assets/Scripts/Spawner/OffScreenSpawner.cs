@@ -54,10 +54,10 @@ public class OffScreenSpawner : MonoBehaviour
     [SerializeField]
     private float bottomBounds; // starting point for the bottom portion of the off-screen
 
-    [SerializeField] private bool playerCloseToLeftBoundary;
-    [SerializeField] private bool playerCloseToRightBoundary;
-    [SerializeField] private bool playerCloseToTopBoundary;
-    [SerializeField] private bool playerCloseToBottomBoundary;
+    private bool playerCloseToLeftBoundary;
+    private bool playerCloseToRightBoundary;
+    private bool playerCloseToTopBoundary;
+    private bool playerCloseToBottomBoundary;
 
     private Vector3 screenCenter;
     

@@ -13,11 +13,9 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     private int poolKey;
     public int PoolKey => poolKey; // Return the pool key (anything that is IPoolable, must have a pool key)
 
-    [SerializeField]
     protected Rigidbody2D rb;
-
-    [SerializeField]
     protected CapsuleCollider2D bulletCollider; // The collider of this bullet
+    private SpriteRenderer _spriteRenderer;
 
     private Vector3 defaultRotation = new Vector3(0f, 0f, -90f);
     
@@ -35,6 +33,13 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     [SerializeField]
     // What should bullet do (besides just damaging target..)
     private UnityEvent<GameObject> onBulletHit;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        bulletCollider = GetComponent<CapsuleCollider2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     private void OnEnable()
     {
@@ -177,6 +182,11 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         if (scriptableObject is T)
         {
             bulletData = scriptableObject as T;
+            // Update bullet appearance
+            if(bulletData.bulletSprite != null)
+            {
+                _spriteRenderer.sprite = bulletData.bulletSprite;
+            }
         }
         else
         {

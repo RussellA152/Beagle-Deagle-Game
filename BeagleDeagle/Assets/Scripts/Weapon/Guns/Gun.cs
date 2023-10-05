@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHasInput
 {
     // Where does this bullet get shot from? (i.e the barrel)
-    [SerializeField]  private Transform bulletSpawnPoint;
+    [SerializeField] private Transform bulletSpawnPoint;
     // Where does the muzzle flash appear at?
     [SerializeField] private SpriteRenderer muzzleFlash;
     
