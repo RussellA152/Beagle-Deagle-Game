@@ -180,7 +180,7 @@ public class PlayerStatsUI : MonoBehaviour
         maxAmmoMagText.text = gunData.magazineSize.ToString();
 
         // Change the weapon image to use the sprite of the player's new gun
-        weaponImage.sprite = gunData.sprite;
+        weaponImage.sprite = gunData.gunEffectsData.weaponSprite;
         
         Sprite bulletSprite = gunData.bulletPrefab.GetComponent<SpriteRenderer>().sprite;
 

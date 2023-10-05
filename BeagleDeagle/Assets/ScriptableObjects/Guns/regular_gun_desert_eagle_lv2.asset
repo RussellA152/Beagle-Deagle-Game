@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: regular_gun_desert_eagle_lv2
   m_EditorClassIdentifier: 
   gunName: Desert Eagle
-  sprite: {fileID: 21300000, guid: 7388ea93419a72240a6b9c804794489b, type: 3}
+  gunEffectsData: {fileID: 11400000, guid: 0f06628b42ea28d47b0d14e08f67de9c, type: 2}
   fireRate: 3.5
   magazineSize: 10
   totalReloadTime: 2

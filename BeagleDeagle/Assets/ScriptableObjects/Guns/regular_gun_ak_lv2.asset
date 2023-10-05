@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: regular_gun_ak_lv2
   m_EditorClassIdentifier: 
   gunName: AK-47
-  sprite: {fileID: 21300000, guid: ebd423c7363acb74b9c80545d30934cb, type: 3}
+  gunEffectsData: {fileID: 11400000, guid: db7912a824bed314aa9b9995859e575e, type: 2}
   fireRate: 7
   magazineSize: 37
   totalReloadTime: 2.5

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: regular_gun_desert_eagle_lv1
   m_EditorClassIdentifier: 
   gunName: Desert Eagle
-  sprite: {fileID: 21300000, guid: 7388ea93419a72240a6b9c804794489b, type: 3}
+  gunEffectsData: {fileID: 11400000, guid: 0f06628b42ea28d47b0d14e08f67de9c, type: 2}
   fireRate: 3.5
   magazineSize: 8
   totalReloadTime: 2
   bulletPrefab: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   bulletData: {fileID: 11400000, guid: 53a677edaa7382d42aa4369f8e9d17c5, type: 2}
-  bulletType: {fileID: 11400000, guid: c33497af639561049bf68ecddcb11618, type: 2}
+  statusEffects: {fileID: 0}
   bulletSpread: 1.5
   penetrationCount: 2
   damagePerHit: 150
