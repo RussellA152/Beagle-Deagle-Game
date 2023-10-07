@@ -51,13 +51,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     [Header("Modifiers")]
     // A list of modifiers being applied to the player's movement speed
     [SerializeField, NonReorderable] private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>();
-    
-    //[Header("Collisions")]
-    //[Range(0, 1)]
-    //public float collisionOffset = 0.05f;
-    //public ContactFilter2D movementFilter;
-    //List<RaycastHit2D> _castCollisions = new List<RaycastHit2D>();
-    
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -103,17 +97,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     {
         if (MovementInput != Vector2.zero && !IsRolling)
         {
-            //The number of objects we can collide with if we go in this direction
-            // int count = _rb.Cast(MovementInput, movementFilter, _castCollisions, (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime + collisionOffset);
-            //
-            // //if nothing is in the way, move our character
-            // if (count == 0)
-            // {
-            //     _rb.MovePosition(_rb.position + MovementInput * (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime);
-            // }
-            
             _rb.MovePosition(_rb.position + MovementInput * (playerData.movementSpeed * _bonusSpeed) * Time.fixedDeltaTime);
-
         }
         
         if(_canRotate)

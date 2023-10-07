@@ -104,11 +104,6 @@ public class PlayerStatsUI : MonoBehaviour
         playerEvents.onPlayerSwitchedWeapon -= AddBulletsToHUD;
     }
 
-    // private void GetPlayerStats(PlayerData data)
-    // {
-    //     _playerData = data;
-    // }
-
     private void UpdatePlayerCurrentHealthText(float currentHealth)
     {
         healthBar.fillAmount = currentHealth / _playerMaxHealth;
@@ -182,7 +177,7 @@ public class PlayerStatsUI : MonoBehaviour
         // Change the weapon image to use the sprite of the player's new gun
         weaponImage.sprite = gunData.gunEffectsData.weaponSprite;
         
-        Sprite bulletSprite = gunData.bulletPrefab.GetComponent<SpriteRenderer>().sprite;
+        Sprite bulletSprite = gunData.bulletData.bulletSprite;
 
         // Change all bullet images to have a new sprite of the current gun's bullet
         for (int i = 0; i < _bulletImages.Count; i++)

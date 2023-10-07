@@ -15,4 +15,4 @@ MonoBehaviour:
   weaponSprite: {fileID: 21300000, guid: ebd423c7363acb74b9c80545d30934cb, type: 3}
   muzzleFlashSprite: {fileID: 21300000, guid: 35cd9467eedc6df4e8ba7a1f5aa167a1, type: 3}
   muzzleFlashPosition: {x: 3.504, y: 0.312}
-  muzzleFlashDuration: 0.03
+  muzzleFlashDuration: 0.02

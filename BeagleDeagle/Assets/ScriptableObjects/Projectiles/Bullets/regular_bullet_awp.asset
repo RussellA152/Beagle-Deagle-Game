@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ef8290e72c3a04c94af5b08902ea2d, type: 3}
   m_Name: regular_bullet_awp
   m_EditorClassIdentifier: 
-  bulletSprite: {fileID: 21300000, guid: 9f2b6b4c0048de547853fcb2c3893e6d, type: 3}
+  bulletSprite: {fileID: 21300000, guid: 54b81520b56c3aa4ba35f61339de802d, type: 3}
   whatBulletCanPenetrate:
     serializedVersion: 2
     m_Bits: 1280
