@@ -30,6 +30,8 @@ public abstract class GunData : ScriptableObject
     public BulletData bulletData;
     // What are the status effects of this bullet? (* PREFAB MUST BE COMPATIBLE * )
     public StatusEffectTypes statusEffects;
+    // Where should bullets spawn from (barrel)
+    public Vector2 bulletSpawnLocation;
     
     [Header("Weapon Spread")]
     [Range(0f, 20f)]

@@ -194,6 +194,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     
         _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
     
+        // Change bulletSpawnPoint's position
+        bulletSpawnPoint.localPosition = weaponData.bulletSpawnLocation;
+        
         // Change weapon and muzzle flashes (and their positions aswell)
         _spriteRenderer.sprite = weaponData.gunEffectsData.weaponSprite;
         muzzleFlash.sprite = weaponData.gunEffectsData.muzzleFlashSprite;

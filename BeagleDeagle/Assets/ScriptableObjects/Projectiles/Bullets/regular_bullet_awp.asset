@@ -25,6 +25,6 @@ MonoBehaviour:
   knockBackPower: {x: 0, y: 0}
   bulletSpeed: 70
   colliderDirection: 0
-  sizeX: 1.5
-  sizeY: 1.5
+  sizeX: 1.2
+  sizeY: 1.2
   duration: 3
