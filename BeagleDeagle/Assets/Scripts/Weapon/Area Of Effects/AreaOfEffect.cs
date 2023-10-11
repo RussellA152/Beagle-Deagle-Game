@@ -136,14 +136,7 @@ public class AreaOfEffect : MonoBehaviour
         
         AreaOfEffectManager.Instance.AddNewAreaOfEffect(areaOfEffectData);
         
-        transform.localScale = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY);
+        transform.localScale = areaOfEffectData.aoeSpreadSize;
         
-        foreach (GameObject particleGameObject in particleSystemGameObjects)
-        {
-            particleGameObject.transform.localScale = areaOfEffectData.aoeParticleSize;
-        }
-        
-
-
     }
 }

@@ -16,6 +16,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   hitThroughWalls: 0
-  areaSpreadX: 25
-  areaSpreadY: 25
-  aoeParticleSize: {x: 5, y: 5, z: 5}
+  aoeSpreadSize: {x: 25, y: 25, z: 25}
