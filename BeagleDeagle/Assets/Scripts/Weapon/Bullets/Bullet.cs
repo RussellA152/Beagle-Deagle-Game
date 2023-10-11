@@ -34,14 +34,14 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     // What should bullet do (besides just damaging target..)
     private UnityEvent<GameObject> onBulletHit;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         bulletCollider = GetComponent<CapsuleCollider2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         if (bulletData != null)
         {
@@ -61,7 +61,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         }
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         _hitEnemies.Clear();
 

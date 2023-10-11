@@ -8,14 +8,14 @@ public class MightyFootBullet : Bullet<MightyFootBulletData>
     private int _wallLayerMask;
     private CheckObstruction _obstructionScript;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _obstructionScript = GetComponent<CheckObstruction>();
     }
 
     private void Start()
      {
-         
          _wallLayerMask = LayerMask.GetMask("Wall");
      }
     

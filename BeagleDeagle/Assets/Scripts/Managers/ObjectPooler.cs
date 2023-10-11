@@ -44,7 +44,6 @@ public class ObjectPooler : MonoBehaviour
 
     public void InitializeObjectPool()
     {
-
         foreach (ObjectPoolItem item in itemsToPool)
         {
             item.pooled = new List<GameObject>();
