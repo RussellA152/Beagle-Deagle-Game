@@ -16,3 +16,13 @@ MonoBehaviour:
   muzzleFlashSprite: {fileID: 21300000, guid: 35cd9467eedc6df4e8ba7a1f5aa167a1, type: 3}
   muzzleFlashPosition: {x: 3.504, y: 0.312}
   muzzleFlashDuration: 0.02
+  fireClips:
+  - {fileID: 8300000, guid: 3ff76d800a9017a4ba511eb08f99454d, type: 3}
+  - {fileID: 8300000, guid: c15bc86251ce01d42b527a6b69edd6b0, type: 3}
+  - {fileID: 8300000, guid: 41c404520719a414fb1c89de7cdb52bb, type: 3}
+  - {fileID: 8300000, guid: b7f3b14a97da82040a874fcb7da38949, type: 3}
+  - {fileID: 8300000, guid: 4e05b654c48cb46458e7c42cbab14ca7, type: 3}
+  reloadStartClip: {fileID: 8300000, guid: c957c715b1636554a9d0e1edf9199008, type: 3}
+  reloadLoopClips: []
+  reloadFinishedClip: {fileID: 8300000, guid: 964c3099755b89d4ba5df12200729dfd, type: 3}
+  reloadCockClip: {fileID: 8300000, guid: 1de9f5173de65cc429ff4a2f3c01af09, type: 3}

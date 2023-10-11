@@ -16,6 +16,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     
     [Header("Required Components")]
     [SerializeField] private PlayerEvents playerEvents;
+    [SerializeField] private SoundEvents soundEvents;
     [SerializeField] private GunData weaponData;
 
     private CooldownSystem _cooldownSystem;
@@ -140,7 +141,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         // If the gun is not already reloading, begin a coroutine for the reload
         if (_bulletsLoaded <= 0f && !_cooldownSystem.IsOnCooldown(Id) && _reloadInputAction.enabled)
         {
-            _cooldownSystem.PutOnCooldown(this);
+            PerformReload();
             return;
         }
 
@@ -279,8 +280,12 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
             _bulletsShot++;
 
             _bulletsLoaded--;
+            
         }
 
+        // Play a shoot sound effect
+        PlayShootSound();
+        // Play a muzzle flash effect
         StartCoroutine(PlayMuzzleFlash());
 
         // Player has shot gun, so reset timeElapsedSinceShot to 0 seconds
@@ -332,32 +337,42 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     #endregion
 
     #region Reloading
-
-    // Call reload function when the player presses the reload key
-    public void OnReload(CallbackContext context)
+    
+    private void PerformReload()
     {
         if (!_cooldownSystem.IsOnCooldown(Id) && _canReload)
         {
             _shootInput = 0f;
             _cooldownSystem.PutOnCooldown(this);
+            
+            // Play "reloadStart" sound effect
+            soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.reloadStartClip);
+            // Start playing the reload finished sound effect
+            StartCoroutine(PlayReloadFinishedSound());
+            
             ActuallyShooting = false;
             AllowShoot(false);
-            Debug.Log("START RELOAD!");
         }
+    }
+    
+    // Call reload function when the player presses the reload key
+    public void OnReload(CallbackContext context)
+    {
+        PerformReload();
     }
 
     private void OnReloadFinish(int id)
     {
         if (id != Id) return;
-        
-        AllowShoot(true);
-        
+
         RefillAmmoCompletely();
         
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
 
+        AllowShoot(true);
+
     }
-    
+
     public bool CheckAmmo()
     {
         // If player has no ammo in reserve,
@@ -378,6 +393,39 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     {
         _canReload = boolean;
     }
+    #endregion
+    
+    #region Sounds
+
+    private void PlayShootSound()
+    {
+        int randomNumber = Random.Range(0, weaponData.gunEffectsData.fireClips.Length);
+        
+        soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.fireClips[randomNumber]);
+    }
+
+    private IEnumerator PlayReloadFinishedSound()
+    {
+        float halfDuration = CooldownDuration / 2f;
+        float eightyPercentDuration = CooldownDuration * 0.8f;
+
+        // Wait for 50% of the cooldown duration
+        yield return new WaitForSeconds(halfDuration);
+    
+        // Play "reloadFinished" sound effect at 50% completion
+        soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.reloadFinishedClip);
+
+        // Calculate the remaining time to reach 80% completion
+        float remainingTime = eightyPercentDuration - halfDuration;
+    
+        // Wait for the remaining time
+        yield return new WaitForSeconds(remainingTime);
+
+        // Play "reloadCock" sound effect at 80% completion
+        soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.reloadCockClip);
+    }
+
+    
     #endregion
 
     #region StatModifiers
@@ -437,12 +485,16 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     {
         reloadSpeedModifiers.Add(modifierToAdd);
         _bonusReloadSpeed += (_bonusReloadSpeed * modifierToAdd.bonusReloadSpeed);
+        
+        CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
     }
 
     public void RemoveReloadSpeedModifier(ReloadSpeedModifier modifierToRemove)
     {
         reloadSpeedModifiers.Remove(modifierToRemove);
         _bonusReloadSpeed /= (1 + modifierToRemove.bonusReloadSpeed);
+        
+        CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
     }
 
     public void AddAmmoLoadModifier(AmmoLoadModifier modifierToAdd)
