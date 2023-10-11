@@ -94,7 +94,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7589004471731816067}
   - component: {fileID: 4266929759319300008}
-  - component: {fileID: 4542633892520952577}
   - component: {fileID: 4418311646622141623}
   m_Layer: 0
   m_Name: Area of Effect
@@ -131,6 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   areaOfEffectData: {fileID: 0}
+  particleSystemGameObjects: []
   onAreaEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -152,21 +152,6 @@ MonoBehaviour:
   onAreaExit:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4542633892520952577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5551387674908472178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e887a5c3183562f4cb6b51388cd81cfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  linePrefab: {fileID: 1591930391332016, guid: a7c1f440279d92143929a19480de4ebc, type: 3}
-  circleCornerCount: 36
-  edgeLineOffset: 0.1
 --- !u!70 &4418311646622141623
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -216,6 +201,7 @@ Transform:
   m_Children:
   - {fileID: 7588949015637170743}
   - {fileID: 7589004471731816067}
+  - {fileID: 5930340946399438612}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -245,8 +231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34027b9d94afcaa4286ec175a3cabc0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: {fileID: 0}
-  statusEffectData: {fileID: 0}
 --- !u!114 &2095971044348423413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,3 +243,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b206ab9bde7910408f9de3b8c266de5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &3893324285354620034
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8164879991046117893}
+    m_Modifications:
+    - target: {fileID: 7226888052447524524, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_Intensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040406, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040406, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040406, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040406, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040406, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040406, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040406, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040406, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040406, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040406, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040406, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040409, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_Name
+      value: CFXR2 WW Enemy Explosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226888052703040409, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+--- !u!4 &5930340946399438612 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7226888052703040406, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
+  m_PrefabInstance: {fileID: 3893324285354620034}
+  m_PrefabAsset: {fileID: 0}

@@ -19,5 +19,7 @@ public class AreaOfEffectData : ScriptableObject
     public float areaSpreadX;
     [Range(0f, 100f)]
     public float areaSpreadY;
-    
+
+    public Vector3 aoeParticleSize;
+
 }

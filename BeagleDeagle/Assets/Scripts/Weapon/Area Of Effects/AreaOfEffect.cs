@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class AreaOfEffect : MonoBehaviour
 {
     [SerializeField] protected AreaOfEffectData areaOfEffectData;
+
+    [SerializeField] private GameObject[] particleSystemGameObjects;
 
     private CheckObstruction _obstructionScript;
 
@@ -35,6 +38,11 @@ public class AreaOfEffect : MonoBehaviour
         _outliner = GetComponent<Outliner>();
 
         _obstructionScript = GetComponentInParent<CheckObstruction>();
+        
+        foreach (GameObject particleGameObject in particleSystemGameObjects)
+        {
+            particleGameObject.SetActive(false);
+        }
 
     }
 
@@ -46,9 +54,20 @@ public class AreaOfEffect : MonoBehaviour
 
     private void OnEnable()
     {
+        // Show particle systems when the area of effect object is activated
+        foreach (GameObject particleGameObject in particleSystemGameObjects)
+        {
+            particleGameObject.SetActive(true);
+        }
+    }
 
-        //UpdateAOEData(areaOfEffectData);
-        
+    private void OnDisable()
+    {
+        // Hide particle systems when the area of effect object is deactivated
+        foreach (GameObject particleGameObject in particleSystemGameObjects)
+        {
+            particleGameObject.SetActive(false);
+        }
         
     }
 
@@ -119,9 +138,11 @@ public class AreaOfEffect : MonoBehaviour
         
         transform.localScale = new Vector2(areaOfEffectData.areaSpreadX, areaOfEffectData.areaSpreadY);
         
-        _outliner.UpdateOutlinerSize();
-
-        Debug.Log("Updated AOE scriptable object!");
+        foreach (GameObject particleGameObject in particleSystemGameObjects)
+        {
+            particleGameObject.transform.localScale = areaOfEffectData.aoeParticleSize;
+        }
+        
 
 
     }

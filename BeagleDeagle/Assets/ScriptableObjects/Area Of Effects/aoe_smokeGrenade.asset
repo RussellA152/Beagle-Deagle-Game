@@ -18,3 +18,4 @@ MonoBehaviour:
   hitThroughWalls: 0
   areaSpreadX: 25
   areaSpreadY: 25
+  aoeParticleSize: {x: 5, y: 5, z: 5}
