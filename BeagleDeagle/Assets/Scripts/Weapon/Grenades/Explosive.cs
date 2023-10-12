@@ -10,9 +10,6 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
     
     [SerializeField] protected GameObject sprite;
 
-    // TODO: Might move this to scriptableObject
-    //[SerializeField] private GameObject particleEffectGameObject;
-
     protected AreaOfEffect AreaOfEffectScript;
 
     protected CheckObstruction ObstructionScript;
@@ -29,7 +26,6 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
         AreaOfEffectScript =
             GetComponentInChildren<AreaOfEffect>();
         
-        //particleEffectGameObject.SetActive(false);
     }
 
     private void Start()
@@ -37,7 +33,7 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
         WallLayerMask = LayerMask.GetMask("Wall");
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         if(AreaOfEffectScript != null)
             AreaOfEffectScript.gameObject.SetActive(false);
@@ -59,7 +55,6 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
 
     public virtual void Explode()
     {
-        //particleEffectGameObject.SetActive(true);
         // Play explosion sound
 
         // Screen shake
@@ -76,7 +71,7 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
     }
     
 
-    public void UpdateScriptableObject(ExplosiveData scriptableObject)
+    public virtual void UpdateScriptableObject(ExplosiveData scriptableObject)
     {
         if (scriptableObject is T)
         {

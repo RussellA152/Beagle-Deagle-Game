@@ -15,8 +15,4 @@ public abstract class ExplosiveData : ScriptableObject
 
     public AreaOfEffectData aoeData;
 
-    //public abstract float GetDamage();
-
-    //public abstract float GetDuration();
-
 }

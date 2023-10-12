@@ -17,6 +17,7 @@ MonoBehaviour:
   detonationTime: 3
   aoeData: {fileID: 11400000, guid: 76c3dbea33a66a444949fba4a83bc5c6, type: 2}
   explosiveRadius: 15
+  explosiveParticleSize: {x: 5, y: 5, z: 5}
   whatDoesExplosionHit:
     serializedVersion: 2
     m_Bits: 256
