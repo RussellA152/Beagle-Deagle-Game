@@ -26,6 +26,9 @@ public class BomberAttack : AIAttack<BomberEnemyData>
         explosivePrefab.transform.position = transform.position;
         explosivePrefab.SetActive(true);
         
+        // Give bomber's explosive the data it needs
+        explosiveScript.UpdateScriptableObject(enemyScriptableObject.explosiveData);
+        
         // Bomber enemies do not use detonation time
         explosiveScript.Activate(transform.position);
 

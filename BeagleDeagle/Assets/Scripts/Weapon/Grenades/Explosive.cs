@@ -45,7 +45,8 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
 
     public virtual void Activate(Vector2 aimDirection)
     {
-        AreaOfEffectScript.UpdateAOEData(ExplosiveData.aoeData);
+        if(AreaOfEffectScript != null)
+            AreaOfEffectScript.UpdateAOEData(ExplosiveData.aoeData);
     }
 
     

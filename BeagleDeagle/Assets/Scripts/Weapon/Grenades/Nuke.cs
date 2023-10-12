@@ -7,7 +7,10 @@ public class Nuke : Explosive<NukeData>, IPoolable
 {
     [SerializeField] private int poolKey;
     
+    // An array of particle effects (each are the same object at the moment for nuke explosives)
     [SerializeField] private GameObject[] explosiveParticleGameObjects;
+
+    private Vector3 _originalParticleSize;
     
     public int PoolKey => poolKey;
     
@@ -17,10 +20,13 @@ public class Nuke : Explosive<NukeData>, IPoolable
     {
         base.Awake();
 
+        _originalParticleSize = explosiveParticleGameObjects[0].transform.localScale;
+
         foreach (GameObject explosiveParticle in explosiveParticleGameObjects)
         {
             explosiveParticle.SetActive(false);
         }
+        
         
     }
 
@@ -31,13 +37,16 @@ public class Nuke : Explosive<NukeData>, IPoolable
         foreach (GameObject explosiveParticle in explosiveParticleGameObjects)
         {
             explosiveParticle.SetActive(false);
+            explosiveParticle.transform.localScale = _originalParticleSize;
         }
     }
 
     public override void Activate(Vector2 aimDirection)
     {
         base.Activate(aimDirection);
+        
         transform.position = aimDirection;
+        
         StartCoroutine(Detonate());
     }
 
@@ -82,10 +91,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
                 IHealth healthScript = targetCollider.gameObject.GetComponent<IHealth>();
 
                 healthScript?.ModifyHealth(-1f * Damage);
-
             }
-            
-
         }
     }
     
@@ -115,7 +121,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
             var localScale = explosiveParticle.transform.localScale;
             
             localScale = new Vector3(ExplosiveData.explosiveRadius *localScale.x ,
-                ExplosiveData.explosiveRadius * localScale.y,ExplosiveData.explosiveRadius * localScale.z);
+            ExplosiveData.explosiveRadius * localScale.y,ExplosiveData.explosiveRadius * localScale.z);
             explosiveParticle.transform.localScale = localScale;
         }
     }

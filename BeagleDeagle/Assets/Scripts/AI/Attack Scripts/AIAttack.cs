@@ -12,7 +12,7 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     protected T enemyScriptableObject;
 
     [Header("Required Scripts")] 
-    public CooldownSystem CooldownSystem;
+    private CooldownSystem _cooldownSystem;
     private ZombieAnimationHandler _animationScript;
 
     [Header("Modifiers")]
@@ -39,7 +39,7 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     private void Awake()
     {
         _animationScript = GetComponent<ZombieAnimationHandler>();
-        CooldownSystem = GetComponent<CooldownSystem>();
+        _cooldownSystem = GetComponent<CooldownSystem>();
 
         Id = 20;
         CooldownDuration = enemyScriptableObject.attackCooldown;
@@ -48,14 +48,14 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     protected virtual void OnEnable()
     {
         // When cooldown ends, allow attack
-        CooldownSystem.OnCooldownEnded += OnAttackCooldownFinish;
+        _cooldownSystem.OnCooldownEnded += OnAttackCooldownFinish;
 
         BeginCooldown();
     }
 
     private void OnDisable()
     {
-        CooldownSystem.OnCooldownEnded -= OnAttackCooldownFinish;
+        _cooldownSystem.OnCooldownEnded -= OnAttackCooldownFinish;
     }
 
 
@@ -69,7 +69,7 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     /// 
     public void BeginCooldown()
     {
-        CooldownSystem.PutOnCooldown(this);
+        _cooldownSystem.PutOnCooldown(this);
         _canAttack = false;
     }
 
