@@ -48,5 +48,13 @@ public class PoolableParticle : MonoBehaviour, IPoolable
         
 
     }
+
+    public void StopAllParticles()
+    {
+        foreach (GameObject particleSystemGO in particleSystemGameObjects)
+        {
+            particleSystemGO.SetActive(false);
+        }
+    }
     
 }

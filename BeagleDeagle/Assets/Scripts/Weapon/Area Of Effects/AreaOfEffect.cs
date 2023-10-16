@@ -57,9 +57,16 @@ public class AreaOfEffect : MonoBehaviour
     {
         GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_particlePoolKey);
         _particleUsed = newParticleEffect.GetComponent<PoolableParticle>();
+        
         newParticleEffect.transform.position = transform.position;
         newParticleEffect.SetActive(true);
+        
         _particleUsed.PlayAllParticles(areaOfEffectData.aoeSpreadSize.x);
+    }
+
+    private void OnDisable()
+    {
+        _particleUsed.StopAllParticles();
     }
 
     private void OnDestroy()
