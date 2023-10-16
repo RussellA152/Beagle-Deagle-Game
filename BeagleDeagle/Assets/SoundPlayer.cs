@@ -23,12 +23,19 @@ public class SoundPlayer : MonoBehaviour
         soundEvents.onUISoundPlay -= PlayUISound;
     }
 
-    private void PlayGunSound(AudioClip clipToPlay)
+    ///-///////////////////////////////////////////////////////////
+    /// Play sound effects for guns which includes shooting and reloading
+    /// 
+    private void PlayGunSound(AudioClip clipToPlay, float volumeOfClip)
     {
+        gunSoundAudioSource.volume = volumeOfClip;
         gunSoundAudioSource.PlayOneShot(clipToPlay);
     }
 
-    private void PlayUISound(AudioClip clipToPlay)
+    ///-///////////////////////////////////////////////////////////
+    /// Play sound effects for UI (mainly for button clicks)
+    /// 
+    private void PlayUISound(AudioClip clipToPlay, float volumeOfClip)
     {
         uiAudioSource.PlayOneShot(clipToPlay);
     }

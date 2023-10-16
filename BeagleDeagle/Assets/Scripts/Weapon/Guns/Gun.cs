@@ -346,7 +346,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
             _cooldownSystem.PutOnCooldown(this);
             
             // Play "reloadStart" sound effect
-            soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.reloadStartClip);
+            soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.reloadStartClip, weaponData.gunEffectsData.reloadSoundVolume);
             // Start playing the reload finished sound effect
             StartCoroutine(PlayReloadFinishedSound());
             
@@ -401,7 +401,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     {
         int randomNumber = Random.Range(0, weaponData.gunEffectsData.fireClips.Length);
         
-        soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.fireClips[randomNumber]);
+        soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.fireClips[randomNumber], weaponData.gunEffectsData.fireSoundVolume);
     }
 
     private IEnumerator PlayReloadFinishedSound()
@@ -413,7 +413,11 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         yield return new WaitForSeconds(halfDuration);
     
         // Play "reloadFinished" sound effect at 50% completion
-        soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.reloadFinishedClip);
+        soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.reloadFinishedClip, weaponData.gunEffectsData.reloadSoundVolume);
+
+        // If the gun is not empty upon reloading, then don't play a reload slide sound
+        if (_bulletsLoaded != 0)
+            yield break;
 
         // Calculate the remaining time to reach 80% completion
         float remainingTime = eightyPercentDuration - halfDuration;
@@ -421,8 +425,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         // Wait for the remaining time
         yield return new WaitForSeconds(remainingTime);
 
-        // Play "reloadCock" sound effect at 80% completion
-        soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.reloadCockClip);
+        // Play "reloadSlide" sound effect at 80% completion
+        soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.reloadSlideClip, weaponData.gunEffectsData.reloadSoundVolume);
     }
 
     

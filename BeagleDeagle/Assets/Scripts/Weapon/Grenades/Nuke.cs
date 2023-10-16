@@ -8,7 +8,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
     [SerializeField] private int poolKey;
     
     // An array of particle effects (each are the same object at the moment for nuke explosives)
-    [SerializeField] private GameObject[] explosiveParticleGameObjects;
+    [SerializeField] private ParticleSystem[] explosiveParticles;
 
     private Vector3 _originalParticleSize;
     
@@ -20,23 +20,17 @@ public class Nuke : Explosive<NukeData>, IPoolable
     {
         base.Awake();
 
-        _originalParticleSize = explosiveParticleGameObjects[0].transform.localScale;
+        _originalParticleSize = explosiveParticles[0].transform.localScale;
 
-        foreach (GameObject explosiveParticle in explosiveParticleGameObjects)
-        {
-            explosiveParticle.SetActive(false);
-        }
-        
-        
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         
-        foreach (GameObject explosiveParticle in explosiveParticleGameObjects)
+        foreach (ParticleSystem explosiveParticle in explosiveParticles)
         {
-            explosiveParticle.SetActive(false);
+            explosiveParticle.Stop();
             explosiveParticle.transform.localScale = _originalParticleSize;
         }
     }
@@ -76,9 +70,10 @@ public class Nuke : Explosive<NukeData>, IPoolable
     {
         base.Explode();
         
-        foreach (GameObject explosiveParticle in explosiveParticleGameObjects)
+        foreach (ParticleSystem explosiveParticle in explosiveParticles)
         {
-            explosiveParticle.SetActive(true);
+            Debug.Log("Hi play!");
+            explosiveParticle.Play();
         }
         
         // Big explosion hurt all enemies
@@ -116,12 +111,13 @@ public class Nuke : Explosive<NukeData>, IPoolable
     {
         base.UpdateScriptableObject(scriptableObject);
         
-        foreach (GameObject explosiveParticle in explosiveParticleGameObjects)
+        foreach (ParticleSystem explosiveParticle in explosiveParticles)
         {
             var localScale = explosiveParticle.transform.localScale;
             
             localScale = new Vector3(ExplosiveData.explosiveRadius *localScale.x ,
             ExplosiveData.explosiveRadius * localScale.y,ExplosiveData.explosiveRadius * localScale.z);
+            
             explosiveParticle.transform.localScale = localScale;
         }
     }

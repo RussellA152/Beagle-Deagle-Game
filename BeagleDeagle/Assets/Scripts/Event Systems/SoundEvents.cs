@@ -9,16 +9,16 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameEvent/SoundEvents")]
 public class SoundEvents : ScriptableObject
 {
-    public event Action<AudioClip> onGunSoundPlay;
+    public event Action<AudioClip, float> onGunSoundPlay;
     
-    public event Action<AudioClip> onUISoundPlay;
+    public event Action<AudioClip, float> onUISoundPlay;
 
-    public void InvokeGunSoundPlay(AudioClip clip)
+    public void InvokeGunSoundPlay(AudioClip clip, float volumeOfClip)
     {
-        onGunSoundPlay?.Invoke(clip);
+        onGunSoundPlay?.Invoke(clip, volumeOfClip);
     }
-    public void InvokeUISoundPlay(AudioClip clip)
+    public void InvokeUISoundPlay(AudioClip clip, float volumeOfClip)
     {
-        onUISoundPlay?.Invoke(clip);
+        onUISoundPlay?.Invoke(clip, volumeOfClip);
     }
 }

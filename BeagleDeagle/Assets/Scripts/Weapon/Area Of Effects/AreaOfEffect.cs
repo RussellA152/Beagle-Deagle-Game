@@ -9,7 +9,7 @@ public class AreaOfEffect : MonoBehaviour
 {
     [SerializeField] protected AreaOfEffectData areaOfEffectData;
 
-    [SerializeField] private GameObject[] particleSystemGameObjects;
+    [SerializeField] private ParticleSystem[] aoeParticles;
 
     private CheckObstruction _obstructionScript;
 
@@ -38,11 +38,6 @@ public class AreaOfEffect : MonoBehaviour
         _outliner = GetComponent<Outliner>();
 
         _obstructionScript = GetComponentInParent<CheckObstruction>();
-        
-        foreach (GameObject particleGameObject in particleSystemGameObjects)
-        {
-            particleGameObject.SetActive(false);
-        }
 
     }
 
@@ -55,18 +50,18 @@ public class AreaOfEffect : MonoBehaviour
     private void OnEnable()
     {
         // Show particle systems when the area of effect object is activated
-        foreach (GameObject particleGameObject in particleSystemGameObjects)
+        foreach (ParticleSystem particleEffect in aoeParticles)
         {
-            particleGameObject.SetActive(true);
+            particleEffect.Play();
         }
     }
 
     private void OnDisable()
     {
         // Hide particle systems when the area of effect object is deactivated
-        foreach (GameObject particleGameObject in particleSystemGameObjects)
+        foreach (ParticleSystem particleGameObject in aoeParticles)
         {
-            particleGameObject.SetActive(false);
+            particleGameObject.Stop();
         }
         
     }

@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4d6fc3da022d1974a8b460fe69c7c6e4, type: 3}
   - {fileID: 8300000, guid: 8a55200faad64ab4cbbbf222f242c3b6, type: 3}
   reloadStartClip: {fileID: 0}
-  reloadLoopClips: []
   reloadFinishedClip: {fileID: 0}
-  reloadCockSoundDelay: 0.1
-  reloadCockClip: {fileID: 0}
+  reloadSlideClip: {fileID: 0}
+  fireSoundVolume: 0.4
+  reloadSoundVolume: 0.6

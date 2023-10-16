@@ -132,9 +132,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   areaOfEffectData: {fileID: 0}
-  particleSystemGameObjects:
-  - {fileID: 2724747240524336246}
-  - {fileID: 5438234592965778628}
+  aoeParticles:
+  - {fileID: 2724747240538264854}
+  - {fileID: 5438234592980551076}
   onAreaEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -308,7 +308,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 114979979335704276, guid: e509867be4f82f246a95eca1ee5a2d61, type: 3}
       propertyPath: clearBehavior
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8656522925563801548, guid: e509867be4f82f246a95eca1ee5a2d61, type: 3}
       propertyPath: m_RootOrder
@@ -421,9 +421,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8656522925563801548, guid: e509867be4f82f246a95eca1ee5a2d61, type: 3}
   m_PrefabInstance: {fileID: 3700367007266484008}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5438234592965778628 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8656522925564163052, guid: e509867be4f82f246a95eca1ee5a2d61, type: 3}
+--- !u!198 &5438234592980551076 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8656522925583198860, guid: e509867be4f82f246a95eca1ee5a2d61, type: 3}
   m_PrefabInstance: {fileID: 3700367007266484008}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6769502401547943834
@@ -435,7 +435,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 114979979335704276, guid: e509867be4f82f246a95eca1ee5a2d61, type: 3}
       propertyPath: clearBehavior
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8656522925563801548, guid: e509867be4f82f246a95eca1ee5a2d61, type: 3}
       propertyPath: m_RootOrder
@@ -612,8 +612,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8656522925563801548, guid: e509867be4f82f246a95eca1ee5a2d61, type: 3}
   m_PrefabInstance: {fileID: 6769502401547943834}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2724747240524336246 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8656522925564163052, guid: e509867be4f82f246a95eca1ee5a2d61, type: 3}
+--- !u!198 &2724747240538264854 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8656522925583198860, guid: e509867be4f82f246a95eca1ee5a2d61, type: 3}
   m_PrefabInstance: {fileID: 6769502401547943834}
   m_PrefabAsset: {fileID: 0}

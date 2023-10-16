@@ -23,6 +23,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b7f3b14a97da82040a874fcb7da38949, type: 3}
   - {fileID: 8300000, guid: 4e05b654c48cb46458e7c42cbab14ca7, type: 3}
   reloadStartClip: {fileID: 8300000, guid: c957c715b1636554a9d0e1edf9199008, type: 3}
-  reloadLoopClips: []
   reloadFinishedClip: {fileID: 8300000, guid: 964c3099755b89d4ba5df12200729dfd, type: 3}
-  reloadCockClip: {fileID: 8300000, guid: 1de9f5173de65cc429ff4a2f3c01af09, type: 3}
+  reloadSlideClip: {fileID: 8300000, guid: 1de9f5173de65cc429ff4a2f3c01af09, type: 3}
+  fireSoundVolume: 0.6
+  reloadSoundVolume: 0.6
