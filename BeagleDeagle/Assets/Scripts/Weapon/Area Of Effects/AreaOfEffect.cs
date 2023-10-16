@@ -9,7 +9,11 @@ public class AreaOfEffect : MonoBehaviour
 {
     [SerializeField] protected AreaOfEffectData areaOfEffectData;
 
-    [SerializeField] private ParticleSystem[] aoeParticles;
+    [SerializeField] private GameObject particleGameObject;
+
+    private PoolableParticle _particleUsed;
+
+    private int _particlePoolKey;
 
     private CheckObstruction _obstructionScript;
 
@@ -39,6 +43,8 @@ public class AreaOfEffect : MonoBehaviour
 
         _obstructionScript = GetComponentInParent<CheckObstruction>();
 
+        _particlePoolKey = particleGameObject.GetComponent<IPoolable>().PoolKey;
+
     }
 
     private void Start()
@@ -49,21 +55,11 @@ public class AreaOfEffect : MonoBehaviour
 
     private void OnEnable()
     {
-        // Show particle systems when the area of effect object is activated
-        foreach (ParticleSystem particleEffect in aoeParticles)
-        {
-            particleEffect.Play();
-        }
-    }
-
-    private void OnDisable()
-    {
-        // Hide particle systems when the area of effect object is deactivated
-        foreach (ParticleSystem particleGameObject in aoeParticles)
-        {
-            particleGameObject.Stop();
-        }
-        
+        GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_particlePoolKey);
+        _particleUsed = newParticleEffect.GetComponent<PoolableParticle>();
+        newParticleEffect.transform.position = transform.position;
+        newParticleEffect.SetActive(true);
+        _particleUsed.PlayAllParticles(areaOfEffectData.aoeSpreadSize.x);
     }
 
     private void OnDestroy()

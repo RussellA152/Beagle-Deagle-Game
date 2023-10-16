@@ -1293,6 +1293,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379984042}
   m_CullTransparentMesh: 1
+--- !u!1 &425190050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 425190051}
+  m_Layer: 0
+  m_Name: Particle Effect Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &425190051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425190050}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 449265961}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &449265959
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,6 +1358,7 @@ Transform:
   - {fileID: 1218188928}
   - {fileID: 1495522494}
   - {fileID: 941686213}
+  - {fileID: 425190051}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1411,6 +1443,24 @@ MonoBehaviour:
     objectToPool: {fileID: 8164879991046117895, guid: 7b69bf609bb9e114aa6b929f6eb799c8, type: 3}
     shouldExpand: 1
     container: {fileID: 1218188928}
+    pooled: []
+    poolKey: 0
+  - amountToPool: 15
+    objectToPool: {fileID: 6015662806844464647, guid: e0f1485437641a7458c0cf7c79d5673b, type: 3}
+    shouldExpand: 1
+    container: {fileID: 425190051}
+    pooled: []
+    poolKey: 0
+  - amountToPool: 5
+    objectToPool: {fileID: 3136792146325362389, guid: 8d5f6f40932bb594b9f21f39e91cc38e, type: 3}
+    shouldExpand: 1
+    container: {fileID: 425190051}
+    pooled: []
+    poolKey: 0
+  - amountToPool: 15
+    objectToPool: {fileID: 3600658646776412917, guid: 0c6c6f28a17808843ad92d63a3a96e69, type: 3}
+    shouldExpand: 1
+    container: {fileID: 425190051}
     pooled: []
     poolKey: 0
 --- !u!1 &457035638

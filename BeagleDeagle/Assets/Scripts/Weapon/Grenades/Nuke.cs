@@ -6,12 +6,13 @@ using UnityEngine.Serialization;
 public class Nuke : Explosive<NukeData>, IPoolable
 {
     [SerializeField] private int poolKey;
-    
-    // An array of particle effects (each are the same object at the moment for nuke explosives)
-    [SerializeField] private ParticleSystem[] explosiveParticles;
 
-    private Vector3 _originalParticleSize;
-    
+    [SerializeField] private GameObject explosiveParticleGameObject;
+
+    private PoolableParticle _explosiveParticleUsed;
+
+    private int _explosiveParticlePoolKey;
+
     public int PoolKey => poolKey;
     
     private bool _explosionHappening = false;
@@ -20,19 +21,13 @@ public class Nuke : Explosive<NukeData>, IPoolable
     {
         base.Awake();
 
-        _originalParticleSize = explosiveParticles[0].transform.localScale;
+        _explosiveParticlePoolKey = explosiveParticleGameObject.GetComponent<IPoolable>().PoolKey;
 
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        
-        foreach (ParticleSystem explosiveParticle in explosiveParticles)
-        {
-            explosiveParticle.Stop();
-            explosiveParticle.transform.localScale = _originalParticleSize;
-        }
     }
 
     public override void Activate(Vector2 aimDirection)
@@ -69,12 +64,17 @@ public class Nuke : Explosive<NukeData>, IPoolable
     public override void Explode()
     {
         base.Explode();
+
+        GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_explosiveParticlePoolKey);
+
+        newParticleEffect.transform.position = transform.position;
+
+        newParticleEffect.SetActive(true);
+
+        _explosiveParticleUsed = newParticleEffect.GetComponent<PoolableParticle>();
         
-        foreach (ParticleSystem explosiveParticle in explosiveParticles)
-        {
-            Debug.Log("Hi play!");
-            explosiveParticle.Play();
-        }
+        
+        PlayParticleEffect();
         
         // Big explosion hurt all enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, ExplosiveData.explosiveRadius, ExplosiveData.whatDoesExplosionHit);
@@ -107,18 +107,10 @@ public class Nuke : Explosive<NukeData>, IPoolable
         _explosionHappening = false;
     }
 
-    public override void UpdateScriptableObject(ExplosiveData scriptableObject)
+    private void PlayParticleEffect()
     {
-        base.UpdateScriptableObject(scriptableObject);
-        
-        foreach (ParticleSystem explosiveParticle in explosiveParticles)
-        {
-            var localScale = explosiveParticle.transform.localScale;
-            
-            localScale = new Vector3(ExplosiveData.explosiveRadius *localScale.x ,
-            ExplosiveData.explosiveRadius * localScale.y,ExplosiveData.explosiveRadius * localScale.z);
-            
-            explosiveParticle.transform.localScale = localScale;
-        }
+
+        _explosiveParticleUsed.PlayAllParticles(ExplosiveData.explosiveRadius);
     }
+    
 }

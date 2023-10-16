@@ -43,7 +43,8 @@ namespace CartoonFX
 		{
 			None,
 			Disable,
-			Destroy
+			Destroy,
+			DisableWithParent
 		}
 
 		[System.Serializable]
@@ -557,9 +558,18 @@ namespace CartoonFX
 						{
 							GameObject.Destroy(this.gameObject);
 						}
+						else if (clearBehavior == ClearBehavior.Disable)
+						{
+							this.gameObject.SetActive(false);
+							
+						}
 						else
 						{
 							this.gameObject.SetActive(false);
+							
+							// I am puting this here so that the object pooling works with particle effects
+							// because some particle effects have empty gameObject parents
+							transform.parent.gameObject.SetActive(false);
 						}
 					}
 				}

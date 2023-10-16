@@ -15,7 +15,9 @@ MonoBehaviour:
   physicsMaterial: {fileID: 0}
   hitThroughWalls: 0
   detonationTime: 0
-  explosiveRadius: 5
+  aoeData: {fileID: 0}
+  explosiveRadius: 4
+  explosiveParticleSize: {x: 1.5, y: 1.5, z: 1.5}
   whatDoesExplosionHit:
     serializedVersion: 2
     m_Bits: 128

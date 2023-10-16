@@ -6,7 +6,7 @@ using UnityEngine;
 public class NukeData : ExplosiveData
 {
     [Range(1f, 100f)] public float explosiveRadius;
-    
+
     public LayerMask whatDoesExplosionHit;
     
 
