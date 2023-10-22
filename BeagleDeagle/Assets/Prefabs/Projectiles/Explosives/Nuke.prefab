@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   areaOfEffectData: {fileID: 0}
-  aoeParticles: []
+  particleGameObject: {fileID: 0}
   onAreaEnter:
     m_PersistentCalls:
       m_Calls: []

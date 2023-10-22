@@ -7,9 +7,10 @@ public class Nuke : Explosive<NukeData>, IPoolable
 {
     [SerializeField] private int poolKey;
 
-    [SerializeField] private GameObject explosiveParticleGameObject;
+    [SerializeField, RestrictedPrefab(typeof(PoolableParticle))] 
+    private GameObject explosiveParticleGameObject;
 
-    private PoolableParticle _explosiveParticleUsed;
+    private PoolableParticle _particleEffectScript;
 
     private int _explosiveParticlePoolKey;
 
@@ -24,12 +25,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
         _explosiveParticlePoolKey = explosiveParticleGameObject.GetComponent<IPoolable>().PoolKey;
 
     }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-    }
-
+    
     public override void Activate(Vector2 aimDirection)
     {
         base.Activate(aimDirection);
@@ -65,15 +61,6 @@ public class Nuke : Explosive<NukeData>, IPoolable
     {
         base.Explode();
 
-        GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_explosiveParticlePoolKey);
-
-        newParticleEffect.transform.position = transform.position;
-
-        newParticleEffect.SetActive(true);
-
-        _explosiveParticleUsed = newParticleEffect.GetComponent<PoolableParticle>();
-        
-        
         PlayParticleEffect();
         
         // Big explosion hurt all enemies
@@ -109,8 +96,15 @@ public class Nuke : Explosive<NukeData>, IPoolable
 
     private void PlayParticleEffect()
     {
+        GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_explosiveParticlePoolKey);
 
-        _explosiveParticleUsed.PlayAllParticles(ExplosiveData.explosiveRadius);
+        newParticleEffect.transform.position = transform.position;
+
+        newParticleEffect.SetActive(true);
+
+        _particleEffectScript = newParticleEffect.GetComponent<PoolableParticle>();
+        
+        _particleEffectScript.PlayAllParticles(ExplosiveData.explosiveRadius);
     }
     
 }

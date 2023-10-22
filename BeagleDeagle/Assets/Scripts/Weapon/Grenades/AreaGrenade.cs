@@ -26,18 +26,13 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
         _grenadeCollider = GetComponent<Collider2D>();
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        AreaOfEffectScript.gameObject.SetActive(false);
+        base.OnDisable();
         
-        //particleAOE.SetActive(false);
-        sprite.SetActive(true);
-
         _grenadeCollider.enabled = true;
 
         UnfreezePosition();
-
-        StopAllCoroutines();
     }
 
     public override void Activate(Vector2 aimDirection)

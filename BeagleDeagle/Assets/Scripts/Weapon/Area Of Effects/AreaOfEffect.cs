@@ -9,7 +9,8 @@ public class AreaOfEffect : MonoBehaviour
 {
     [SerializeField] protected AreaOfEffectData areaOfEffectData;
 
-    [SerializeField] private GameObject particleGameObject;
+    [SerializeField, RestrictedPrefab(typeof(PoolableParticle))] 
+    private GameObject particleGameObject;
 
     private PoolableParticle _particleUsed;
 
