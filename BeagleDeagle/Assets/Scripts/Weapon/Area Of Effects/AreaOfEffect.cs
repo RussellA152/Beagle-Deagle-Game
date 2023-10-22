@@ -67,7 +67,8 @@ public class AreaOfEffect : MonoBehaviour
 
     private void OnDisable()
     {
-        _particleUsed.StopAllParticles();
+        if(_particleUsed != null)
+            _particleUsed.StopAllParticles();
     }
 
     private void OnDestroy()

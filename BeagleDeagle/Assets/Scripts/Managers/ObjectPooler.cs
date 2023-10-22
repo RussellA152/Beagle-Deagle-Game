@@ -84,7 +84,7 @@ public class ObjectPooler : MonoBehaviour
         
         // If key could not be found, show an error in the console
         if(itemRequested == null)
-            Debug.LogError("That item is not in the object pooler!");
+            Debug.LogError("That item is not in the object pooler! Key: " + key);
 
         lock (_lockObject) // Lock the critical section to ensure exclusive access
         {

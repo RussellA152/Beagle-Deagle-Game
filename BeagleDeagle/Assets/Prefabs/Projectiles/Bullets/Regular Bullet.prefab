@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolKey: 20
+  inanimateObjectHitParticleEffect: {fileID: 7371912302769336663, guid: 23b0a20e6957fd54995c5dcea11f49f9, type: 3}
+  enemyHitParticleEffect: {fileID: 1688976237673181899, guid: 97d7d94ed58b9be4d8cbff990df23596, type: 3}
   onBulletHit:
     m_PersistentCalls:
       m_Calls: []

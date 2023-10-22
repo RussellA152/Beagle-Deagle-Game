@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -26,9 +27,18 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
     private float _damagePerHit; // The damage of the player's gun or enemy that shot this bullet
 
+    [Header("Penetration")]
     private int _penetrationCount; // The amount of penetration of the player's gun or enemy that shot this bullet
-
     private int _amountPenetrated; // How many enemies has this bullet penetrated through?
+
+
+    [Header("Impact Particle Effects")] 
+    // When hitting inanimate object, instantiate a particle effect on it (typically a spark)
+    [SerializeField] private GameObject inanimateObjectHitParticleEffect;
+    private int _inanimateHitParticlePoolKey;
+    // When hitting a player or enemy, instantiate a particle effect on them (typically a blood particle effect)
+    [SerializeField] private GameObject enemyHitParticleEffect;
+    private int _enemyHitParticlePoolKey;
     
     [SerializeField]
     // What should bullet do (besides just damaging target..)
@@ -36,9 +46,13 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
     protected virtual void Awake()
     {
+        // Cache dependencies
         rb = GetComponent<Rigidbody2D>();
         bulletCollider = GetComponent<CapsuleCollider2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        _enemyHitParticlePoolKey = enemyHitParticleEffect.GetComponent<IPoolable>().PoolKey;
+        _inanimateHitParticlePoolKey = inanimateObjectHitParticleEffect.GetComponent<IPoolable>().PoolKey;
     }
 
     protected virtual void OnEnable()
@@ -50,9 +64,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
             
             // Change the bullet's transform scale to whatever the scriptable object has
             transform.localScale = new Vector2(bulletData.sizeX, bulletData.sizeY);
-            
-            //bulletCollider.size = new Vector2(bulletData.sizeX, bulletData.sizeY);
-            
+
             // Change the bullet's collider direction to whatever the scriptable object has
             bulletCollider.direction = bulletData.colliderDirection;
 
@@ -102,26 +114,31 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         // If this bullet hits something that destroys it, disable the bullet
         if((bulletData.whatDestroysBullet.value & (1 << collision.gameObject.layer)) > 0)
         {
+            // Play particle effect on object hit
+            ActivateParticleEffect(collision.gameObject, false);
+            
             gameObject.SetActive(false);
             return;
         }
         
         onBulletHit.Invoke(collision.gameObject);
         Debug.Log(gameObject + " HIT " +  collision.gameObject);
-            
-
+        
+        
         // If this bullet hits what its allowed to
         if ((bulletData.whatBulletCanPenetrate.value & (1 << collision.gameObject.layer)) > 0)
         {
+
             // Check if this bullet can damage that gameObject
             if((bulletData.whatBulletCanDamage.value & (1 << collision.gameObject.layer)) > 0)
             {
                 // Add this enemy to the list of hitEnemies
                 _hitEnemies.Add(collision.transform);
-
-                Debug.Log(_damagePerHit + " applied to " + collision.gameObject);
-
+                
                 DamageOnHit(collision.gameObject);
+                
+                // Play particle effect on enemy hit
+                ActivateParticleEffect(collision.gameObject, true);
                 
                 Vector2 knockBackDirection = rb.velocity.normalized;
 
@@ -131,16 +148,42 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
                     collision.gameObject.GetComponent<IKnockBackable>().ApplyKnockBack(knockBackDirection, bulletData.knockBackPower);
                 }
             }
-            // Penetrate through object
+            
+            // Penetrate through objects
             Penetrate();
         }
     }
 
     protected virtual void DamageOnHit(GameObject objectHit)
     {
+        // Make objectHit take damage, then play blood particle effect on them
+        // TODO: This assumes we hit a player or enemy, not something inanimate
         IHealth healthScript = objectHit.GetComponent<IHealth>();
-        
+
         healthScript?.ModifyHealth(-1 * _damagePerHit);
+    }
+
+    private void ActivateParticleEffect(GameObject objectHit, bool isAnimate)
+    {
+        GameObject hitParticleEffect;
+
+        if (isAnimate)
+        {
+            // Spawn a blood particle effect
+            hitParticleEffect =  ObjectPooler.Instance.GetPooledObject(_enemyHitParticlePoolKey);
+            hitParticleEffect.transform.position = objectHit.transform.position;
+        }
+        else
+        {
+            hitParticleEffect = ObjectPooler.Instance.GetPooledObject(_inanimateHitParticlePoolKey);
+            hitParticleEffect.transform.position = transform.position;
+        }
+        
+        // Place hit particle effect at the position where the bullet hit its target
+        hitParticleEffect.SetActive(true);
+        hitParticleEffect.GetComponent<PoolableParticle>().PlayAllParticles(1f);
+        
+        
     }
 
     // Call this function each time this bullet hits their target
@@ -182,6 +225,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         if (scriptableObject is T)
         {
             bulletData = scriptableObject as T;
+            
             // Update bullet appearance
             if(bulletData.bulletSprite != null)
             {
@@ -194,4 +238,3 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         }
     }
 }
-
