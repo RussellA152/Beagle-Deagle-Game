@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   areaOfEffectData: {fileID: 0}
-  particleGameObject: {fileID: 0}
+  particleGameObject: {fileID: 5841027399942595212, guid: 0929f7ebdcba2aa4ebb6e4ff1000a5e5, type: 3}
   onAreaEnter:
     m_PersistentCalls:
       m_Calls: []

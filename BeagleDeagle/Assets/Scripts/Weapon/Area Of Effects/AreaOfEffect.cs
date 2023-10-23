@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -138,5 +139,12 @@ public class AreaOfEffect : MonoBehaviour
         
         transform.localScale = areaOfEffectData.aoeSpreadSize;
         
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        
+        Gizmos.DrawWireSphere(transform.position, areaOfEffectData.aoeSpreadSize.x);
     }
 }

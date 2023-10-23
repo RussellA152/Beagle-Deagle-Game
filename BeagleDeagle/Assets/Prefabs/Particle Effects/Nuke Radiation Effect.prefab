@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5841027399942595211}
+  - component: {fileID: 4634829684772935804}
   m_Layer: 0
   m_Name: Nuke Radiation Effect
   m_TagString: Untagged
@@ -32,6 +33,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4634829684772935804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5841027399942595212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f1748149a702641801d68a02ab4751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolKey: 45
+  particleSystemGameObjects:
+  - {fileID: 7811010442689027543}
 --- !u!1001 &5841027400494664283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40,12 +56,40 @@ PrefabInstance:
     m_TransformParent: {fileID: 5841027399942595211}
     m_Modifications:
     - target: {fileID: 2189429763845914923, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: m_SortingOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2189429763845914923, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
       propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3055988428892776100, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3055988428892776100, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3055988428892776100, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4425129568584715180, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4425129568584715180, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4425129568584715180, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4425129568584715180, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 4425129568584715180, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -99,12 +143,53 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4425129568604114668, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4425129568604114668, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.3647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 4425129568604114668, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.6010818
+      objectReference: {fileID: 0}
+    - target: {fileID: 4425129568604114668, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.7254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687447663895591760, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687447663895591760, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.42745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687447663895591760, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.24230151
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687447663895591760, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.50684327
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687447663895591760, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.5188679
+      objectReference: {fileID: 0}
     - target: {fileID: 9049779857616056944, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
       propertyPath: clearBehavior
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+--- !u!1 &7811010442689027543 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4425129568585013132, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+  m_PrefabInstance: {fileID: 5841027400494664283}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7811010442689446391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4425129568584715180, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
