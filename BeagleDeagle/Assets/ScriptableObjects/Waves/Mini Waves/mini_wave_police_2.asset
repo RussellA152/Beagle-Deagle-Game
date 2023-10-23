@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d5f0e33009df49409adf65ec7b95e4c, type: 3}
-  m_Name: mini_wave_police
+  m_Name: mini_wave_police_2
   m_EditorClassIdentifier: 
   miniWaveName: Wizard  Zombie Waves
-  delayBetweenSpawn: 1
-  enemiesPerSpawn: 1
-  waveDuration: 5
+  delayBetweenSpawn: 3
+  enemiesPerSpawn: 3
+  waveDuration: 50
   enemyPrefab: {fileID: 3711592478197892634, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
   enemyData: {fileID: 11400000, guid: d97f4e9283956124cb59f55f59a122be, type: 2}

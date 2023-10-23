@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466630de2a48cd543815a39cea832634, type: 3}
   m_Name: wave_6
   m_EditorClassIdentifier: 
-  waveName: Wave 3
-  message: Wave 4 is ongoing!
+  waveName: Wave 6
+  message: Wave 6 is ongoing!
   miniWaves:
   - {fileID: 11400000, guid: 3790d679a8437504d93685b0501067de, type: 2}
   duration: 30

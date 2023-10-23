@@ -1378,12 +1378,12 @@ MonoBehaviour:
   offScreenSpawnerScript: {fileID: 913910685}
   difficultyFactor: 1
   waves:
-  - {fileID: 11400000, guid: a04539acda9e00d4ca4d674c6691196b, type: 2}
   - {fileID: 11400000, guid: 18c489f5e4bc62842ac5bcb57ab3b81c, type: 2}
   - {fileID: 11400000, guid: 1b012fd009e204f49b9d25f24d502a4e, type: 2}
   - {fileID: 11400000, guid: c2e9bbb8fada51a43a27f243c0c68737, type: 2}
   - {fileID: 11400000, guid: c0870fb65c7aef4479433c9d5a294add, type: 2}
   - {fileID: 11400000, guid: 5d71b7a7e0523d94f9f57dcea23ee1c7, type: 2}
+  - {fileID: 11400000, guid: a04539acda9e00d4ca4d674c6691196b, type: 2}
 --- !u!114 &449265963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5455,7 +5455,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2439171421654748759, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2439171422092810394, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7560,7 +7560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621176, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621178, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_RootOrder
