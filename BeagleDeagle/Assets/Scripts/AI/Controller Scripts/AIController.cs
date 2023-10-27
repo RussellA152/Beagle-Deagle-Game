@@ -24,6 +24,8 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     [Header("Required Components")]
     private NavMeshAgent _agent;
     private Collider2D _bodyCollider;
+    [SerializeField] private GameObject deathParticleEffect;
+    private int deathParticleEffectPoolKey;
 
     [Header("Required Scripts")]
     protected AIAttack<T> AttackScript;
@@ -53,6 +55,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
         DamageOverTimeScript = GetComponent<DamageOverTimeHandler>();
         AnimationHandlerScript = GetComponent<ZombieAnimationHandler>();
 
+        deathParticleEffectPoolKey = deathParticleEffect.GetComponent<IPoolable>().PoolKey;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -248,7 +251,14 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     /// 
     public void DisableCorpse()
     {
+        GameObject particleEffect = ObjectPooler.Instance.GetPooledObject(deathParticleEffectPoolKey);
+
+        particleEffect.transform.position = transform.position;
+        particleEffect.SetActive(true);
+        particleEffect.GetComponent<PoolableParticle>().PlayAllParticles(1f);
+        
         gameObject.SetActive(false);
+
     }
     
     ///-///////////////////////////////////////////////////////////

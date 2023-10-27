@@ -94,6 +94,7 @@ MonoBehaviour:
   poolKey: 11
   enemyScriptableObject: {fileID: 11400000, guid: d97f4e9283956124cb59f55f59a122be, type: 2}
   target: {fileID: 4912910121122697808}
+  deathParticleEffect: {fileID: 5497711690300594199, guid: 446ab0f07b2f4b44fa8bc1bd51f439ea, type: 3}
 --- !u!114 &7500669978799673356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +137,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScriptableObject: {fileID: 11400000, guid: d97f4e9283956124cb59f55f59a122be, type: 2}
-  CooldownSystem: {fileID: 0}
   damageModifiers: []
   attackSpeedModifiers: []
   projectileSpawnPoint: {fileID: 4912910121122697808}
