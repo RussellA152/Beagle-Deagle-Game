@@ -20,6 +20,9 @@ public class DamageOverTime
     // What created this DOT?
     public AreaOfEffectData source;
 
+    [RestrictedPrefab(typeof(PoolableParticle))]
+    public GameObject particleEffect;
+
     ///-///////////////////////////////////////////////////////////
     /// Every "tickInterval" seconds, apply a certain amount of damage to the entity
     /// for a "tick" amount of times.

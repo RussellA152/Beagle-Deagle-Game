@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
+public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPlayStatusParticle
 {
     // The health script of this target
     private IHealth _healthScript;
@@ -30,9 +30,9 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
     public void AddDamageOverTime(DamageOverTime dotToAdd)
     {
         damageOverTimeEffects.Add(dotToAdd);
-        
 
         StartCoroutine(TakeDamageOverTime(dotToAdd));
+        
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -55,10 +55,18 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
     {
         float ticks = dot.ticks;
 
+        // Find particle effect associated with DOT
+        PoolableParticle particleEffect =
+            ObjectPooler.Instance.GetPooledObject(dot.particleEffect.GetComponent<IPoolable>().PoolKey).GetComponent<PoolableParticle>();
+        
+        Debug.Log(particleEffect);
+        
         while (ticks > 0)
         {
             // TODO: THIS ASSUMES WE ALWAYS DO DAMAGE!
             _healthScript.ModifyHealth(-1f * dot.damage);
+            
+            PlayStatusParticleEffect(particleEffect);
 
             yield return new WaitForSeconds(dot.tickInterval);
 
@@ -95,5 +103,13 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
 
 
     }
-    
+
+    public void PlayStatusParticleEffect(PoolableParticle particleEffect)
+    {
+        particleEffect.gameObject.SetActive(true);
+        
+        particleEffect.gameObject.transform.position = transform.position;
+            
+        particleEffect.PlayAllParticles(1f);
+    }
 }

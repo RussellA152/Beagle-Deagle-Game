@@ -11,12 +11,12 @@ public class AreaOfEffect : MonoBehaviour
     [SerializeField] protected AreaOfEffectData areaOfEffectData;
 
     [SerializeField, RestrictedPrefab(typeof(PoolableParticle))] 
-    private GameObject particleGameObject;
+    private GameObject areaOfEffectParticleEffect;
 
     private PoolableParticle _particleUsed;
 
     private int _particlePoolKey;
-
+ 
     private CheckObstruction _obstructionScript;
 
     private Outliner _outliner;
@@ -44,8 +44,9 @@ public class AreaOfEffect : MonoBehaviour
         _outliner = GetComponent<Outliner>();
 
         _obstructionScript = GetComponentInParent<CheckObstruction>();
-
-        _particlePoolKey = particleGameObject.GetComponent<IPoolable>().PoolKey;
+        
+        if(areaOfEffectParticleEffect != null)
+            _particlePoolKey = areaOfEffectParticleEffect.GetComponent<IPoolable>().PoolKey;
 
     }
 
@@ -57,13 +58,17 @@ public class AreaOfEffect : MonoBehaviour
 
     private void OnEnable()
     {
-        GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_particlePoolKey);
-        _particleUsed = newParticleEffect.GetComponent<PoolableParticle>();
+        if (areaOfEffectParticleEffect != null)
+        {
+            GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_particlePoolKey);
+            _particleUsed = newParticleEffect.GetComponent<PoolableParticle>();
         
-        newParticleEffect.transform.position = transform.position;
-        newParticleEffect.SetActive(true);
+            newParticleEffect.transform.position = transform.position;
+            newParticleEffect.SetActive(true);
         
-        _particleUsed.PlayAllParticles(areaOfEffectData.aoeSpreadSize.x);
+            _particleUsed.PlayAllParticles(areaOfEffectData.aoeSpreadSize.x);
+        }
+        
     }
 
     private void OnDisable()
@@ -122,11 +127,12 @@ public class AreaOfEffect : MonoBehaviour
             {
                 AreaOfEffectManager.Instance.TryAddAffectedTarget(areaOfEffectData, collision.gameObject);
 
+                //PlayParticleEffect(collision.gameObject);
+                
                 onAreaStay.Invoke(collision.gameObject);
             }
         }
     }
-    
 
     ///-///////////////////////////////////////////////////////////
     /// Changes the AOE effect of this instance
@@ -141,10 +147,10 @@ public class AreaOfEffect : MonoBehaviour
         
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        
-        Gizmos.DrawWireSphere(transform.position, areaOfEffectData.aoeSpreadSize.x);
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.blue;
+    //     
+    //     Gizmos.DrawWireSphere(transform.position, areaOfEffectData.aoeSpreadSize.x);
+    // }
 }

@@ -12,6 +12,6 @@ public class DamageOverTimeOnCollision : StatusEffect<DamageOverTimeData>
 
             damageOverTimeScript?.AddDamageOverTime(StatusEffectData.damageOverTime);
         }
-        
     }
+    
 }
