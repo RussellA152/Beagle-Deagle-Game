@@ -20,7 +20,12 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
 
     public void RevertAllModifiers()
     {
-        damageOverTimeEffects.Clear();
+        foreach (DamageOverTime dot in damageOverTimeEffects)
+        {
+            dot.isActive = false;
+
+            damageOverTimeEffects.Remove(dot);
+        }
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -61,7 +66,8 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
             ObjectPooler.Instance.GetPooledObject(dot.particleEffect.GetComponent<IPoolable>().PoolKey)
                 .GetComponent<PoolableParticle>();
 
-        while (ticks > 0)
+        // Take away health while the dot still has ticks and is active
+        while (ticks > 0 && dot.isActive)
         {
             // TODO: THIS ASSUMES WE ALWAYS DO DAMAGE!
             _healthScript.ModifyHealth(-1f * dot.damage);

@@ -181,9 +181,6 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
 
     public void RevertAllModifiers()
     {
-        // Reset any movement speed modifiers on the enemy
-        _bonusSpeed = 1f;
-
         // Remove speed modifiers from list when spawning
         foreach (MovementSpeedModifier movementModifier in  movementSpeedModifiers)
         {

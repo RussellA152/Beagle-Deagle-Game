@@ -74,19 +74,24 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
     {
         maxHealthModifiers.Add(modifierToAdd);
         _bonusMaxHealth += modifierToAdd.bonusMaxHealth;
+
+        modifierToAdd.isActive = true;
     }
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
     {
         maxHealthModifiers.Remove(modifierToRemove);
         _bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
+
+        modifierToRemove.isActive = false;
     }
 
     public void RevertAllModifiers()
     {
-        // reset any max health modifiers applied to an enemy
-        _bonusMaxHealth = 1f;
-        maxHealthModifiers.Clear();
+        foreach (MaxHealthModifier maxHealthModifier in maxHealthModifiers)
+        {
+            RemoveMaxHealthModifier(maxHealthModifier);
+        }
     }
     #endregion
     

@@ -198,6 +198,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         movementSpeedModifiers.Add(modifierToAdd);
         _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
 
+        modifierToAdd.isActive = true;
+
     }
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
@@ -205,6 +207,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         movementSpeedModifiers.Remove(modifierToRemove);
 
         _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
+        
+        modifierToRemove.isActive = false;
 
     }
     

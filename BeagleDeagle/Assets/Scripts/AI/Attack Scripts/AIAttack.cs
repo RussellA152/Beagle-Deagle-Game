@@ -94,13 +94,15 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     ///
     public void RevertAllModifiers()
     {
-        // reset any modifiers on the enemy's damage
-        _bonusDamage = 1f;
-        _bonusAttackSpeed = 1f;
+        foreach (DamageModifier damageModifier in damageModifiers)
+        {
+            RemoveDamageModifier(damageModifier);
+        }
 
-        // remove modifiers from lists
-        damageModifiers.Clear();
-        attackSpeedModifiers.Clear();
+        foreach (AttackSpeedModifier attackSpeedModifier in attackSpeedModifiers)
+        {
+            RemoveAttackSpeedModifier(attackSpeedModifier);
+        }
     }
     
     public void SetTarget(Transform newTarget)
@@ -126,12 +128,15 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         damageModifiers.Add(modifierToAdd);
         _bonusDamage += (_bonusDamage * modifierToAdd.bonusDamage);
 
+        modifierToAdd.isActive = true;
     }
 
     public void RemoveDamageModifier(DamageModifier modifierToRemove)
     {
         damageModifiers.Remove(modifierToRemove);
         _bonusDamage /= (1 + modifierToRemove.bonusDamage);
+        
+        modifierToRemove.isActive = false;
     }
 
     public void AddAttackSpeedModifier(AttackSpeedModifier modifierToAdd)
@@ -141,6 +146,8 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         
         // Increase or decrease the animation speed of the movement animation
         _animationScript.SetAttackAnimationSpeed(modifierToAdd.bonusAttackSpeed);
+        
+        modifierToAdd.isActive = true;
     }
 
     public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove)
@@ -149,6 +156,8 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         _bonusAttackSpeed /= (1 + modifierToRemove.bonusAttackSpeed);
         
         _animationScript.SetAttackAnimationSpeed(-1f * modifierToRemove.bonusAttackSpeed);
+
+        modifierToRemove.isActive = false;
     }
 
     #endregion

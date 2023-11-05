@@ -73,12 +73,16 @@ public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
     {
         maxHealthModifiers.Add(modifierToAdd);
         _bonusMaxHealth += modifierToAdd.bonusMaxHealth;
+
+        modifierToAdd.isActive = true;
     }
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
     {
         maxHealthModifiers.Remove(modifierToRemove);
         _bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
+
+        modifierToRemove.isActive = false;
     }
     #endregion
     

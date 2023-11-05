@@ -150,24 +150,32 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     {
         utilityCooldownModifiers.Add(modifierToAdd);
         _bonusUtilityCooldown += (_bonusUtilityCooldown * modifierToAdd.bonusUtilityCooldown);
+
+        modifierToAdd.isActive = true;
     }
 
     public void RemoveUtilityCooldownModifier(UtilityCooldownModifier modifierToRemove)
     {
         utilityCooldownModifiers.Remove(modifierToRemove);
         _bonusUtilityCooldown /= (1 + modifierToRemove.bonusUtilityCooldown);
+
+        modifierToRemove.isActive = false;
     }
 
     public void AddUtilityUsesModifier(UtilityUsesModifier modifierToAdd)
     {
         utilityUsesModifiers.Add(modifierToAdd);
         _bonusUtilityUses += modifierToAdd.bonusUtilityUses;
+        
+        modifierToAdd.isActive = true;
     }
 
     public void RemoveUtilityUsesModifier(UtilityUsesModifier modifierToRemove)
     {
         utilityUsesModifiers.Remove(modifierToRemove);
         _bonusUtilityUses -= modifierToRemove.bonusUtilityUses;
+
+        modifierToRemove.isActive = false;
     }
 
     #endregion
