@@ -17,6 +17,5 @@ public class MovementSpeedModifier: Modifier
     {
         modifierName = name;
         bonusMovementSpeed = movementSpeed;
-        
     }
 }

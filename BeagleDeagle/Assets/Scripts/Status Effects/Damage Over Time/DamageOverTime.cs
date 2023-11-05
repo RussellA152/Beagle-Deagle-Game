@@ -1,10 +1,8 @@
 using UnityEngine;
 
 [System.Serializable]
-public class DamageOverTime
+public class DamageOverTime: Modifier
 {
-    public string dotName;
-
     [Range(-1000f, 1000f)]
     // How much damage does this DOT do?
     public float damage;
@@ -28,7 +26,7 @@ public class DamageOverTime
     /// for a "tick" amount of times.
     public DamageOverTime(string name, float damage, int ticks, float tickInterval, AreaOfEffectData source)
     {
-        dotName = name;
+        modifierName = name;
 
         this.damage = damage;
 

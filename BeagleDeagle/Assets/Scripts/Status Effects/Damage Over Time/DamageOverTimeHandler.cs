@@ -12,15 +12,11 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
     // All damage over time effects that have been applied to this target
     [SerializeField, NonReorderable]
     private List<DamageOverTime> damageOverTimeEffects = new List<DamageOverTime>();
-    
-    private PoolableParticle _activeParticle;
-    public PoolableParticle ActiveParticle => _activeParticle;
 
     private void OnEnable()
     {
         _healthScript ??= GetComponent<IHealth>();
     }
-    
 
     public void RevertAllModifiers()
     {
@@ -35,7 +31,7 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
         damageOverTimeEffects.Add(dotToAdd);
 
         StartCoroutine(TakeDamageOverTime(dotToAdd));
-        
+
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -44,11 +40,11 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
     public void RemoveDamageOverTime(DamageOverTime dotToRemove)
     {
         damageOverTimeEffects.Remove(dotToRemove);
-        
+
         // Check if we need to reapply the DOT
         ReapplyDot(dotToRemove);
 
-
+        
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -56,18 +52,21 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
     /// "tick" amount of times.
     public IEnumerator TakeDamageOverTime(DamageOverTime dot)
     {
+        dot.isActive = true;
+        
         float ticks = dot.ticks;
 
         // Find particle effect associated with DOT
-        _activeParticle =
-            ObjectPooler.Instance.GetPooledObject(dot.particleEffect.GetComponent<IPoolable>().PoolKey).GetComponent<PoolableParticle>();
+        PoolableParticle activeParticle =
+            ObjectPooler.Instance.GetPooledObject(dot.particleEffect.GetComponent<IPoolable>().PoolKey)
+                .GetComponent<PoolableParticle>();
 
         while (ticks > 0)
         {
             // TODO: THIS ASSUMES WE ALWAYS DO DAMAGE!
             _healthScript.ModifyHealth(-1f * dot.damage);
-            
-            PlayStatusParticleEffect(_activeParticle);
+
+            StartCoroutine(StartParticleEffect(activeParticle, dot));
 
             yield return new WaitForSeconds(dot.tickInterval);
 
@@ -88,32 +87,30 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
         // If this target is still standing in an AOE, reapply the DOT
         if (AreaOfEffectManager.Instance.IsTargetOverlappingAreaOfEffect(sourceOfDot, gameObject))
         {
-            Debug.Log("TRUE, REAPPLY DOT");
-            
             AreaOfEffectManager.Instance.TryAddAffectedTarget(sourceOfDot, gameObject);
-            
+
             // Add the DOT to this target again
             AddDamageOverTime(dotExpired);
-            
+
         }
         else
         {
-            Debug.Log("FALSE, DO NOT REAPPLY DOT");
+            // Remove the DOT from the target
             AreaOfEffectManager.Instance.RemoveTargetFromAffectedHashSet(sourceOfDot, gameObject);
+            
+            dotExpired.isActive = false;
         }
 
 
     }
 
-    public void PlayStatusParticleEffect(PoolableParticle particleEffect)
+    public IEnumerator StartParticleEffect(PoolableParticle particleEffect, Modifier modifier)
     {
         particleEffect.PlaceParticleOnTransform(transform);
-            
-        particleEffect.PlayAllParticles(1f);
-    }
 
-    // public void StickToGameObject(PoolableParticle particleEffect)
-    // {
-    //     _activeParticle.transform.position = transform.position;
-    // }
+        particleEffect.PlayAllParticles(1f);
+
+        yield break;
+    }
 }
+    

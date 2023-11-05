@@ -32,9 +32,6 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
     // The x scale that the enemy was instantiated with
     private float _originalTransformScaleX;
 
-    private PoolableParticle _activeParticle;
-    public PoolableParticle ActiveParticle => _activeParticle;
-    
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -154,24 +151,25 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
         movementSpeedModifiers.Add(modifierToAdd);
         _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
+
+        modifierToAdd.isActive = true;
         
         // Increase or decrease the animation speed of the movement animation
         _animationScript.SetMovementAnimationSpeed(modifierToAdd.bonusMovementSpeed);
 
         if (modifierToAdd.particleEffect != null)
         {
-            _activeParticle = ObjectPooler.Instance.GetPooledObject(modifierToAdd.particleEffect.GetComponent<IPoolable>().PoolKey).GetComponent<PoolableParticle>();
-            
-            PlayStatusParticleEffect(_activeParticle);
+
+            StartCoroutine(StartParticleEffect(
+                ObjectPooler.Instance.GetPooledObject(modifierToAdd.particleEffect.GetComponent<IPoolable>().PoolKey)
+                    .GetComponent<PoolableParticle>(), modifierToAdd));
         }
         
     }
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
-        _activeParticle.StopAllParticles();
-        
-        
+        modifierToRemove.isActive = false;
         movementSpeedModifiers.Remove(modifierToRemove);
         _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
@@ -187,8 +185,11 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
         _bonusSpeed = 1f;
 
         // Remove speed modifiers from list when spawning
-        movementSpeedModifiers.Clear();
-        
+        foreach (MovementSpeedModifier movementModifier in  movementSpeedModifiers)
+        {
+            RemoveMovementSpeedModifier(movementModifier);
+        }
+
     }
 
     #endregion
@@ -205,12 +206,16 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
         }
     }
     
-    public void PlayStatusParticleEffect(PoolableParticle particleEffect)
+
+    public IEnumerator StartParticleEffect(PoolableParticle particleEffect, Modifier modifier)
     {
         particleEffect.StickParticleToTransform(transform);
             
         particleEffect.PlayAllParticles(1f);
+        
+        while (modifier.isActive)
+            yield return null;
+        
+        particleEffect.StopAllParticles();
     }
-    
-    
 }
