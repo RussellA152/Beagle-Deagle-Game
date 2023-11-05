@@ -253,9 +253,10 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     {
         GameObject particleEffect = ObjectPooler.Instance.GetPooledObject(deathParticleEffectPoolKey);
 
-        particleEffect.transform.position = transform.position;
-        particleEffect.SetActive(true);
-        particleEffect.GetComponent<PoolableParticle>().PlayAllParticles(1f);
+        PoolableParticle particleUsed = particleEffect.GetComponent<PoolableParticle>();
+        
+        particleUsed.PlaceParticleOnTransform(transform);
+        particleUsed.PlayAllParticles(1f);
         
         gameObject.SetActive(false);
 

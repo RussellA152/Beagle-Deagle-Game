@@ -63,9 +63,8 @@ public class AreaOfEffect : MonoBehaviour
             GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_particlePoolKey);
             _particleUsed = newParticleEffect.GetComponent<PoolableParticle>();
         
-            newParticleEffect.transform.position = transform.position;
-            newParticleEffect.SetActive(true);
-        
+            _particleUsed.PlaceParticleOnTransform(transform);
+
             _particleUsed.PlayAllParticles(areaOfEffectData.aoeSpreadSize.x);
         }
         
@@ -73,14 +72,20 @@ public class AreaOfEffect : MonoBehaviour
 
     private void OnDisable()
     {
-        if(_particleUsed != null)
+        if (_particleUsed != null)
+        {
+            Debug.Log("Disable particle! " + _particleUsed);
             _particleUsed.StopAllParticles();
+        }
+            
     }
 
     private void OnDestroy()
     {
         // Resetting the size of the trigger collider when destroyed
         _triggerCollider.size = new Vector2(1f, 1f);
+        
+        
     }
     
 

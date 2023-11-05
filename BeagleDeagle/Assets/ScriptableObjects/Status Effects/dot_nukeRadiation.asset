@@ -17,8 +17,8 @@ MonoBehaviour:
     m_Bits: 256
   damageOverTime:
     dotName: Nuke Radiation
-    damage: 30
-    ticks: 3
+    damage: 1
+    ticks: 15
     tickInterval: 1
     source: {fileID: 11400000, guid: 76c3dbea33a66a444949fba4a83bc5c6, type: 2}
     particleEffect: {fileID: 1688976237673181899, guid: 97d7d94ed58b9be4d8cbff990df23596, type: 3}

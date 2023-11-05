@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
+public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, IPlayStatusParticle
 {
     
     [Header("Data to Use")]
@@ -26,11 +26,14 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     
     // Can the enemy turn around?
     private bool _canFlip = true;
-
-
+    
     private Transform _target;
-    // The x scale that the enemy was instaniated with
+    
+    // The x scale that the enemy was instantiated with
     private float _originalTransformScaleX;
+
+    private PoolableParticle _activeParticle;
+    public PoolableParticle ActiveParticle => _activeParticle;
     
     private void Awake()
     {
@@ -64,6 +67,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
     private void Update()
     {
         FlipSprite();
+
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -153,17 +157,28 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
         
         // Increase or decrease the animation speed of the movement animation
         _animationScript.SetMovementAnimationSpeed(modifierToAdd.bonusMovementSpeed);
+
+        if (modifierToAdd.particleEffect != null)
+        {
+            _activeParticle = ObjectPooler.Instance.GetPooledObject(modifierToAdd.particleEffect.GetComponent<IPoolable>().PoolKey).GetComponent<PoolableParticle>();
+            
+            PlayStatusParticleEffect(_activeParticle);
+        }
         
     }
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
+        _activeParticle.StopAllParticles();
+        
+        
         movementSpeedModifiers.Remove(modifierToRemove);
         _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
         
         // Remove speed effect that was applied to the movement animation's speed
         _animationScript.SetMovementAnimationSpeed(-1f * modifierToRemove.bonusMovementSpeed);
+        
     }
 
     public void RevertAllModifiers()
@@ -173,10 +188,10 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
 
         // Remove speed modifiers from list when spawning
         movementSpeedModifiers.Clear();
+        
     }
 
     #endregion
-    
     
     public void AllowMovement(bool boolean)
     {
@@ -184,11 +199,18 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable
         {
             _agent.isStopped = false;
         }
-
         else
         {
             _agent.isStopped = true;
         }
-           
     }
+    
+    public void PlayStatusParticleEffect(PoolableParticle particleEffect)
+    {
+        particleEffect.StickParticleToTransform(transform);
+            
+        particleEffect.PlayAllParticles(1f);
+    }
+    
+    
 }

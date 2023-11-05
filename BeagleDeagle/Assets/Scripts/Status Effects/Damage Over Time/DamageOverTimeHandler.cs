@@ -12,6 +12,9 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
     // All damage over time effects that have been applied to this target
     [SerializeField, NonReorderable]
     private List<DamageOverTime> damageOverTimeEffects = new List<DamageOverTime>();
+    
+    private PoolableParticle _activeParticle;
+    public PoolableParticle ActiveParticle => _activeParticle;
 
     private void OnEnable()
     {
@@ -56,17 +59,15 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
         float ticks = dot.ticks;
 
         // Find particle effect associated with DOT
-        PoolableParticle particleEffect =
+        _activeParticle =
             ObjectPooler.Instance.GetPooledObject(dot.particleEffect.GetComponent<IPoolable>().PoolKey).GetComponent<PoolableParticle>();
-        
-        Debug.Log(particleEffect);
-        
+
         while (ticks > 0)
         {
             // TODO: THIS ASSUMES WE ALWAYS DO DAMAGE!
             _healthScript.ModifyHealth(-1f * dot.damage);
             
-            PlayStatusParticleEffect(particleEffect);
+            PlayStatusParticleEffect(_activeParticle);
 
             yield return new WaitForSeconds(dot.tickInterval);
 
@@ -106,10 +107,13 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
 
     public void PlayStatusParticleEffect(PoolableParticle particleEffect)
     {
-        particleEffect.gameObject.SetActive(true);
-        
-        particleEffect.gameObject.transform.position = transform.position;
+        particleEffect.PlaceParticleOnTransform(transform);
             
         particleEffect.PlayAllParticles(1f);
     }
+
+    // public void StickToGameObject(PoolableParticle particleEffect)
+    // {
+    //     _activeParticle.transform.position = transform.position;
+    // }
 }

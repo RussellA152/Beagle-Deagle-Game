@@ -358,7 +358,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     // Call reload function when the player presses the reload key
     public void OnReload(CallbackContext context)
     {
-        PerformReload();
+        // Only allow manual reloading if the player has some ammo, but not empty
+        if(_bulletsLoaded > 0f && _bulletsLoaded < weaponData.magazineSize)
+            PerformReload();
     }
 
     private void OnReloadFinish(int id)

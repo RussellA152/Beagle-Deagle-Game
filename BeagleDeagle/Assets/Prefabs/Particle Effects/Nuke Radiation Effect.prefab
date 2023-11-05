@@ -47,7 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolKey: 45
   particleSystemGameObjects:
-  - {fileID: 7811010442689027543}
+  - {fileID: 7811010442674242743}
+  originalParent: {fileID: 0}
+  currentParent: {fileID: 0}
 --- !u!1001 &5841027400494664283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -81,15 +83,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4425129568584715180, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.55
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 4425129568584715180, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.55
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 4425129568584715180, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.55
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 4425129568584715180, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -185,9 +187,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
---- !u!1 &7811010442689027543 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4425129568585013132, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+--- !u!198 &7811010442674242743 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4425129568604114668, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
   m_PrefabInstance: {fileID: 5841027400494664283}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7811010442689446391 stripped

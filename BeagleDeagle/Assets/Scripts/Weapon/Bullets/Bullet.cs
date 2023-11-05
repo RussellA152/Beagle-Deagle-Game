@@ -169,22 +169,27 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     private void ActivateParticleEffect(GameObject objectHit, bool isAnimate)
     {
         GameObject hitParticleEffect;
+        PoolableParticle particleUsed;
 
         if (isAnimate)
         {
             // Spawn a blood particle effect
             hitParticleEffect =  ObjectPooler.Instance.GetPooledObject(_enemyHitParticlePoolKey);
-            hitParticleEffect.transform.position = objectHit.transform.position;
+            particleUsed = hitParticleEffect.GetComponent<PoolableParticle>();
+            particleUsed.PlaceParticleOnTransform(objectHit.transform);
+           // hitParticleEffect.transform.position = objectHit.transform.position;
         }
         else
         {
             hitParticleEffect = ObjectPooler.Instance.GetPooledObject(_inanimateHitParticlePoolKey);
-            hitParticleEffect.transform.position = transform.position;
+            particleUsed = hitParticleEffect.GetComponent<PoolableParticle>();
+            particleUsed.PlaceParticleOnTransform(transform);
+            //hitParticleEffect.transform.position = transform.position;
         }
         
         // Place hit particle effect at the position where the bullet hit its target
-        hitParticleEffect.SetActive(true);
-        hitParticleEffect.GetComponent<PoolableParticle>().PlayAllParticles(1f);
+        //hitParticleEffect.SetActive(true);
+        particleUsed.PlayAllParticles(1f);
         
         
     }

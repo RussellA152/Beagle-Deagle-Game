@@ -552,26 +552,7 @@ namespace CartoonFX
 				// Check isAlive every N frame, with an offset so that all active effects aren't checked at once
 				if ((Time.renderedFrameCount + startFrameOffset) % CHECK_EVERY_N_FRAME == 0)
 				{
-					if (!rootParticleSystem.IsAlive(true))
-					{
-						if (clearBehavior == ClearBehavior.Destroy)
-						{
-							GameObject.Destroy(this.gameObject);
-						}
-						else if (clearBehavior == ClearBehavior.Disable)
-						{
-							this.gameObject.SetActive(false);
-							
-						}
-						else
-						{
-							this.gameObject.SetActive(false);
-							
-							// I am puting this here so that the object pooling works with particle effects
-							// because some particle effects have empty gameObject parents
-							transform.parent.gameObject.SetActive(false);
-						}
-					}
+					DisableParticle();
 				}
 			}
 #endif
@@ -583,6 +564,29 @@ namespace CartoonFX
 			}
 		}
 #endif
+
+		public void DisableParticle()
+		{
+			if (!rootParticleSystem.IsAlive(true))
+			{
+				if (clearBehavior == ClearBehavior.Destroy)
+				{
+					Destroy(gameObject);
+				}
+				else if (clearBehavior == ClearBehavior.Disable)
+				{
+					gameObject.SetActive(false);
+					//transform.parent.gameObject.SetActive(false);
+				}
+				else if(clearBehavior == ClearBehavior.DisableWithParent)
+				{
+					gameObject.SetActive(false);
+					// I am putting this here so that the object pooling works with particle effects
+					// because some particle effects have empty gameObject parents
+					transform.parent.gameObject.SetActive(false);
+				}
+			}
+		}
 
 #if !DISABLE_LIGHTS || !DISABLE_CAMERA_SHAKE
 		public void Animate(float time)

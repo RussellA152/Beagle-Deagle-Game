@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1688976237673181898}
   - component: {fileID: 1688976237673181893}
   m_Layer: 0
-  m_Name: Blood Damage Effect
+  m_Name: Bleed Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f1748149a702641801d68a02ab4751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolKey: 43
+  poolKey: 47
   particleSystemGameObjects:
   - {fileID: 5314410119773377798}
   originalParent: {fileID: 0}
@@ -63,7 +63,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6823200998282874672, guid: 8f8fe12323625f5499b2853dd2ad3e58, type: 3}
       propertyPath: looping
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6823200998282874672, guid: 8f8fe12323625f5499b2853dd2ad3e58, type: 3}
       propertyPath: playOnAwake
@@ -132,6 +132,10 @@ PrefabInstance:
     - target: {fileID: 6823200998282874702, guid: 8f8fe12323625f5499b2853dd2ad3e58, type: 3}
       propertyPath: m_Name
       value: CFXR2 Blood (Directional)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6823200998337669616, guid: 8f8fe12323625f5499b2853dd2ad3e58, type: 3}
+      propertyPath: looping
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6823200998337669616, guid: 8f8fe12323625f5499b2853dd2ad3e58, type: 3}
       propertyPath: playOnAwake

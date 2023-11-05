@@ -47,7 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolKey: 40
   particleSystemGameObjects:
-  - {fileID: 7329387719341985761}
+  - {fileID: 7329387719355979393}
+  originalParent: {fileID: 0}
+  currentParent: {fileID: 0}
 --- !u!1001 &8084943019219396909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -119,8 +121,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1550447302318127852, guid: 86b7f970ada64f445a2e05a62ba70055, type: 3}
   m_PrefabInstance: {fileID: 8084943019219396909}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7329387719341985761 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1550447302318352076, guid: 86b7f970ada64f445a2e05a62ba70055, type: 3}
+--- !u!198 &7329387719355979393 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1550447302299778988, guid: 86b7f970ada64f445a2e05a62ba70055, type: 3}
   m_PrefabInstance: {fileID: 8084943019219396909}
   m_PrefabAsset: {fileID: 0}

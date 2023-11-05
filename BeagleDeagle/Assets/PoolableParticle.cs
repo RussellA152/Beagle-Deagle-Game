@@ -1,49 +1,64 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CartoonFX;
 using UnityEngine;
 
 public class PoolableParticle : MonoBehaviour, IPoolable
 {
     [SerializeField] private int poolKey;
 
-    public GameObject[] particleSystemGameObjects;
+    public ParticleSystem[] particleSystemGameObjects;
 
     private Vector3 _originalSize;
 
+    [SerializeField] private Transform originalParent;
+    [SerializeField] private Transform currentParent;
+
     private void Awake()
     {
-        foreach (GameObject particleSystemGO in particleSystemGameObjects)
+        foreach (ParticleSystem particleSys in particleSystemGameObjects)
         {
-            particleSystemGO.SetActive(false);
+            particleSys.gameObject.SetActive(false);
         }
 
         _originalSize = particleSystemGameObjects[0].transform.localScale;
     }
 
+    private void OnEnable()
+    {
+        originalParent = transform.parent;
+    }
+
     private void OnDisable()
     {
-        foreach (GameObject particleSystemGO in particleSystemGameObjects)
+        if (originalParent != null)
         {
-            particleSystemGO.SetActive(false);
-            particleSystemGO.transform.localScale = _originalSize;
+            transform.SetParent(originalParent);
         }
+        
+        foreach (ParticleSystem particleSys in particleSystemGameObjects)
+        {
+            particleSys.gameObject.SetActive(false);
+            particleSys.transform.localScale = _originalSize;
+        }
+        
     }
 
     public int PoolKey => poolKey;
 
     public void PlayAllParticles(float sizeMultiplier)
     {
-        foreach (GameObject particleSystemGO in particleSystemGameObjects)
+        foreach (ParticleSystem particleSys in particleSystemGameObjects)
         {
-            var localScale = particleSystemGO.transform.localScale;
+            var localScale = particleSys.transform.localScale;
             
             localScale = new Vector3(sizeMultiplier *localScale.x ,
                 sizeMultiplier * localScale.y,sizeMultiplier * localScale.z);
             
-            particleSystemGO.transform.localScale = localScale;
+            particleSys.transform.localScale = localScale;
             
-            particleSystemGO.SetActive(true);
+            particleSys.gameObject.SetActive(true);
         }
         
 
@@ -51,10 +66,33 @@ public class PoolableParticle : MonoBehaviour, IPoolable
 
     public void StopAllParticles()
     {
-        foreach (GameObject particleSystemGO in particleSystemGameObjects)
+        foreach (ParticleSystem particleSys in particleSystemGameObjects)
         {
-            particleSystemGO.SetActive(false);
+            particleSys.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            
+            CFXR_Effect effect = particleSys.GetComponent<CFXR_Effect>();
+            effect.DisableParticle();
+
         }
+    }
+
+    public void PlaceParticleOnTransform(Transform transformToPlaceAt)
+    {
+        transform.position = transformToPlaceAt.position;
+        gameObject.SetActive(true);
+    }
+
+    public void StickParticleToTransform(Transform transformToStickTo)
+    {
+        Transform transformComponent = transform;
+        
+        transformComponent.position = transformToStickTo.position;
+
+        gameObject.SetActive(true);
+        
+        transformComponent.SetParent(transformToStickTo);
+        
+        currentParent = transformComponent.parent;
     }
     
 }

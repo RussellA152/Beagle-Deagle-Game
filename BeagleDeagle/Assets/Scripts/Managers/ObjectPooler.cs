@@ -59,7 +59,7 @@ public class ObjectPooler : MonoBehaviour
                 // Set its parent to a container (if it exists)
                 if (item.container != null)
                 {
-                    obj.transform.parent = item.container;
+                    obj.transform.SetParent(item.container);
                 }
 
                 obj.SetActive(false);
