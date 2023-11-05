@@ -7,6 +7,7 @@ using UnityEngine;
 public class PoolableParticle : MonoBehaviour, IPoolable
 {
     [SerializeField] private int poolKey;
+    public int PoolKey => poolKey;
 
     public ParticleSystem[] particleSystemGameObjects;
 
@@ -14,6 +15,8 @@ public class PoolableParticle : MonoBehaviour, IPoolable
 
     [SerializeField] private Transform originalParent;
     [SerializeField] private Transform currentParent;
+    
+    
 
     private void Awake()
     {
@@ -45,8 +48,9 @@ public class PoolableParticle : MonoBehaviour, IPoolable
         
     }
 
-    public int PoolKey => poolKey;
-
+    ///-///////////////////////////////////////////////////////////
+    /// Set all particle system gameObjects active, most of them play on awake.
+    /// 
     public void PlayAllParticles(float sizeMultiplier)
     {
         foreach (ParticleSystem particleSys in particleSystemGameObjects)
@@ -64,6 +68,9 @@ public class PoolableParticle : MonoBehaviour, IPoolable
 
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Tell all particle systems in this gameObject to stop playing
+    /// 
     public void StopAllParticles()
     {
         foreach (ParticleSystem particleSys in particleSystemGameObjects)
@@ -71,7 +78,9 @@ public class PoolableParticle : MonoBehaviour, IPoolable
             particleSys.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             
             CFXR_Effect effect = particleSys.GetComponent<CFXR_Effect>();
-            effect.DisableParticle();
+            
+            if(effect != null)
+                effect.DisableParticle();
 
         }
     }

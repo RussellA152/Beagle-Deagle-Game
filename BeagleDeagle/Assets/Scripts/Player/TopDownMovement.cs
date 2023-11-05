@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 
-public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IHasCooldown, IHasInput
+public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IHasCooldown, IHasInput, IModifierWithParticle
 {
     [SerializeField] private PlayerData playerData;
     [SerializeField] private PlayerEvents playerEvents;
@@ -199,6 +199,14 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
 
         modifierToAdd.isActive = true;
+        
+        if (modifierToAdd.particleEffect != null)
+        {
+
+            StartCoroutine(StartParticleEffect(
+                ObjectPooler.Instance.GetPooledObject(modifierToAdd.particleEffect.GetComponent<IPoolable>().PoolKey)
+                    .GetComponent<PoolableParticle>(), modifierToAdd));
+        }
 
     }
 
@@ -412,5 +420,17 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
             _rotationInputAction.Disable();
             _rollInputAction.Disable();
         }
+    }
+
+    public IEnumerator StartParticleEffect(PoolableParticle particleEffect, Modifier modifier)
+    {
+        particleEffect.StickParticleToTransform(transform);
+            
+        particleEffect.PlayAllParticles(1f);
+        
+        while (modifier.isActive)
+            yield return null;
+        
+        particleEffect.StopAllParticles();
     }
 }

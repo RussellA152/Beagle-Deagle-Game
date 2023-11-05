@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPlayStatusParticle
+public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IModifierWithParticle
 {
     // The health script of this target
     private IHealth _healthScript;
@@ -23,9 +23,9 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
         foreach (DamageOverTime dot in damageOverTimeEffects)
         {
             dot.isActive = false;
-
-            damageOverTimeEffects.Remove(dot);
+            
         }
+        damageOverTimeEffects.Clear();
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -60,19 +60,20 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
         dot.isActive = true;
         
         float ticks = dot.ticks;
-
-        // Find particle effect associated with DOT
-        PoolableParticle activeParticle =
-            ObjectPooler.Instance.GetPooledObject(dot.particleEffect.GetComponent<IPoolable>().PoolKey)
-                .GetComponent<PoolableParticle>();
-
+        
+        
         // Take away health while the dot still has ticks and is active
         while (ticks > 0 && dot.isActive)
         {
+            // Find a particle effect associated with DOT
+            PoolableParticle activeParticle = 
+                ObjectPooler.Instance.GetPooledObject(dot.particleEffect.GetComponent<IPoolable>().PoolKey)
+                    .GetComponent<PoolableParticle>();
+            
+            StartCoroutine(StartParticleEffect(activeParticle, dot));
+            
             // TODO: THIS ASSUMES WE ALWAYS DO DAMAGE!
             _healthScript.ModifyHealth(-1f * dot.damage);
-
-            StartCoroutine(StartParticleEffect(activeParticle, dot));
 
             yield return new WaitForSeconds(dot.tickInterval);
 
@@ -113,7 +114,7 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IPla
     public IEnumerator StartParticleEffect(PoolableParticle particleEffect, Modifier modifier)
     {
         particleEffect.PlaceParticleOnTransform(transform);
-
+        
         particleEffect.PlayAllParticles(1f);
 
         yield break;
