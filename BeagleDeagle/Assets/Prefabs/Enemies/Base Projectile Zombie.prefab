@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5291671943106792783}
   - component: {fileID: 4264947812934250099}
   - component: {fileID: -4139390413299684877}
+  - component: {fileID: 2023155156209178935}
   - component: {fileID: 3711592478197892577}
   - component: {fileID: 3711592478197892576}
   - component: {fileID: 6609138936841988931}
@@ -165,6 +166,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageOverTimeEffects: []
+--- !u!114 &2023155156209178935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711592478197892634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9bd47aedefda848b6c07f473ebad5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &3711592478197892577
 NavMeshAgent:
   m_ObjectHideFlags: 0

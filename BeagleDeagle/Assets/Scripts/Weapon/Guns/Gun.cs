@@ -440,7 +440,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         damageModifiers.Add(modifierToAdd);
         _bonusDamage += (_bonusDamage * modifierToAdd.bonusDamage);
 
-        modifierToAdd.isActive = true;
+        //modifierToAdd.isActive = true;
     }
 
     public void RemoveDamageModifier(DamageModifier modifierToRemove)
@@ -448,7 +448,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         damageModifiers.Remove(modifierToRemove);
         _bonusDamage /= (1 + modifierToRemove.bonusDamage);
         
-        modifierToRemove.isActive = false;
+        //modifierToRemove.isActive = false;
     }
 
 
@@ -457,7 +457,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         penetrationModifiers.Add(modifierToAdd);
         _bonusPenetration += modifierToAdd.bonusPenetration;
         
-        modifierToAdd.isActive = true;
+        //modifierToAdd.isActive = true;
     }
 
     public void RemovePenetrationModifier(PenetrationModifier modifierToRemove)
@@ -465,7 +465,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         penetrationModifiers.Remove(modifierToRemove);
         _bonusPenetration -= modifierToRemove.bonusPenetration;
         
-        modifierToRemove.isActive = false;
+        //modifierToRemove.isActive = false;
     }
 
     public void AddSpreadModifierModifier(SpreadModifier modifierToAdd)
@@ -473,7 +473,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         spreadModifiers.Add(modifierToAdd);
         _bonusSpread += (_bonusSpread * modifierToAdd.bonusSpread);
         
-        modifierToAdd.isActive = true;
+        //modifierToAdd.isActive = true;
     }
 
     public void RemoveSpreadModifier(SpreadModifier modifierToRemove)
@@ -481,7 +481,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         spreadModifiers.Remove(modifierToRemove);
         _bonusSpread /= (1 + modifierToRemove.bonusSpread);
         
-        modifierToRemove.isActive = false;
+        //modifierToRemove.isActive = false;
     }
 
     public void AddAttackSpeedModifier(AttackSpeedModifier modifierToAdd)
@@ -489,7 +489,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         fireRateModifiers.Add(modifierToAdd);
         _bonusFireRate += (_bonusFireRate * modifierToAdd.bonusAttackSpeed);
         
-        modifierToAdd.isActive = true;
+        //modifierToAdd.isActive = true;
     }
 
     public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove)
@@ -497,7 +497,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         fireRateModifiers.Remove(modifierToRemove);
         _bonusFireRate /= (1 + modifierToRemove.bonusAttackSpeed);
         
-        modifierToRemove.isActive = false;
+        //modifierToRemove.isActive = false;
 
     }
 
@@ -508,7 +508,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         
         CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
         
-        modifierToAdd.isActive = true;
+        //modifierToAdd.isActive = true;
     }
 
     public void RemoveReloadSpeedModifier(ReloadSpeedModifier modifierToRemove)
@@ -518,7 +518,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         
         CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
         
-        modifierToRemove.isActive = false;
+        //modifierToRemove.isActive = false;
     }
 
     public void AddAmmoLoadModifier(AmmoLoadModifier modifierToAdd)
@@ -526,7 +526,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         ammoLoadModifiers.Add(modifierToAdd);
         _bonusAmmoLoad += (_bonusAmmoLoad * modifierToAdd.bonusAmmoLoad);
         
-        modifierToAdd.isActive = true;
+        //modifierToAdd.isActive = true;
 
         // Give player's weapon this bonus ammo load (this is because bulletsLoaded is only inside of the SO)
         // Refill the player's weapon before applying new ammo load
@@ -542,7 +542,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         ammoLoadModifiers.Remove(modifierToRemove);
         _bonusAmmoLoad /= (1 + modifierToRemove.bonusAmmoLoad);
 
-        modifierToRemove.isActive = false;
+        //modifierToRemove.isActive = false;
     }
 
     #endregion

@@ -128,7 +128,7 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         damageModifiers.Add(modifierToAdd);
         _bonusDamage += (_bonusDamage * modifierToAdd.bonusDamage);
 
-        modifierToAdd.isActive = true;
+        //modifierToAdd.isActive = true;
     }
 
     public void RemoveDamageModifier(DamageModifier modifierToRemove)
@@ -136,7 +136,7 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         damageModifiers.Remove(modifierToRemove);
         _bonusDamage /= (1 + modifierToRemove.bonusDamage);
         
-        modifierToRemove.isActive = false;
+        //modifierToRemove.isActive = false;
     }
 
     public void AddAttackSpeedModifier(AttackSpeedModifier modifierToAdd)
@@ -147,7 +147,7 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         // Increase or decrease the animation speed of the movement animation
         _animationScript.SetAttackAnimationSpeed(modifierToAdd.bonusAttackSpeed);
         
-        modifierToAdd.isActive = true;
+        //modifierToAdd.isActive = true;
     }
 
     public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove)
@@ -157,7 +157,7 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         
         _animationScript.SetAttackAnimationSpeed(-1f * modifierToRemove.bonusAttackSpeed);
 
-        modifierToRemove.isActive = false;
+        //modifierToRemove.isActive = false;
     }
 
     #endregion

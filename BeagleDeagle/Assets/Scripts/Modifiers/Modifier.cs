@@ -5,8 +5,8 @@ public class Modifier
     // The name of the object or item that is applying this modifier
     public string modifierName;
 
-    // Is the modifier currently in effect?
-    [HideInInspector]
-    public bool isActive;
+    [RestrictedPrefab(typeof(PoolableParticle))]
+    public GameObject particleEffect;
+
 }
 

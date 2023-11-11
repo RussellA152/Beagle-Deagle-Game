@@ -17,10 +17,9 @@ MonoBehaviour:
     m_Bits: 256
   movementSpeedEffect:
     modifierName: Slow Smoke
-    isActive: 0
-    bonusMovementSpeed: -0.7
     particleEffect: {fileID: 3084706840994566313, guid: c0a56add2938172458a8dca155e4d161, type: 3}
+    bonusMovementSpeed: -0.7
   attackSpeedEffect:
     modifierName: Slow Smoke
-    isActive: 0
+    particleEffect: {fileID: 0}
     bonusAttackSpeed: -0.3

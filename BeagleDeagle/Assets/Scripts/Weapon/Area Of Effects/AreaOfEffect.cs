@@ -60,7 +60,6 @@ public class AreaOfEffect : MonoBehaviour
     {
         if (_particleUsed != null)
         {
-            Debug.Log("Disable particle! " + _particleUsed);
             _particleUsed.StopAllParticles();
         }
             
@@ -129,7 +128,6 @@ public class AreaOfEffect : MonoBehaviour
     {
         if (areaOfEffectParticleEffect != null)
         {
-            Debug.Log("HI IM ENABLED! " + gameObject.name);
             GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_particlePoolKey);
             _particleUsed = newParticleEffect.GetComponent<PoolableParticle>();
         

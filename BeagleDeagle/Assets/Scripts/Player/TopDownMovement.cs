@@ -6,12 +6,13 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 
-public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IHasCooldown, IHasInput, IModifierWithParticle
+public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IHasCooldown, IHasInput//, IModifierWithParticle
 {
     [SerializeField] private PlayerData playerData;
     [SerializeField] private PlayerEvents playerEvents;
 
     public CooldownSystem cooldownSystem;
+    private ParticleEffectHandler _particleEffectHandler;
 
     private PlayerInput _playerInput;
 
@@ -64,6 +65,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         _rollInputAction = _playerInput.currentActionMap.FindAction("Roll");
 
         cooldownSystem = GetComponent<CooldownSystem>();
+
+        _particleEffectHandler = GetComponent<ParticleEffectHandler>();
 
         Id = 9;
         CooldownDuration = playerData.rollCooldown;
@@ -198,25 +201,16 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         movementSpeedModifiers.Add(modifierToAdd);
         _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
 
-        modifierToAdd.isActive = true;
-        
-        if (modifierToAdd.particleEffect != null)
-        {
-
-            StartCoroutine(StartParticleEffect(
-                ObjectPooler.Instance.GetPooledObject(modifierToAdd.particleEffect.GetComponent<IPoolable>().PoolKey)
-                    .GetComponent<PoolableParticle>(), modifierToAdd));
-        }
-
+        _particleEffectHandler.StartPlayingParticle(modifierToAdd, true);
     }
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
+        _particleEffectHandler.StopSpecificParticle(modifierToRemove);
+        
         movementSpeedModifiers.Remove(modifierToRemove);
 
         _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
-        
-        modifierToRemove.isActive = false;
 
     }
     
@@ -421,16 +415,5 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
             _rollInputAction.Disable();
         }
     }
-
-    public IEnumerator StartParticleEffect(PoolableParticle particleEffect, Modifier modifier)
-    {
-        particleEffect.StickParticleToTransform(transform);
-            
-        particleEffect.PlayAllParticles(1f);
-        
-        while (modifier.isActive)
-            yield return null;
-        
-        particleEffect.StopAllParticles();
-    }
+    
 }

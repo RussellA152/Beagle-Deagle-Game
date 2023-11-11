@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IModifierWithParticle
+public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
 {
     // The health script of this target
     private IHealth _healthScript;
+    private ParticleEffectHandler _particleEffectHandler;
 
     [Header("All Damage Over Time Effects Afflicted With")]
     // All damage over time effects that have been applied to this target
@@ -16,15 +17,12 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IMod
     private void OnEnable()
     {
         _healthScript ??= GetComponent<IHealth>();
+        _particleEffectHandler = GetComponent<ParticleEffectHandler>();
     }
 
     public void RevertAllModifiers()
     {
-        foreach (DamageOverTime dot in damageOverTimeEffects)
-        {
-            dot.isActive = false;
-            
-        }
+        
         damageOverTimeEffects.Clear();
     }
 
@@ -57,20 +55,12 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IMod
     /// "tick" amount of times.
     public IEnumerator TakeDamageOverTime(DamageOverTime dot)
     {
-        dot.isActive = true;
-        
         float ticks = dot.ticks;
-        
-        
+
         // Take away health while the dot still has ticks and is active
-        while (ticks > 0 && dot.isActive)
+        while (ticks > 0)
         {
-            // Find a particle effect associated with DOT
-            PoolableParticle activeParticle = 
-                ObjectPooler.Instance.GetPooledObject(dot.particleEffect.GetComponent<IPoolable>().PoolKey)
-                    .GetComponent<PoolableParticle>();
-            
-            StartCoroutine(StartParticleEffect(activeParticle, dot));
+            _particleEffectHandler.StartPlayingParticle(dot, false);
             
             // TODO: THIS ASSUMES WE ALWAYS DO DAMAGE!
             _healthScript.ModifyHealth(-1f * dot.damage);
@@ -105,19 +95,11 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler, IMod
             // Remove the DOT from the target
             AreaOfEffectManager.Instance.RemoveTargetFromAffectedHashSet(sourceOfDot, gameObject);
             
-            dotExpired.isActive = false;
+            _particleEffectHandler.StopSpecificParticle(dotExpired);
+
         }
 
-
     }
-
-    public IEnumerator StartParticleEffect(PoolableParticle particleEffect, Modifier modifier)
-    {
-        particleEffect.PlaceParticleOnTransform(transform);
-        
-        particleEffect.PlayAllParticles(1f);
-
-        yield break;
-    }
+    
 }
     

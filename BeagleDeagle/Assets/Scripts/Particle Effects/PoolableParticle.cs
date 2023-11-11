@@ -78,7 +78,6 @@ public class PoolableParticle : MonoBehaviour, IPoolable
     {
         foreach (ParticleSystem particleSys in particleSystemGameObjects)
         {
-            Debug.Log("STOP Particle!" + gameObject.name);
             particleSys.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             
             CFXR_Effect effect = particleSys.GetComponent<CFXR_Effect>();

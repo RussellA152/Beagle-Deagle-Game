@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, IModifierWithParticle
+public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable//, IModifierWithParticle
 {
     
     [Header("Data to Use")]
@@ -14,6 +14,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
     private NavMeshAgent _agent;
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
+    private ParticleEffectHandler _particleEffectHandler;
 
     [Header("Required Scripts")]
     private ZombieAnimationHandler _animationScript;
@@ -41,6 +42,8 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         
         _animationScript = GetComponent<ZombieAnimationHandler>();
+
+        _particleEffectHandler = GetComponent<ParticleEffectHandler>();
     }
 
     private void Start()
@@ -66,7 +69,34 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
         FlipSprite();
 
     }
+    
+    ///-///////////////////////////////////////////////////////////
+    /// When this enemy's target is to their left, flip their sprite to the left.
+    /// Otherwise, keep their sprite facing right.
+    /// 
+    private void FlipSprite()
+    {
+        if (_canFlip)
+        {
+            if (_target.position.x < transform.position.x)
+                transform.localScale = new Vector3(-1f * _originalTransformScaleX, transform.localScale.y, transform.localScale.z);
+            else
+                transform.localScale = new Vector3(_originalTransformScaleX, transform.localScale.y, transform.localScale.z);
+        }
+    }
 
+    public void SetTarget(Transform newTarget)
+    {
+        _target = newTarget;
+    }
+
+    public void SetCanFlip(bool boolean)
+    {
+        _canFlip = boolean;
+    }
+
+    #region Stun
+    
     ///-///////////////////////////////////////////////////////////
     /// Disable the enemy's ability to move.
     /// Then start a coroutine to wait some time and remove the stun effect
@@ -75,18 +105,30 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
     {
         if (!IsStunned)
         {
+            _particleEffectHandler.StartPlayingParticle(stunModifier, true);
             StartCoroutine(RemoveStunCoroutine(stunModifier));
-
-            if (stunModifier.particleEffect != null)
-            {
-                StartCoroutine(StartParticleEffect(
-                    ObjectPooler.Instance.GetPooledObject(stunModifier.particleEffect.GetComponent<IPoolable>().PoolKey)
-                        .GetComponent<PoolableParticle>(), stunModifier));
-            }
+            
         }
             
     }
+    
+    ///-///////////////////////////////////////////////////////////
+    /// Wait some time, then remove stun from enemy
+    /// 
+    public IEnumerator RemoveStunCoroutine(StunModifier stunModifier)
+    {
+        IsStunned = true;
 
+        yield return new WaitForSeconds(stunModifier.stunDuration);
+        
+        IsStunned = false;
+        
+        _particleEffectHandler.StopSpecificParticle(stunModifier);
+        
+    }
+    #endregion
+
+    #region Knockback
     ///-///////////////////////////////////////////////////////////
     /// Apply a specified amount of force in a direction to the enemy.
     /// 
@@ -119,45 +161,9 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
         // Allow enemy to move again
         _agent.isStopped = false;
     }
+    
 
-    ///-///////////////////////////////////////////////////////////
-    /// When this enemy's target is to their left, flip their sprite to the left.
-    /// Otherwise, keep their sprite facing right.
-    /// 
-    private void FlipSprite()
-    {
-        if (_canFlip)
-        {
-            if (_target.position.x < transform.position.x)
-                transform.localScale = new Vector3(-1f * _originalTransformScaleX, transform.localScale.y, transform.localScale.z);
-            else
-                transform.localScale = new Vector3(_originalTransformScaleX, transform.localScale.y, transform.localScale.z);
-        }
-    }
-
-    public void SetTarget(Transform newTarget)
-    {
-        _target = newTarget;
-    }
-
-    public void SetCanFlip(bool boolean)
-    {
-        _canFlip = boolean;
-    }
-
-    ///-///////////////////////////////////////////////////////////
-    /// Wait some time, then remove stun from enemy
-    /// 
-    public IEnumerator RemoveStunCoroutine(StunModifier stunModifier)
-    {
-        IsStunned = true;
-        stunModifier.isActive = true;
-        
-        yield return new WaitForSeconds(stunModifier.stunDuration);
-        
-        IsStunned = false;
-        stunModifier.isActive = false;
-    }
+    #endregion
 
     #region MovementModifiers
     public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
@@ -165,29 +171,22 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
         movementSpeedModifiers.Add(modifierToAdd);
         _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
-
-        modifierToAdd.isActive = true;
+        
+        _particleEffectHandler.StartPlayingParticle(modifierToAdd, true);
         
         // Increase or decrease the animation speed of the movement animation
         _animationScript.SetMovementAnimationSpeed(modifierToAdd.bonusMovementSpeed);
-
-        if (modifierToAdd.particleEffect != null)
-        {
-
-            StartCoroutine(StartParticleEffect(
-                ObjectPooler.Instance.GetPooledObject(modifierToAdd.particleEffect.GetComponent<IPoolable>().PoolKey)
-                    .GetComponent<PoolableParticle>(), modifierToAdd));
-        }
         
     }
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
-        modifierToRemove.isActive = false;
+        _particleEffectHandler.StopSpecificParticle(modifierToRemove);
+        
         movementSpeedModifiers.Remove(modifierToRemove);
         _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
-        
+
         // Remove speed effect that was applied to the movement animation's speed
         _animationScript.SetMovementAnimationSpeed(-1f * modifierToRemove.bonusMovementSpeed);
         
@@ -215,17 +214,5 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
             _agent.isStopped = true;
         }
     }
-    
 
-    public IEnumerator StartParticleEffect(PoolableParticle particleEffect, Modifier modifier)
-    {
-        particleEffect.StickParticleToTransform(transform);
-            
-        particleEffect.PlayAllParticles(1f);
-        
-        while (modifier.isActive)
-            yield return null;
-        
-        particleEffect.StopAllParticles();
-    }
 }

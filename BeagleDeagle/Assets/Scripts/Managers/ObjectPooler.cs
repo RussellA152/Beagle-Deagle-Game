@@ -56,6 +56,8 @@ public class ObjectPooler : MonoBehaviour
                 // Create the new object
                 GameObject obj = Instantiate(item.objectToPool);
 
+                obj.name = obj.name + " " + i;
+
                 // Set its parent to a container (if it exists)
                 if (item.container != null)
                 {
