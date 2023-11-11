@@ -9,7 +9,7 @@ public class StunOnCollision : StatusEffect<StunData>
         if (DoesThisAffectTarget(objectHit))
         {
             // Stun the enemy for a certain amount of seconds
-            objectHit.GetComponent<IStunnable>().GetStunned(StatusEffectData.stunDuration);
+            objectHit.GetComponent<IStunnable>().GetStunned(StatusEffectData.stunEffect);
             
         }
 

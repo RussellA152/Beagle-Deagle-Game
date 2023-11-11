@@ -13,8 +13,8 @@ public class PoolableParticle : MonoBehaviour, IPoolable
 
     private Vector3 _originalSize;
 
-    [SerializeField] private Transform originalParent;
-    [SerializeField] private Transform currentParent;
+    private Transform _originalParent;
+    private Transform _currentParent;
     
     
 
@@ -30,14 +30,14 @@ public class PoolableParticle : MonoBehaviour, IPoolable
 
     private void OnEnable()
     {
-        originalParent = transform.parent;
+        _originalParent = transform.parent;
     }
 
     private void OnDisable()
     {
-        if (originalParent != null)
+        if (_originalParent != null)
         {
-            transform.SetParent(originalParent);
+            transform.SetParent(_originalParent);
         }
         
         foreach (ParticleSystem particleSys in particleSystemGameObjects)
@@ -101,7 +101,7 @@ public class PoolableParticle : MonoBehaviour, IPoolable
         
         transformComponent.SetParent(transformToStickTo);
         
-        currentParent = transformComponent.parent;
+        _currentParent = transformComponent.parent;
     }
     
 }

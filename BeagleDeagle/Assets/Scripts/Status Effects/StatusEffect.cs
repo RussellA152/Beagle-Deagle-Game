@@ -5,19 +5,8 @@ using System;
 
 public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: StatusEffectData
 {
-
     private StatusEffectTypes _statusEffectTypes;
     protected T StatusEffectData;
-
-    // [SerializeField, RestrictedPrefab(typeof(PoolableParticle))]
-    // private GameObject statusEffectParticle;
-    //
-    // private int _statusEffectParticlePoolKey;
-
-    // private void Awake()
-    // {
-    //     _statusEffectParticlePoolKey = statusEffectParticle.GetComponent<IPoolable>().PoolKey;
-    // }
 
     ///-///////////////////////////////////////////////////////////
     /// Apply an effect to the object that was hit by the status effect.

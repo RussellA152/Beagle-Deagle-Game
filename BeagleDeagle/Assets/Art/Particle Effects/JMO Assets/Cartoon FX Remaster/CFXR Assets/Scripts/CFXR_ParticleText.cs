@@ -34,7 +34,8 @@ namespace CartoonFX
         [SerializeField] bool cumulativeDelay = false;
         [Range(0f, 2f)] [SerializeField] float compensateLifetime = 0;
 
-        [Header("Misc")]
+        [Header("Misc")] 
+        [SerializeField] bool preventBackwardText = true;
         [SerializeField] float lifetimeMultiplier = 1f;
         [Range(-90f, 90f)] [SerializeField] float rotation = -5f;
         [SerializeField] float sortingFudgeOffset = 0.1f;
@@ -318,6 +319,13 @@ namespace CartoonFX
                         ps.textureSheetAnimation.SetSprite(0, sprite);
 
                         mainModule.startRotation = Mathf.Deg2Rad * rotation;
+                        
+                        
+                        // ADDED MYSELF
+                        // This should ensure that text is always facing the correct direction no matter the transform's local scale
+                        // if (preventBackwardText && (transform.parent.localScale.x < 1 || transform.localScale.x < 1))
+                        //     transform.localScale *= -1f;
+           
                         mainModule.startColor = backgroundColor;
 
                         var customData = ps.customData;

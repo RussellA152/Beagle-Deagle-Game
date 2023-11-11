@@ -71,10 +71,20 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
     /// Disable the enemy's ability to move.
     /// Then start a coroutine to wait some time and remove the stun effect
     /// 
-    public void GetStunned(float duration)
-    {       
-        if(!IsStunned)
-            StartCoroutine(RemoveStunCoroutine(duration));
+    public void GetStunned(StunModifier stunModifier)
+    {
+        if (!IsStunned)
+        {
+            StartCoroutine(RemoveStunCoroutine(stunModifier));
+
+            if (stunModifier.particleEffect != null)
+            {
+                StartCoroutine(StartParticleEffect(
+                    ObjectPooler.Instance.GetPooledObject(stunModifier.particleEffect.GetComponent<IPoolable>().PoolKey)
+                        .GetComponent<PoolableParticle>(), stunModifier));
+            }
+        }
+            
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -138,11 +148,15 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
     ///-///////////////////////////////////////////////////////////
     /// Wait some time, then remove stun from enemy
     /// 
-    public IEnumerator RemoveStunCoroutine(float duration)
+    public IEnumerator RemoveStunCoroutine(StunModifier stunModifier)
     {
         IsStunned = true;
-        yield return new WaitForSeconds(duration);
+        stunModifier.isActive = true;
+        
+        yield return new WaitForSeconds(stunModifier.stunDuration);
+        
         IsStunned = false;
+        stunModifier.isActive = false;
     }
 
     #region MovementModifiers
@@ -186,7 +200,6 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable, I
         {
             RemoveMovementSpeedModifier(movementModifier);
         }
-
     }
 
     #endregion

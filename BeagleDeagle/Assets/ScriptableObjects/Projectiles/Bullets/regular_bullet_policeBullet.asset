@@ -23,7 +23,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   knockBackPower: {x: 0, y: 0}
-  bulletSpeed: 15
+  bulletSpeed: 10
   colliderDirection: 1
   sizeX: 1
   sizeY: 1
