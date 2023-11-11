@@ -59,6 +59,7 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
 
         //particleAOE.SetActive(true);
         AreaOfEffectScript.gameObject.SetActive(true);
+        AreaOfEffectScript.OnAreaOfEffectActivate();
 
         FreezePosition();
 

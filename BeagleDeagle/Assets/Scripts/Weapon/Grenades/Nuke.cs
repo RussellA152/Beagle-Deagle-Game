@@ -42,9 +42,13 @@ public class Nuke : Explosive<NukeData>, IPoolable
         yield return new WaitForSeconds(ExplosiveData.detonationTime);
 
         sprite.SetActive(false);
-        
-        if(AreaOfEffectScript != null)
+
+        if (AreaOfEffectScript != null)
+        {
             AreaOfEffectScript.gameObject.SetActive(true);
+            AreaOfEffectScript.OnAreaOfEffectActivate();
+        }
+            
 
         StartCoroutine(BrieflyShowGizmo());
 

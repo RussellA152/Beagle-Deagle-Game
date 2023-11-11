@@ -11,6 +11,9 @@ public class PoolableParticle : MonoBehaviour, IPoolable
 
     public ParticleSystem[] particleSystemGameObjects;
 
+    // Particles that should not rotate no matter what object they play on top of
+    //public ParticleSystem[] staticRotationParticles;
+
     private Vector3 _originalSize;
 
     private Transform _originalParent;
@@ -75,6 +78,7 @@ public class PoolableParticle : MonoBehaviour, IPoolable
     {
         foreach (ParticleSystem particleSys in particleSystemGameObjects)
         {
+            Debug.Log("STOP Particle!" + gameObject.name);
             particleSys.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             
             CFXR_Effect effect = particleSys.GetComponent<CFXR_Effect>();
@@ -85,12 +89,18 @@ public class PoolableParticle : MonoBehaviour, IPoolable
         }
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Move particle effect to the position of a transform. If you want to
+    /// have the particle effect continuously play on top of a transform, then use the StickParticleToTransform method.
     public void PlaceParticleOnTransform(Transform transformToPlaceAt)
     {
         transform.position = transformToPlaceAt.position;
         gameObject.SetActive(true);
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Give particle system a new parent transform so it can play its effect on top of that transform.
+    /// 
     public void StickParticleToTransform(Transform transformToStickTo)
     {
         Transform transformComponent = transform;
@@ -102,6 +112,27 @@ public class PoolableParticle : MonoBehaviour, IPoolable
         transformComponent.SetParent(transformToStickTo);
         
         _currentParent = transformComponent.parent;
+        
+        //FixParticleRotation();
     }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Don't let particle systems face the wrong direction (if they are in the staticRotationParticles array)
+    /// 
+    // private void FixParticleRotation()
+    // {
+    //     foreach (ParticleSystem particleSystem in staticRotationParticles)
+    //     {
+    //         // If the parent gameObject of the particle effect is flipped, then un-flip these particle systems
+    //         if (_currentParent.localScale.x < 1f)
+    //         {
+    //             var localScale = particleSystem.transform.localScale;
+    //             localScale = new Vector3(-1f * localScale.x,
+    //                 localScale.y, localScale.z);
+    //             
+    //             particleSystem.transform.localScale = localScale;
+    //         }
+    //     }
+    // }
     
 }

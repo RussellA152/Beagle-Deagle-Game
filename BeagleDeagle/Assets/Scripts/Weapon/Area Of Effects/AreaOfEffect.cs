@@ -56,20 +56,6 @@ public class AreaOfEffect : MonoBehaviour
 
     }
 
-    private void OnEnable()
-    {
-        if (areaOfEffectParticleEffect != null)
-        {
-            GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_particlePoolKey);
-            _particleUsed = newParticleEffect.GetComponent<PoolableParticle>();
-        
-            _particleUsed.PlaceParticleOnTransform(transform);
-
-            _particleUsed.PlayAllParticles(areaOfEffectData.aoeSpreadSize.x);
-        }
-        
-    }
-
     private void OnDisable()
     {
         if (_particleUsed != null)
@@ -136,6 +122,20 @@ public class AreaOfEffect : MonoBehaviour
                 
                 onAreaStay.Invoke(collision.gameObject);
             }
+        }
+    }
+
+    public void OnAreaOfEffectActivate()
+    {
+        if (areaOfEffectParticleEffect != null)
+        {
+            Debug.Log("HI IM ENABLED! " + gameObject.name);
+            GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_particlePoolKey);
+            _particleUsed = newParticleEffect.GetComponent<PoolableParticle>();
+        
+            _particleUsed.PlaceParticleOnTransform(transform);
+
+            _particleUsed.PlayAllParticles(areaOfEffectData.aoeSpreadSize.x);
         }
     }
 

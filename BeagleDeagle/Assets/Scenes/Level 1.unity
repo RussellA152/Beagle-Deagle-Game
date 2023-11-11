@@ -1499,7 +1499,7 @@ MonoBehaviour:
     container: {fileID: 425190051}
     pooled: []
     poolKey: 0
-  - amountToPool: 15
+  - amountToPool: 60
     objectToPool: {fileID: 3084706840994566313, guid: c0a56add2938172458a8dca155e4d161, type: 3}
     shouldExpand: 1
     container: {fileID: 425190051}
