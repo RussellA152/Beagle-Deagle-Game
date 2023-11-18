@@ -31,10 +31,10 @@ public class PlayerEvents : ScriptableObject
     public event Action<int> onPlayerLeveledUp;
 
     // When the player ranks up and obtains mandatory rewards, tell all listeners what mandatory reward the player has received
-    public event Action<Reward> onPlayerReceivedMandatoryReward;
+    public event Action<LevelUpReward> onPlayerReceivedMandatoryReward;
 
     // When the player ranks up, if they received optional rewards, tell all listeners what choices the player has for rewards (i.e. optional rewards)
-    public event Action<List<Reward>> onPlayerReceivedOptionalRewards; 
+    public event Action<List<LevelUpReward>> onPlayerReceivedOptionalRewards; 
 
     // Pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
     public event Action<PlayerData> onPlayerObtainedNewCharacterStats;
@@ -107,12 +107,12 @@ public class PlayerEvents : ScriptableObject
         onPlayerLeveledUp?.Invoke(newLevel);
     }
 
-    public void InvokePlayerReceivedMandatoryRewardEvent(Reward receivedReward)
+    public void InvokePlayerReceivedMandatoryRewardEvent(LevelUpReward receivedLevelUpReward)
     {
-        onPlayerReceivedMandatoryReward?.Invoke(receivedReward);
+        onPlayerReceivedMandatoryReward?.Invoke(receivedLevelUpReward);
     }
     
-    public void InvokePlayerReceivedPotentialRewardsEvent(List<Reward> rewardChoices)
+    public void InvokePlayerReceivedPotentialRewardsEvent(List<LevelUpReward> rewardChoices)
     {
         onPlayerReceivedOptionalRewards?.Invoke(rewardChoices);
     }

@@ -25,12 +25,12 @@ public class PlayerLevelUp : MonoBehaviour
 
     private void OnEnable()
     {
-        enemyEvents.onEnemyDeathXp += GainXpFromEnemyKill;
+        enemyEvents.onEnemyDeathXp += GainXp;
     }
 
     private void OnDisable()
     {
-        enemyEvents.onEnemyDeathXp -= GainXpFromEnemyKill;
+        enemyEvents.onEnemyDeathXp -= GainXp;
     }
 
     private void Start()
@@ -46,7 +46,7 @@ public class PlayerLevelUp : MonoBehaviour
     /// Whenever an enemy dies, gain an "amount" of xp.
     /// Then, invoke an event that the player's current xp count has changed.
     /// 
-    private void GainXpFromEnemyKill(int amount)
+    public void GainXp(int amount)
     {
         if (!_allowXpGain) return;
         
@@ -82,10 +82,10 @@ public class PlayerLevelUp : MonoBehaviour
     {
         Debug.Log($"Player has reached rank {newLevel}, give them a reward!");
         
-        List<Reward> optionalRewards = new List<Reward>();
+        List<LevelUpReward> optionalRewards = new List<LevelUpReward>();
         
         // Check all rewards that are given at this level
-        foreach (Reward reward in playerData.rewardsList.allRewards)
+        foreach (LevelUpReward reward in playerData.levelUpRewardsList.allRewards)
         {
             // If player meets the reward's level requirement...
             if (reward.LevelGiven == newLevel)

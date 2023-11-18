@@ -37,8 +37,8 @@ public class EnemyData : ScriptableObject
     [Header("Who to Chase?")]
     
     public LayerMask chaseLayer; // What kind of layer does this enemy follow? (ex. Player)
-    
-    [Range(0f, 10000f), Space(20)]
-    public int xpOnDeath;
+
+    // How much money or xp does this enemy give on death?
+    public CurrencyReward currencyRewardOnDeath;
 
 }

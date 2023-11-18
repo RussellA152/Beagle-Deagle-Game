@@ -26,7 +26,9 @@ MonoBehaviour:
   chaseLayer:
     serializedVersion: 2
     m_Bits: 128
-  xpOnDeath: 150
+  currencyRewardOnDeath:
+    xpAmount: 150
+    moneyAmount: 0
   whatHitBoxDamages:
     serializedVersion: 2
     m_Bits: 128

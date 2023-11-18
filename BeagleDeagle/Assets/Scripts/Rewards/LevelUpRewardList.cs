@@ -3,25 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewReward", menuName = "ScriptableObjects/LevelUpReward")]
-public class RewardList : ScriptableObject
+[CreateAssetMenu(fileName = "NewLevelUpReward", menuName = "ScriptableObjects/Rewards/LevelUpReward")]
+public class LevelUpRewardList : ScriptableObject
 {
     [SerializeField, NonReorderable]
-    private List<GunReward> gunRewards = new List<GunReward>();
+    private List<GunLevelUpReward> gunRewards = new List<GunLevelUpReward>();
     
     [SerializeField, NonReorderable, Space(20)]
-    private List<UtilityReward> utilityRewards = new List<UtilityReward>();
+    private List<UtilityLevelUpReward> utilityRewards = new List<UtilityLevelUpReward>();
     
     [SerializeField, NonReorderable, Space(20)]
-    private List<UltimateReward> ultimateRewards = new List<UltimateReward>();
+    private List<UltimateLevelUpReward> ultimateRewards = new List<UltimateLevelUpReward>();
 
-    public readonly List<Reward> allRewards = new List<Reward>();
+    public readonly List<LevelUpReward> allRewards = new List<LevelUpReward>();
 
     // Add all gun, utility ability, and ultimate ability scriptable objects to 1 list
     private void OnEnable()
     {
         allRewards.Clear();
-        
+
         foreach (var reward in gunRewards)
         {
             if (!allRewards.Contains(reward))
@@ -45,6 +45,7 @@ public class RewardList : ScriptableObject
                 allRewards.Add(reward);
             }
         }
+        
     }
 
 }

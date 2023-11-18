@@ -17,6 +17,9 @@ public class GameEvents : ScriptableObject
     // When the game is resumed after it has been paused... invoke this event
     public Action OnGameResumeAfterPause;
 
+    // When a map objective has been completed... invoke this event
+    public Action<CurrencyReward> OnMapObjectiveCompleted;
+
     public void InvokeOnGamePauseEvent()
     {
         OnGamePause?.Invoke();
@@ -25,5 +28,10 @@ public class GameEvents : ScriptableObject
     public void InvokeOnGameResumeEvent()
     {
         OnGameResumeAfterPause?.Invoke();
+    }
+
+    public void InvokeMapObjectiveCompletedEvent(CurrencyReward currencyReward)
+    {
+        OnMapObjectiveCompleted?.Invoke(currencyReward);
     }
 }

@@ -15,7 +15,7 @@ public class PlayerData : ScriptableObject
     public RuntimeAnimatorController animatorController;
 
     // What set of rewards does this character receive?
-    public RewardList rewardsList;
+    [FormerlySerializedAs("rewardsList")] public LevelUpRewardList levelUpRewardsList;
 
     [Header("Health")]
     [Range(1f, 2500f)] public float maxHealth;

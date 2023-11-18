@@ -26,7 +26,9 @@ MonoBehaviour:
   chaseLayer:
     serializedVersion: 2
     m_Bits: 128
-  xpOnDeath: 150
+  currencyRewardOnDeath:
+    xpAmount: 150
+    moneyAmount: 0
   bulletPrefab: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   bulletData: {fileID: 11400000, guid: be1d615a5892cc443a06ea3aed7be291, type: 2}
   statusEffects: {fileID: 0}

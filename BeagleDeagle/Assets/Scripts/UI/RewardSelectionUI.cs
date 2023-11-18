@@ -66,14 +66,14 @@ public class RewardSelectionUI : MonoBehaviour
         _playerGameObject = pGameObject;
     }
 
-    public void AddChoiceButton(List<Reward> rewardChoices)
+    public void AddChoiceButton(List<LevelUpReward> rewardChoices)
     {
         gamePauser.PauseGameAutomatically();
         
         optionalRewardPanel.enabled = true;
         
 
-        foreach (Reward potentialReward in rewardChoices)
+        foreach (LevelUpReward potentialReward in rewardChoices)
         {
             GameObject newButton = Instantiate(choicePrefab, optionalRewardPanel.transform, false);
 
@@ -94,17 +94,17 @@ public class RewardSelectionUI : MonoBehaviour
 
     }
 
-    private void GiveRewardToPlayerOnClick(Reward chosenReward)
+    private void GiveRewardToPlayerOnClick(LevelUpReward chosenLevelUpReward)
     {
         // Don't give a reward if the player already picked one
         if (_rewardWasChosen) return;
         
-        Debug.Log("Player picked " + chosenReward.Description);
+        Debug.Log("Player picked " + chosenLevelUpReward.Description);
 
         _rewardWasChosen = true;
         
         // Have reward give its data to the player
-        chosenReward.GiveDataToPlayer(_playerGameObject);
+        chosenLevelUpReward.GiveDataToPlayer(_playerGameObject);
         
         RemoveAllButtons();
     }
@@ -126,19 +126,19 @@ public class RewardSelectionUI : MonoBehaviour
         gamePauser.ResumeGame();
     }
 
-    private void DisplayMandatoryRewardDescription(Reward mandatoryReward)
+    private void DisplayMandatoryRewardDescription(LevelUpReward mandatoryLevelUpReward)
     {
-        StartCoroutine(RemoveDescriptionAfterTime(mandatoryReward));
+        StartCoroutine(RemoveDescriptionAfterTime(mandatoryLevelUpReward));
     }
 
     ///-///////////////////////////////////////////////////////////
     /// When the player receives a "mandatory" reward (meaning the player will always receive that reward, no choices),
     /// a text box will appear above the player's head with the description of the reward. Shortly after, it will disappear again.
-    private IEnumerator RemoveDescriptionAfterTime(Reward mandatoryReward)
+    private IEnumerator RemoveDescriptionAfterTime(LevelUpReward mandatoryLevelUpReward)
     {
         // Change text
         mandatoryRewardDescription.gameObject.SetActive(true);
-        mandatoryRewardDescription.text = mandatoryReward.Description;
+        mandatoryRewardDescription.text = mandatoryLevelUpReward.Description;
         
         yield return new WaitForSeconds(rewardDescriptionDisplayTime);
         

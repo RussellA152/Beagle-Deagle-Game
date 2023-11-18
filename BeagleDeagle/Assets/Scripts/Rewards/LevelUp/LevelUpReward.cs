@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// When the player reaches a certain level, they will be given a certain scriptableObject 
 /// as an upgrade to a gun, utility ability, or ultimate ability.
 /// 
-public abstract class Reward
+public abstract class LevelUpReward
 {
     [Range(1, 20),Tooltip("What level is the reward given at?")]
     public int LevelGiven;
@@ -27,10 +27,10 @@ public abstract class Reward
 }
 
 [System.Serializable]
-public class GunReward: Reward
+public class GunLevelUpReward: LevelUpReward
 {
     public GunData gunData;
-    public GunReward(GunData data, int level)
+    public GunLevelUpReward(GunData data, int level)
     {
         gunData = data;
         LevelGiven = level;
@@ -49,11 +49,11 @@ public class GunReward: Reward
 }
 
 [System.Serializable]
-public class UtilityReward: Reward
+public class UtilityLevelUpReward: LevelUpReward
 {
     public UtilityAbilityData utilityAbilityData;
     
-    public UtilityReward(UtilityAbilityData data, int level)
+    public UtilityLevelUpReward(UtilityAbilityData data, int level)
     {
         utilityAbilityData = data;
         LevelGiven = level;
@@ -71,10 +71,10 @@ public class UtilityReward: Reward
 }
 
 [System.Serializable]
-public class UltimateReward: Reward
+public class UltimateLevelUpReward: LevelUpReward
 {
     public UltimateAbilityData ultimateAbilityData;
-    public UltimateReward(UltimateAbilityData data, int level)
+    public UltimateLevelUpReward(UltimateAbilityData data, int level)
     {
         ultimateAbilityData = data;
         LevelGiven = level;
@@ -90,5 +90,6 @@ public class UltimateReward: Reward
         recipientGameObject.GetComponent<IUltimateUpdatable>().UpdateScriptableObject(ultimateAbilityData);
         Debug.Log($"{recipientGameObject.name} was given {ultimateAbilityData}");
     }
+    
 }
 
