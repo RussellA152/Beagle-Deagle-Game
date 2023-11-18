@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IKnockBackable
+public interface IKnockbackable
 {
     ///-///////////////////////////////////////////////////////////
     /// Apply a force/knockBack to an entity. For example, a grenade 

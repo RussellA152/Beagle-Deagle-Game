@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockBackable//, IModifierWithParticle
+public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable//, IModifierWithParticle
 {
     
     [Header("Data to Use")]

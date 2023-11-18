@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+///-///////////////////////////////////////////////////////////
+/// Objects that can be affected by modifiers and will have particle effects play on top of them will require this script.
+/// 
 public class ParticleEffectHandler : MonoBehaviour
 {
     // All modifiers currently playing on this object
@@ -22,11 +25,14 @@ public class ParticleEffectHandler : MonoBehaviour
             {
                 _activeModifierParticles.Add(modifier, particleToPlay);
         
+                // Stick the particle to this transform (set particle's parent to this transform),
+                // otherwise just move it to the transform's position.
                 if(stickToObject)
                     particleToPlay.StickParticleToTransform(transform);
                 else
                     particleToPlay.PlaceParticleOnTransform(transform);
             
+                // Particle effects that play on transforms will * probably * only need a size of 1
                 particleToPlay.PlayAllParticles(1f);
             }
         }

@@ -110,7 +110,6 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         // If this bullet already hit this enemy, then don't allow penetration or damage to occur
         if (_hitEnemies.Contains(collision.transform))
         {
-            Debug.Log("Hit already!");
             return;
         }
         
@@ -125,7 +124,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         }
         
         onBulletHit.Invoke(collision.gameObject);
-        Debug.Log(gameObject + " HIT " +  collision.gameObject);
+        //Debug.Log(gameObject + " HIT " +  collision.gameObject);
         
         
         // If this bullet hits what its allowed to
@@ -145,10 +144,12 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
                 
                 Vector2 knockBackDirection = rb.velocity.normalized;
 
-                // If the target is knockBack-able
-                if (collision.gameObject.GetComponent<IKnockBackable>() != null)
+                IKnockbackable knockbackableScript = collision.gameObject.GetComponent<IKnockbackable>();
+                
+                // If the target is knockback-able
+                if (knockbackableScript != null)
                 {
-                    collision.gameObject.GetComponent<IKnockBackable>().ApplyKnockBack(knockBackDirection, bulletData.knockBackPower);
+                    knockbackableScript.ApplyKnockBack(knockBackDirection, bulletData.knockBackPower);
                 }
             }
             
@@ -184,14 +185,10 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
             hitParticleEffect = ObjectPooler.Instance.GetPooledObject(_inanimateHitParticlePoolKey);
             particleUsed = hitParticleEffect.GetComponent<PoolableParticle>();
             particleUsed.PlaceParticleOnTransform(transform);
-            //hitParticleEffect.transform.position = transform.position;
         }
         
-        // Place hit particle effect at the position where the bullet hit its target
-        //hitParticleEffect.SetActive(true);
         particleUsed.PlayAllParticles(1f);
-        
-        
+
     }
 
     // Call this function each time this bullet hits their target
