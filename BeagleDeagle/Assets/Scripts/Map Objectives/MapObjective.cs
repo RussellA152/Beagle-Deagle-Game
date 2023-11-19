@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 ///-///////////////////////////////////////////////////////////
 /// Map Objectives are optional, timed activities in the game level besides the main activity of surviving the timer.
@@ -11,32 +12,20 @@ public abstract class MapObjective : MonoBehaviour
 {
     [SerializeField] private GameEvents gameEvents;
     // How long will it take for this objective to expire? (disappear after being ignored)
-    [SerializeField] private float timeUntilExpire;
+    [SerializeField, Range(1f, 180f)] 
+    private float timeUntilExpire;
 
     // How long will the player play this objective? (ex. Survive for "duration" seconds)
-    [SerializeField] private float duration;
+    [SerializeField, Range(1f, 180f)] 
+    private float duration;
 
-    [SerializeField] private CurrencyReward currencyRewardOnCompletion;
-
-    // Rewards given for completing this objective
-    //[SerializeField] private RewardList completionRewards;
-
-    private void OnEnable()
-    {
-        SetUpObjective();
-    }
+    [SerializeField] private CurrencyReward completionReward;
 
     private void OnDisable()
     {
         OnObjectiveDisable();
     }
 
-    ///-///////////////////////////////////////////////////////////
-    /// Start this objective and set up any tasks needed for the player 
-    /// to interact with this objective
-    /// 
-    protected abstract void SetUpObjective();
-    
     protected abstract void OnObjectiveDisable();
 
     ///-///////////////////////////////////////////////////////////
@@ -46,7 +35,7 @@ public abstract class MapObjective : MonoBehaviour
     protected virtual void OnObjectiveCompletion()
     {
         // Give reward
-        gameEvents.InvokeMapObjectiveCompletedEvent(currencyRewardOnCompletion);
+        gameEvents.InvokeMapObjectiveCompletedEvent(completionReward);
         
     }
     
