@@ -204,7 +204,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         muzzleFlash.transform.localPosition = weaponData.gunEffectsData.muzzleFlashPosition;
         
         // Stop reloading if player switched to a new gun (ammo will refill anyways)
-        _cooldownSystem.StopCooldown(Id);
+        _cooldownSystem.EndCooldown(Id);
         
         CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
         

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
 public class CooldownData
 {
     public int Id { get;  }
@@ -32,6 +33,11 @@ public class CooldownData
         RemainingTime = Mathf.Max(RemainingTime - deltaTime, 0f);
 
         return RemainingTime == 0f;
+    }
+
+    public void RefreshCooldownTime()
+    {
+        RemainingTime = startingTime;
     }
 
     public void EndTimer()

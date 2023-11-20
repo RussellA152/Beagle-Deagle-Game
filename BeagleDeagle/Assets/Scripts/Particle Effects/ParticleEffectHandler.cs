@@ -11,6 +11,11 @@ public class ParticleEffectHandler : MonoBehaviour
     // All modifiers currently playing on this object
     private Dictionary<Modifier, PoolableParticle> _activeModifierParticles = new Dictionary<Modifier, PoolableParticle>();
 
+    private void OnDisable()
+    {
+        _activeModifierParticles.Clear();
+    }
+
     ///-///////////////////////////////////////////////////////////
     /// Play a particle effect associated with a modifier, if it has one.
     /// This is how to play particle effects like fire on an enemy.
@@ -23,7 +28,7 @@ public class ParticleEffectHandler : MonoBehaviour
 
             if (particleToPlay != null)
             {
-                _activeModifierParticles.Add(modifier, particleToPlay);
+                _activeModifierParticles.TryAdd(modifier, particleToPlay);
         
                 // Stick the particle to this transform (set particle's parent to this transform),
                 // otherwise just move it to the transform's position.

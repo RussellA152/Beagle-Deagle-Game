@@ -71,6 +71,7 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
             currentMapObjective = PickRandomObjective();
         }
 
+        //CooldownSystem.PutOnCooldown(this);
     }
 
     private MapObjective PickRandomObjective()
@@ -103,24 +104,26 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
         return currentMapObjective;
     }
 
-    public void StartObjectiveAfterCompletion(MapObjective mapObjective)
+    public void ObjectiveWasActivated()
+    {
+        CooldownSystem.RemoveCooldown(Id);
+    }
+    
+
+    public void StartNewObjectiveAfterEnded(MapObjective mapObjective)
     {
         mapObjective.gameObject.SetActive(false);
-        
-        // Restart cooldown after completing an objective
-        CooldownSystem.StopCooldown(Id);
+
         CooldownSystem.PutOnCooldown(this);
     }
     
-    public void StartObjectiveAfterExpire(MapObjective mapObjective)
+    public void StartNewObjectiveAfterExpired(MapObjectiveExpire mapObjectiveExpire)
     {
-        mapObjective.gameObject.SetActive(false);
-        
-        // Restart cooldown after an objective expired
-        CooldownSystem.StopCooldown(Id);
+        mapObjectiveExpire.gameObject.SetActive(false);
+
         CooldownSystem.PutOnCooldown(this);
     }
-    
+
     public float GetNextObjectiveTime()
     {
         return CooldownSystem.GetRemainingDuration(Id);

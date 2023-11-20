@@ -32,6 +32,11 @@ public class SoulCollectObjective : MapObjective
         enemyEvents.onEnemyDeathGiveGameObject -= CollectEnemySoul;
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// When an enemy dies near the soul collector gameObject, then 
+    /// increment "collectedSouls" by 1. When collectedSouls reaches a threshold,
+    /// the objective is complete.
+    /// 
     private void CollectEnemySoul(GameObject enemyThatDied)
     {
         if (Vector2.Distance(transform.position, enemyThatDied.transform.position) <= collectRange)

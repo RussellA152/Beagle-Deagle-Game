@@ -22,7 +22,6 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
 
     public void RevertAllModifiers()
     {
-        
         damageOverTimeEffects.Clear();
     }
 

@@ -45,8 +45,11 @@ public class CooldownSystem : MonoBehaviour
     {
         _cooldowns.Add(new CooldownData(cooldown));
     }
-    
-    public void StopCooldown(int id)
+
+    ///-///////////////////////////////////////////////////////////
+    /// Set a cooldown to zero (will be considered completed)
+    /// 
+    public void EndCooldown(int id)
     {
         foreach (CooldownData cooldown in _cooldowns)
         {
@@ -57,6 +60,36 @@ public class CooldownSystem : MonoBehaviour
 
             cooldown.EndTimer();
 
+        }
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Remove a cooldown from list of cooldowns (will not be considered completed)
+    /// 
+    public void RemoveCooldown(int id)
+    {
+        for (int i = _cooldowns.Count - 1; i >= 0; i--)
+        {
+            if (_cooldowns[i].Id != id)
+            {
+                continue;
+            }
+
+            _cooldowns.RemoveAt(i);
+        }
+        
+    }
+
+    public void RefreshCooldown(int id)
+    {
+        foreach (CooldownData cooldown in _cooldowns)
+        {
+            if (cooldown.Id != id)
+            {
+                continue;
+            }
+
+            cooldown.RefreshCooldownTime();
         }
     }
 

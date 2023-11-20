@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 ///-///////////////////////////////////////////////////////////
 /// Map Objectives are optional, timed activities in the game level besides the main activity of surviving the timer.
@@ -12,34 +13,45 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
 {
     [SerializeField] private GameEvents gameEvents;
 
-    // Is this objective currently being played?
-    public bool IsActive { get; private set; }
+    [SerializeField] private List<Transform> potentialSpawnLocations = new List<Transform>();
 
+    private Transform _currentSpawnLocation;
+    private Transform _previousSpawnLocation;
+    
     // How long will the player play this objective? (ex. Survive for "duration" seconds)
     [SerializeField, Range(1f, 180f)] 
-    private float duration;
+    private float timeAllotted;
 
     [SerializeField] private CurrencyReward completionReward;
 
     protected CooldownSystem CooldownSystem;
+    private MapObjectiveExpire _mapObjectiveExpire;
 
     // Collider that player needs to touch to begin objective
     private CapsuleCollider2D _startObjectiveCollider;
+    
+    // Is this objective currently being played?
+    public bool IsActive { get; private set; }
 
     private void Awake()
     {
         Id = 50;
         CooldownSystem = GetComponent<CooldownSystem>();
-        CooldownDuration = duration;
+        CooldownDuration = timeAllotted;
 
+        _mapObjectiveExpire = GetComponent<MapObjectiveExpire>();
         _startObjectiveCollider = GetComponent<CapsuleCollider2D>();
-        
+
+    }
+
+    private void Start()
+    {
+        CooldownSystem.OnCooldownEnded += ObjectiveOutOfTime;
     }
 
     private void OnEnable()
     {
-        CooldownSystem.OnCooldownEnded += ObjectiveExpire;
-        
+
         OnObjectiveEnable();
     }
 
@@ -47,15 +59,18 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     {
         // Re-activate start collider
         _startObjectiveCollider.enabled = true;
-        
-        CooldownSystem.OnCooldownEnded -= ObjectiveExpire;
 
         OnObjectiveDisable();
     }
 
+    private void OnDestroy()
+    {
+        CooldownSystem.OnCooldownEnded -= ObjectiveOutOfTime;
+    }
+
     protected virtual void OnObjectiveEnable()
     {
-        //IsActive = true;
+        PlaceObjectiveAtRandomLocation();
     }
 
     protected virtual void OnObjectiveDisable()
@@ -72,19 +87,49 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         // Give reward
         gameEvents.InvokeMapObjectiveCompletedEvent(completionReward);
         
-        MapObjectiveManager.instance.StartObjectiveAfterCompletion(this);
+        MapObjectiveManager.instance.StartNewObjectiveAfterEnded(this);
+        
+        CooldownSystem.RemoveCooldown(Id);
         
     }
 
-    private void ObjectiveExpire(int cooldownId)
+    private void ObjectiveOutOfTime(int cooldownId)
     {
         if (Id == cooldownId)
         {
+            Debug.Log("Timer ENDED for " + gameObject + "!");
             IsActive = false;
-            MapObjectiveManager.instance.StartObjectiveAfterExpire(this);
-            Debug.Log("ACTIVITY EXPIRED!");
+            MapObjectiveManager.instance.StartNewObjectiveAfterEnded(this);
         }
            
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Place this objective at one of its potential spawn locations while avoiding
+    /// a previously used location.
+    /// 
+    private void PlaceObjectiveAtRandomLocation()
+    {
+        if (potentialSpawnLocations.Count > 1 && _previousSpawnLocation != null)
+        {
+            while (_currentSpawnLocation == _previousSpawnLocation)
+            {
+                int randomLocationIndex = Random.Range(0, potentialSpawnLocations.Count);
+
+                _currentSpawnLocation = potentialSpawnLocations[randomLocationIndex];
+            }
+        }
+        else
+        {
+            int randomLocationIndex = Random.Range(0, potentialSpawnLocations.Count);
+
+            _currentSpawnLocation = potentialSpawnLocations[randomLocationIndex];
+        }
+        
+
+        _previousSpawnLocation = _currentSpawnLocation;
+
+        transform.position = _currentSpawnLocation.position;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -92,10 +137,25 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         if (other.gameObject.CompareTag("Player"))
         {
             IsActive = true;
-            
+
             // Start objective when player enters 
             Debug.Log("Start objective timer!");
-            CooldownSystem.PutOnCooldown(this);
+
+            if (CooldownSystem.IsOnCooldown(Id))
+            {
+                CooldownSystem.RefreshCooldown(Id);
+                Debug.Log("REFRESH COOLDOWN FOR " + gameObject);
+            }
+                
+            else
+            {
+                CooldownSystem.PutOnCooldown(this);
+                Debug.Log("START COOLDOWN FOR " + gameObject);
+            }
+                
+            MapObjectiveManager.instance.ObjectiveWasActivated();
+            
+            _mapObjectiveExpire.RemoveExpireTimeOnActivate();
 
             // Disable start collider when player enters
             _startObjectiveCollider.enabled = false;
