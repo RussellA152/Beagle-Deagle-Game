@@ -10,6 +10,8 @@ using Random = UnityEngine.Random;
 /// 
 public class MapObjectiveManager : MonoBehaviour, IHasCooldown
 {
+    public static MapObjectiveManager instance;
+    
     [SerializeField] 
     private List<MapObjective> potentialMapObjectives = new List<MapObjective>();
 
@@ -20,25 +22,35 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
     private float timeBetweenObjectives = 5f;
 
     // Manager will need a cooldown to start another objective
-    private CooldownSystem _cooldownSystem;
+    public CooldownSystem CooldownSystem {get; private set;}
 
     private void Awake()
     {
+        instance = this;
+        
         // Setting cooldown Id and cooldown duration
         Id = 30;
         CooldownDuration = timeBetweenObjectives;
         
-        _cooldownSystem = GetComponent<CooldownSystem>();
+        CooldownSystem = GetComponent<CooldownSystem>();
 
         // Pick a random objective when cooldown ends
-        _cooldownSystem.OnCooldownEnded += StartNewObjective;
+        CooldownSystem.OnCooldownEnded += StartNewObjective;
         
+
     }
 
     private void Start()
     {
         // Start a cooldown for the first objective to start
-        _cooldownSystem.PutOnCooldown(this);
+        CooldownSystem.PutOnCooldown(this);
+
+        // Disable all map objectives at the start of the game
+        foreach (MapObjective mapObjective in potentialMapObjectives)
+        {
+            mapObjective.gameObject.SetActive(false);
+        }
+        
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -47,21 +59,18 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
     /// 
     private void StartNewObjective(int cooldownId)
     {
-        if (Id == cooldownId)
-        {
-            if (currentMapObjective != null)
-            {
-                Debug.Log("REMOVE PREVIOUS OBJECTIVE");
-                currentMapObjective.gameObject.SetActive(false);
-            }
-            
-            Debug.Log("START RANDOM OBJECTIVE");
+        if (Id != cooldownId) return;
 
+        if (currentMapObjective == null)
+        {
             currentMapObjective = PickRandomObjective();
-            
-            _cooldownSystem.PutOnCooldown(this);
         }
-        
+        else if (!currentMapObjective.IsActive)
+        {
+            currentMapObjective.gameObject.SetActive(false);
+            currentMapObjective = PickRandomObjective();
+        }
+
     }
 
     private MapObjective PickRandomObjective()
@@ -92,6 +101,29 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
         _previousMapObjective = currentMapObjective;
 
         return currentMapObjective;
+    }
+
+    public void StartObjectiveAfterCompletion(MapObjective mapObjective)
+    {
+        mapObjective.gameObject.SetActive(false);
+        
+        // Restart cooldown after completing an objective
+        CooldownSystem.StopCooldown(Id);
+        CooldownSystem.PutOnCooldown(this);
+    }
+    
+    public void StartObjectiveAfterExpire(MapObjective mapObjective)
+    {
+        mapObjective.gameObject.SetActive(false);
+        
+        // Restart cooldown after an objective expired
+        CooldownSystem.StopCooldown(Id);
+        CooldownSystem.PutOnCooldown(this);
+    }
+    
+    public float GetNextObjectiveTime()
+    {
+        return CooldownSystem.GetRemainingDuration(Id);
     }
 
     public int Id { get; set; }
