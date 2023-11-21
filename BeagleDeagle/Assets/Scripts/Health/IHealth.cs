@@ -10,10 +10,6 @@ public interface IHealth
     /// 
     public void ModifyHealth(float amount);
 
-    public void AddMaxHealthModifier(MaxHealthModifier modifierToAdd);
-
-    public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove);
-    
     ///-///////////////////////////////////////////////////////////
     /// Return the current health value of this entity
     /// 

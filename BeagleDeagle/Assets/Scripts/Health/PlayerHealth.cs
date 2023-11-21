@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour, IHealth, IPlayerDataUpdatable
+public class PlayerHealth : MonoBehaviour, IHealth, IHealthWIthModifiers, IPlayerDataUpdatable
 {
     [SerializeField] private PlayerEvents playerEvents;
     

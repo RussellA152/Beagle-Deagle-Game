@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class SoulCollectObjective : MapObjective
 {
-    [SerializeField] private EnemyEvents enemyEvents;
-    
     // How many souls need to be collected? 
     [SerializeField, Range(1,100)] 
     private int collectRequirement;
@@ -20,7 +18,7 @@ public class SoulCollectObjective : MapObjective
     protected override void OnObjectiveEnable()
     {
         base.OnObjectiveEnable();
-        enemyEvents.onEnemyDeathGiveGameObject += CollectEnemySoul;
+        EnemyManager.Instance.onEnemyDeathGiveGameObject += CollectEnemySoul;
     }
     
     protected override void OnObjectiveDisable()
@@ -29,7 +27,7 @@ public class SoulCollectObjective : MapObjective
         
         _collectedSouls = 0;
         
-        enemyEvents.onEnemyDeathGiveGameObject -= CollectEnemySoul;
+        EnemyManager.Instance.onEnemyDeathGiveGameObject -= CollectEnemySoul;
     }
 
     ///-///////////////////////////////////////////////////////////

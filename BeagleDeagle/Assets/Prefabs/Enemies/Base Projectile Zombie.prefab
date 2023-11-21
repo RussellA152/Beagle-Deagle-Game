@@ -95,6 +95,7 @@ MonoBehaviour:
   poolKey: 11
   enemyScriptableObject: {fileID: 11400000, guid: d97f4e9283956124cb59f55f59a122be, type: 2}
   target: {fileID: 4912910121122697808}
+  enemyEvents: {fileID: 11400000, guid: e5d63ef152feead4eb09d0bad482c6a9, type: 2}
   deathParticleEffect: {fileID: 5497711690300594199, guid: 446ab0f07b2f4b44fa8bc1bd51f439ea, type: 3}
 --- !u!114 &7500669978799673356
 MonoBehaviour:

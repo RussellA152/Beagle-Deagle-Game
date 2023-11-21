@@ -7,7 +7,7 @@ using UnityEngine.AI;
 /// Responsible for executing code based on enemy states. States include: Idle, Chasing, Attack, Stunned, and Death.
 /// This script holds references to the enemy's attack, movement, and health scripts.
 /// 
-public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpdatable where T: EnemyData
+public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IEnemyDataUpdatable where T: EnemyData
 {
     public EnemyState _state;
     
@@ -18,8 +18,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     public T enemyScriptableObject;
     
     [Header("Enemy's Target")]
-    [SerializeField] // TEMPORARY, WILL NEED A DIFFERENT WAY TO REFERENCE THE PLAYER *
-    private Transform target; // Who this enemy will chase and attack?
+    [SerializeField] private Transform target; // Who this enemy will chase and attack?
     
     [Header("Required Components")]
     private NavMeshAgent _agent;
@@ -30,7 +29,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     [Header("Required Scripts")]
     protected AIAttack<T> AttackScript;
     protected AIMovement MovementScript;
-    protected AIHealth HealthScript;
+    protected EnemyHealth HealthScript;
     protected DamageOverTimeHandler DamageOverTimeScript;
     protected ZombieAnimationHandler AnimationHandlerScript;
     
@@ -51,7 +50,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
         
         AttackScript = GetComponent<AIAttack<T>>();
         MovementScript = GetComponent<AIMovement>();
-        HealthScript = GetComponent<AIHealth>();
+        HealthScript = GetComponent<EnemyHealth>();
         DamageOverTimeScript = GetComponent<DamageOverTimeHandler>();
         AnimationHandlerScript = GetComponent<ZombieAnimationHandler>();
 
@@ -86,12 +85,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
     {
         _state = EnemyState.Idle;
 
-        // Target is almost always the player
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-        
-        // Give movement and attack script the target of this enemy
-        MovementScript.SetTarget(target);
-        AttackScript.SetTarget(target);
+        EnemyManager.Instance.RegisterNewEnemy(gameObject);
     }
 
     private void OnEnable()
@@ -302,5 +296,13 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IEnemyDataUpda
         // Draw a blue sphere indiciating how close enemy can be to follow player
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.chaseRange);
+    }
+
+    public void SetNewTarget(Transform newTarget)
+    {
+        target = newTarget;
+        
+        MovementScript.SetTarget(target);
+        AttackScript.SetTarget(target);
     }
 }

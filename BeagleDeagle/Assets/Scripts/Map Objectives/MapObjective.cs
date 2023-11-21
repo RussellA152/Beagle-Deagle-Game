@@ -26,9 +26,6 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
 
     protected CooldownSystem CooldownSystem;
     private MapObjectiveExpire _mapObjectiveExpire;
-
-    // Collider that player needs to touch to begin objective
-    //private CapsuleCollider2D _startObjectiveCollider;
     
     // Is this objective currently being played?
     public bool IsActive { get; private set; }
@@ -40,7 +37,6 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         CooldownDuration = timeAllotted;
 
         _mapObjectiveExpire = GetComponent<MapObjectiveExpire>();
-        //_startObjectiveCollider = GetComponent<CapsuleCollider2D>();
 
     }
 
@@ -99,6 +95,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         
     }
 
+    
     protected virtual void OnObjectiveEnter()
     {
         // If the objective is already active, don't try to activate again
@@ -125,13 +122,19 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         _mapObjectiveExpire.RemoveExpireTimeOnActivate();
     }
 
+    protected virtual void OnObjectiveOutOfTime()
+    {
+        Debug.Log("Timer ENDED for " + gameObject + "!");
+        IsActive = false;
+        MapObjectiveManager.instance.StartNewObjectiveAfterEnded(this);
+    }
+    
+
     private void ObjectiveOutOfTime(int cooldownId)
     {
         if (Id == cooldownId)
         {
-            Debug.Log("Timer ENDED for " + gameObject + "!");
-            IsActive = false;
-            MapObjectiveManager.instance.StartNewObjectiveAfterEnded(this);
+            OnObjectiveOutOfTime();
         }
            
     }

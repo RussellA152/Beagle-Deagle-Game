@@ -74,7 +74,7 @@ public class CooldownSystem : MonoBehaviour
             {
                 continue;
             }
-
+            
             _cooldowns.RemoveAt(i);
         }
         
