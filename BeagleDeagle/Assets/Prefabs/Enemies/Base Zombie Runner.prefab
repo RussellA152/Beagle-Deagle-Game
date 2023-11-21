@@ -325,6 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyEvents: {fileID: 11400000, guid: e5d63ef152feead4eb09d0bad482c6a9, type: 2}
+  currencyEvents: {fileID: 11400000, guid: 0129d1f239c35cc4ab9e40307e69b1b0, type: 2}
   enemyData: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
   maxHealthModifiers: []
 --- !u!114 &1452773915677320547

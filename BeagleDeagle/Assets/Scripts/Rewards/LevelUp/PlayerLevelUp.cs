@@ -13,7 +13,7 @@ public class PlayerLevelUp : MonoBehaviour
     [SerializeField] private PlayerData playerData;
     
     [SerializeField] private PlayerEvents playerEvents;
-    [SerializeField] private EnemyEvents enemyEvents;
+    [SerializeField] private CurrencyEvents currencyEvents;
     
     // The current rank that the player is at
     private int _currentLevel = 1;
@@ -25,12 +25,12 @@ public class PlayerLevelUp : MonoBehaviour
 
     private void OnEnable()
     {
-        enemyEvents.onEnemyDeathXp += GainXp;
+        currencyEvents.givePlayerXp += GainXp;
     }
 
     private void OnDisable()
     {
-        enemyEvents.onEnemyDeathXp -= GainXp;
+        currencyEvents.givePlayerXp -= GainXp;
     }
 
     private void Start()

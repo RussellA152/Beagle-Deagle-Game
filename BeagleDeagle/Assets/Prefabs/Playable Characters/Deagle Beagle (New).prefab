@@ -329,7 +329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  enemyEvents: {fileID: 11400000, guid: e5d63ef152feead4eb09d0bad482c6a9, type: 2}
+  currencyEvents: {fileID: 11400000, guid: 0129d1f239c35cc4ab9e40307e69b1b0, type: 2}
 --- !u!114 &2439171421654748749
 MonoBehaviour:
   m_ObjectHideFlags: 0

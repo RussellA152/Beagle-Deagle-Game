@@ -67,14 +67,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("WEAPON MISSING!");
         }
 
-        gameEvents.OnGamePause += DisableAllPlayerInput;
-        gameEvents.OnGameResumeAfterPause += EnableAllPlayerInput;
+        gameEvents.onGamePause += DisableAllPlayerInput;
+        gameEvents.onGameResumeAfterPause += EnableAllPlayerInput;
     }
 
     private void OnDisable()
     {
-        gameEvents.OnGamePause -= DisableAllPlayerInput;
-        gameEvents.OnGameResumeAfterPause -= EnableAllPlayerInput;
+        gameEvents.onGamePause -= DisableAllPlayerInput;
+        gameEvents.onGameResumeAfterPause -= EnableAllPlayerInput;
     }
 
     private void Start()

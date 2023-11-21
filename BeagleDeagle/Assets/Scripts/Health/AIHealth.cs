@@ -6,6 +6,8 @@ using UnityEngine;
 public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
 {
     [SerializeField] private EnemyEvents enemyEvents;
+
+    [SerializeField] private CurrencyEvents currencyEvents;
     
     [Header("Data to Use")]
     [SerializeField] private EnemyData enemyData;
@@ -51,7 +53,7 @@ public class AIHealth : MonoBehaviour, IHealth, IEnemyDataUpdatable
             _isDead = true;
             
             // Give the player a certain amount of xp upon death
-            enemyEvents.InvokeGiveXp(enemyData.currencyRewardOnDeath.xpAmount);
+            currencyEvents.InvokeGiveXp(enemyData.currencyRewardOnDeath.xpAmount);
             // Tell other scripts that this enemy has died
             enemyEvents.InvokeEnemyDeathGiveGameObject(gameObject);
         }

@@ -10,28 +10,20 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameEvent/GameEvents")]
 public class GameEvents : ScriptableObject
 {
-
     // After the game has paused... invoke this event
-    public Action OnGamePause;
+    public event Action onGamePause;
 
     // When the game is resumed after it has been paused... invoke this event
-    public Action OnGameResumeAfterPause;
-
-    // When a map objective has been completed... invoke this event
-    public Action<CurrencyReward> OnMapObjectiveCompleted;
+    public event Action onGameResumeAfterPause;
 
     public void InvokeOnGamePauseEvent()
     {
-        OnGamePause?.Invoke();
+        onGamePause?.Invoke();
     }
 
     public void InvokeOnGameResumeEvent()
     {
-        OnGameResumeAfterPause?.Invoke();
+        onGameResumeAfterPause?.Invoke();
     }
-
-    public void InvokeMapObjectiveCompletedEvent(CurrencyReward currencyReward)
-    {
-        OnMapObjectiveCompleted?.Invoke(currencyReward);
-    }
+    
 }

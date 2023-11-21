@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 /// 
 public abstract class MapObjective : MonoBehaviour, IHasCooldown
 {
-    [SerializeField] private GameEvents gameEvents;
+    [SerializeField] private CurrencyEvents currencyEvents;
 
     [SerializeField] private List<Transform> potentialSpawnLocations = new List<Transform>();
 
@@ -28,7 +28,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     private MapObjectiveExpire _mapObjectiveExpire;
 
     // Collider that player needs to touch to begin objective
-    private CapsuleCollider2D _startObjectiveCollider;
+    //private CapsuleCollider2D _startObjectiveCollider;
     
     // Is this objective currently being played?
     public bool IsActive { get; private set; }
@@ -40,7 +40,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         CooldownDuration = timeAllotted;
 
         _mapObjectiveExpire = GetComponent<MapObjectiveExpire>();
-        _startObjectiveCollider = GetComponent<CapsuleCollider2D>();
+        //_startObjectiveCollider = GetComponent<CapsuleCollider2D>();
 
     }
 
@@ -57,15 +57,21 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
 
     private void OnDisable()
     {
-        // Re-activate start collider
-        _startObjectiveCollider.enabled = true;
-
         OnObjectiveDisable();
     }
 
     private void OnDestroy()
     {
         CooldownSystem.OnCooldownEnded -= ObjectiveOutOfTime;
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            OnObjectiveEnter();
+        }
+        
     }
 
     protected virtual void OnObjectiveEnable()
@@ -85,12 +91,38 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     protected virtual void OnObjectiveCompletion()
     {
         // Give reward
-        gameEvents.InvokeMapObjectiveCompletedEvent(completionReward);
+        currencyEvents.InvokeGiveXp(completionReward.xpAmount);
         
         MapObjectiveManager.instance.StartNewObjectiveAfterEnded(this);
         
         CooldownSystem.RemoveCooldown(Id);
         
+    }
+
+    protected virtual void OnObjectiveEnter()
+    {
+        // If the objective is already active, don't try to activate again
+        if (IsActive) return;
+        
+        IsActive = true;
+        
+        // Start objective's timeAllotted timer
+        if (CooldownSystem.IsOnCooldown(Id))
+        {
+            CooldownSystem.RefreshCooldown(Id);
+            Debug.Log("REFRESH COOLDOWN FOR " + gameObject);
+        }
+                
+        else
+        {
+            CooldownSystem.PutOnCooldown(this);
+            Debug.Log("START COOLDOWN FOR " + gameObject);
+        }
+                
+        MapObjectiveManager.instance.ObjectiveWasActivated();
+            
+        // Objective will no longer expire once activated
+        _mapObjectiveExpire.RemoveExpireTimeOnActivate();
     }
 
     private void ObjectiveOutOfTime(int cooldownId)
@@ -130,37 +162,6 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         _previousSpawnLocation = _currentSpawnLocation;
 
         transform.position = _currentSpawnLocation.position;
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            IsActive = true;
-
-            // Start objective when player enters 
-            Debug.Log("Start objective timer!");
-
-            if (CooldownSystem.IsOnCooldown(Id))
-            {
-                CooldownSystem.RefreshCooldown(Id);
-                Debug.Log("REFRESH COOLDOWN FOR " + gameObject);
-            }
-                
-            else
-            {
-                CooldownSystem.PutOnCooldown(this);
-                Debug.Log("START COOLDOWN FOR " + gameObject);
-            }
-                
-            MapObjectiveManager.instance.ObjectiveWasActivated();
-            
-            _mapObjectiveExpire.RemoveExpireTimeOnActivate();
-
-            // Disable start collider when player enters
-            _startObjectiveCollider.enabled = false;
-        }
-        
     }
 
     public int Id { get; set; }

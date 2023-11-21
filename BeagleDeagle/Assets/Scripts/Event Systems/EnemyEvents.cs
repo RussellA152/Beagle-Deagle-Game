@@ -11,9 +11,7 @@ using UnityEngine;
 public class EnemyEvents : ScriptableObject
 {
     // Pass the gameObject of the enemy that died
-    public event Action<GameObject> onEnemyDeathGiveGameObject; 
-    // Pass the amount of xp that an enemy will grant upon death to the gameObject that killed them
-    public event Action<int> onEnemyDeathXp;
+    public event Action<GameObject> onEnemyDeathGiveGameObject;
 
     ///-///////////////////////////////////////////////////////////
     /// When an enemy is killed, pass their gameObject to other scripts
@@ -22,12 +20,5 @@ public class EnemyEvents : ScriptableObject
     public void InvokeEnemyDeathGiveGameObject(GameObject enemyGameObject)
     {
         onEnemyDeathGiveGameObject?.Invoke(enemyGameObject);
-    }
-    ///-///////////////////////////////////////////////////////////
-    /// When an enemy is killed, pass the amount of xp that they should give.
-    /// 
-    public void InvokeGiveXp(int xpAmount)
-    {
-        onEnemyDeathXp?.Invoke(xpAmount);
     }
 }
