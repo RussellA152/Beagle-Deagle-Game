@@ -48,6 +48,7 @@ public class SoulCollectObjective : MapObjective
             Debug.Log("MAX SOULS HAS BEEN REACHED. OBJECTIVE COMPLETED!");
             
             OnObjectiveCompletion();
+            RemoveCooldown();
         }
     }
     

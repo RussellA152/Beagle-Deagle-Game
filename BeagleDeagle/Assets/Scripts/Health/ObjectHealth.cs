@@ -15,7 +15,15 @@ public class ObjectHealth : MonoBehaviour, IHealth
     
     // Is the enemy currently dead?
     private bool _isDead;
-    
+
+    private void Start()
+    {
+        _isDead = false;
+
+        _currentHealth = maxHealth;
+    }
+
+
     public virtual void ModifyHealth(float amount)
     {
         // Calculate the potential new health value

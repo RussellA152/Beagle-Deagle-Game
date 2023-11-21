@@ -22,9 +22,12 @@ public class SurvivalAreaObjective : MapObjective
             _elapsedTimeInsideArea += Time.deltaTime;
         
         // Complete objective once player has spent enough time inside survival area
-        if(_elapsedTimeInsideArea >= timeRequiredToStayInside)
+        if (_elapsedTimeInsideArea >= timeRequiredToStayInside)
+        {
             OnObjectiveCompletion();
-        
+            RemoveCooldown();
+        }
+
     }
 
     protected override void OnObjectiveDisable()

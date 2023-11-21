@@ -47,7 +47,6 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
 
     private void OnEnable()
     {
-
         OnObjectiveEnable();
     }
 
@@ -90,9 +89,16 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         currencyEvents.InvokeGiveXp(completionReward.xpAmount);
         
         MapObjectiveManager.instance.StartNewObjectiveAfterEnded(this);
-        
-        CooldownSystem.RemoveCooldown(Id);
-        
+
+    }
+
+    // All objectives will remove their cooldown on completion except for the DefendObjective.
+    // This is because the DefendObjective must run out of time to be considered completed, which results
+    // in the cooldown being removed anyways.
+    protected void RemoveCooldown()
+    {
+        if(CooldownSystem.IsOnCooldown(Id))
+            CooldownSystem.RemoveCooldown(Id);
     }
 
     

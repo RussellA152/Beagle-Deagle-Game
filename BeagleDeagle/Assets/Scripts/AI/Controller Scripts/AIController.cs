@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 ///-///////////////////////////////////////////////////////////
 /// Responsible for executing code based on enemy states. States include: Idle, Chasing, Attack, Stunned, and Death.
@@ -9,7 +10,7 @@ using UnityEngine.AI;
 /// 
 public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IEnemyDataUpdatable where T: EnemyData
 {
-    public EnemyState _state;
+    public EnemyState state;
     
     [SerializeField]
     private int poolKey;
@@ -17,14 +18,13 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     [Header("Data to Use")]
     public T enemyScriptableObject;
     
-    [Header("Enemy's Target")]
-    [SerializeField] private Transform target; // Who this enemy will chase and attack?
+    private Transform _target; // Who this enemy will chase and attack?
     
     [Header("Required Components")]
     private NavMeshAgent _agent;
     private Collider2D _bodyCollider;
     [SerializeField] private GameObject deathParticleEffect;
-    private int deathParticleEffectPoolKey;
+    private int _deathParticleEffectPoolKey;
 
     [Header("Required Scripts")]
     protected AIAttack<T> AttackScript;
@@ -54,7 +54,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
         DamageOverTimeScript = GetComponent<DamageOverTimeHandler>();
         AnimationHandlerScript = GetComponent<ZombieAnimationHandler>();
 
-        deathParticleEffectPoolKey = deathParticleEffect.GetComponent<IPoolable>().PoolKey;
+        _deathParticleEffectPoolKey = deathParticleEffect.GetComponent<IPoolable>().PoolKey;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -64,9 +64,6 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     {
         // Not moving towards player or anyone
         Idle,
-
-        // Enemy is spawning behind barrier or from the ground
-        //Spawning,
 
         // Moving towards player
         Chase,
@@ -83,7 +80,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     }
     protected virtual void Start()
     {
-        _state = EnemyState.Idle;
+        state = EnemyState.Idle;
 
         EnemyManager.Instance.RegisterNewEnemy(gameObject);
     }
@@ -91,10 +88,18 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     private void OnEnable()
     {
         // When enemy spawns in, they start as Idle
-        _state = EnemyState.Idle;
+        state = EnemyState.Idle;
         
         // Re-enable the enemy's body collider (we disable it when they die)
         _bodyCollider.enabled = true;
+    }
+    
+    public void SetNewTarget(Transform newTarget)
+    {
+        _target = newTarget;
+        
+        MovementScript.SetTarget(_target);
+        AttackScript.SetTarget(_target);
     }
 
     private void Update()
@@ -109,7 +114,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
         // Update this enemy's state
         CheckState();
 
-        switch (_state)
+        switch (state)
         {
             case EnemyState.Idle:
                 OnIdle();
@@ -138,48 +143,48 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     {
         if (HealthScript.IsDead())
         {
-            _state = EnemyState.Death;
+            state = EnemyState.Death;
             return;
         }
 
         if (MovementScript.IsStunned)
         {
-            _state = EnemyState.Stunned;
+            state = EnemyState.Stunned;
             return;
         }
 
         // If the enemy is not dead...
-        if (_state != EnemyState.Death)
+        if (state != EnemyState.Death)
         {
             if (_inChaseRange)
             {
                 // If target is in attack range and the enemy's attack is off cooldown, then attack
                 if (_inAttackRange && AttackScript.GetCanAttack())
                 {
-                    _state = EnemyState.Attack;
+                    state = EnemyState.Attack;
                 }
                 // If the target is not in attack range, and the enemy is still attacking and the attack is on cooldown
                 // Make the enemy go back to idle so they can change to another state
-                else if (!_inAttackRange && _state == EnemyState.Attack && !AttackScript.GetCanAttack())
+                else if (!_inAttackRange && state == EnemyState.Attack && !AttackScript.GetCanAttack())
                 {
-                    _state = EnemyState.Idle;
+                    state = EnemyState.Idle;
                 }
                 // If the target is not in attack range, and the enemy is not playing their attack animation...
                 // Then the enemy is no longer attacking the target, and can start chasing them
                 else if(!_inAttackRange && !AnimationHandlerScript.animator.GetBool("isAttacking"))
                 {
-                    _state = EnemyState.Chase;
+                    state = EnemyState.Chase;
                 }
                 // If the target is in attack range, but the enemy's attack is on cooldown, then go to Idle state
                 else if (_inAttackRange && !AttackScript.GetCanAttack())
                 {
-                    _state = EnemyState.Idle;
+                    state = EnemyState.Idle;
                 }
 
             }
             else
             {
-                _state = EnemyState.Idle;
+                state = EnemyState.Idle;
             }
 
         }
@@ -201,8 +206,8 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
         MovementScript.AllowMovement(true);
 
         // If there's a target, then move towards them
-        if (target != null)
-            _agent.SetDestination(target.position);
+        if (_target != null)
+            _agent.SetDestination(_target.position);
     }
 
     protected virtual void OnAttack()
@@ -245,7 +250,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     /// 
     public void DisableCorpse()
     {
-        GameObject particleEffect = ObjectPooler.Instance.GetPooledObject(deathParticleEffectPoolKey);
+        GameObject particleEffect = ObjectPooler.Instance.GetPooledObject(_deathParticleEffectPoolKey);
 
         PoolableParticle particleUsed = particleEffect.GetComponent<PoolableParticle>();
         
@@ -296,13 +301,5 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
         // Draw a blue sphere indiciating how close enemy can be to follow player
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, enemyScriptableObject.chaseRange);
-    }
-
-    public void SetNewTarget(Transform newTarget)
-    {
-        target = newTarget;
-        
-        MovementScript.SetTarget(target);
-        AttackScript.SetTarget(target);
     }
 }

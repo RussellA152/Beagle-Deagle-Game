@@ -47,7 +47,10 @@ public class EnemyManager : MonoBehaviour
         
         InvokeEnemyWasInstantiated(newEnemy);
     }
-    
+
+    ///-///////////////////////////////////////////////////////////
+    /// Tell all enemies that they have a new object to follow and attack
+    /// 
     public void ChangeAllEnemyTarget(Transform newTarget)
     {
         foreach (IHasTarget enemyWithTarget in _allEnemiesWithTargets)

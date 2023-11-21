@@ -41,6 +41,7 @@ public class DefendObjective : MapObjective
         // If so, the player successfully completed this objective, otherwise they failed to defend the object.
         if (!_objectWithHealth.IsDead())
         {
+            // * Do not remove cooldown because cooldown is already removed *
             OnObjectiveCompletion();
         }
         else
