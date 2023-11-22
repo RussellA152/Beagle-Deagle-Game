@@ -15,11 +15,11 @@ public class DefendObjective : MapObjective
             OnObjectiveOutOfTime();
     }
 
-    protected override void OnObjectiveEnable()
+    protected override void OnObjectiveAwake()
     {
-        base.OnObjectiveEnable();
-        _objectWithHealth = GetComponentInChildren<ObjectHealth>();
+        base.OnObjectiveAwake();
         
+        _objectWithHealth = GetComponentInChildren<ObjectHealth>();
     }
 
     protected override void OnObjectiveEnter()

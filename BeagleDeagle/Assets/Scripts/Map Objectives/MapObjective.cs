@@ -32,12 +32,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
 
     private void Awake()
     {
-        Id = 50;
-        CooldownSystem = GetComponent<CooldownSystem>();
-        CooldownDuration = timeAllotted;
-
-        _mapObjectiveExpire = GetComponent<MapObjectiveExpire>();
-
+        OnObjectiveAwake();
     }
 
     private void Start()
@@ -67,6 +62,15 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
             OnObjectiveEnter();
         }
         
+    }
+
+    protected virtual void OnObjectiveAwake()
+    {
+        Id = 50;
+        CooldownSystem = GetComponent<CooldownSystem>();
+        CooldownDuration = timeAllotted;
+
+        _mapObjectiveExpire = GetComponent<MapObjectiveExpire>();
     }
 
     protected virtual void OnObjectiveEnable()

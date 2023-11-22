@@ -426,7 +426,7 @@ public class OffScreenSpawner : MonoBehaviour
         }
     }
     
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.black;
         Gizmos.DrawLine(new Vector3(leftBounds, topBounds), new Vector3(rightBounds, topBounds));
