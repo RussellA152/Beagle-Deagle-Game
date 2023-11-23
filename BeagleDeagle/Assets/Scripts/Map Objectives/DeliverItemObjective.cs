@@ -44,4 +44,9 @@ public class DeliverItemObjective : MapObjective
         _waypointIndicator.enableSprite = false;
         _waypointIndicator.enableText = false;
     }
+
+    public override string GetObjectiveDescription()
+    {
+        return "Deliver: " + (int)CooldownSystem.GetRemainingDuration(Id) + "s";
+    }
 }

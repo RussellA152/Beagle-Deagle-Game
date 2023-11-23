@@ -30,6 +30,11 @@ public class SoulCollectObjective : MapObjective
         EnemyManager.Instance.onEnemyDeathGiveGameObject -= CollectEnemySoul;
     }
 
+    public override string GetObjectiveDescription()
+    {
+        return "Souls: " + _collectedSouls;
+    }
+
     ///-///////////////////////////////////////////////////////////
     /// When an enemy dies near the soul collector gameObject, then 
     /// increment "collectedSouls" by 1. When collectedSouls reaches a threshold,

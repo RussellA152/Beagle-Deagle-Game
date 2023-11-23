@@ -44,6 +44,11 @@ public class SurvivalAreaObjective : MapObjective
         _playerInsideArea = true;
     }
 
+    public override string GetObjectiveDescription()
+    {
+        return "Survive: " + (int) _elapsedTimeInsideArea + "s";
+    }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))

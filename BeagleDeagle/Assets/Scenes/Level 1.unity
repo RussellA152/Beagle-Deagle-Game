@@ -537,6 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c48d47728fa467c4ea975082df712916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameEvents: {fileID: 11400000, guid: 4314cd15feeb5de469dda4a888348c8a, type: 2}
   potentialMapObjectives:
   - {fileID: 921930830}
   - {fileID: 263960615}
@@ -1687,7 +1688,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c488769c7ce1a43b3fa22f07992264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveBegan: {fileID: 11400000, guid: fe73cd89da7b7914eb99547fc28646a8, type: 2}
   offScreenSpawnerScript: {fileID: 913910685}
   difficultyFactor: 1
   waves:
@@ -2306,6 +2306,7 @@ GameObject:
   - component: {fileID: 579705704}
   - component: {fileID: 579705710}
   - component: {fileID: 579705709}
+  - component: {fileID: 579705711}
   m_Layer: 5
   m_Name: Game UI
   m_TagString: Canvas
@@ -2325,7 +2326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0451d7bbb91b3a64aaff63b1447881b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wavesBegan: {fileID: 11400000, guid: fe73cd89da7b7914eb99547fc28646a8, type: 2}
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   waveMessageText: {fileID: 0}
   healthBar: {fileID: 1102519887}
@@ -2471,7 +2471,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTimeText: {fileID: 494875136}
-  nextObjectiveTimeText: {fileID: 1119679905}
+--- !u!114 &579705711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579705703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7da6a0ab2097a43abce6ac7aee9870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvents: {fileID: 11400000, guid: 4314cd15feeb5de469dda4a888348c8a, type: 2}
+  objectiveTextBox: {fileID: 1119679905}
+  objectiveTimerRectTransform: {fileID: 187799451}
 --- !u!1 &597972801
 GameObject:
   m_ObjectHideFlags: 0
@@ -5846,9 +5860,9 @@ RectTransform:
   m_Father: {fileID: 1138191028}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 137.5, y: -37.5}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1119679905
@@ -6085,8 +6099,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -131.8}
-  m_SizeDelta: {x: 275, y: 75}
+  m_AnchoredPosition: {x: 0, y: -135.2}
+  m_SizeDelta: {x: 350, y: 75}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1138191029
 MonoBehaviour:

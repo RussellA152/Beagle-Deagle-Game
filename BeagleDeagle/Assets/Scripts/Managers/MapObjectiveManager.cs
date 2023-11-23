@@ -11,6 +11,8 @@ using Random = UnityEngine.Random;
 public class MapObjectiveManager : MonoBehaviour, IHasCooldown
 {
     public static MapObjectiveManager instance;
+
+    [SerializeField] private GameEvents gameEvents;
     
     [SerializeField] 
     private List<MapObjective> potentialMapObjectives = new List<MapObjective>();
@@ -104,9 +106,11 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
         return currentMapObjective;
     }
 
-    public void ObjectiveWasActivated()
+    public void ObjectiveWasActivated(MapObjective mapObjective)
     {
         CooldownSystem.RemoveCooldown(Id);
+        
+        gameEvents.InvokeMapObjectiveBeginEvent(mapObjective);
     }
     
 
@@ -115,6 +119,8 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
         mapObjective.gameObject.SetActive(false);
 
         CooldownSystem.PutOnCooldown(this);
+        
+        gameEvents.InvokeMapObjectiveEndedEvent(mapObjective);
     }
     
     public void StartNewObjectiveAfterExpired(MapObjectiveExpire mapObjectiveExpire)
@@ -122,11 +128,6 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
         mapObjectiveExpire.gameObject.SetActive(false);
 
         CooldownSystem.PutOnCooldown(this);
-    }
-
-    public float GetNextObjectiveTime()
-    {
-        return CooldownSystem.GetRemainingDuration(Id);
     }
 
     public int Id { get; set; }

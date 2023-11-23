@@ -18,11 +18,11 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     private Transform _currentSpawnLocation;
     private Transform _previousSpawnLocation;
     
+    [SerializeField] private CurrencyReward completionReward;
+    
     // How long will the player play this objective? (ex. Survive for "duration" seconds)
     [SerializeField, Range(1f, 180f)] 
     private float timeAllotted;
-
-    [SerializeField] private CurrencyReward completionReward;
 
     protected CooldownSystem CooldownSystem;
     private MapObjectiveExpire _mapObjectiveExpire;
@@ -112,7 +112,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         if (IsActive) return;
         
         IsActive = true;
-        
+
         // Start objective's timeAllotted timer
         if (CooldownSystem.IsOnCooldown(Id))
         {
@@ -125,8 +125,8 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
             CooldownSystem.PutOnCooldown(this);
             Debug.Log("START COOLDOWN FOR " + gameObject);
         }
-                
-        MapObjectiveManager.instance.ObjectiveWasActivated();
+        
+        MapObjectiveManager.instance.ObjectiveWasActivated(this);
             
         // Objective will no longer expire once activated
         _mapObjectiveExpire.RemoveExpireTimeOnActivate();
@@ -148,6 +148,8 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         }
            
     }
+
+    public abstract string GetObjectiveDescription();
 
     ///-///////////////////////////////////////////////////////////
     /// Place this objective at one of its potential spawn locations while avoiding
@@ -175,6 +177,11 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         _previousSpawnLocation = _currentSpawnLocation;
 
         transform.position = _currentSpawnLocation.position;
+    }
+
+    public float GetTimeRemaining()
+    {
+        return CooldownSystem.GetRemainingDuration(Id);
     }
 
     public int Id { get; set; }

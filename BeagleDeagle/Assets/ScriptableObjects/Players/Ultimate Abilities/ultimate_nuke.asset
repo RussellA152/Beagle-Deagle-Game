@@ -16,7 +16,7 @@ MonoBehaviour:
   abilitySprite: {fileID: 21300000, guid: 47147c2120c657a49b8ef77fc8a073fc, type: 3}
   abilityDamage: 200
   cooldown: 3
-  duration: 10
+  duration: 5
   startTime: 0
   nukePrefab: {fileID: 8164879991046117895, guid: aa33ae65cdafcb0459a60d94822c128b, type: 3}
   nukeData: {fileID: 11400000, guid: 76af1c12408bb984e8e85236fff79b1d, type: 2}

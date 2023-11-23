@@ -13,13 +13,7 @@ public class PlayerStatsUI : MonoBehaviour
 {
     [Header("Event Systems")]
     [SerializeField]
-    private WaveBeginEvents wavesBegan;
-
-    [SerializeField]
     private PlayerEvents playerEvents;
-
-    // Needed to know basic stats and values specific to each character (xp needed to rank up)
-    //private PlayerData _playerData;
 
     [SerializeField] private TextMeshProUGUI waveMessageText;
 
@@ -70,8 +64,6 @@ public class PlayerStatsUI : MonoBehaviour
     
     private void OnEnable()
     {
-        wavesBegan.changeHUDTextEvent += UpdateWaveMessageText;
-
         playerEvents.onPlayerCurrentHealthChanged += UpdatePlayerCurrentHealthText;
 
         playerEvents.onPlayerMaxHealthChanged += UpdatePlayerMaxHealthText;
@@ -88,8 +80,6 @@ public class PlayerStatsUI : MonoBehaviour
 
     private void OnDisable()
     {
-        wavesBegan.changeHUDTextEvent -= UpdateWaveMessageText;
-
         playerEvents.onPlayerCurrentHealthChanged -= UpdatePlayerCurrentHealthText;
 
         playerEvents.onPlayerMaxHealthChanged -= UpdatePlayerMaxHealthText;

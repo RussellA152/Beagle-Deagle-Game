@@ -55,4 +55,9 @@ public class DefendObjective : MapObjective
         }
         
     }
+
+    public override string GetObjectiveDescription()
+    {
+        return "Defend: " + (int) CooldownSystem.GetRemainingDuration(Id) + "s";
+    }
 }

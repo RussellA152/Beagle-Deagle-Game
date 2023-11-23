@@ -112,7 +112,7 @@ public class GamePauser : MonoBehaviour
         StartCoroutine(GamePauseDelay());
 
         // Tell all listeners that the game was paused
-        gameEvents.InvokeOnGamePauseEvent();
+        gameEvents.InvokeGamePauseEvent();
     }
 
     // Small delay before allowing game to be resumed after being paused
@@ -133,6 +133,6 @@ public class GamePauser : MonoBehaviour
         _gamePausedAutomatically = false;
         
         // Tell all listeners that the game was unpaused
-        gameEvents.InvokeOnGameResumeEvent();
+        gameEvents.InvokeGameResumeEvent();
     }
 }

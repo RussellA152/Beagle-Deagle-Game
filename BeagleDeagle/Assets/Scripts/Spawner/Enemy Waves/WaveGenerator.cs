@@ -7,8 +7,6 @@ using System.Linq;
 
 public class WaveGenerator : MonoBehaviour
 {
-    public WaveBeginEvents waveBegan;
-
     public OffScreenSpawner offScreenSpawnerScript;
 
     public float difficultyFactor = 0.9f;
