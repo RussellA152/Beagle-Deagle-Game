@@ -22,6 +22,7 @@ public class DeliverItemObjective : MapObjective
     {
         base.OnObjectiveAwake();
         _dropOffLocation = GetComponentInChildren<DropOffLocation>();
+        _waypointIndicator = GetComponent<Waypoint_Indicator>();
     }
 
     protected override void OnObjectiveEnable()

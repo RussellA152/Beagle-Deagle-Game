@@ -16,6 +16,9 @@ public class GameEvents : ScriptableObject
     // When the game is resumed after it has been paused... invoke this event
     public event Action onGameResumeAfterPause;
 
+    // When a minute has passed in the game... invoke this event
+    public event Action onGameMinutePassed;
+
     public void InvokeOnGamePauseEvent()
     {
         onGamePause?.Invoke();
@@ -24,6 +27,11 @@ public class GameEvents : ScriptableObject
     public void InvokeOnGameResumeEvent()
     {
         onGameResumeAfterPause?.Invoke();
+    }
+
+    public void InvokeOnGameMinutePassed()
+    {
+        onGameMinutePassed?.Invoke();
     }
     
 }

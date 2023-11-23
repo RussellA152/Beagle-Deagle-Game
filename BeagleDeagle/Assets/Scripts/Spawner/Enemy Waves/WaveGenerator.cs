@@ -47,10 +47,10 @@ public class WaveGenerator : MonoBehaviour
                 }
 
                 // Only print a message to the screen if the message isn't blank
-                if (W.message != "")
-                {
-                    waveBegan.InvokeEvent(W.message);
-                }
+                // if (W.message != "")
+                // {
+                //     waveBegan.InvokeEvent(W.message);
+                // }
 
                 // For each mini wave in that wave...
                 foreach (MiniWaveData A in W.miniWaves)
