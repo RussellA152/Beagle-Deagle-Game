@@ -81,7 +81,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
         }
     }
     
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         if (_explosionHappening)
         {
@@ -101,10 +101,6 @@ public class Nuke : Explosive<NukeData>, IPoolable
     private void PlayParticleEffect()
     {
         GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_explosiveParticlePoolKey);
-
-        //newParticleEffect.transform.position = transform.position;
-
-        //newParticleEffect.SetActive(true);
 
         _particleEffectScript = newParticleEffect.GetComponent<PoolableParticle>();
         

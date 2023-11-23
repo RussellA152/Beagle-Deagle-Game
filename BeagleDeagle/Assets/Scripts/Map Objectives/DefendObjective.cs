@@ -22,11 +22,16 @@ public class DefendObjective : MapObjective
         _objectWithHealth = GetComponentInChildren<ObjectHealth>();
     }
 
+    protected override void OnObjectiveEnable()
+    {
+        base.OnObjectiveEnable();
+        
+        _previousEnemyTarget = EnemyManager.Instance.GetGlobalTarget();
+    }
+
     protected override void OnObjectiveEnter()
     {
         base.OnObjectiveEnter();
-        
-        _previousEnemyTarget = EnemyManager.Instance.GetGlobalTarget();
         
         // Change all enemy targets to be this defended object
         EnemyManager.Instance.ChangeAllEnemyTarget(_objectWithHealth.transform);

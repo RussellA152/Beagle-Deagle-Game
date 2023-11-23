@@ -15,7 +15,7 @@ public class EnemyManager : MonoBehaviour
     private readonly List<GameObject> _allEnemyGameObjects = new List<GameObject>();
     private readonly List<IHasTarget> _allEnemiesWithTargets = new List<IHasTarget>();
 
-    private Transform _globalTarget;
+    [SerializeField] private Transform _globalTarget;
     private void Awake()
     {
         Instance = this;
