@@ -9,6 +9,8 @@ using UnityEngine;
 public class DeliverItemObjective : MapObjective
 {
     private DropOffLocation _dropOffLocation;
+
+    private Waypoint_Indicator _waypointIndicator;
     
     private void Update()
     {
@@ -26,11 +28,19 @@ public class DeliverItemObjective : MapObjective
     {
         base.OnObjectiveEnable();
         _dropOffLocation.gameObject.SetActive(false);
+
+        // Show waypoint indicator sprite and text when objective starts
+        _waypointIndicator.enableSprite = true;
+        _waypointIndicator.enableText = true;
     }
 
     protected override void OnObjectiveEnter()
     {
         base.OnObjectiveEnter();
         _dropOffLocation.gameObject.SetActive(true);
+        
+        // Stop showing waypoint indicator sprite and text when objective starts
+        _waypointIndicator.enableSprite = false;
+        _waypointIndicator.enableText = false;
     }
 }
