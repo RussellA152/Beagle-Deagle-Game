@@ -17,18 +17,29 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
 
     private Transform _currentSpawnLocation;
     private Transform _previousSpawnLocation;
+
+    [SerializeField] private LayerMask layersThatCanStart;
+    
+    // This timer will begin when the player is too far away from the objective (will fail when it reaches 0)
+    [SerializeField, Range(1f, 180f)] 
+    private float timeToFailWhenFarAway;
+
+    [SerializeField, Range(1f, 100f)] 
+    private float startingRange = 10f;
+    
+    [SerializeField, Range(1f, 100f)] 
+    private float exitingRange = 15f;
     
     [SerializeField] private CurrencyReward completionReward;
     
-    // How long will the player play this objective? (ex. Survive for "duration" seconds)
-    [SerializeField, Range(1f, 180f)] 
-    private float timeAllotted;
 
     protected CooldownSystem CooldownSystem;
     private MapObjectiveExpire _mapObjectiveExpire;
     
     // Is this objective currently being played?
     public bool IsActive { get; private set; }
+    
+    protected bool PlayerInsideArea = false;
 
     private void Awake()
     {
@@ -48,27 +59,26 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     private void OnDisable()
     {
         OnObjectiveDisable();
+        
     }
 
     private void OnDestroy()
     {
         CooldownSystem.OnCooldownEnded -= ObjectiveOutOfTime;
     }
-    
-    private void OnTriggerEnter2D(Collider2D other)
+
+    private void Update()
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            OnObjectiveEnter();
-        }
-        
+        OnObjectiveUpdate();
     }
+    
 
     protected virtual void OnObjectiveAwake()
     {
         Id = 50;
         CooldownSystem = GetComponent<CooldownSystem>();
-        CooldownDuration = timeAllotted;
+
+        CooldownDuration = timeToFailWhenFarAway;
 
         _mapObjectiveExpire = GetComponent<MapObjectiveExpire>();
     }
@@ -80,7 +90,27 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
 
     protected virtual void OnObjectiveDisable()
     {
+        PlayerInsideArea = false;
         IsActive = false;
+    }
+
+    protected virtual void OnObjectiveUpdate()
+    {
+        // If player has walked in map objective enter range
+        if (!PlayerInsideArea && Physics2D.OverlapCircle(transform.position, startingRange, layersThatCanStart))
+        {
+            PlayerInsideArea = true;
+            OnObjectiveEnter();
+            Debug.Log("Player INSIDE! " + gameObject);
+        }
+        // If player has walked out of map objective exit range
+        else if (PlayerInsideArea &&
+                 !Physics2D.OverlapCircle(transform.position, exitingRange, layersThatCanStart))
+        {
+            PlayerInsideArea = false;
+            OnObjectiveExit();
+            Debug.Log("Player EXIT! " + gameObject);
+        }
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -109,15 +139,34 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     protected virtual void OnObjectiveEnter()
     {
         // If the objective is already active, don't try to activate again
-        if (IsActive) return;
+        if (!IsActive)
+        {
+            MapObjectiveManager.Instance.ObjectiveWasActivated(this);
+            
+            // Objective will no longer expire once activated
+            _mapObjectiveExpire.RemoveExpireTimeOnActivate();
+            
+            IsActive = true;
+            
+        }
+        // Stop counting down if player has re-entered the objective
+        if (CooldownSystem.IsOnCooldown(Id))
+        {
+            CooldownSystem.RemoveCooldown(Id);
+        }
         
-        IsActive = true;
+        MapObjectiveManager.Instance.ObjectiveWasEntered(this);
+        
+    }
 
-        // Start objective's timeAllotted timer
+    protected virtual void OnObjectiveExit()
+    {
+        if (!IsActive) return;
+        
+        // If player is too far away from objective, then start counting down
         if (CooldownSystem.IsOnCooldown(Id))
         {
             CooldownSystem.RefreshCooldown(Id);
-            Debug.Log("REFRESH COOLDOWN FOR " + gameObject);
         }
                 
         else
@@ -125,11 +174,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
             CooldownSystem.PutOnCooldown(this);
             Debug.Log("START COOLDOWN FOR " + gameObject);
         }
-        
-        MapObjectiveManager.Instance.ObjectiveWasActivated(this);
-            
-        // Objective will no longer expire once activated
-        _mapObjectiveExpire.RemoveExpireTimeOnActivate();
+        MapObjectiveManager.Instance.ObjectiveWasExited(this);
     }
 
     protected virtual void OnObjectiveOutOfTime()
@@ -189,7 +234,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         completionReward.moneyAmount = (int) (completionReward.moneyAmount + (completionReward.moneyAmount * percentage));
     }
 
-    public float GetTimeRemaining()
+    public float GetExitTimeRemaining()
     {
         return CooldownSystem.GetRemainingDuration(Id);
     }
@@ -197,4 +242,15 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     public int Id { get; set; }
     
     public float CooldownDuration { get; set; }
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        
+        Gizmos.DrawWireSphere(transform.position, startingRange);
+        
+        Gizmos.color = Color.red;
+        
+        Gizmos.DrawWireSphere(transform.position, exitingRange);
+    }
 }

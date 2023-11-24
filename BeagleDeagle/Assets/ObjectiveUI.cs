@@ -31,19 +31,28 @@ public class ObjectiveUI : MonoBehaviour
     private void OnEnable()
     {
         gameEvents.onMapObjectiveBegin += StartDisplay;
-        gameEvents.onMapObjectiveBegin += Shrink;
+
+        gameEvents.onPlayerExitedMapObjective += Shrink;
+
+        gameEvents.onPlayerEnteredMapObjective += StopShrink;
+        
         gameEvents.onMapObjectiveEnded += StopDisplay;
     }
 
     private void OnDisable()
     {
         gameEvents.onMapObjectiveBegin -= StartDisplay;
-        gameEvents.onMapObjectiveBegin -= Shrink;
+      
+        gameEvents.onPlayerExitedMapObjective -= Shrink;
+
+        gameEvents.onPlayerEnteredMapObjective -= StopShrink;
+        
         gameEvents.onMapObjectiveEnded -= StopDisplay;
     }
 
     private void Update()
     {
+        // Continuously update the objective's description
         if(_shouldDisplay)
             objectiveTextBox.text = _currentMapObjective.GetObjectiveDescription();
     }
@@ -57,8 +66,9 @@ public class ObjectiveUI : MonoBehaviour
 
         _shouldDisplay = true;
         
+        objectiveTextBox.text = _currentMapObjective.GetObjectiveDescription();
+        
         objectiveTextBox.gameObject.SetActive(true);
-        objectiveTimerRectTransform.gameObject.SetActive(true);
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -68,22 +78,32 @@ public class ObjectiveUI : MonoBehaviour
     {
         _shouldDisplay = false;
         
-        // Stop tween
-        LeanTween.cancel(objectiveTimerRectTransform);
-        
         objectiveTextBox.gameObject.SetActive(false);
-        objectiveTimerRectTransform.gameObject.SetActive(false);
 
-        // Reset rect transform's size
-        objectiveTimerRectTransform.sizeDelta = new Vector2(_originalWidth, objectiveTimerRectTransform.sizeDelta.y);
+        StopShrink(mapObjective);
 
     }
 
     private void Shrink(MapObjective mapObjective)
     {
+        Debug.Log("START SHRINK");
+        objectiveTimerRectTransform.gameObject.SetActive(true);
+        
         // Use LeanTween to shrink the RectTransform's width
-        LeanTween.size(objectiveTimerRectTransform, new Vector2(_targetWidth, objectiveTimerRectTransform.sizeDelta.y), mapObjective.GetTimeRemaining())
+        LeanTween.size(objectiveTimerRectTransform, new Vector2(_targetWidth, objectiveTimerRectTransform.sizeDelta.y), mapObjective.GetExitTimeRemaining())
             .setEase(LeanTweenType.easeInOutSine); // Use an easing type for a smoother effect;
+    }
+
+    private void StopShrink(MapObjective mapObjective)
+    {
+        Debug.Log("STOP SHRINK");
+        // Stop tween
+        LeanTween.cancel(objectiveTimerRectTransform);
+        
+        // Reset rect transform's size
+        objectiveTimerRectTransform.sizeDelta = new Vector2(_originalWidth, objectiveTimerRectTransform.sizeDelta.y);
+        
+        objectiveTimerRectTransform.gameObject.SetActive(false);
     }
 
     

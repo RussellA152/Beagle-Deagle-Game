@@ -124,8 +124,17 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
         
         gameEvents.InvokeMapObjectiveBeginEvent(mapObjective);
     }
-    
 
+    public void ObjectiveWasEntered(MapObjective mapObjective)
+    {
+        gameEvents.InvokePlayerEnteredMapObjective(mapObjective);
+    }
+    
+    public void ObjectiveWasExited(MapObjective mapObjective)
+    {
+        gameEvents.InvokePlayerExitedMapObjective(mapObjective);
+    }
+    
     public void StartNewObjectiveAfterEnded(MapObjective mapObjective)
     {
         mapObjective.gameObject.SetActive(false);

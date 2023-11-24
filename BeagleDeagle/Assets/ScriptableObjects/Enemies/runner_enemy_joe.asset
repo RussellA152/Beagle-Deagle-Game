@@ -22,13 +22,13 @@ MonoBehaviour:
   chaseRange: 150
   attackLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 16512
   chaseLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 16512
   currencyRewardOnDeath:
     xpAmount: 150
     moneyAmount: 0
   whatHitBoxDamages:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 16512

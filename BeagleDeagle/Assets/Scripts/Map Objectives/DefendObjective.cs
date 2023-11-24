@@ -2,18 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DefendObjective : MapObjective
 {
     private ObjectHealth _objectWithHealth;
 
     private Transform _previousEnemyTarget;
+    
+    // How much time does the player need to stay inside the area for?
+    [SerializeField, Range(10f, 60f)] 
+    private float timeRequiredToDefend = 30f;
 
-    private void Update()
-    {
-        if(_objectWithHealth.IsDead())
-            OnObjectiveOutOfTime();
-    }
+    // How much time does the player need left to complete?
+    private float _timeNeededLeft;
 
     protected override void OnObjectiveAwake()
     {
@@ -22,11 +24,27 @@ public class DefendObjective : MapObjective
         _objectWithHealth = GetComponentInChildren<ObjectHealth>();
     }
 
+    protected override void OnObjectiveUpdate()
+    {
+        base.OnObjectiveUpdate();
+        
+        // While player is inside the survival area, then add time to the timeSpentInsideArea
+        if (PlayerInsideArea)
+            _timeNeededLeft -= Time.deltaTime;
+        
+        
+        if(_timeNeededLeft <= 0f || _objectWithHealth.IsDead())
+            OnObjectiveOutOfTime();
+    }
+
     protected override void OnObjectiveEnable()
     {
         base.OnObjectiveEnable();
         
         _previousEnemyTarget = EnemyManager.Instance.GetGlobalTarget();
+        
+        _timeNeededLeft = timeRequiredToDefend;
+        
     }
 
     protected override void OnObjectiveEnter()
@@ -35,6 +53,7 @@ public class DefendObjective : MapObjective
         
         // Change all enemy targets to be this defended object
         EnemyManager.Instance.ChangeAllEnemyTarget(_objectWithHealth.transform);
+        
     }
 
     protected override void OnObjectiveOutOfTime()
@@ -58,6 +77,6 @@ public class DefendObjective : MapObjective
 
     public override string GetObjectiveDescription()
     {
-        return "Defend: " + (int) CooldownSystem.GetRemainingDuration(Id) + "s";
+        return "Defend: " + (int) _timeNeededLeft + "s";
     }
 }

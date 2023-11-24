@@ -8,56 +8,45 @@ public class SurvivalAreaObjective : MapObjective
     // How much time does the player need to stay inside the area for?
     [SerializeField, Range(10f, 60f)] 
     private float timeRequiredToStayInside = 30f;
-    
-    // How much time has the player spent inside of the survival area?
-    private float _elapsedTimeInsideArea = 0f;
-    
-    // Is the player inside of the survival area?
-    private bool _playerInsideArea = false;
 
-    private void Update()
+    // How much time does the player need left to complete?
+    private float _timeNeededLeft;
+
+    protected override void OnObjectiveEnable()
     {
+        base.OnObjectiveEnable();
+        _timeNeededLeft = timeRequiredToStayInside;
+    }
+
+    protected override void OnObjectiveUpdate()
+    {
+        base.OnObjectiveUpdate();
+        
         // While player is inside the survival area, then add time to the timeSpentInsideArea
-        if (_playerInsideArea)
-            _elapsedTimeInsideArea += Time.deltaTime;
+        if (PlayerInsideArea)
+            _timeNeededLeft -= Time.deltaTime;
         
         // Complete objective once player has spent enough time inside survival area
-        if (_elapsedTimeInsideArea >= timeRequiredToStayInside)
+        if (_timeNeededLeft <= 0f)
         {
             OnObjectiveCompletion();
             RemoveCooldown();
         }
-
-    }
-
-    protected override void OnObjectiveDisable()
-    {
-        base.OnObjectiveDisable();
-        
-        _elapsedTimeInsideArea = 0f;
-        _playerInsideArea = false;
     }
 
     protected override void OnObjectiveEnter()
     {
         base.OnObjectiveEnter();
-        _playerInsideArea = true;
+        PlayerInsideArea = true;
     }
+    
 
     public override string GetObjectiveDescription()
     {
-        if (!_playerInsideArea)
+        if (!PlayerInsideArea)
             return "Return To Survival Area!";
         
-        return "Survive: " + (int) _elapsedTimeInsideArea + "s";
+        return "Survive: " + (int) _timeNeededLeft + "s";
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            // Player is no longer inside of the survival area
-            _playerInsideArea = false;
-        }
-    }
 }

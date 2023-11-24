@@ -17,7 +17,6 @@ MonoBehaviour:
   detonationTime: 0
   aoeData: {fileID: 0}
   explosiveRadius: 4
-  explosiveParticleSize: {x: 1.5, y: 1.5, z: 1.5}
   whatDoesExplosionHit:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 16512

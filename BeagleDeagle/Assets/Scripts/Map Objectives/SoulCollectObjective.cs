@@ -32,7 +32,7 @@ public class SoulCollectObjective : MapObjective
 
     public override string GetObjectiveDescription()
     {
-        return "Souls: " + _collectedSouls;
+        return "Souls: " + _collectedSouls + " of " + collectRequirement;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -55,13 +55,5 @@ public class SoulCollectObjective : MapObjective
             OnObjectiveCompletion();
             RemoveCooldown();
         }
-    }
-    
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        
-        Gizmos.DrawWireSphere(transform.position, collectRange);
     }
 }

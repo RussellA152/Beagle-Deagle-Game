@@ -15,10 +15,10 @@ MonoBehaviour:
   bulletSprite: {fileID: 21300000, guid: 52c053ccea2949643bf449827c710fea, type: 3}
   whatBulletCanPenetrate:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 16512
   whatBulletCanDamage:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 16512
   whatDestroysBullet:
     serializedVersion: 2
     m_Bits: 1024
