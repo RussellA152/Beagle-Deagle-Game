@@ -101,7 +101,7 @@ MonoBehaviour:
   layersThatCanDropOff:
     serializedVersion: 2
     m_Bits: 128
-  dropOffRange: 10
+  dropOffRange: 2.5
   playerHoldingItem: 0
 --- !u!114 &3213695290756387218
 MonoBehaviour:

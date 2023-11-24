@@ -32,9 +32,9 @@ public class ObjectiveUI : MonoBehaviour
     {
         gameEvents.onMapObjectiveBegin += StartDisplay;
 
-        gameEvents.onPlayerExitedMapObjective += Shrink;
+        gameEvents.onMapObjectiveExited += Shrink;
 
-        gameEvents.onPlayerEnteredMapObjective += StopShrink;
+        gameEvents.onMapObjectiveEntered += StopShrink;
         
         gameEvents.onMapObjectiveEnded += StopDisplay;
     }
@@ -43,9 +43,9 @@ public class ObjectiveUI : MonoBehaviour
     {
         gameEvents.onMapObjectiveBegin -= StartDisplay;
       
-        gameEvents.onPlayerExitedMapObjective -= Shrink;
+        gameEvents.onMapObjectiveExited -= Shrink;
 
-        gameEvents.onPlayerEnteredMapObjective -= StopShrink;
+        gameEvents.onMapObjectiveEntered -= StopShrink;
         
         gameEvents.onMapObjectiveEnded -= StopDisplay;
     }

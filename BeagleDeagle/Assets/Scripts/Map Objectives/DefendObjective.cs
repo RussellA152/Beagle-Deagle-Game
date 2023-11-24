@@ -29,7 +29,7 @@ public class DefendObjective : MapObjective
         base.OnObjectiveUpdate();
         
         // While player is inside the survival area, then add time to the timeSpentInsideArea
-        if (PlayerInsideArea)
+        if (PlayerInsideStartingArea)
             _timeNeededLeft -= Time.deltaTime;
         
         

@@ -108,12 +108,15 @@ MonoBehaviour:
     m_Bits: 128
   timeToFailWhenFarAway: 10
   startingRange: 5
-  exitingRange: 20
+  exitingRange: 10
   completionReward:
     xpAmount: 500
     moneyAmount: 500
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   potentialDropOffLocations: []
   dropOffItem: {fileID: 3213695290756387245, guid: dd922c910975a5a488089ac3984b6767, type: 3}
+  pickUpTimer: 0.8
+  _playerTransform: {fileID: 0}
 --- !u!114 &8590283920421078041
 MonoBehaviour:
   m_ObjectHideFlags: 0

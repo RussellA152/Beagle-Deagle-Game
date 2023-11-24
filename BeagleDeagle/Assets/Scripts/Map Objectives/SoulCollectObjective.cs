@@ -25,15 +25,12 @@ public class SoulCollectObjective : MapObjective
     {
         base.OnObjectiveDisable();
         
+        // Reset number of collected souls
         _collectedSouls = 0;
         
         EnemyManager.Instance.onEnemyDeathGiveGameObject -= CollectEnemySoul;
     }
-
-    public override string GetObjectiveDescription()
-    {
-        return "Souls: " + _collectedSouls + " of " + collectRequirement;
-    }
+    
 
     ///-///////////////////////////////////////////////////////////
     /// When an enemy dies near the soul collector gameObject, then 
@@ -45,15 +42,17 @@ public class SoulCollectObjective : MapObjective
         if (Vector2.Distance(transform.position, enemyThatDied.transform.position) <= collectRange)
         {
             _collectedSouls++;
-            Debug.Log($"Collected {enemyThatDied}'s soul. Now this has {_collectedSouls} souls."); 
         }
 
         if (_collectedSouls >= collectRequirement)
         {
-            Debug.Log("MAX SOULS HAS BEEN REACHED. OBJECTIVE COMPLETED!");
-            
             OnObjectiveCompletion();
             RemoveCooldown();
         }
+    }
+    
+    public override string GetObjectiveDescription()
+    {
+        return "Souls: " + _collectedSouls + " of " + collectRequirement;
     }
 }

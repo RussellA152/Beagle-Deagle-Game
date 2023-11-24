@@ -84,10 +84,11 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
             currentMapObjective.gameObject.SetActive(false);
             currentMapObjective = PickRandomObjective();
         }
-
-        //CooldownSystem.PutOnCooldown(this);
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Find a random objective and place it in a location in the game level.
+    /// 
     private MapObjective PickRandomObjective()
     {
         int randomIndex = 0; 
@@ -118,6 +119,9 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
         return currentMapObjective;
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// A map objective was started by the player.
+    /// 
     public void ObjectiveWasActivated(MapObjective mapObjective)
     {
         _cooldownSystem.RemoveCooldown(Id);
@@ -125,14 +129,20 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
         gameEvents.InvokeMapObjectiveBeginEvent(mapObjective);
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// The player walked into a map objective's starting range.
+    /// 
     public void ObjectiveWasEntered(MapObjective mapObjective)
     {
-        gameEvents.InvokePlayerEnteredMapObjective(mapObjective);
+        gameEvents.InvokMapObjectiveEnteredEvent(mapObjective);
     }
-    
+
+    ///-///////////////////////////////////////////////////////////
+    /// The player walked outside of a map objective's exit range.
+    /// 
     public void ObjectiveWasExited(MapObjective mapObjective)
     {
-        gameEvents.InvokePlayerExitedMapObjective(mapObjective);
+        gameEvents.InvokeMapObjectiveExited(mapObjective);
     }
     
     public void StartNewObjectiveAfterEnded(MapObjective mapObjective)

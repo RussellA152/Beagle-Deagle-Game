@@ -23,7 +23,7 @@ public class SurvivalAreaObjective : MapObjective
         base.OnObjectiveUpdate();
         
         // While player is inside the survival area, then add time to the timeSpentInsideArea
-        if (PlayerInsideArea)
+        if (PlayerInsideStartingArea)
             _timeNeededLeft -= Time.deltaTime;
         
         // Complete objective once player has spent enough time inside survival area
@@ -33,17 +33,11 @@ public class SurvivalAreaObjective : MapObjective
             RemoveCooldown();
         }
     }
-
-    protected override void OnObjectiveEnter()
-    {
-        base.OnObjectiveEnter();
-        PlayerInsideArea = true;
-    }
     
-
+    
     public override string GetObjectiveDescription()
     {
-        if (!PlayerInsideArea)
+        if (!PlayerInsideStartingArea)
             return "Return To Survival Area!";
         
         return "Survive: " + (int) _timeNeededLeft + "s";
