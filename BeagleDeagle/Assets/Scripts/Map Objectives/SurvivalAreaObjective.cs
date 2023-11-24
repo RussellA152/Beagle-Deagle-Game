@@ -46,6 +46,9 @@ public class SurvivalAreaObjective : MapObjective
 
     public override string GetObjectiveDescription()
     {
+        if (!_playerInsideArea)
+            return "Return To Survival Area!";
+        
         return "Survive: " + (int) _elapsedTimeInsideArea + "s";
     }
 

@@ -10,14 +10,19 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameEvent/GameEvents")]
 public class GameEvents : ScriptableObject
 {
+    // When a minute has passed in the game... invoke this event
+    public event Action onGameMinutePassed;
+    
+    
+    // When the level's play timer has reached the max (ex. 20 minutes)... invoke this event
+    public event Action onGameTimeConcluded;
+    
     // After the game has paused... invoke this event
     public event Action onGamePause;
 
     // When the game is resumed after it has been paused... invoke this event
     public event Action onGameResumeAfterPause;
-
-    // When a minute has passed in the game... invoke this event
-    public event Action onGameMinutePassed;
+    
     
     // When a map objective was started by the player... invoke this event
     public event Action<MapObjective> onMapObjectiveBegin;
@@ -25,6 +30,16 @@ public class GameEvents : ScriptableObject
     // When a map objective has ended (after being started by player)... invoke this event 
     public event Action<MapObjective> onMapObjectiveEnded;
 
+    public void InvokeGameMinutePassedEvent()
+    {
+        onGameMinutePassed?.Invoke();
+    }
+
+    public void InvokeGameTimeConcludedEvent()
+    {
+        onGameTimeConcluded?.Invoke();
+    }
+    
     public void InvokeGamePauseEvent()
     {
         onGamePause?.Invoke();
@@ -34,11 +49,7 @@ public class GameEvents : ScriptableObject
     {
         onGameResumeAfterPause?.Invoke();
     }
-
-    public void InvokeGameMinutePassedEvent()
-    {
-        onGameMinutePassed?.Invoke();
-    }
+    
 
     public void InvokeMapObjectiveBeginEvent(MapObjective mapObjectiveStarted)
     {

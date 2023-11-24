@@ -7,13 +7,14 @@ public class GameTimeManager : MonoBehaviour
 {
     public static GameTimeManager Instance;
     
+    public GameEvents gameEvents;
+    
     [Range(1f, 1500f)]
     public float targetGameDuration = 1200f; // 20 minutes in seconds
     public float ElapsedTime { get; private set; }
     
     private bool _gameConcludedFromTime;
-
-    public event Action onGameTimeConcluded;
+    
 
     private void Awake()
     {
@@ -33,6 +34,8 @@ public class GameTimeManager : MonoBehaviour
     {
         _gameConcludedFromTime = false;
         
+        InvokeRepeating(nameof(EveryGameMinute), 60f, 60f);
+        
     }
 
     private void Update()
@@ -43,11 +46,16 @@ public class GameTimeManager : MonoBehaviour
             Debug.Log("Game Time ENDED!");
             _gameConcludedFromTime = true;
             
-            onGameTimeConcluded?.Invoke();
+            gameEvents.InvokeGameTimeConcludedEvent();
         }
         else
         {
             ElapsedTime += Time.deltaTime;
         }
+    }
+
+    private void EveryGameMinute()
+    {
+        gameEvents.InvokeGameMinutePassedEvent();
     }
 }

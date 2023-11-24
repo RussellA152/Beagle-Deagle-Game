@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 /// 
 public class MapObjectiveManager : MonoBehaviour, IHasCooldown
 {
-    public static MapObjectiveManager instance;
+    public static MapObjectiveManager Instance;
 
     [SerializeField] private GameEvents gameEvents;
     
@@ -23,21 +23,23 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
     [SerializeField, Range(5f, 180f)] 
     private float timeBetweenObjectives = 5f;
 
+    [SerializeField, Range(0.1f, 1f)] 
+    private float rewardScalePercentage;
     // Manager will need a cooldown to start another objective
-    public CooldownSystem CooldownSystem {get; private set;}
+    private CooldownSystem _cooldownSystem;
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
         
         // Setting cooldown Id and cooldown duration
         Id = 30;
         CooldownDuration = timeBetweenObjectives;
         
-        CooldownSystem = GetComponent<CooldownSystem>();
+        _cooldownSystem = GetComponent<CooldownSystem>();
 
         // Pick a random objective when cooldown ends
-        CooldownSystem.OnCooldownEnded += StartNewObjective;
+        _cooldownSystem.OnCooldownEnded += StartNewObjective;
         
 
     }
@@ -45,7 +47,7 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
     private void Start()
     {
         // Start a cooldown for the first objective to start
-        CooldownSystem.PutOnCooldown(this);
+        _cooldownSystem.PutOnCooldown(this);
 
         // Disable all map objectives at the start of the game
         foreach (MapObjective mapObjective in potentialMapObjectives)
@@ -53,6 +55,16 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
             mapObjective.gameObject.SetActive(false);
         }
         
+    }
+
+    private void OnEnable()
+    {
+        gameEvents.onGameMinutePassed += RewardScaleWithTime;
+    }
+
+    private void OnDisable()
+    {
+        gameEvents.onGameMinutePassed -= RewardScaleWithTime;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -108,7 +120,7 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
 
     public void ObjectiveWasActivated(MapObjective mapObjective)
     {
-        CooldownSystem.RemoveCooldown(Id);
+        _cooldownSystem.RemoveCooldown(Id);
         
         gameEvents.InvokeMapObjectiveBeginEvent(mapObjective);
     }
@@ -118,7 +130,7 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
     {
         mapObjective.gameObject.SetActive(false);
 
-        CooldownSystem.PutOnCooldown(this);
+        _cooldownSystem.PutOnCooldown(this);
         
         gameEvents.InvokeMapObjectiveEndedEvent(mapObjective);
     }
@@ -127,7 +139,19 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
     {
         mapObjectiveExpire.gameObject.SetActive(false);
 
-        CooldownSystem.PutOnCooldown(this);
+        _cooldownSystem.PutOnCooldown(this);
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Every minute, make all map objectives increase their rewards.
+    /// This makes it so completing map objectives in later stages don't feel worthless.
+    /// 
+    private void RewardScaleWithTime()
+    {
+        foreach (MapObjective mapObjective in potentialMapObjectives)
+        {
+            mapObjective.IncreaseRewards(rewardScalePercentage);
+        }
     }
 
     public int Id { get; set; }

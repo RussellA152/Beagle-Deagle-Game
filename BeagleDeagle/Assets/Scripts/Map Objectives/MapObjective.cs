@@ -92,7 +92,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         // Give reward
         currencyEvents.InvokeGiveXp(completionReward.xpAmount);
         
-        MapObjectiveManager.instance.StartNewObjectiveAfterEnded(this);
+        MapObjectiveManager.Instance.StartNewObjectiveAfterEnded(this);
 
     }
 
@@ -126,7 +126,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
             Debug.Log("START COOLDOWN FOR " + gameObject);
         }
         
-        MapObjectiveManager.instance.ObjectiveWasActivated(this);
+        MapObjectiveManager.Instance.ObjectiveWasActivated(this);
             
         // Objective will no longer expire once activated
         _mapObjectiveExpire.RemoveExpireTimeOnActivate();
@@ -136,7 +136,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     {
         Debug.Log("Timer ENDED for " + gameObject + "!");
         IsActive = false;
-        MapObjectiveManager.instance.StartNewObjectiveAfterEnded(this);
+        MapObjectiveManager.Instance.StartNewObjectiveAfterEnded(this);
     }
     
 
@@ -177,6 +177,16 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         _previousSpawnLocation = _currentSpawnLocation;
 
         transform.position = _currentSpawnLocation.position;
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Increase amount of xp and money given for completing an objective by a certain percentage.
+    /// 
+    public void IncreaseRewards(float percentage)
+    {
+        completionReward.xpAmount = (int) (completionReward.xpAmount + (completionReward.xpAmount * percentage));
+        
+        completionReward.moneyAmount = (int) (completionReward.moneyAmount + (completionReward.moneyAmount * percentage));
     }
 
     public float GetTimeRemaining()

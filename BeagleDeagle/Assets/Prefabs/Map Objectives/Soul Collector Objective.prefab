@@ -101,15 +101,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 694532f353f42914f89de78b7c2ee680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvents: {fileID: 11400000, guid: 4314cd15feeb5de469dda4a888348c8a, type: 2}
   currencyEvents: {fileID: 11400000, guid: 0129d1f239c35cc4ab9e40307e69b1b0, type: 2}
   potentialSpawnLocations:
   - {fileID: 0}
   - {fileID: 0}
-  timeAllotted: 10
   completionReward:
-    xpAmount: 0
-    moneyAmount: 0
+    xpAmount: 500
+    moneyAmount: 500
+  timeAllotted: 10
   collectRequirement: 8
   collectRange: 15
 --- !u!114 &7529365375572421820

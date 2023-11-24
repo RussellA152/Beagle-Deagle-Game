@@ -41,7 +41,7 @@ public class MapObjectiveExpire : MonoBehaviour, IHasCooldown
     {
         if (Id == cooldownId)
         {
-            MapObjectiveManager.instance.StartNewObjectiveAfterExpired(this);
+            MapObjectiveManager.Instance.StartNewObjectiveAfterExpired(this);
         }
            
     }
