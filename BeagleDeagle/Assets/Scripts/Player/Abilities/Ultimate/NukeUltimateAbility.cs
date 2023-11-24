@@ -31,6 +31,10 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
         }
         
         nuclearBomb.SetActive(true);
+        
+        // Play nuke animation
+        nuclearBomb.GetComponentInChildren<NukeShadowAnimation>().PlayNukeShadowAnimation();
+        
         explosiveScript.Activate(transform.position);
 
     }

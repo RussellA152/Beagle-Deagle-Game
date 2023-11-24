@@ -61,7 +61,7 @@ public class Nuke : Explosive<NukeData>, IPoolable
 
     }
 
-    public override void Explode()
+    protected override void Explode()
     {
         base.Explode();
 

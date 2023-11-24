@@ -54,7 +54,7 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
     // Then after some more time, disable this grenade
     public abstract IEnumerator Detonate();
 
-    public virtual void Explode()
+    protected virtual void Explode()
     {
         // Play explosion sound
 
@@ -70,8 +70,11 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
     {
         Duration = explosiveDuration;
     }
-    
 
+    public float GetDetonationTime()
+    {
+        return ExplosiveData.detonationTime;
+    }
     public virtual void UpdateScriptableObject(ExplosiveData scriptableObject)
     {
         if (scriptableObject is T)
