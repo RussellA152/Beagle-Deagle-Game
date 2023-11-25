@@ -116,7 +116,7 @@ MonoBehaviour:
   potentialDropOffLocations: []
   dropOffItem: {fileID: 3213695290756387245, guid: dd922c910975a5a488089ac3984b6767, type: 3}
   pickUpTimer: 0.8
-  _playerTransform: {fileID: 0}
+  numberOfHitsBeforeDropping: 3
 --- !u!114 &8590283920421078041
 MonoBehaviour:
   m_ObjectHideFlags: 0

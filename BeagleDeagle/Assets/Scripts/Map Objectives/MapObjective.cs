@@ -20,6 +20,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     private Transform _previousSpawnLocation;
 
     [SerializeField] private LayerMask layersThatCanStart;
+    protected Transform PlayerTransform;
     
     // This timer will begin when the player is too far away from the objective (will fail when it reaches 0)
     [SerializeField, Range(1f, 180f)] 
@@ -106,23 +107,25 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
 
     protected virtual void OnObjectiveUpdate()
     {
-        // If player has walked in map objective enter range
-        if (!PlayerInsideStartingArea && Physics2D.OverlapCircle(transform.position, startingRange, layersThatCanStart))
+        bool playerInsideStartingAreaNow = Physics2D.OverlapCircle(transform.position, startingRange, layersThatCanStart);
+
+        if (!PlayerInsideStartingArea && playerInsideStartingAreaNow)
         {
             PlayerInsideStartingArea = true;
             OnObjectiveEnter();
         }
-        else if(PlayerInsideStartingArea && !Physics2D.OverlapCircle(transform.position, startingRange, layersThatCanStart))
+        else if (PlayerInsideStartingArea && !playerInsideStartingAreaNow)
         {
             PlayerInsideStartingArea = false;
-            
         }
 
-        if (!PlayerInsideExitArea && Physics2D.OverlapCircle(transform.position, exitingRange, layersThatCanStart))
+        bool playerInsideExitAreaNow = Physics2D.OverlapCircle(transform.position, exitingRange, layersThatCanStart);
+
+        if (!PlayerInsideExitArea && playerInsideExitAreaNow)
         {
             PlayerInsideExitArea = true;
         }
-        else if(PlayerInsideExitArea && !Physics2D.OverlapCircle(transform.position, exitingRange, layersThatCanStart))
+        else if (PlayerInsideExitArea && !playerInsideExitAreaNow)
         {
             PlayerInsideExitArea = false;
             OnObjectiveExit();
@@ -250,6 +253,11 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         completionReward.xpAmount = (int) (completionReward.xpAmount + (completionReward.xpAmount * percentage));
         
         completionReward.moneyAmount = (int) (completionReward.moneyAmount + (completionReward.moneyAmount * percentage));
+    }
+
+    public void ReceivePlayerReference(Transform pTransform)
+    {
+        PlayerTransform = pTransform;
     }
 
     ///-///////////////////////////////////////////////////////////

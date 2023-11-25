@@ -36,6 +36,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWIthModifiers, IPlaye
 
         // Clamp the new health value between 0 and the maximum potential health (including any max health modifiers)
         newHealth = Mathf.Clamp(newHealth, 0f, playerData.maxHealth * _bonusMaxHealth);
+        
 
         // Check if the new health value is zero or below
         if (newHealth <= 0f)
@@ -45,6 +46,10 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWIthModifiers, IPlaye
         }
         else
         {
+            // Player took damage 
+            if(newHealth < _currentHealth)
+                playerEvents.InvokePlayerTookDamage();
+            
             _currentHealth = newHealth;
         }
         // Current health has changed, so update all listeners with the new value

@@ -23,11 +23,9 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
         // Fetch a grenade from the object pool
         GameObject grenade = ObjectPooler.Instance.GetPooledObject(_poolKey);
         
-        
         // Find direction that player is looking in
         Vector2 aimDirection = _playerMovementScript.ReturnPlayerDirection().normalized;
         
-        Debug.Log(aimDirection);
 
         IExplosiveUpdatable areaGrenadeComponent = grenade.GetComponent<IExplosiveUpdatable>();
         

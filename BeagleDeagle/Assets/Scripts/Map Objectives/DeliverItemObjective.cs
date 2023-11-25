@@ -19,14 +19,16 @@ public class DeliverItemObjective : MapObjective
     [SerializeField, Range(0.1f, 1.5f)] 
     private float pickUpTimer = 0.8f;
     private float _playerPickUpTimer;
+
+    [SerializeField, Range(1, 5)] 
+    private int numberOfHitsBeforeDropping = 1;
+    private int _hitsLeftBeforeDropping;
     
     private DropOffItem _currentDropOff;
 
     private Waypoint_Indicator _waypointIndicator;
 
     private bool _playerHoldingItem = false;
-
-    [SerializeField] private Transform _playerTransform;
 
     protected override void OnObjectiveAwake()
     {
@@ -51,12 +53,13 @@ public class DeliverItemObjective : MapObjective
         base.OnObjectiveEnable();
 
         _playerPickUpTimer = pickUpTimer;
+        _hitsLeftBeforeDropping = numberOfHitsBeforeDropping;
 
         // Show waypoint indicator sprite and text when objective starts
         _waypointIndicator.enableSprite = true;
         _waypointIndicator.enableText = true;
 
-        playerEvents.onPlayerCurrentHealthChanged += DropDeliverItemOnDamage;
+        playerEvents.onPlayerTookDamage += DropDeliverItemOnDamage;
 
     }
 
@@ -66,27 +69,26 @@ public class DeliverItemObjective : MapObjective
 
         if (PlayerInsideStartingArea && !_playerHoldingItem)
         {
-            Debug.Log("Lower timer!");
             _playerPickUpTimer -= Time.deltaTime;
+            
+            if (_playerPickUpTimer <= 0f)
+            {
+                _playerHoldingItem = true;
+                _currentDropOff.playerHoldingItem = true;
+
+                _hitsLeftBeforeDropping = numberOfHitsBeforeDropping;
+            }
         }
-        
-        if(PlayerInsideStartingArea && _playerPickUpTimer <= 0f)
-        {
-            Debug.Log("Player has retrieved item again!");
-            _playerHoldingItem = true;
-            _currentDropOff.playerHoldingItem = true;
-        }
-        
+
         if(!PlayerInsideStartingArea)
         {
-            Debug.Log("Player not inside deliver item zone!");
             _playerPickUpTimer = pickUpTimer;
         }
 
 
         if (_playerHoldingItem)
         {
-            transform.position = _playerTransform.position;
+            transform.position = PlayerTransform.position;
         }
         
 
@@ -110,13 +112,19 @@ public class DeliverItemObjective : MapObjective
         _waypointIndicator.enableText = false;
     }
 
-    private void DropDeliverItemOnDamage(float playerCurrentHealth)
+    private void DropDeliverItemOnDamage()
     {
-        _playerHoldingItem = false;
+        _hitsLeftBeforeDropping--;
         
-        _playerPickUpTimer = pickUpTimer;
+        if (_hitsLeftBeforeDropping <= 0)
+        {
+            _playerHoldingItem = false;
         
-        _currentDropOff.playerHoldingItem = false;
+            _playerPickUpTimer = pickUpTimer;
+        
+            _currentDropOff.playerHoldingItem = false;
+        }
+        
     }
 
     ///-///////////////////////////////////////////////////////////

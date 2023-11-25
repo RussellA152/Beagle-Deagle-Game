@@ -13,6 +13,7 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
     public static MapObjectiveManager Instance;
 
     [SerializeField] private GameEvents gameEvents;
+    [SerializeField] private PlayerEvents playerEvents;
     
     [SerializeField] 
     private List<MapObjective> potentialMapObjectives = new List<MapObjective>();
@@ -28,6 +29,8 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
     // Manager will need a cooldown to start another objective
     private CooldownSystem _cooldownSystem;
 
+    private Transform _playerTransform;
+
     private void Awake()
     {
         Instance = this;
@@ -41,6 +44,7 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
         // Pick a random objective when cooldown ends
         _cooldownSystem.OnCooldownEnded += StartNewObjective;
         
+
 
     }
 
@@ -60,11 +64,18 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
     private void OnEnable()
     {
         gameEvents.onGameMinutePassed += RewardScaleWithTime;
+        playerEvents.givePlayerGameObject += FindPlayer;
     }
 
     private void OnDisable()
     {
         gameEvents.onGameMinutePassed -= RewardScaleWithTime;
+        playerEvents.givePlayerGameObject -= FindPlayer;
+    }
+
+    private void FindPlayer(GameObject playerGameObject)
+    {
+        _playerTransform = playerGameObject.transform;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -111,6 +122,8 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
             currentMapObjective = potentialMapObjectives[randomIndex];
 
         }
+        
+        currentMapObjective.ReceivePlayerReference(_playerTransform);
         
         currentMapObjective.gameObject.SetActive(true);
         

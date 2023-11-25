@@ -12,9 +12,8 @@ public class PlayerEvents : ScriptableObject
     // Pass a reference to the player gameObject
     public event Action<GameObject> givePlayerGameObject;
 
-    // Player was attacked by an enemy (does not count DOTs)
-    //public event Action onPlayerAttacked; 
-
+    public event Action onPlayerTookDamage;
+    
     // Pass a reference to the player's current Health (used by HUD)
     public event Action<float> onPlayerCurrentHealthChanged;
 
@@ -73,10 +72,10 @@ public class PlayerEvents : ScriptableObject
         givePlayerGameObject?.Invoke(playerGameObject);
     }
 
-    // public void InvokePlayerWasAttackedEvent()
-    // {
-    //     onPlayerAttacked?.Invoke();
-    // }
+    public void InvokePlayerTookDamage()
+    {
+        onPlayerTookDamage?.Invoke();
+    }
 
     // When the player's max health changes
     // Pass around the max health value to whoever needs it (ex. HUD needs to display max health at all times)

@@ -549,6 +549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameEvents: {fileID: 11400000, guid: 4314cd15feeb5de469dda4a888348c8a, type: 2}
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   potentialMapObjectives:
   - {fileID: 137266806}
   currentMapObjective: {fileID: 0}
