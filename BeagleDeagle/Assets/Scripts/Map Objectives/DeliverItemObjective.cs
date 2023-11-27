@@ -114,16 +114,20 @@ public class DeliverItemObjective : MapObjective
 
     private void DropDeliverItemOnDamage()
     {
-        _hitsLeftBeforeDropping--;
-        
-        if (_hitsLeftBeforeDropping <= 0)
+        if (IsActive)
         {
-            _playerHoldingItem = false;
+            _hitsLeftBeforeDropping--;
         
-            _playerPickUpTimer = pickUpTimer;
+            if (_hitsLeftBeforeDropping <= 0)
+            {
+                _playerHoldingItem = false;
         
-            _currentDropOff.playerHoldingItem = false;
+                _playerPickUpTimer = pickUpTimer;
+        
+                _currentDropOff.playerHoldingItem = false;
+            }
         }
+        
         
     }
 

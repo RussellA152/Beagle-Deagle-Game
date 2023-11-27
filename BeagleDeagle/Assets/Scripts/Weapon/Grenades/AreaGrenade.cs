@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
     private Rigidbody2D _rb;
     
     private Collider2D _grenadeCollider;
+
+
+    private GrenadeAnimation _grenadeAnimation;
     
 
     [Range(0f, 100f)]
@@ -24,6 +28,8 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
         base.Awake();
         _rb = GetComponent<Rigidbody2D>();
         _grenadeCollider = GetComponent<Collider2D>();
+
+        _grenadeAnimation = GetComponentInChildren<GrenadeAnimation>();
     }
 
     protected override void OnDisable()
@@ -40,13 +46,12 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
         base.Activate(aimDirection);
         
         StartCoroutine(Detonate());
-
-        // Rotate the grenade based on the aim direction
-        float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, aimAngle);
+        
+        _grenadeAnimation.ThrowAnimation(aimDirection);
 
         // Apply force to push the grenade forward in the aim direction
         _rb.AddForce(aimDirection * throwSpeed, ForceMode2D.Impulse);
+        
     }
 
     // Wait some time, then activate the grenade's explosion
@@ -54,13 +59,12 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
     public override IEnumerator Detonate()
     {
         yield return new WaitForSeconds(ExplosiveData.detonationTime);
-
-        sprite.SetActive(false);
-
-        //particleAOE.SetActive(true);
+        
         AreaOfEffectScript.gameObject.SetActive(true);
         AreaOfEffectScript.OnAreaOfEffectActivate();
 
+        _grenadeAnimation.BounceOnLandAnimation();
+        
         FreezePosition();
 
         Explode();
@@ -73,10 +77,15 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
         
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        _grenadeAnimation.StopThrowAnimation();
+    }
+
     private void FreezePosition()
     {
         _rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
-
+        
     }
 
     private void UnfreezePosition()

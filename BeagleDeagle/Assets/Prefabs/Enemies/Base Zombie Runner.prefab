@@ -293,11 +293,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6358ef6244754468e2e1d78e6d0369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _state: 0
+  state: 0
   poolKey: 10
   enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
-  target: {fileID: 0}
-  enemyEvents: {fileID: 11400000, guid: e5d63ef152feead4eb09d0bad482c6a9, type: 2}
   deathParticleEffect: {fileID: 5497711690300594199, guid: 446ab0f07b2f4b44fa8bc1bd51f439ea, type: 3}
 --- !u!114 &2060393728062037017
 MonoBehaviour:
@@ -325,7 +323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db53577188b32941a633f33e5026826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyEvents: {fileID: 11400000, guid: e5d63ef152feead4eb09d0bad482c6a9, type: 2}
   currencyEvents: {fileID: 11400000, guid: 0129d1f239c35cc4ab9e40307e69b1b0, type: 2}
   enemyData: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
   maxHealthModifiers: []
