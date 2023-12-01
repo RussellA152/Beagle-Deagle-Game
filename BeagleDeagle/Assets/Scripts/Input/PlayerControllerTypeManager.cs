@@ -28,9 +28,10 @@ public class PlayerControllerTypeManager : MonoBehaviour
         Instance = this;
 
         DontDestroyOnLoad(gameObject);
-        
-        _playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
-        
+
+        // Find the player input component in the level
+        _playerInput = FindObjectOfType<PlayerInput>();
+
     }
 
     private void OnEnable()

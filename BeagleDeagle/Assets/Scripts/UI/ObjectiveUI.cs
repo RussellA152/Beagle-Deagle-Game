@@ -86,7 +86,6 @@ public class ObjectiveUI : MonoBehaviour
 
     private void Shrink(MapObjective mapObjective)
     {
-        Debug.Log("START SHRINK");
         objectiveTimerRectTransform.gameObject.SetActive(true);
         
         // Use LeanTween to shrink the RectTransform's width
@@ -96,7 +95,6 @@ public class ObjectiveUI : MonoBehaviour
 
     private void StopShrink(MapObjective mapObjective)
     {
-        Debug.Log("STOP SHRINK");
         // Stop tween
         LeanTween.cancel(objectiveTimerRectTransform);
         

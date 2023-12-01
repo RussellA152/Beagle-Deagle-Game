@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    /* EnemyManager is not responsible for spawning enemies, it only listens for enemies spawning.
+     The ObjectPooler spawns enemies and other reused gameObjects. */
+
     public static EnemyManager Instance;
 
     public event Action<GameObject> onEnemyInstantiated;
