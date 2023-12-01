@@ -28,6 +28,8 @@ public class ObjectPooler : MonoBehaviour
     [NonReorderable]
     public List<ObjectPoolItem> itemsToPool;
 
+    private Dictionary<int, ObjectPoolItem> _allUniqueItems = new Dictionary<int, ObjectPoolItem>();
+
     private object _lockObject = new object(); // Create a private lock object for synchronization
 
 
@@ -50,6 +52,10 @@ public class ObjectPooler : MonoBehaviour
             // iterate through all items that we want to object pool
             // cache a reference to their pool key so we don't have to get component too often
             item.poolKey = item.objectToPool.GetComponent<IPoolable>().PoolKey;
+
+            // Add the unique item to a dictionary
+            _allUniqueItems.Add(item.poolKey, item);
+
 
             for (int i = 0; i < item.amountToPool; i++)
             {
@@ -74,15 +80,8 @@ public class ObjectPooler : MonoBehaviour
     {
         ObjectPoolItem itemRequested = null;
 
-        // First, find the object that is being requested (e.g., a bullet)
-        foreach (ObjectPoolItem item in itemsToPool)
-        {
-            if (key == item.poolKey)
-            {
-                itemRequested = item;
-                break;
-            }
-        }
+        // Find the object that is being requested (e.g, a bullet)
+        itemRequested = _allUniqueItems[key];
         
         // If key could not be found, show an error in the console
         if(itemRequested == null)
