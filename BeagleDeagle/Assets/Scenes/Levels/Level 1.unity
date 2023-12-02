@@ -5011,6 +5011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f879124ba3155644904c33efafa2a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
 --- !u!4 &928850400
 Transform:
   m_ObjectHideFlags: 0
@@ -6431,10 +6432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5395937268da5bf4896a3872e8ce2ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Test HUD
   loadTimer: 3
-  playerPrefab: {fileID: 5313635083943124204, guid: 95e57430ce08c2f44ba2a53104bf6e2c, type: 3}
-  spawnLocation: {fileID: 1791262540}
+  currentScene: 0
 --- !u!1 &1190919859
 GameObject:
   m_ObjectHideFlags: 0
@@ -8884,7 +8883,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621176, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621178, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_RootOrder

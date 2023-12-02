@@ -9,6 +9,8 @@ public class PlayerControllerTypeManager : MonoBehaviour
 {
     public static PlayerControllerTypeManager Instance;
 
+    public PlayerEvents playerEvents;
+    
     private PlayerInput _playerInput;
 
     private ControllerType _currentControllerType;
@@ -28,25 +30,29 @@ public class PlayerControllerTypeManager : MonoBehaviour
         Instance = this;
 
         DontDestroyOnLoad(gameObject);
-
-        // Find the player input component in the level
-        _playerInput = FindObjectOfType<PlayerInput>();
-
+        
     }
 
     private void OnEnable()
     {
-        _playerInput.onControlsChanged += ControlsChanged;
-
+        playerEvents.givePlayerGameObject += FindPlayerInput;
+        
     }
 
     private void OnDisable()
     {
         _playerInput.onControlsChanged -= ControlsChanged;
     }
+    
 
-    private void Start()
+    private void FindPlayerInput(GameObject playerGameObject)
     {
+        // Find the player input component in the level
+        _playerInput = playerGameObject.GetComponent<PlayerInput>();
+        
+        _playerInput.onControlsChanged += ControlsChanged;
+        
+        // Initialize controls (most likely keyboard at first)
         ControlsChanged(_playerInput);
     }
     

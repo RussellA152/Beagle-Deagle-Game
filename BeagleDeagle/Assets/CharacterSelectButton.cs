@@ -21,7 +21,7 @@ public class CharacterSelectButton : MonoBehaviour
 
     private void Start()
     {
-        StartMenuManager.Instance.onPlayerChoseCharacter += DisableOnCharacterChoice;
+        PlayerCharacterSpawner.Instance.onPlayerChoseCharacter += DisableOnCharacterChoice;
     }
 
     private void OnEnable()
@@ -32,12 +32,12 @@ public class CharacterSelectButton : MonoBehaviour
     private void OnDisable()
     {
         buttonComponent.onClick.RemoveListener(ChooseCharacter);
-        StartMenuManager.Instance.onPlayerChoseCharacter -= DisableOnCharacterChoice;
+        PlayerCharacterSpawner.Instance.onPlayerChoseCharacter -= DisableOnCharacterChoice;
     }
 
     private void ChooseCharacter()
     {
-        StartMenuManager.Instance.InvokePlayerChoseCharacter(selectableCharacter);
+        PlayerCharacterSpawner.Instance.InvokePlayerChoseCharacter(selectableCharacter);
     }
 
     ///-///////////////////////////////////////////////////////////
