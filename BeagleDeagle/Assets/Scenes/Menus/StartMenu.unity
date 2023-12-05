@@ -498,56 +498,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 630078052}
   m_CullTransparentMesh: 1
---- !u!1 &929195512
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 929195514}
-  - component: {fileID: 929195513}
-  m_Layer: 0
-  m_Name: Enable/Disable On Scene Load
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &929195513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 929195512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dcb9271b979352488d0c90293b2f9e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableType: 0
-  disableType: 1
-  gameObjectsAffected:
-  - {fileID: 2039735662}
-  - {fileID: 1081208369}
-  - {fileID: 941552050}
---- !u!4 &929195514
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 929195512}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 780.5, y: 438.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &941552050
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,3 +2262,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103776850}
   m_CullTransparentMesh: 1
+--- !u!1001 &5195875923532906258
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5195875923685841640, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195875923685841640, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 780.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195875923685841640, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 438.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195875923685841640, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195875923685841640, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195875923685841640, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195875923685841640, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195875923685841640, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195875923685841640, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195875923685841640, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195875923685841640, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195875923685841642, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: m_Name
+      value: Enable/Disable On Scene Load (Start Menu)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195875923685841643, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: gameObjectsAffected.Array.data[0]
+      value: 
+      objectReference: {fileID: 2039735662}
+    - target: {fileID: 5195875923685841643, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: gameObjectsAffected.Array.data[1]
+      value: 
+      objectReference: {fileID: 1081208369}
+    - target: {fileID: 5195875923685841643, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
+      propertyPath: gameObjectsAffected.Array.data[2]
+      value: 
+      objectReference: {fileID: 941552050}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ebc6f1e6175c6a248bc856c48b814abc, type: 3}
