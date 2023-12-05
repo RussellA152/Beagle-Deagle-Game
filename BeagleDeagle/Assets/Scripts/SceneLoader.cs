@@ -2,21 +2,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance;
-    
-    public float loadTimer = 1f;
 
     public int currentScene;
     public event Action onLevelChosen;
-
     public event Action onGameSceneLoaded;
     
+    public event Action onMenuSceneLoaded;
+
+    private Camera _previousMainCamera;
+
+    private EventSystem _previousEventSystem;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -32,19 +37,15 @@ public class SceneLoader : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += OnGameSceneLoaded;
+        _previousMainCamera = Camera.main;
+        _previousEventSystem = EventSystem.current;
+        
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnGameSceneLoaded;
-    }
-
-    IEnumerator SceneDelay()
-    {
-        yield return new WaitForSeconds(loadTimer);
-        LoadNewScene();
-
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void InvokeLevelChosen(int sceneChoice)
@@ -53,23 +54,30 @@ public class SceneLoader : MonoBehaviour
         onLevelChosen?.Invoke();
         
         Debug.Log($"Scene {sceneChoice} was chosen. Will now load...");
-        StartCoroutine(SceneDelay());
+        LoadNewScene();
     }
 
     private void LoadNewScene()
-    { 
+    {
         SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
 
     }
     
-    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // TODO: Make this properly check a scene type!
-        
         // This method will be called when a new scene is loaded
         Debug.Log("Scene loaded: " + scene.name);
-        
-        onGameSceneLoaded?.Invoke();
+
+        if (scene.name.Contains("Game"))
+        {
+            Debug.Log("Scene is a game level");
+            onGameSceneLoaded?.Invoke();
+        }
+        else if (scene.name.Contains("Menu"))
+        {
+            Debug.Log("Scene is a menu.");
+            onMenuSceneLoaded?.Invoke();
+        }
 
     }
 }
