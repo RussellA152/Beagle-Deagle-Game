@@ -18,9 +18,9 @@ public class SceneLoader : MonoBehaviour
     
     public event Action onMenuSceneLoaded;
 
-    private Camera _previousMainCamera;
+    //private Camera _previousMainCamera;
 
-    private EventSystem _previousEventSystem;
+    //private EventSystem _previousEventSystem;
 
     private void Awake()
     {
@@ -37,8 +37,8 @@ public class SceneLoader : MonoBehaviour
 
     private void OnEnable()
     {
-        _previousMainCamera = Camera.main;
-        _previousEventSystem = EventSystem.current;
+        //_previousMainCamera = Camera.main;
+        //_previousEventSystem = EventSystem.current;
         
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -59,7 +59,7 @@ public class SceneLoader : MonoBehaviour
 
     private void LoadNewScene()
     {
-        SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
+        SceneManager.LoadScene(currentScene, LoadSceneMode.Single);
 
     }
     

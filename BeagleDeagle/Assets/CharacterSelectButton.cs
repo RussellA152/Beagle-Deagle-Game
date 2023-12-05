@@ -9,13 +9,17 @@ using UnityEngine.UI;
 /// 
 public class CharacterSelectButton : MonoBehaviour
 {
-    [HideInInspector]
-    public Button buttonComponent;
+    private Image buttonImage;
+    private Button buttonComponent;
     
     public GameObject selectableCharacter;
 
+    [SerializeField] private GameObject otherCharacterSelectButton;
+    [SerializeField] private GameObject levelChoiceButton;
+
     private void Awake()
     {
+        buttonImage = GetComponent<Image>();
         buttonComponent = GetComponent<Button>();
     }
 
@@ -27,6 +31,7 @@ public class CharacterSelectButton : MonoBehaviour
     private void OnEnable()
     {
         buttonComponent.onClick.AddListener(ChooseCharacter);
+        buttonComponent.onClick.AddListener(DisableOtherButtons);
     }
 
     private void OnDisable()
@@ -38,6 +43,14 @@ public class CharacterSelectButton : MonoBehaviour
     private void ChooseCharacter()
     {
         PlayerCharacterSpawner.Instance.InvokePlayerChoseCharacter(selectableCharacter);
+    }
+
+    private void DisableOtherButtons()
+    {
+        buttonImage.enabled = false;
+        buttonComponent.interactable = false;
+        levelChoiceButton.SetActive(true);
+        gameObject.SetActive(false);
     }
 
     ///-///////////////////////////////////////////////////////////
