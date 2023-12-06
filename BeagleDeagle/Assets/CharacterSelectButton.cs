@@ -10,16 +10,14 @@ using UnityEngine.UI;
 public class CharacterSelectButton : MonoBehaviour
 {
     // private Image buttonImage;
-    private Button buttonComponent;
+    private Button _buttonComponent;
     
     public GameObject selectableCharacter;
-
-    //[SerializeField] private GameObject levelChoiceButton;
+    
 
     private void Awake()
     {
-        //buttonImage = GetComponent<Image>();
-        buttonComponent = GetComponent<Button>();
+        _buttonComponent = GetComponent<Button>();
     }
 
     private void Start()
@@ -27,30 +25,26 @@ public class CharacterSelectButton : MonoBehaviour
         PlayerCharacterSpawner.Instance.onPlayerChoseCharacter += DisableOnCharacterChoice;
     }
 
+    private void OnDestroy()
+    {
+        PlayerCharacterSpawner.Instance.onPlayerChoseCharacter -= DisableOnCharacterChoice;
+    }
+
     private void OnEnable()
     {
-        buttonComponent.onClick.AddListener(ChooseCharacter);
-        //buttonComponent.onClick.AddListener(DisableOtherButtons);
+        _buttonComponent.onClick.AddListener(ChooseCharacter);
     }
 
     private void OnDisable()
     {
-        buttonComponent.onClick.RemoveListener(ChooseCharacter);
-        PlayerCharacterSpawner.Instance.onPlayerChoseCharacter -= DisableOnCharacterChoice;
+        _buttonComponent.onClick.RemoveListener(ChooseCharacter);
     }
 
     private void ChooseCharacter()
     {
         PlayerCharacterSpawner.Instance.InvokePlayerChoseCharacter(selectableCharacter);
     }
-
-    // private void DisableOtherButtons()
-    // {
-    //     buttonImage.enabled = false;
-    //     buttonComponent.interactable = false;
-    //     levelChoiceButton.SetActive(true);
-    //
-    // }
+    
 
     ///-///////////////////////////////////////////////////////////
     /// When a character has been chosen, turn off the button component so player
@@ -58,7 +52,7 @@ public class CharacterSelectButton : MonoBehaviour
     /// 
     private void DisableOnCharacterChoice()
     {
-        buttonComponent.enabled = false;
+        _buttonComponent.enabled = false;
         gameObject.SetActive(false);
     }
 }
