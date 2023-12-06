@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93fa82c0c5345a341b21656b9e0770b4, type: 3}
-  m_Name: regular_gun_deagle_lvl_2
+  m_Name: regular_gun_ak_lvl_1
   m_EditorClassIdentifier: 
-  gunName: Desert Eagle
-  gunEffectsData: {fileID: 11400000, guid: 0f06628b42ea28d47b0d14e08f67de9c, type: 2}
-  fireRate: 3
-  magazineSize: 10
+  gunName: AK-47
+  gunEffectsData: {fileID: 11400000, guid: db7912a824bed314aa9b9995859e575e, type: 2}
+  fireRate: 6.5
+  magazineSize: 24
   totalReloadTime: 2.5
   bulletPrefab: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
-  bulletData: {fileID: 11400000, guid: 53a677edaa7382d42aa4369f8e9d17c5, type: 2}
+  bulletData: {fileID: 11400000, guid: 4d07325412e78c64f9807623c8b4b158, type: 2}
   statusEffects: {fileID: 0}
-  bulletSpawnLocation: {x: 3.2, y: 0.312}
-  bulletSpread: 1.5
+  bulletSpawnLocation: {x: 3.3, y: 0.312}
+  bulletSpread: 3.6
   penetrationCount: 1
-  damagePerHit: 150
+  damagePerHit: 60

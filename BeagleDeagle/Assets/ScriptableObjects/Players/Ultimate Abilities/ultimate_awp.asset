@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityName: AWP Sniper
   abilitySprite: {fileID: 21300000, guid: 5f9e104afa36dd3429900d6332b7a411, type: 3}
   abilityDamage: 200
-  cooldown: 5
-  duration: 6
+  cooldown: 25
+  duration: 5.5
   startTime: 0.5
   awpGunData: {fileID: 11400000, guid: fa8fd2ad5ce7d5741b9621155f0030b6, type: 2}

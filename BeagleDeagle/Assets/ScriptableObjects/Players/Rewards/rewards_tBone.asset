@@ -14,14 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunRewards:
   - LevelGiven: 2
-    IsChosen: 1
+    IsChosen: 0
     Icon: {fileID: 0}
-    Description: +25% Magazine Size!
+    Description: +20% Less Spread!
     gunData: {fileID: 11400000, guid: 5c1a3c650afa74a4bbf272339501a52d, type: 2}
-  - LevelGiven: 2
-    IsChosen: 1
+  - LevelGiven: 3
+    IsChosen: 0
     Icon: {fileID: 0}
     Description: +25% Magazine Size!
     gunData: {fileID: 11400000, guid: 69d700199811a274d88b49318497d4bb, type: 2}
+  - LevelGiven: 4
+    IsChosen: 0
+    Icon: {fileID: 0}
+    Description: +25% DMG!
+    gunData: {fileID: 11400000, guid: bace429ec3379c1448697c52d3d750dd, type: 2}
+  - LevelGiven: 6
+    IsChosen: 0
+    Icon: {fileID: 0}
+    Description: + Firerate!
+    gunData: {fileID: 11400000, guid: bace429ec3379c1448697c52d3d750dd, type: 2}
   utilityRewards: []
   ultimateRewards: []
