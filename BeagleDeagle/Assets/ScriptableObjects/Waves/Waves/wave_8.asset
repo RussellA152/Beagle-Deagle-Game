@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 466630de2a48cd543815a39cea832634, type: 3}
-  m_Name: wave_4
+  m_Name: wave_8
   m_EditorClassIdentifier: 
-  waveName: Wave 4
-  message: Wave 4 is ongoing!
+  waveName: Wave 7
+  message: Wave 7 is ongoing!
   miniWaves:
-  - {fileID: 11400000, guid: 20bb747677f8c3340a9e76549d13ae26, type: 2}
-  - {fileID: 11400000, guid: 2611343e801b23644b7bdb6b300c5ba0, type: 2}
+  - {fileID: 11400000, guid: dabf5eaf2b7beb24c83ff12d958fd8f1, type: 2}
+  - {fileID: 11400000, guid: af25e1232453b2d4688fd4554d364f88, type: 2}
+  - {fileID: 11400000, guid: 76b203046932139428df59138d9803b7, type: 2}
   duration: 30

@@ -15,7 +15,7 @@ MonoBehaviour:
   waveName: Wave 7
   message: Wave 7 is ongoing!
   miniWaves:
-  - {fileID: 11400000, guid: 5e63bec83b6e78346ae179c3b237a75e, type: 2}
-  - {fileID: 11400000, guid: 78edae77060e1fc42950ccce089a19ba, type: 2}
-  - {fileID: 11400000, guid: 76b203046932139428df59138d9803b7, type: 2}
+  - {fileID: 11400000, guid: dabf5eaf2b7beb24c83ff12d958fd8f1, type: 2}
+  - {fileID: 11400000, guid: ad2860c86f1b46f4a889d2bae515cf8e, type: 2}
+  - {fileID: 11400000, guid: 8f9bb39399a6f7c48b26c865dcb1edbb, type: 2}
   duration: 30

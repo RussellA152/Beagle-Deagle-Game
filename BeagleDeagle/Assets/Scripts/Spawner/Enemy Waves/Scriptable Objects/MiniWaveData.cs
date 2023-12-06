@@ -18,7 +18,7 @@ public abstract class MiniWaveData : ScriptableObject
     // How many enemies will spawn in each interval (ex. 2 enemies every 3 seconds)
     public int enemiesPerSpawn;
 
-    [Range(1f, 60f)]
+    [Range(1f, 180f)]
     // How long does this wave last?
     public float waveDuration;
     
