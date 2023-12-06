@@ -14,20 +14,9 @@ public class CharacterSelectButton : MonoBehaviour
     
     public GameObject selectableCharacter;
     
-
     private void Awake()
     {
         _buttonComponent = GetComponent<Button>();
-    }
-
-    private void Start()
-    {
-        PlayerCharacterSpawner.Instance.onPlayerChoseCharacter += DisableOnCharacterChoice;
-    }
-
-    private void OnDestroy()
-    {
-        PlayerCharacterSpawner.Instance.onPlayerChoseCharacter -= DisableOnCharacterChoice;
     }
 
     private void OnEnable()
@@ -45,14 +34,4 @@ public class CharacterSelectButton : MonoBehaviour
         PlayerCharacterSpawner.Instance.InvokePlayerChoseCharacter(selectableCharacter);
     }
     
-
-    ///-///////////////////////////////////////////////////////////
-    /// When a character has been chosen, turn off the button component so player
-    /// cannot make a second choice.
-    /// 
-    private void DisableOnCharacterChoice()
-    {
-        _buttonComponent.enabled = false;
-        gameObject.SetActive(false);
-    }
 }
