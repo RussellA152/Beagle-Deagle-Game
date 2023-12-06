@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7aed98210e83f4aa4f3a5f53cb0d9b, type: 3}
   m_Name: player_data_deagle_beagle
   m_EditorClassIdentifier: 
-  characterName: 
+  characterName: Deagle Beagle
   animatorController: {fileID: 9100000, guid: 1c58318914a09d34380850903624482c, type: 2}
   levelUpRewardsList: {fileID: 11400000, guid: 7bfae28ddc7ac0546aac95c7362a7d17, type: 2}
-  maxHealth: 2500
+  maxHealth: 500
   movementSpeed: 10
   rollPower: {x: 1000, y: 1000}
   rollCooldown: 3

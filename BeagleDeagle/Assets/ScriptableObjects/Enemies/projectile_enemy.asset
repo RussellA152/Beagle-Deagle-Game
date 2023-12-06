@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0609f4a24628c1e468147ee54aa07378, type: 3}
-  m_Name: projectile_enemy_police
+  m_Name: projectile_enemy
   m_EditorClassIdentifier: 
   characterName: Projectile Enemy
   animatorController: {fileID: 9100000, guid: 7ec07fe532d25ee48843c2c0f4b1a230, type: 2}

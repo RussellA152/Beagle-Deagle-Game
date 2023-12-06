@@ -26,12 +26,12 @@ MonoBehaviour:
   - LevelGiven: 4
     IsChosen: 0
     Icon: {fileID: 0}
-    Description: +25% DMG!
-    gunData: {fileID: 11400000, guid: bace429ec3379c1448697c52d3d750dd, type: 2}
+    Description: +20% Firerate!
+    gunData: {fileID: 11400000, guid: a20dbca171eb7ea42b3b376831ff6270, type: 2}
   - LevelGiven: 6
     IsChosen: 0
     Icon: {fileID: 0}
-    Description: + Firerate!
+    Description: +25% DMG!
     gunData: {fileID: 11400000, guid: bace429ec3379c1448697c52d3d750dd, type: 2}
   utilityRewards: []
   ultimateRewards: []

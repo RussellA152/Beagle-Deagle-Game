@@ -27,7 +27,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16512
   currencyRewardOnDeath:
-    xpAmount: 150
+    xpAmount: 100
     moneyAmount: 0
   whatHitBoxDamages:
     serializedVersion: 2

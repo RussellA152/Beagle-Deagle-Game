@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7aed98210e83f4aa4f3a5f53cb0d9b, type: 3}
   m_Name: player_data_tBone
   m_EditorClassIdentifier: 
-  characterName: 
+  characterName: T-Bone
   animatorController: {fileID: 22100000, guid: b13a18b485bab5b45a2cf79db2f52966, type: 2}
   levelUpRewardsList: {fileID: 11400000, guid: 6a96a66ab5d2d864280db5f9a9adecaf, type: 2}
-  maxHealth: 2500
+  maxHealth: 500
   movementSpeed: 10
   rollPower: {x: 1000, y: 1000}
   rollCooldown: 3

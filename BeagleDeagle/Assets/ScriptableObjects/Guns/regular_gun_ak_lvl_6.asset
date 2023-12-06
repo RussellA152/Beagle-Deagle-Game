@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunName: AK-47
   gunEffectsData: {fileID: 11400000, guid: db7912a824bed314aa9b9995859e575e, type: 2}
-  fireRate: 7
+  fireRate: 6.8
   magazineSize: 30
   totalReloadTime: 2.5
   bulletPrefab: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}

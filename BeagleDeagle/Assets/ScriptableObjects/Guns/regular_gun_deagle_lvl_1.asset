@@ -21,6 +21,6 @@ MonoBehaviour:
   bulletData: {fileID: 11400000, guid: 53a677edaa7382d42aa4369f8e9d17c5, type: 2}
   statusEffects: {fileID: 0}
   bulletSpawnLocation: {x: 3.2, y: 0.312}
-  bulletSpread: 1.5
+  bulletSpread: 2
   penetrationCount: 1
   damagePerHit: 150

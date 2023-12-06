@@ -9,17 +9,16 @@ using UnityEngine.UI;
 /// 
 public class CharacterSelectButton : MonoBehaviour
 {
-    private Image buttonImage;
+    // private Image buttonImage;
     private Button buttonComponent;
     
     public GameObject selectableCharacter;
 
-    [SerializeField] private GameObject otherCharacterSelectButton;
-    [SerializeField] private GameObject levelChoiceButton;
+    //[SerializeField] private GameObject levelChoiceButton;
 
     private void Awake()
     {
-        buttonImage = GetComponent<Image>();
+        //buttonImage = GetComponent<Image>();
         buttonComponent = GetComponent<Button>();
     }
 
@@ -31,7 +30,7 @@ public class CharacterSelectButton : MonoBehaviour
     private void OnEnable()
     {
         buttonComponent.onClick.AddListener(ChooseCharacter);
-        buttonComponent.onClick.AddListener(DisableOtherButtons);
+        //buttonComponent.onClick.AddListener(DisableOtherButtons);
     }
 
     private void OnDisable()
@@ -45,13 +44,13 @@ public class CharacterSelectButton : MonoBehaviour
         PlayerCharacterSpawner.Instance.InvokePlayerChoseCharacter(selectableCharacter);
     }
 
-    private void DisableOtherButtons()
-    {
-        buttonImage.enabled = false;
-        buttonComponent.interactable = false;
-        levelChoiceButton.SetActive(true);
-        gameObject.SetActive(false);
-    }
+    // private void DisableOtherButtons()
+    // {
+    //     buttonImage.enabled = false;
+    //     buttonComponent.interactable = false;
+    //     levelChoiceButton.SetActive(true);
+    //
+    // }
 
     ///-///////////////////////////////////////////////////////////
     /// When a character has been chosen, turn off the button component so player
@@ -60,5 +59,6 @@ public class CharacterSelectButton : MonoBehaviour
     private void DisableOnCharacterChoice()
     {
         buttonComponent.enabled = false;
+        gameObject.SetActive(false);
     }
 }

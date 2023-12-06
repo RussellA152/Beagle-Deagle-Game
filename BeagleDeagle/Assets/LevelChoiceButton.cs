@@ -15,11 +15,6 @@ public class LevelChoiceButton : MonoBehaviour
     {
         buttonComponent = GetComponent<Button>();
     }
-    
-    private void Start()
-    {
-        SceneLoader.Instance.onLevelChosen += DisableOnLevelChoice;
-    }
 
     private void OnEnable()
     {
@@ -29,7 +24,6 @@ public class LevelChoiceButton : MonoBehaviour
     private void OnDisable()
     {
         buttonComponent.onClick.RemoveListener(ChooseLevel);
-        SceneLoader.Instance.onLevelChosen -= DisableOnLevelChoice;
     }
 
     private void ChooseLevel()
@@ -37,8 +31,4 @@ public class LevelChoiceButton : MonoBehaviour
         SceneLoader.Instance.InvokeLevelChosen(selectableLevel);
     }
 
-    private void DisableOnLevelChoice()
-    {
-        buttonComponent.enabled = false;
-    }
 }
