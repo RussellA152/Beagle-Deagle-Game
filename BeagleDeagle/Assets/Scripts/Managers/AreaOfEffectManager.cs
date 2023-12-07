@@ -32,7 +32,7 @@ public class AreaOfEffectManager : MonoBehaviour
 
         Instance = this;
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     private void OnDisable()

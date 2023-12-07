@@ -35,20 +35,20 @@ public class PlayerControllerTypeManager : MonoBehaviour
 
     private void OnEnable()
     {
-        playerEvents.givePlayerGameObject += FindPlayerInput;
-        
+        playerEvents.givePlayerInput += FindPlayerInput;
     }
 
     private void OnDisable()
     {
-        _playerInput.onControlsChanged -= ControlsChanged;
+        if(_playerInput != null)
+            _playerInput.onControlsChanged -= ControlsChanged;
     }
     
 
-    private void FindPlayerInput(GameObject playerGameObject)
+    private void FindPlayerInput(PlayerInput playerInput)
     {
         // Find the player input component in the level
-        _playerInput = playerGameObject.GetComponent<PlayerInput>();
+        _playerInput = playerInput;
         
         _playerInput.onControlsChanged += ControlsChanged;
         
@@ -73,6 +73,7 @@ public class PlayerControllerTypeManager : MonoBehaviour
     /// 
     private void ControlsChanged(PlayerInput playerInput)
     {
+        Debug.Log("invoked!");
         switch (playerInput.currentControlScheme)
         {
             case "Keyboard":

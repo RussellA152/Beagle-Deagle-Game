@@ -27,7 +27,7 @@ public class GameTimeManager : MonoBehaviour
 
         Instance = this;
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()

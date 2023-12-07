@@ -17,11 +17,7 @@ public class SceneLoader : MonoBehaviour
     public event Action onGameSceneLoaded;
     
     public event Action onMenuSceneLoaded;
-
-    //private Camera _previousMainCamera;
-
-    //private EventSystem _previousEventSystem;
-
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -32,18 +28,18 @@ public class SceneLoader : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        
+        //SceneManager.sceneLoaded += OnSceneLoaded;
 
     }
 
     private void OnEnable()
     {
-        //_previousMainCamera = Camera.main;
-        //_previousEventSystem = EventSystem.current;
-        
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }

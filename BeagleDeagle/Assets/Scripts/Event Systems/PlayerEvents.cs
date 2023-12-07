@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 ///-///////////////////////////////////////////////////////////
 /// A series of significant events caused by player actions. Some including when the player's health changes, obtains an upgrade to their gun,
@@ -11,6 +12,8 @@ public class PlayerEvents : ScriptableObject
 {
     // Pass a reference to the player gameObject
     public event Action<GameObject> givePlayerGameObject;
+
+    public event Action<PlayerInput> givePlayerInput;
 
     public event Action onPlayerTookDamage;
     
@@ -70,6 +73,11 @@ public class PlayerEvents : ScriptableObject
     public void InvokeFindPlayer(GameObject playerGameObject)
     {
         givePlayerGameObject?.Invoke(playerGameObject);
+    }
+
+    public void InvokeFindPlayerInput(PlayerInput playerInput)
+    {
+        givePlayerInput?.Invoke(playerInput);
     }
 
     public void InvokePlayerTookDamage()
