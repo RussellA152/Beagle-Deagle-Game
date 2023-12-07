@@ -46,6 +46,8 @@ public class GamePauser : MonoBehaviour
 
     private void OnDisable()
     {
+        ResumeGame();
+        
         playerEvents.givePlayerGameObject -= FindPlayerInput;
         
         resumeButton.onClick.RemoveListener(ResumeButton);

@@ -43,6 +43,8 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWIthModifiers, IPlaye
         {
             _currentHealth = 0f;
             _isDead = true;
+            // Tell all listeners that the player has died
+            playerEvents.InvokePlayerDied();
         }
         else
         {

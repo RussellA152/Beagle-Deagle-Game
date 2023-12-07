@@ -16,6 +16,8 @@ public class PlayerEvents : ScriptableObject
     public event Action<PlayerInput> givePlayerInput;
 
     public event Action onPlayerTookDamage;
+
+    public event Action onPlayerDied;
     
     // Pass a reference to the player's current Health (used by HUD)
     public event Action<float> onPlayerCurrentHealthChanged;
@@ -83,6 +85,11 @@ public class PlayerEvents : ScriptableObject
     public void InvokePlayerTookDamage()
     {
         onPlayerTookDamage?.Invoke();
+    }
+
+    public void InvokePlayerDied()
+    {
+        onPlayerDied?.Invoke();
     }
 
     // When the player's max health changes

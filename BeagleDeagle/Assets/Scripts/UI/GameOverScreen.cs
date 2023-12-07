@@ -1,27 +1,31 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
-public class VictoryScreen : MonoBehaviour
+public class GameOverScreen : MonoBehaviour
 {
     // Will tell us that the gamer timer concluded
     [SerializeField] private GameEvents gameEvents;
-
+    // Will tell us that the player has died
+    [SerializeField] private PlayerEvents playerEvents;
+    
     // Will pause the game for us
     [SerializeField] private GamePauser gamePauser;
 
     // All objects to turn on when the victory screen appears
-    [SerializeField] private GameObject[] victoryScreenGameObjects;
+    [SerializeField] private GameObject[] gameOverGameObjects;
+
+    [SerializeField] private TMP_Text menuTitle;
 
     // The button to be selected when the victory screen appears
     [SerializeField] private GameObject continueButtonGameObject;
 
     private void Start()
     {
-        foreach (GameObject gameObj in victoryScreenGameObjects)
+        foreach (GameObject gameObj in gameOverGameObjects)
         {
             gameObj.SetActive(false);
         }
@@ -29,28 +33,44 @@ public class VictoryScreen : MonoBehaviour
 
     private void OnEnable()
     {
-        gameEvents.onGameTimeConcluded += ShowVictoryScreen;
+        playerEvents.onPlayerDied += DeathScreen;
+        gameEvents.onGameTimeConcluded += VictoryScreen;
     }
 
     private void OnDisable()
     {
-        gameEvents.onGameTimeConcluded -= ShowVictoryScreen;
+        playerEvents.onPlayerDied -= DeathScreen;
+        gameEvents.onGameTimeConcluded -= VictoryScreen;
+    }
+    
+
+    private void DeathScreen()
+    {
+        menuTitle.text = "You Died!";
+        
+        ShowScreen();
+    }
+
+    private void VictoryScreen()
+    {
+        menuTitle.text = "You Win!";
+        
+        ShowScreen();
     }
 
     ///-///////////////////////////////////////////////////////////
     /// When the game's timer concludes (ex. 15 minutes), pause the game
     /// and show the victory screen to the player.
     /// 
-    private void ShowVictoryScreen()
+    private void ShowScreen()
     {
         EventSystem.current.SetSelectedGameObject(continueButtonGameObject);
         
-        foreach (GameObject gameObj in victoryScreenGameObjects)
+        foreach (GameObject gameObj in gameOverGameObjects)
         {
             gameObj.SetActive(true);
         }
         
         gamePauser.PauseGameAutomatically();
     }
-    
 }
