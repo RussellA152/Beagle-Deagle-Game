@@ -73,7 +73,6 @@ public class PlayerControllerTypeManager : MonoBehaviour
     /// 
     private void ControlsChanged(PlayerInput playerInput)
     {
-        Debug.Log("invoked!");
         switch (playerInput.currentControlScheme)
         {
             case "Keyboard":

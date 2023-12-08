@@ -22,9 +22,9 @@ public class OffScreenSpawner : MonoBehaviour
     private Vector3 screenBounds = new Vector3(28,15);
     
 
-    [Header("The Ground of This Level")]
-    [SerializeField] 
-    private Tilemap surfaceTileMap;
+    [Header("Level's Tilemaps")]
+    [SerializeField] private Grid tileGrid;
+    [SerializeField] private Tilemap surfaceTileMap;
     
 
     [Header("Boundaries of the Map")]
@@ -52,10 +52,10 @@ public class OffScreenSpawner : MonoBehaviour
     [SerializeField]
     private float bottomBounds; // starting point for the bottom portion of the off-screen
 
-    private bool playerCloseToLeftBoundary;
-    private bool playerCloseToRightBoundary;
-    private bool playerCloseToTopBoundary;
-    private bool playerCloseToBottomBoundary;
+    [SerializeField] private bool playerCloseToLeftBoundary;
+    [SerializeField] private bool playerCloseToRightBoundary;
+    [SerializeField] private bool playerCloseToTopBoundary;
+    [SerializeField] private bool playerCloseToBottomBoundary;
 
     private Vector3 screenCenter;
     
@@ -89,10 +89,11 @@ public class OffScreenSpawner : MonoBehaviour
 
         // Calculating all boundaries of the map (this is so that we can check if an enemy is about to spawn outside of the map)
         var cellBounds = surfaceTileMap.cellBounds;
-        surfaceTopBoundary = cellBounds.max.y;
-        surfaceBottomBoundary = cellBounds.min.y;
-        surfaceLeftBoundary = cellBounds.min.x;
-        surfaceRightBoundary = cellBounds.max.x;
+        Vector3 gridSize = tileGrid.cellSize;
+        surfaceTopBoundary = cellBounds.max.y * gridSize.y;
+        surfaceBottomBoundary = cellBounds.min.y * gridSize.y;
+        surfaceLeftBoundary = cellBounds.min.x * gridSize.x;
+        surfaceRightBoundary = cellBounds.max.x * gridSize.x;
 
     }
     
