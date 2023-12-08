@@ -113,7 +113,7 @@ MonoBehaviour:
   completionReward:
     xpAmount: 500
     moneyAmount: 500
-  collectRequirement: 8
+  collectRequirement: 10
   collectRange: 15
 --- !u!114 &7529365375572421820
 MonoBehaviour:
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf99d8c7d04b96a478316d603c79896f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeUntilExpire: 15
+  timeUntilExpire: 30
 --- !u!114 &7529365375572421794
 MonoBehaviour:
   m_ObjectHideFlags: 0
