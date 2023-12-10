@@ -30,7 +30,8 @@ public class GameEvents : ScriptableObject
     // When a map objective has ended (after being started by player)... invoke this event 
     public event Action<MapObjective> onMapObjectiveEnded;
 
-    public event Action<MapObjective> onMapObjectiveEntered;
+    
+    public event Action<MapObjective> onMapObjectiveReturned;
 
     public event Action<MapObjective> onMapObjectiveExited; 
 
@@ -65,9 +66,9 @@ public class GameEvents : ScriptableObject
         onMapObjectiveEnded?.Invoke(mapObjectiveEnded);
     }
 
-    public void InvokMapObjectiveEnteredEvent(MapObjective mapObjectiveEntered)
+    public void InvokMapObjectiveReturnedEvent(MapObjective mapObjectiveEntered)
     {
-        onMapObjectiveEntered?.Invoke(mapObjectiveEntered);
+        onMapObjectiveReturned?.Invoke(mapObjectiveEntered);
     }
     
     public void InvokeMapObjectiveExited(MapObjective mapObjectiveExited)

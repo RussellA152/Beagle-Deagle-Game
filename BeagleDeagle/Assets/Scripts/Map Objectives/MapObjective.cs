@@ -42,7 +42,10 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     
     private CooldownSystem _cooldownSystem;
     private MapObjectiveExpire _mapObjectiveExpire;
-    
+
+    // Range indicator will display one of the ranges of a map objective (ex. Soul Collect range, survival range, etc.)
+    protected RangeIndicator RangeIndicator;
+
     // Is this objective currently being played?
     public bool IsActive { get; private set; }
     
@@ -51,12 +54,17 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
 
     private void Awake()
     {
+        RangeIndicator = GetComponentInChildren<RangeIndicator>();
+        
         OnObjectiveAwake();
     }
 
     private void Start()
     {
         _cooldownSystem.OnCooldownEnded += ObjectiveOutOfTime;
+        
+        // Hide range until player activates this map objective
+        RangeIndicator.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -124,6 +132,15 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         if (!PlayerInsideExitArea && playerInsideExitAreaNow)
         {
             PlayerInsideExitArea = true;
+            
+            // Stop counting down if player has re-entered the starting range
+            if (_cooldownSystem.IsOnCooldown(Id))
+            {
+                Debug.Log("Stop exit timer!");
+                MapObjectiveManager.Instance.PlayerReturnedToObjective(this);
+                _cooldownSystem.RemoveCooldown(Id);
+            }
+            
         }
         else if (PlayerInsideExitArea && !playerInsideExitAreaNow)
         {
@@ -169,13 +186,9 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
             IsActive = true;
             
         }
-        // Stop counting down if player has re-entered the objective
-        if (_cooldownSystem.IsOnCooldown(Id))
-        {
-            _cooldownSystem.RemoveCooldown(Id);
-        }
+
+        DisplayRangeIndicator();
         
-        MapObjectiveManager.Instance.ObjectiveWasEntered(this);
         
     }
 
@@ -254,6 +267,16 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         
         completionReward.moneyAmount = (int) (completionReward.moneyAmount + (completionReward.moneyAmount * percentage));
     }
+    
+    protected virtual void DisplayRangeIndicator()
+    {
+        // Display the exiting range of this map objective
+        RangeIndicator.gameObject.SetActive(true);
+        
+        RangeIndicator.SetSize(new Vector2(startingRange, startingRange));
+        
+    }
+    
 
     public void ReceivePlayerReference(Transform pTransform)
     {
@@ -267,6 +290,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     {
         return _cooldownSystem.GetRemainingDuration(Id);
     }
+    
 
     public int Id { get; set; }
     

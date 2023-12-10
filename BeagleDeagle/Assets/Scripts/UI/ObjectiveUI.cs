@@ -34,8 +34,8 @@ public class ObjectiveUI : MonoBehaviour
 
         gameEvents.onMapObjectiveExited += Shrink;
 
-        gameEvents.onMapObjectiveEntered += StopShrink;
-        
+        gameEvents.onMapObjectiveReturned += StopShrink;
+
         gameEvents.onMapObjectiveEnded += StopDisplay;
     }
 
@@ -45,7 +45,7 @@ public class ObjectiveUI : MonoBehaviour
       
         gameEvents.onMapObjectiveExited -= Shrink;
 
-        gameEvents.onMapObjectiveEntered -= StopShrink;
+        gameEvents.onMapObjectiveReturned -= StopShrink;
         
         gameEvents.onMapObjectiveEnded -= StopDisplay;
     }

@@ -50,7 +50,14 @@ public class SoulCollectObjective : MapObjective
             RemoveCooldown();
         }
     }
-    
+
+    protected override void DisplayRangeIndicator()
+    {
+        base.DisplayRangeIndicator();
+        
+        RangeIndicator.SetSize(new Vector2(collectRange, collectRange));
+    }
+
     public override string GetObjectiveDescription()
     {
         return "Souls: " + _collectedSouls + " of " + collectRequirement;

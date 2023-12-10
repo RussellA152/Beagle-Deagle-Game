@@ -18,10 +18,19 @@ public class DropOffItem : MonoBehaviour
     [HideInInspector] 
     public bool playerHoldingItem = false;
 
+    private RangeIndicator _rangeIndicator;
+
+    private void Awake()
+    {
+        _rangeIndicator = GetComponentInChildren<RangeIndicator>();
+    }
+
     private void Start()
     {
         PlayerArrived = false;
         playerHoldingItem = false;
+        
+        DisplayRangeIndicator();
     }
     
     private void Update()
@@ -31,6 +40,15 @@ public class DropOffItem : MonoBehaviour
         {
             PlayerArrived = true;
         }
+    }
+    
+    private void DisplayRangeIndicator()
+    {
+        // Display the exiting range of this map objective
+        _rangeIndicator.gameObject.SetActive(true);
+        
+        _rangeIndicator.SetSize(new Vector2(dropOffRange, dropOffRange));
+        
     }
 
     private void OnDrawGizmos()

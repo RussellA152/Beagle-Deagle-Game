@@ -34,7 +34,6 @@ public class SurvivalAreaObjective : MapObjective
         }
     }
     
-    
     public override string GetObjectiveDescription()
     {
         if (!PlayerInsideStartingArea)

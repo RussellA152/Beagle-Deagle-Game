@@ -143,11 +143,11 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
     }
 
     ///-///////////////////////////////////////////////////////////
-    /// The player walked into a map objective's starting range.
+    /// The player walked back into the map objective after exiting.
     /// 
-    public void ObjectiveWasEntered(MapObjective mapObjective)
+    public void PlayerReturnedToObjective(MapObjective mapObjective)
     {
-        gameEvents.InvokMapObjectiveEnteredEvent(mapObjective);
+        gameEvents.InvokMapObjectiveReturnedEvent(mapObjective);
     }
 
     ///-///////////////////////////////////////////////////////////

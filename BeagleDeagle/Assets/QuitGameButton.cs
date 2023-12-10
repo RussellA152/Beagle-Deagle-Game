@@ -6,21 +6,21 @@ using UnityEngine.UI;
 
 public class QuitGameButton : MonoBehaviour
 {
-    private Button quitButton;
+    private Button _quitButton;
 
     private void Awake()
     {
-        quitButton = GetComponent<Button>();
+        _quitButton = GetComponent<Button>();
     }
 
     private void OnEnable()
     {
-        quitButton.onClick.AddListener(CloseGame);
+        _quitButton.onClick.AddListener(CloseGame);
     }
 
     private void OnDisable()
     {
-        quitButton.onClick.RemoveListener(CloseGame);
+        _quitButton.onClick.RemoveListener(CloseGame);
     }
 
     private void CloseGame()
