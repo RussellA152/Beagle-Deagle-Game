@@ -82914,6 +82914,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 143017070040165732, guid: 08e21cfba36fa4d4eb7a479c70bceb93, type: 3}
+      propertyPath: waves.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 143017070040165732, guid: 08e21cfba36fa4d4eb7a479c70bceb93, type: 3}
+      propertyPath: waves.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7e4bff47a92d1334fa189a8bd8658770, type: 2}
+    - target: {fileID: 143017070040165732, guid: 08e21cfba36fa4d4eb7a479c70bceb93, type: 3}
+      propertyPath: waves.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: b5f944abbf5b9ac418998e9134702f89, type: 2}
+    - target: {fileID: 143017070040165732, guid: 08e21cfba36fa4d4eb7a479c70bceb93, type: 3}
       propertyPath: offScreenSpawnerScript
       value: 
       objectReference: {fileID: 2055773075}
