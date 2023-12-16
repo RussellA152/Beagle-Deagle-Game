@@ -42,7 +42,8 @@ public class CooldownUI : MonoBehaviour
     // How long after roll cooldown finishes should the roll fill show on screen? 
     private float _rollFillLingerTime = 0.35f;
 
-    private bool _useMousePosition;
+    // Use mouse position by default
+    private bool _useMousePosition = true;
 
     private void Awake()
     {

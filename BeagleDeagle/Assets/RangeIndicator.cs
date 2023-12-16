@@ -9,9 +9,11 @@ using UnityEngine;
 /// 
 public class RangeIndicator : MonoBehaviour
 {
-    public void SetSize(Vector2 size)
+    // Divide by 5 to account for converting a radius to transform.local scale
+    private int _divider = 5;
+    public void SetRadius(float radius)
     {
-        transform.localScale = size / 5;
+        transform.localScale = new Vector2(radius / _divider, radius / _divider);
     }
 }
 

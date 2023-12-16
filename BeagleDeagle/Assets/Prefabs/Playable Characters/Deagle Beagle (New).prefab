@@ -345,6 +345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
+  healthRegenDelay: 2.5
   maxHealthModifiers: []
 --- !u!114 &2439171421654748750
 MonoBehaviour:

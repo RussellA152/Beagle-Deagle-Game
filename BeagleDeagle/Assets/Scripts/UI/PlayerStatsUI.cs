@@ -97,7 +97,8 @@ public class PlayerStatsUI : MonoBehaviour
     private void UpdatePlayerCurrentHealthText(float currentHealth)
     {
         healthBar.fillAmount = currentHealth / _playerMaxHealth;
-        currentHealthText.text = currentHealth.ToString();
+        // Convert health display to int
+        currentHealthText.text = ((int) currentHealth).ToString();
     }
 
     private void UpdatePlayerMaxHealthText(float maxHealth)

@@ -47,7 +47,7 @@ public class DropOffItem : MonoBehaviour
         // Display the exiting range of this map objective
         _rangeIndicator.gameObject.SetActive(true);
         
-        _rangeIndicator.SetSize(new Vector2(dropOffRange, dropOffRange));
+        _rangeIndicator.SetRadius(dropOffRange);
         
     }
 

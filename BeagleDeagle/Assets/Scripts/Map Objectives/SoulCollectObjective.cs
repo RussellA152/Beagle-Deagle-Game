@@ -55,7 +55,7 @@ public class SoulCollectObjective : MapObjective
     {
         base.DisplayRangeIndicator();
         
-        RangeIndicator.SetSize(new Vector2(collectRange, collectRange));
+        RangeIndicator.SetRadius(collectRange);
     }
 
     public override string GetObjectiveDescription()

@@ -273,7 +273,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         // Display the exiting range of this map objective
         RangeIndicator.gameObject.SetActive(true);
         
-        RangeIndicator.SetSize(new Vector2(startingRange, startingRange));
+        RangeIndicator.SetRadius(startingRange);
         
     }
     

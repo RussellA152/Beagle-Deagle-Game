@@ -20,6 +20,11 @@ public class PlayerData : ScriptableObject
     [Header("Health")]
     [Range(1f, 2500f)] public float maxHealth;
 
+    // How much health can the player regenerate up to? (ex. player can regenerate up to 50% health, but must be below 50% health)
+    [Range(0.1f, 0.5f)] public float healthRegenPercentage;
+    // How much does the player regenerate?
+    [Range(1f, 2500f)] public float regenRate;
+
     [Header("Movement")]
     [Range(0f, 100f)] public float movementSpeed;
     public Vector2 rollPower;
