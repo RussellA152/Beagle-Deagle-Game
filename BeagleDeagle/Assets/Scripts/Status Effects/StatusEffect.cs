@@ -24,10 +24,8 @@ public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: St
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
+        
+        return false;
     }
     
     public void UpdateScriptableObject(StatusEffectData scriptableObject)
