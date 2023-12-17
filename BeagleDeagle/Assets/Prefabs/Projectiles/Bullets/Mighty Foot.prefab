@@ -102,7 +102,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolKey: 21
+  _inanimateParticleLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   inanimateObjectHitParticleEffect: {fileID: 0}
+  _enemyParticleLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
   enemyHitParticleEffect: {fileID: 1688976237673181899, guid: 97d7d94ed58b9be4d8cbff990df23596, type: 3}
   onBulletHit:
     m_PersistentCalls:

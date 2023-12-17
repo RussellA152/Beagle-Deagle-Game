@@ -22,7 +22,7 @@ TagManager:
   - IgnoreEnemy
   - HitBox
   - Ally
-  - 
+  - DestroyableObstacle
   - 
   - 
   - 

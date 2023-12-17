@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface IHealth
 {
-
     ///-///////////////////////////////////////////////////////////
     /// Add or subtract from this entity's current health value
     /// 

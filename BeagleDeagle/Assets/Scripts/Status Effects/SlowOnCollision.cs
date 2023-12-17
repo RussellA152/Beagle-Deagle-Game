@@ -17,7 +17,6 @@ public class SlowOnCollision : StatusEffect<SlowData>
         
     }
     
-
     public void RemoveEffectFromTarget(GameObject objectHit)
     {
         if (DoesThisAffectTarget(objectHit) && removeOnTriggerExit)

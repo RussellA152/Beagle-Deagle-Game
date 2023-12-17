@@ -45,7 +45,7 @@ public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: St
         _statusEffectTypes = statusEffectTypesScriptableObject;
         
         // Retrieve status effect data from explosive type
-        // Examples: StunData, DamageOverTimeData, SlowData
+        // Examples: StunData, DamageOverTimeData, SlowData, HealData
         StatusEffectData = _statusEffectTypes.GetStatusEffectData<T>();
     }
 }

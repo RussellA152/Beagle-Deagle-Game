@@ -34,9 +34,11 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
     [Header("Impact Particle Effects")] 
     // When hitting inanimate object, instantiate a particle effect on it (typically a spark)
+    [SerializeField] private LayerMask _inanimateParticleLayerMask;
     [SerializeField] private GameObject inanimateObjectHitParticleEffect;
     private int _inanimateHitParticlePoolKey;
     // When hitting a player or enemy, instantiate a particle effect on them (typically a blood particle effect)
+    [SerializeField] private LayerMask _enemyParticleLayerMask;
     [SerializeField] private GameObject enemyHitParticleEffect;
     private int _enemyHitParticlePoolKey;
     
@@ -117,8 +119,9 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         if((bulletData.whatDestroysBullet.value & (1 << collision.gameObject.layer)) > 0)
         {
             // Play particle effect on object hit
-            ActivateParticleEffect(collision.gameObject, false);
+            //ActivateParticleEffect(collision.gameObject, false);
             
+            ActivateParticleEffect(collision.gameObject);
             gameObject.SetActive(false);
             return;
         }
@@ -140,7 +143,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
                 DamageOnHit(collision.gameObject);
                 
                 // Play particle effect on enemy hit
-                ActivateParticleEffect(collision.gameObject, true);
+                ActivateParticleEffect(collision.gameObject);
                 
                 Vector2 knockBackDirection = rb.velocity.normalized;
 
@@ -167,27 +170,29 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         healthScript?.ModifyHealth(-1 * _damagePerHit);
     }
 
-    private void ActivateParticleEffect(GameObject objectHit, bool isAnimate)
+    private void ActivateParticleEffect(GameObject objectHit)
     {
         GameObject hitParticleEffect;
         PoolableParticle particleUsed;
 
-        if (isAnimate)
+        if ((_enemyParticleLayerMask.value & (1 << objectHit.layer)) > 0)
         {
             // Spawn a blood particle effect
             hitParticleEffect =  ObjectPooler.Instance.GetPooledObject(_enemyHitParticlePoolKey);
             particleUsed = hitParticleEffect.GetComponent<PoolableParticle>();
             particleUsed.PlaceParticleOnTransform(objectHit.transform);
-           // hitParticleEffect.transform.position = objectHit.transform.position;
+            
+            particleUsed.PlayAllParticles(1f);
         }
-        else
+        else if((_inanimateParticleLayerMask.value & (1 << objectHit.layer)) > 0)
         {
             hitParticleEffect = ObjectPooler.Instance.GetPooledObject(_inanimateHitParticlePoolKey);
             particleUsed = hitParticleEffect.GetComponent<PoolableParticle>();
             particleUsed.PlaceParticleOnTransform(transform);
+            
+            particleUsed.PlayAllParticles(1f);
         }
         
-        particleUsed.PlayAllParticles(1f);
 
     }
 
