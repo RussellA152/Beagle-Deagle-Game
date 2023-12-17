@@ -53,13 +53,10 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
         // Start timer until disappear
         if (!_cooldownSystem.IsOnCooldown(Id))
         {
-            Debug.Log("Start cooldown for: " + CooldownDuration + " seconds");
             _cooldownSystem.PutOnCooldown(this);
         }
-
         else
         {
-            Debug.Log("Refresh cooldown for: " + CooldownDuration + " seconds");
             _cooldownSystem.RefreshCooldown(Id);
         }
             
@@ -88,7 +85,6 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
     private void Despawn(int id)
     {
         if (Id != id) return;
-        Debug.Log("DESPAWN PICK UP!");
         onPickUpDespawn?.Invoke();
         
         gameObject.SetActive(false);

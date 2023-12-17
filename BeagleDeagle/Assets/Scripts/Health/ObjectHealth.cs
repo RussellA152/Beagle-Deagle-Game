@@ -12,7 +12,8 @@ public class ObjectHealth : MonoBehaviour, IHealth
     // The current health of this enemy
     private float _currentHealth;
 
-    [SerializeField] private float maxHealth;
+    [SerializeField, Range(1f, 5000f)] 
+    private float maxHealth;
     
     // Is the enemy currently dead?
     private bool _isDead;

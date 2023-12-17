@@ -46,11 +46,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWIthModifiers, IPlaye
 
     private void Update()
     {
-        if (_currentHealth < (playerData.maxHealth * _bonusMaxHealth) * playerData.healthRegenPercentage && !_cooldownSystem.IsOnCooldown(Id))
-        {
-            ModifyHealth(playerData.regenRate * Time.deltaTime);
-
-        }
+        CheckHealthRegeneration();
     }
 
 
@@ -91,6 +87,14 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWIthModifiers, IPlaye
         
             // Current health has changed, so update all listeners with the new value
         playerEvents.InvokeCurrentHealthEvent(_currentHealth);
+    }
+
+    private void CheckHealthRegeneration()
+    {
+        if (_currentHealth < (playerData.maxHealth * _bonusMaxHealth) * playerData.healthRegenPercentage && !_cooldownSystem.IsOnCooldown(Id))
+        {
+            ModifyHealth(playerData.regenRate * Time.deltaTime);
+        }
     }
 
     public float GetCurrentHealth()

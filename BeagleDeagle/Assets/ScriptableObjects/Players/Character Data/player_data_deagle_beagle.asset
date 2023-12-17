@@ -16,8 +16,8 @@ MonoBehaviour:
   animatorController: {fileID: 9100000, guid: 1c58318914a09d34380850903624482c, type: 2}
   levelUpRewardsList: {fileID: 11400000, guid: 7bfae28ddc7ac0546aac95c7362a7d17, type: 2}
   maxHealth: 500
-  healthRegenPercentage: 0.5
-  regenRate: 50
+  healthRegenPercentage: 0.3
+  regenRate: 30
   movementSpeed: 10
   rollPower: {x: 1000, y: 1000}
   rollCooldown: 3
