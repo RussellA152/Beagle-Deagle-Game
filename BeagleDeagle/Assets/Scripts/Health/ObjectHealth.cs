@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class ObjectHealth : MonoBehaviour, IHealth
     // Is the enemy currently dead?
     private bool _isDead;
 
+    public event Action onObjectDeath; 
+
     private void Start()
     {
         _isDead = false;
@@ -23,6 +26,12 @@ public class ObjectHealth : MonoBehaviour, IHealth
         _currentHealth = maxHealth;
     }
 
+    private void OnEnable()
+    {
+        _isDead = false;
+        _currentHealth = maxHealth;
+    }
+    
 
     public virtual void ModifyHealth(float amount)
     {
@@ -36,6 +45,10 @@ public class ObjectHealth : MonoBehaviour, IHealth
         if (newHealth <= 0f)
         {
             _currentHealth = 0f;
+            
+            // Tell listeners that this object died
+            onObjectDeath?.Invoke();
+            
             _isDead = true;
             
         }
