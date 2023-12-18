@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour, IHealth, IHealthWIthModifiers,IEnemyDataUpdatable
+public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDataUpdatable
 {
     [SerializeField] private CurrencyEvents currencyEvents;
     

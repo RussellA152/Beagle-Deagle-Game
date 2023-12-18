@@ -83,7 +83,7 @@ public class RewardSelectionUI : MonoBehaviour
         
             // Change the name, description, and icon image of the button to whatever the reward uses
             buttonRewardChoiceUIElementScript.SetName(potentialReward.GetRewardName());
-            buttonRewardChoiceUIElementScript.SetDescription(potentialReward.Description);
+            buttonRewardChoiceUIElementScript.SetDescription(potentialReward.GetDescription());
             buttonRewardChoiceUIElementScript.SetIcon(potentialReward.Icon);
         
             buttonRewardChoiceUIElementScript.GetButton().onClick.AddListener(() => GiveRewardToPlayerOnClick(potentialReward));
@@ -99,7 +99,7 @@ public class RewardSelectionUI : MonoBehaviour
         // Don't give a reward if the player already picked one
         if (_rewardWasChosen) return;
         
-        Debug.Log("Player picked " + chosenLevelUpReward.Description);
+        Debug.Log("Player picked " + chosenLevelUpReward.GetDescription());
 
         _rewardWasChosen = true;
         
@@ -138,7 +138,7 @@ public class RewardSelectionUI : MonoBehaviour
     {
         // Change text
         mandatoryRewardDescription.gameObject.SetActive(true);
-        mandatoryRewardDescription.text = mandatoryLevelUpReward.Description;
+        mandatoryRewardDescription.text = mandatoryLevelUpReward.GetDescription();
         
         yield return new WaitForSeconds(rewardDescriptionDisplayTime);
         

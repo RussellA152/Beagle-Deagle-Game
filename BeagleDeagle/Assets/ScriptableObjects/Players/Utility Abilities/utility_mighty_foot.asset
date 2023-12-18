@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: utility_mighty_foot
   m_EditorClassIdentifier: 
   abilityName: Mighty Foot
+  description: Kick enemies in front of you, knocking them away and stunning them
+    briefly.
   abilitySprite: {fileID: 21300000, guid: 8f27c983809f687488e79213a9cafc37, type: 3}
   abilityDamage: 40
   cooldown: 3

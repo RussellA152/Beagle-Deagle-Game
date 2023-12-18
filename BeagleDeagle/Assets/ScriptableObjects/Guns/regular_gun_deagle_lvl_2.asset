@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: regular_gun_deagle_lvl_2
   m_EditorClassIdentifier: 
   gunName: Desert Eagle
+  description: +25% Magazine Size!
   gunEffectsData: {fileID: 11400000, guid: 0f06628b42ea28d47b0d14e08f67de9c, type: 2}
   fireRate: 3
   magazineSize: 10

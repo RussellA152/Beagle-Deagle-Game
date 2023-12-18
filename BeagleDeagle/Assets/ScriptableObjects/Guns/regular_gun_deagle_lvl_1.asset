@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: regular_gun_deagle_lvl_1
   m_EditorClassIdentifier: 
   gunName: Desert Eagle
+  description: A semi-Auto heavy pistol with good penetration.
   gunEffectsData: {fileID: 11400000, guid: 0f06628b42ea28d47b0d14e08f67de9c, type: 2}
   fireRate: 3
   magazineSize: 8

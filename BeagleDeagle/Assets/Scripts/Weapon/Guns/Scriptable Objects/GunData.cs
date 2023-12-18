@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public abstract class GunData : ScriptableObject
+public abstract class GunData : ScriptableObject, IHasDescription
 {
     // Name displayed in-game
     public string gunName;
+    
+    [Space(10), TextArea(2,3)]
+    public string description;
 
     public GunEffectsData gunEffectsData;
     
@@ -45,5 +48,9 @@ public abstract class GunData : ScriptableObject
     /// Return the damage of this weapon.
     /// 
     public abstract float GetDamage();
-    
+
+    public string GetDescription()
+    {
+        return description;
+    }
 }

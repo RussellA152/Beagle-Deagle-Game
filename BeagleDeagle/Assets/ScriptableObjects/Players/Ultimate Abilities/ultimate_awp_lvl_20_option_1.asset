@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8d5d101c15f1cc488adfb3c7686e907, type: 3}
-  m_Name: ultimate_awp
+  m_Name: ultimate_awp_lvl_20_option_1
   m_EditorClassIdentifier: 
-  abilityName: AWP Sniper
+  abilityName: Trickshot
+  description: Bullets ricochet 2 times off the edge of the screen.
   abilitySprite: {fileID: 21300000, guid: 5f9e104afa36dd3429900d6332b7a411, type: 3}
   abilityDamage: 200
   cooldown: 25
   duration: 5.5
   startTime: 0.5
-  awpGunData: {fileID: 11400000, guid: fa8fd2ad5ce7d5741b9621155f0030b6, type: 2}
+  awpGunData: {fileID: 11400000, guid: c1887e064c2190a47b5704b02c511d8d, type: 2}

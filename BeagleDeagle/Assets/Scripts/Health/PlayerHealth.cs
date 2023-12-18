@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour, IHealth, IHealthWIthModifiers, IPlayerDataUpdatable, IHasCooldown
+public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlayerDataUpdatable, IHasCooldown
 {
     [SerializeField] private PlayerEvents playerEvents;
     

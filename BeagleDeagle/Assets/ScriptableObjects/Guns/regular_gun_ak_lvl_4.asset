@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: regular_gun_ak_lvl_4
   m_EditorClassIdentifier: 
   gunName: AK-47
+  description: +20% Firerate!
   gunEffectsData: {fileID: 11400000, guid: db7912a824bed314aa9b9995859e575e, type: 2}
   fireRate: 6.8
   magazineSize: 30

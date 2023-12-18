@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 /// When the player reaches a certain level, they will be given a certain scriptableObject 
 /// as an upgrade to a gun, utility ability, or ultimate ability.
 /// 
-public abstract class LevelUpReward
+public abstract class LevelUpReward: IHasDescription
 {
     [Range(1, 20),Tooltip("What level is the reward given at?")]
     public int LevelGiven;
@@ -18,11 +19,10 @@ public abstract class LevelUpReward
 
     public Image Icon;
 
-    [Space(10), TextArea(2,3)]
-    public string Description;
-
     public abstract string GetRewardName();
     public abstract void GiveDataToPlayer(GameObject recipientGameObject);
+
+    public abstract string GetDescription();
 
 }
 
@@ -34,6 +34,7 @@ public class GunLevelUpReward: LevelUpReward
     {
         gunData = data;
         LevelGiven = level;
+        
     }
 
     public override string GetRewardName()
@@ -45,6 +46,11 @@ public class GunLevelUpReward: LevelUpReward
     {
         recipientGameObject.GetComponentInChildren<IGunDataUpdatable>().UpdateScriptableObject(gunData);
         Debug.Log($"{recipientGameObject.name} was given {gunData}");
+    }
+
+    public override string GetDescription()
+    {
+        return gunData.GetDescription();
     }
 }
 
@@ -68,6 +74,11 @@ public class UtilityLevelUpReward: LevelUpReward
         recipientGameObject.GetComponent<IUtilityUpdatable>().UpdateScriptableObject(utilityAbilityData);
         Debug.Log($"{recipientGameObject.name} was given {utilityAbilityData}");
     }
+    
+    public override string GetDescription()
+    {
+        return utilityAbilityData.GetDescription();
+    }
 }
 
 [System.Serializable]
@@ -89,6 +100,11 @@ public class UltimateLevelUpReward: LevelUpReward
     {
         recipientGameObject.GetComponent<IUltimateUpdatable>().UpdateScriptableObject(ultimateAbilityData);
         Debug.Log($"{recipientGameObject.name} was given {ultimateAbilityData}");
+    }
+    
+    public override string GetDescription()
+    {
+        return ultimateAbilityData.GetDescription();
     }
     
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IHealthWIthModifiers
+public interface IHealthWithModifiers
 {
     public void AddMaxHealthModifier(MaxHealthModifier modifierToAdd);
 

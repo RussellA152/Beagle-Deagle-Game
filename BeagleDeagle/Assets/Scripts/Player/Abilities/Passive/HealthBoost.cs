@@ -6,7 +6,7 @@ public class HealthBoost : PassiveAbility<HealthBoostData>
 {
     protected override void ActivatePassive()
     {
-        IHealthWIthModifiers playerHealth = Player.GetComponent<IHealthWIthModifiers>();
+        IHealthWithModifiers playerHealth = Player.GetComponent<IHealthWithModifiers>();
         
         // Add max health modifier to the player
         // Increases player's max health
@@ -16,7 +16,7 @@ public class HealthBoost : PassiveAbility<HealthBoostData>
 
     protected override void RemovePassive()
     {
-        IHealthWIthModifiers playerHealth = Player.GetComponent<IHealthWIthModifiers>();
+        IHealthWithModifiers playerHealth = Player.GetComponent<IHealthWithModifiers>();
         
         // Add max health modifier to the player
         // Increases player's max health

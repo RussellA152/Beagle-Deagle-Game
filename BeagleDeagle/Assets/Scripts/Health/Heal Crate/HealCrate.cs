@@ -11,8 +11,7 @@ public class HealCrate : MonoBehaviour, IHasCooldown
 
     private ObjectHealth _healthScript;
     private ConsumablePickUp _healthPickUp;
-    private bool _destroyed;
-    
+
     private CooldownSystem _cooldownSystem;
     [SerializeField, Range(0.1f, 120f)] 
     private float restoreTimer = 5f;
@@ -46,8 +45,11 @@ public class HealCrate : MonoBehaviour, IHasCooldown
         _healthPickUp.onPickUpDespawn -= StartCooldown;
         _cooldownSystem.OnCooldownEnded -= RestoreCrate;
     }
-    
 
+
+    ///-///////////////////////////////////////////////////////////
+    /// After being destroyed, spawn the consumable for someone to pick up.
+    /// 
     private void SpawnCrate()
     {
         crateGameObject.SetActive(false);
@@ -60,7 +62,7 @@ public class HealCrate : MonoBehaviour, IHasCooldown
     }
 
     ///-///////////////////////////////////////////////////////////
-    /// After being destroyed, the crate will restore itself and become destructible once again
+    /// After being destroyed, the crate will restore itself and become destructible once again.
     /// 
     private void RestoreCrate(int id)
     {
@@ -68,8 +70,6 @@ public class HealCrate : MonoBehaviour, IHasCooldown
         
         crateGameObject.SetActive(true);
         healItemGameObject.SetActive(false);
-
-        _destroyed = false;
     }
 
     public int Id { get; set; }
