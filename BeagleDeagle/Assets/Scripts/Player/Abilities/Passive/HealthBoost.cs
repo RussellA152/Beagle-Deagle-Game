@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBoost : PassiveAbility<HealthBoostData>
+public class HealthBoost : PassiveAbility
 {
+    [SerializeField] private HealthBoostData healthBoostData;
     protected override void ActivatePassive()
     {
         IHealthWithModifiers playerHealth = Player.GetComponent<IHealthWithModifiers>();
         
+        Debug.Log("GIVE INCREASED HEALTH");
+        
         // Add max health modifier to the player
         // Increases player's max health
-        playerHealth?.AddMaxHealthModifier(passiveData.maxHealthModifier);
+        playerHealth?.AddMaxHealthModifier(healthBoostData.maxHealthModifier);
         
     }
 
@@ -20,6 +23,6 @@ public class HealthBoost : PassiveAbility<HealthBoostData>
         
         // Add max health modifier to the player
         // Increases player's max health
-        playerHealth?.RemoveMaxHealthModifier(passiveData.maxHealthModifier);
+        playerHealth?.RemoveMaxHealthModifier(healthBoostData.maxHealthModifier);
     }
 }

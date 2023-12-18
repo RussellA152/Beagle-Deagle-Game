@@ -120,15 +120,17 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
         maxHealthModifiers.Add(modifierToAdd);
         _bonusMaxHealth += modifierToAdd.bonusMaxHealth;
 
-        //modifierToAdd.isActive = true;
+        playerEvents.InvokeCurrentHealthEvent(_currentHealth);
+        playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * _bonusMaxHealth);
     }
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
     {
         maxHealthModifiers.Remove(modifierToRemove);
         _bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
-
-        //modifierToRemove.isActive = false;
+        
+        playerEvents.InvokeCurrentHealthEvent(_currentHealth);
+        playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * _bonusMaxHealth);
     }
     #endregion
 

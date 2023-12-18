@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596ece807630f8c42b5c7d6af170e5e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passiveData: {fileID: 11400000, guid: 05c221c08f911334ba6af2abfddb31cb, type: 2}
+  healthBoostData: {fileID: 11400000, guid: 05c221c08f911334ba6af2abfddb31cb, type: 2}

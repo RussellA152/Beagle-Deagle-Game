@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71712cd2b779f4f438d9eb2d7cd0bb93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passiveData: {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}
+  speedBoost: {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}

@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdd07501426668d4385793ec2f63919a, type: 3}
-  m_Name: passive_speed_boost
+  m_Script: {fileID: 11500000, guid: 9a5a17c7038d5cd47b7196071af34d59, type: 3}
+  m_Name: passive_healthBoost
   m_EditorClassIdentifier: 
-  minimumTimeRequired: 2.5
-  movementSpeedModifier:
-    modifierName: T-Bone Speed Boost
-    bonusMovementSpeed: 0.3
+  passiveName: Plot Armor
+  description: 50% increased health.
+  gameObjectWithPassive: {fileID: 3929045018532200188, guid: dd531424111346144a1a4848bd555cd9, type: 3}

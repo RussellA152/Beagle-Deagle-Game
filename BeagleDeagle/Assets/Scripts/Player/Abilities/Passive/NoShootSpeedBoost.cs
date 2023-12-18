@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedBoost : PassiveAbility<SpeedBoostData>
+public class NoShootSpeedBoost : PassiveAbility
 {
+    [SerializeField] private SpeedBoostData speedBoost;
     private bool _speedIncreased = false;
     
     private Gun _gunScript;
@@ -43,18 +44,18 @@ public class SpeedBoost : PassiveAbility<SpeedBoostData>
     {
         while (true)
         {
-            if (!_speedIncreased && _gunScript.ReturnLastTimeShot() >= passiveData.minimumTimeRequired)
+            if (!_speedIncreased && _gunScript.ReturnLastTimeShot() >= speedBoost.minimumTimeRequired)
             {
                 _speedIncreased = true;
 
-                _movementScript.AddMovementSpeedModifier(passiveData.movementSpeedModifier);
+                _movementScript.AddMovementSpeedModifier(speedBoost.movementSpeedModifier);
            
             }
-            else if (_speedIncreased && _gunScript.ReturnLastTimeShot() < passiveData.minimumTimeRequired)
+            else if (_speedIncreased && _gunScript.ReturnLastTimeShot() < speedBoost.minimumTimeRequired)
             {
                 _speedIncreased = false;
 
-                _movementScript.RemoveMovementSpeedModifier(passiveData.movementSpeedModifier);
+                _movementScript.RemoveMovementSpeedModifier(speedBoost.movementSpeedModifier);
             }
             yield return null;
         }
@@ -64,7 +65,7 @@ public class SpeedBoost : PassiveAbility<SpeedBoostData>
     {
         IMovable movementScript = Player.GetComponent<IMovable>();
 
-        movementScript.RemoveMovementSpeedModifier(passiveData.movementSpeedModifier);
+        movementScript.RemoveMovementSpeedModifier(speedBoost.movementSpeedModifier);
         
     }
 }
