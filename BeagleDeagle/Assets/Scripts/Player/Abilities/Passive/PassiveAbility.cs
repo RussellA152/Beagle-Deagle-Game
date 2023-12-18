@@ -7,7 +7,7 @@ public abstract class PassiveAbility<T> : MonoBehaviour where T: ScriptableObjec
 {
     protected GameObject Player;
     
-    [SerializeField]  protected T passiveData;
+    [SerializeField] protected T passiveData;
 
     private void Start()
     {

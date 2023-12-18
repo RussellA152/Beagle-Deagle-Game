@@ -23246,6 +23246,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: T-Bone (New)
       objectReference: {fileID: 0}
+    - target: {fileID: 1777428645584621176, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621178, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_RootOrder
       value: 23
@@ -85332,7 +85336,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4608479753219126513, guid: cb891dbcd79a7a44c90db84ac53cbc2d, type: 3}
       propertyPath: timeBetweenObjectives
-      value: 7
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4608479753219126513, guid: cb891dbcd79a7a44c90db84ac53cbc2d, type: 3}
       propertyPath: potentialMapObjectives.Array.data[0]
