@@ -14,12 +14,12 @@ public class NoShootSpeedBoost : PassiveAbility
     
     protected override void OnEnable()
     {
-        base.OnEnable();
-        
         // Fetch gun script from the gun gameObject
         _gunScript = Player.GetComponentInChildren<Gun>();
         
         _movementScript = Player.GetComponent<IMovable>();
+        
+        base.OnEnable();
         
     }
 

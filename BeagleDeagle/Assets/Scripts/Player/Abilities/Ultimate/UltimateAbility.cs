@@ -8,8 +8,9 @@ using static UnityEngine.InputSystem.InputAction;
 public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IHasCooldown, IHasInput where T: UltimateAbilityData
 {
     [SerializeField] protected PlayerEvents playerEvents;
-    
-    [SerializeField] protected T ultimateData;
+
+    [SerializeField] private PlayerData playerData;
+    protected T UltimateAbilityData;
 
     private CooldownSystem _cooldownSystem;
     
@@ -25,9 +26,9 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
         _playerInput = GetComponent<PlayerInput>();
         _cooldownSystem = GetComponent<CooldownSystem>();
         _ultimateInputAction = _playerInput.currentActionMap.FindAction("Ultimate");
-
-        Id = 10;
-        CooldownDuration = ultimateData.cooldown;
+        
+        UltimateAbilityData = (T) playerData.ultimateAbilityData;
+        
     }
 
     protected virtual void OnEnable()
@@ -43,8 +44,12 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     
     protected virtual void Start()
     {
+
+        Id = 10;
+        CooldownDuration = UltimateAbilityData.cooldown;
+        
         playerEvents.InvokeUltimateCooldown(Id);
-        playerEvents.InvokeNewUltimate(ultimateData);
+        playerEvents.InvokeNewUltimate(UltimateAbilityData);
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -78,8 +83,8 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     {
         if (scriptableObject is T)
         {
-            ultimateData = scriptableObject as T;
-            playerEvents.InvokeNewUltimate(ultimateData);
+            UltimateAbilityData = scriptableObject as T;
+            playerEvents.InvokeNewUltimate(UltimateAbilityData);
         }
         else
         {

@@ -17,7 +17,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     [Header("Required Components")]
     [SerializeField] private PlayerEvents playerEvents;
     [SerializeField] private SoundEvents soundEvents;
-    [SerializeField] private GunData weaponData;
+    // Player data determines which weapon to start with
+    [SerializeField] private PlayerData playerData;
+    private GunData _weaponData;
 
     private CooldownSystem _cooldownSystem;
 
@@ -80,6 +82,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         _cooldownSystem = GetComponentInParent<CooldownSystem>();
         
         _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        _weaponData = playerData.gunData;
         
 
         _shootInputAction = _playerInput.currentActionMap.FindAction("Fire");
@@ -87,15 +91,16 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
 
         
         _reloadInputAction.performed += OnReload;
-
-        Id = 11;
-        CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
+        
 
     }
 
     private void Start()
     {
-        UpdateScriptableObject(weaponData);
+        Id = 11;
+        CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
+        
+        UpdateScriptableObject(_weaponData);
         
         playerEvents.InvokeUpdateAmmoLoadedText(Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad));
         
@@ -106,9 +111,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
 
         _bulletsShot = 0;
         
-        _bulletsLoaded = weaponData.magazineSize;
+        _bulletsLoaded = _weaponData.magazineSize;
         
-        _bulletPoolKey = weaponData.bulletPrefab.GetComponent<IPoolable>().PoolKey;
+        _bulletPoolKey = _weaponData.bulletPrefab.GetComponent<IPoolable>().PoolKey;
         
         muzzleFlash.gameObject.SetActive(false);
 
@@ -188,7 +193,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
             yield return null;
         }
     
-        weaponData = scriptableObject;
+        _weaponData = scriptableObject;
     
         // Refill all ammo 
         RefillAmmoCompletely();
@@ -196,22 +201,22 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
     
         // Change bulletSpawnPoint's position
-        bulletSpawnPoint.localPosition = weaponData.bulletSpawnLocation;
+        bulletSpawnPoint.localPosition = _weaponData.bulletSpawnLocation;
         
         // Change weapon and muzzle flashes (and their positions aswell)
-        _spriteRenderer.sprite = weaponData.gunEffectsData.weaponSprite;
-        muzzleFlash.sprite = weaponData.gunEffectsData.muzzleFlashSprite;
-        muzzleFlash.transform.localPosition = weaponData.gunEffectsData.muzzleFlashPosition;
+        _spriteRenderer.sprite = _weaponData.gunEffectsData.weaponSprite;
+        muzzleFlash.sprite = _weaponData.gunEffectsData.muzzleFlashSprite;
+        muzzleFlash.transform.localPosition = _weaponData.gunEffectsData.muzzleFlashPosition;
         
         // Stop reloading if player switched to a new gun (ammo will refill anyways)
         _cooldownSystem.EndCooldown(Id);
         
-        CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
+        CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
         
         // After swapping to new weapon, show the ammo on the HUD
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
         
-        playerEvents.InvokeNewWeaponEvent(weaponData);
+        playerEvents.InvokeNewWeaponEvent(_weaponData);
 
     }
 
@@ -228,14 +233,14 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     /// 
     public GunData GetCurrentData()
     {
-        return weaponData;
+        return _weaponData;
     }
     
     #region Shooting
     
     public bool CheckIfCanFire()
     {
-        return Time.time - _lastTimeShot > 1f / weaponData.fireRate * _bonusFireRate;
+        return Time.time - _lastTimeShot > 1f / _weaponData.fireRate * _bonusFireRate;
     }
     
     ///-///////////////////////////////////////////////////////////
@@ -254,19 +259,19 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
             IBulletUpdatable projectile = newBullet.GetComponent<IBulletUpdatable>();
 
             // Update bullet's status effects with data, only if this weapon's bullets has status effects
-            if (weaponData.statusEffects != null)
+            if (_weaponData.statusEffects != null)
             {
                 foreach (IStatusEffect statusEffect in newBullet.GetComponents<IStatusEffect>())
                 {
-                    statusEffect.UpdateWeaponType(weaponData.statusEffects);
+                    statusEffect.UpdateWeaponType(_weaponData.statusEffects);
                 }
             }
 
-            projectile.UpdateScriptableObject(weaponData.bulletData);
+            projectile.UpdateScriptableObject(_weaponData.bulletData);
             
             // Pass in the damage and penetration values of this gun, to the bullet being shot
             // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
-            projectile.UpdateDamageAndPenetrationValues(weaponData.GetDamage() * _bonusDamage, weaponData.penetrationCount + _bonusPenetration);
+            projectile.UpdateDamageAndPenetrationValues(_weaponData.GetDamage() * _bonusDamage, _weaponData.penetrationCount + _bonusPenetration);
             
 
             // Set the position to be at the barrel of the gun
@@ -302,7 +307,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     private IEnumerator PlayMuzzleFlash()
     {
         muzzleFlash.gameObject.SetActive(true);
-        yield return new WaitForSeconds(weaponData.gunEffectsData.muzzleFlashDuration);
+        yield return new WaitForSeconds(_weaponData.gunEffectsData.muzzleFlashDuration);
         muzzleFlash.gameObject.SetActive(false);
     }
     
@@ -312,7 +317,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     public virtual Quaternion CalculateWeaponSpread()
     {
         // Calculate the spread angle
-        float spreadAngle = Random.Range(-weaponData.bulletSpread * _bonusSpread, weaponData.bulletSpread * _bonusSpread);
+        float spreadAngle = Random.Range(-_weaponData.bulletSpread * _bonusSpread, _weaponData.bulletSpread * _bonusSpread);
 
         return Quaternion.Euler(0f, 0f, spreadAngle) * bulletSpawnPoint.rotation;
     }
@@ -346,7 +351,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
             _cooldownSystem.PutOnCooldown(this);
             
             // Play "reloadStart" sound effect
-            soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.reloadStartClip, weaponData.gunEffectsData.reloadSoundVolume);
+            soundEvents.InvokeGunSoundPlay(_weaponData.gunEffectsData.reloadStartClip, _weaponData.gunEffectsData.reloadSoundVolume);
             // Start playing the reload finished sound effect
             StartCoroutine(PlayReloadFinishedSound());
             
@@ -359,7 +364,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     public void OnReload(CallbackContext context)
     {
         // Only allow manual reloading if the player has some ammo, but not empty
-        if(_bulletsLoaded > 0f && _bulletsLoaded < weaponData.magazineSize)
+        if(_bulletsLoaded > 0f && _bulletsLoaded < _weaponData.magazineSize)
             PerformReload();
     }
 
@@ -387,7 +392,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     /// 
     private void RefillAmmoCompletely()
     {
-        _bulletsLoaded = weaponData.magazineSize;
+        _bulletsLoaded = _weaponData.magazineSize;
         _bulletsShot = 0;
     }
     
@@ -401,9 +406,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
 
     private void PlayShootSound()
     {
-        int randomNumber = Random.Range(0, weaponData.gunEffectsData.fireClips.Length);
+        int randomNumber = Random.Range(0, _weaponData.gunEffectsData.fireClips.Length);
         
-        soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.fireClips[randomNumber], weaponData.gunEffectsData.fireSoundVolume);
+        soundEvents.InvokeGunSoundPlay(_weaponData.gunEffectsData.fireClips[randomNumber], _weaponData.gunEffectsData.fireSoundVolume);
     }
 
     private IEnumerator PlayReloadFinishedSound()
@@ -415,7 +420,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         yield return new WaitForSeconds(halfDuration);
     
         // Play "reloadFinished" sound effect at 50% completion
-        soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.reloadFinishedClip, weaponData.gunEffectsData.reloadSoundVolume);
+        soundEvents.InvokeGunSoundPlay(_weaponData.gunEffectsData.reloadFinishedClip, _weaponData.gunEffectsData.reloadSoundVolume);
 
         // If the gun is not empty upon reloading, then don't play a reload slide sound
         if (_bulletsLoaded != 0)
@@ -428,7 +433,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         yield return new WaitForSeconds(remainingTime);
 
         // Play "reloadSlide" sound effect at 80% completion
-        soundEvents.InvokeGunSoundPlay(weaponData.gunEffectsData.reloadSlideClip, weaponData.gunEffectsData.reloadSoundVolume);
+        soundEvents.InvokeGunSoundPlay(_weaponData.gunEffectsData.reloadSlideClip, _weaponData.gunEffectsData.reloadSoundVolume);
     }
 
     
@@ -506,7 +511,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         reloadSpeedModifiers.Add(modifierToAdd);
         _bonusReloadSpeed += (_bonusReloadSpeed * modifierToAdd.bonusReloadSpeed);
         
-        CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
+        CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
         
         //modifierToAdd.isActive = true;
     }
@@ -516,7 +521,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         reloadSpeedModifiers.Remove(modifierToRemove);
         _bonusReloadSpeed /= (1 + modifierToRemove.bonusReloadSpeed);
         
-        CooldownDuration = weaponData.totalReloadTime * _bonusReloadSpeed;
+        CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
         
         //modifierToRemove.isActive = false;
     }

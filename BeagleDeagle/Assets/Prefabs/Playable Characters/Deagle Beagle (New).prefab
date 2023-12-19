@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  utilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
+  playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
   CooldownSystem: {fileID: 0}
   utilityCooldownModifiers: []
   utilityUsesModifiers: []
@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  ultimateData: {fileID: 11400000, guid: 8d978ad8039192b42b0c5c89926fcb38, type: 2}
+  playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
 --- !u!50 &2439171421654748756
 Rigidbody2D:
   serializedVersion: 4
@@ -560,7 +560,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c226154a4db8eeb41bb3cf8b755cd02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingPassive: {fileID: 11400000, guid: 7654338b5d8bcaf47a42c1f6ab6e3cfb, type: 2}
+  playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
+  _startingPassive: {fileID: 11400000, guid: 7654338b5d8bcaf47a42c1f6ab6e3cfb, type: 2}
 --- !u!1 &2439171422020017621
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,6 +944,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4077318060314352052, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+      propertyPath: playerData
+      value: 
+      objectReference: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
     - target: {fileID: 4077318060314352052, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: weaponData
       value: 

@@ -7,11 +7,14 @@ public abstract class PassiveAbility: MonoBehaviour
 {
     protected GameObject Player;
 
-    protected virtual void OnEnable()
+    private void Awake()
     {
         // Passive ability scripts have another parent, so the parent.parent would be the Player gameObject with all the components attached
         Player = transform.parent.parent.gameObject;
-        
+    }
+
+    protected virtual void OnEnable()
+    {
         ActivatePassive();
     }
 

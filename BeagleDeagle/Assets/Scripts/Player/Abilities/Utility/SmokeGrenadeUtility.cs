@@ -12,7 +12,7 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
     {
         base.Start();
         
-        _poolKey = utilityData.smokeGrenadePrefab.GetComponent<IPoolable>().PoolKey;
+        _poolKey = UtilityData.smokeGrenadePrefab.GetComponent<IPoolable>().PoolKey;
 
         _playerMovementScript = gameObject.GetComponent<TopDownMovement>();
         
@@ -29,8 +29,8 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
 
         IExplosiveUpdatable areaGrenadeComponent = grenade.GetComponent<IExplosiveUpdatable>();
         
-        areaGrenadeComponent.SetDamage(utilityData.abilityDamage);
-        areaGrenadeComponent.SetDuration(utilityData.duration); ;
+        areaGrenadeComponent.SetDamage(UtilityData.abilityDamage);
+        areaGrenadeComponent.SetDuration(UtilityData.duration); ;
 
         // Make grenade spawn at player's position
         grenade.transform.position = gameObject.transform.position;
@@ -39,10 +39,10 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
 
         foreach (IStatusEffect statusEffect in grenade.GetComponents<IStatusEffect>())
         {
-            statusEffect.UpdateWeaponType(utilityData.statusEffects);
+            statusEffect.UpdateWeaponType(UtilityData.statusEffects);
         }
         
-        areaGrenadeComponent.UpdateScriptableObject(utilityData.smokeGrenadeData);
+        areaGrenadeComponent.UpdateScriptableObject(UtilityData.smokeGrenadeData);
         
 
         // Throw grenade in the direction player is facing

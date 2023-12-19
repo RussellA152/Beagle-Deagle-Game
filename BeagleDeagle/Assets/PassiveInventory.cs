@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class PassiveInventory : MonoBehaviour
 {
+    [SerializeField] private PlayerData playerData;
+    
     // The passive that this character will start with
-    [SerializeField] private PassiveAbilityData startingPassive;
+    private PassiveAbilityData _startingPassive;
 
     private void Awake()
     {
-        GetNewPassive(startingPassive);
+        _startingPassive = playerData.passiveAbilityData;
+        
+        GetNewPassive(_startingPassive);
     }
 
     ///-///////////////////////////////////////////////////////////
