@@ -10,10 +10,23 @@ using UnityEngine.UI;
 /// and another button being selected at the same time.
 public class SelectButtonOnHighlight : MonoBehaviour, IPointerEnterHandler
 {
+    private Button _button;
+    public event Action<Button> onButtonSelected;
+
+    private void Start()
+    {
+        _button = GetComponent<Button>();
+    }
+
     // Implement the IPointerEnterHandler interface
     public void OnPointerEnter(PointerEventData eventData)
     {
         EventSystem.current.SetSelectedGameObject(gameObject);
 
+        // Tell listeners that this button has been selected
+        onButtonSelected?.Invoke(_button);
+
     }
+    
+    
 }

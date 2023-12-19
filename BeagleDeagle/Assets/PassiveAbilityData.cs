@@ -7,6 +7,8 @@ public class PassiveAbilityData : ScriptableObject, IHasDescription
 {
     [Space(10), TextArea(2,3)]
     public string passiveName;
+
+    public Sprite abilityIcon;
     
     [Space(10), TextArea(2,3)]
     public string description;

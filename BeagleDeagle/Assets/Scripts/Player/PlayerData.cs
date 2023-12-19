@@ -30,6 +30,12 @@ public class PlayerData : ScriptableObject
     public Vector2 rollPower;
     [Range(0.1f, 30f)] public float rollCooldown;
 
+    [Header("Starting Weapon and Abilities")]
+    public GunData gunData;
+    public PassiveAbilityData passiveAbilityData;
+    public UtilityAbilityData utilityAbilityData;
+    public UltimateAbilityData ultimateAbilityData;
+
     [Space(20)] 
     // How much xp does the player require at each level? (Ex. Level 2 requires 'x' amount of xp)
     public int[] xpNeededPerLevel;

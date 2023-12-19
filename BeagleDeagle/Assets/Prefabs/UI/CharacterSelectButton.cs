@@ -12,7 +12,10 @@ public class CharacterSelectButton : MonoBehaviour
     // private Image buttonImage;
     private Button _buttonComponent;
     
+    [RestrictedPrefab(typeof(PlayerController))]
     public GameObject selectableCharacter;
+
+    public PlayerData dataToDisplay;
     
     private void Awake()
     {

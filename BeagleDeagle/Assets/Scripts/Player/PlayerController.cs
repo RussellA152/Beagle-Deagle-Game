@@ -250,10 +250,7 @@ public class PlayerController : MonoBehaviour
         {
             inputScript.AllowInput(false);
             
-            //Debug.Log(inputScript);
         }
     }
-    
-
 }
 
