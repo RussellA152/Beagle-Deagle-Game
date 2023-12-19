@@ -8,7 +8,7 @@ using UnityEngine.UI;
 ///-///////////////////////////////////////////////////////////
 /// When a button is highlighted from a mouse, set it as the current selected button. This will prevent a button from being highlighted
 /// and another button being selected at the same time.
-public class SelectButtonOnHighlight : MonoBehaviour, IPointerEnterHandler
+public class SelectButtonOnHighlight : MonoBehaviour, IPointerEnterHandler, ISelectHandler
 {
     private Button _button;
     public event Action<Button> onButtonSelected;
@@ -25,8 +25,14 @@ public class SelectButtonOnHighlight : MonoBehaviour, IPointerEnterHandler
 
         // Tell listeners that this button has been selected
         onButtonSelected?.Invoke(_button);
-
+        
     }
     
-    
+    public void OnSelect(BaseEventData eventData)
+    {
+        // Tell listeners that this button has been selected
+        onButtonSelected?.Invoke(_button);
+    }
+
+
 }

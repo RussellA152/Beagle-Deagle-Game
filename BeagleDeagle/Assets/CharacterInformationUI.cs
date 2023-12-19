@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CharacterInformationUI : MonoBehaviour
@@ -25,7 +26,7 @@ public class CharacterInformationUI : MonoBehaviour
     [SerializeField] private Image ultimateAbilityImage;
     [SerializeField] private TMP_Text ultimateAbilityText;
 
-    private void OnEnable()
+    private void Start()
     {
         // Listen for when any character select button is highlighted by the player
         foreach (Button button in allCharacterButtons)
@@ -33,8 +34,8 @@ public class CharacterInformationUI : MonoBehaviour
             button.GetComponent<SelectButtonOnHighlight>().onButtonSelected += UpdateAllTextAndImages;
         }
     }
-
-    private void OnDisable()
+    
+    private void OnDestroy()
     {
         foreach (Button button in allCharacterButtons)
         {
@@ -42,7 +43,11 @@ public class CharacterInformationUI : MonoBehaviour
         }
     }
 
-    private void UpdateAllTextAndImages(Button buttonSelected)
+    ///-///////////////////////////////////////////////////////////
+    /// Display text and images about the weapon and abilities of the character that the player is currently viewing.
+    /// By default, information about Deagle Beagle is displayed first.
+    /// 
+    public void UpdateAllTextAndImages(Button buttonSelected)
     {
         CharacterSelectButton characterSelectButton = buttonSelected.GetComponent<CharacterSelectButton>();
         PlayerData playerData = characterSelectButton.dataToDisplay;
