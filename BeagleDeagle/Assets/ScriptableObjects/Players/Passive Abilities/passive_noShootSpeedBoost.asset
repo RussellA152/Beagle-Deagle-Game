@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: passive_noShootSpeedBoost
   m_EditorClassIdentifier: 
   passiveName: Rushing B
+  abilityIcon: {fileID: 21300000, guid: f3255a27924357d4d84819edbe61115e, type: 3}
   description: Gain a speed boost after not shooting for 2.5 seconds.
   gameObjectWithPassive: {fileID: 4349616696555974631, guid: 84cadc5cbdf1e464caf17a497800d631, type: 3}

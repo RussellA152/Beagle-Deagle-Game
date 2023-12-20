@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: passive_healthBoost
   m_EditorClassIdentifier: 
   passiveName: Plot Armor
+  abilityIcon: {fileID: 21300000, guid: 31d4c5e9a1d9543439c035b16c6f1d75, type: 3}
   description: 50% increased health.
   gameObjectWithPassive: {fileID: 3929045018532200188, guid: dd531424111346144a1a4848bd555cd9, type: 3}
