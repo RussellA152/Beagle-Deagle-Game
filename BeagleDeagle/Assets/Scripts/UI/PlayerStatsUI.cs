@@ -76,6 +76,7 @@ public class PlayerStatsUI : MonoBehaviour
 
         playerEvents.onPlayerSwitchedWeapon += AddBulletsToHUD;
         playerEvents.onPlayerBulletsLoadedChanged += UpdateAmmoText;
+        playerEvents.onPlayerMaxAmmoLoadedChanged += UpdateMaxAmmoText;
     }
 
     private void OnDisable()
@@ -91,6 +92,7 @@ public class PlayerStatsUI : MonoBehaviour
         playerEvents.onPlayerObtainedNewUtility -= UpdateUtilityImage;
         
         playerEvents.onPlayerBulletsLoadedChanged -= UpdateAmmoText;
+        playerEvents.onPlayerMaxAmmoLoadedChanged -= UpdateMaxAmmoText;
         playerEvents.onPlayerSwitchedWeapon -= AddBulletsToHUD;
     }
 
@@ -116,7 +118,7 @@ public class PlayerStatsUI : MonoBehaviour
     private void UpdateAmmoText(int bulletsLoaded)
     {
         currentAmmoMagText.text = bulletsLoaded.ToString();
-        
+
         int bulletDifference = bulletsLoaded - _maxAmmoCount;
         
         if (_bulletImages.Count > 0f)
@@ -135,6 +137,13 @@ public class PlayerStatsUI : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void UpdateMaxAmmoText(int maxAmmoLoaded)
+    {
+        _maxAmmoCount = maxAmmoLoaded;
+        
+        maxAmmoMagText.text = maxAmmoLoaded.ToString();
     }
 
     private void UpdateXpImage(float xpNeededLeft)

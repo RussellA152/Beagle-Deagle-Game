@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "NewLevelUpReward", menuName = "ScriptableObjects/Rewards/LevelUpReward")]
 public class LevelUpRewardList : ScriptableObject
@@ -10,7 +11,10 @@ public class LevelUpRewardList : ScriptableObject
     private List<GunLevelUpReward> gunRewards = new List<GunLevelUpReward>();
     
     [SerializeField, NonReorderable]
-    private List<PassiveLevelUpReward> passiveRewads = new List<PassiveLevelUpReward>();
+    private List<WeaponStatLevelUpReward> weaponStatRewards = new List<WeaponStatLevelUpReward>();
+    
+    [SerializeField, NonReorderable]
+    private List<PassiveLevelUpReward> passiveRewards = new List<PassiveLevelUpReward>();
     
     [SerializeField, NonReorderable, Space(20)]
     private List<UtilityLevelUpReward> utilityRewards = new List<UtilityLevelUpReward>();
@@ -26,6 +30,14 @@ public class LevelUpRewardList : ScriptableObject
         allRewards.Clear();
 
         foreach (var reward in gunRewards)
+        {
+            if (!allRewards.Contains(reward))
+            {
+                allRewards.Add(reward);
+            }
+        }
+        
+        foreach (var reward in weaponStatRewards)
         {
             if (!allRewards.Contains(reward))
             {
@@ -49,7 +61,7 @@ public class LevelUpRewardList : ScriptableObject
             }
         }
         
-        foreach (var reward in passiveRewads)
+        foreach (var reward in passiveRewards)
         {
             if (!allRewards.Contains(reward))
             {

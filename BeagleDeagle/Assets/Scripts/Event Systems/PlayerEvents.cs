@@ -46,8 +46,11 @@ public class PlayerEvents : ScriptableObject
     // Pass a reference to the player's current stat data (might be used when the player receives new health and movement speed data?)
     public event Action<PlayerData> onPlayerObtainedNewCharacterStats;
 
-    // Pass a reference to the player's current ammo loaded (invoked when the player's ammo changes)
+    // Pass a reference to the player's current ammo loaded (invoked when the player's current ammo changes)
     public event Action<int> onPlayerBulletsLoadedChanged;
+    
+    // Pass a reference to the player's max ammo loaded (invoked when the player's max ammo changes)
+    public event Action<int> onPlayerMaxAmmoLoadedChanged;
 
     // Pass a reference to the player's current utility data (ex. player is currently using Mighty Foot)
     public event Action<UtilityAbilityData> onPlayerObtainedNewUtility;
@@ -150,6 +153,12 @@ public class PlayerEvents : ScriptableObject
         //Debug.Log("Ammo is: " + ammoLoaded);
         onPlayerBulletsLoadedChanged?.Invoke(ammoLoaded);
     }
+
+    public void InvokeUpdateMaxAmmoLoadedText(int maxAmmoLoaded)
+    {
+        onPlayerMaxAmmoLoadedChanged?.Invoke(maxAmmoLoaded);
+    }
+    
     public void InvokeReloadCooldown(int id)
     {
         givePlayerReloadCooldownId?.Invoke(id);

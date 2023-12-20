@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 using Random = UnityEngine.Random;
 
-public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHasInput
+public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
 {
     // Where does this bullet get shot from? (i.e the barrel)
     [SerializeField] private Transform bulletSpawnPoint;
@@ -101,8 +101,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
         
         UpdateScriptableObject(_weaponData);
+
+        _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
         
-        playerEvents.InvokeUpdateAmmoLoadedText(Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad));
+        playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
         
         playerEvents.InvokeReloadCooldown(Id);
 
@@ -110,8 +112,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         _timeElapsedSinceShot = 0f;
 
         _bulletsShot = 0;
-        
-        _bulletsLoaded = _weaponData.magazineSize;
         
         _bulletPoolKey = _weaponData.bulletPrefab.GetComponent<IPoolable>().PoolKey;
         
@@ -217,6 +217,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
         
         playerEvents.InvokeNewWeaponEvent(_weaponData);
+        
+        playerEvents.InvokeUpdateMaxAmmoLoadedText(Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad));
 
     }
 
@@ -364,7 +366,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     public void OnReload(CallbackContext context)
     {
         // Only allow manual reloading if the player has some ammo, but not empty
-        if(_bulletsLoaded > 0f && _bulletsLoaded < _weaponData.magazineSize)
+        if(_bulletsLoaded > 0f && _bulletsLoaded < _weaponData.magazineSize * _bonusAmmoLoad)
             PerformReload();
     }
 
@@ -392,7 +394,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     /// 
     private void RefillAmmoCompletely()
     {
-        _bulletsLoaded = _weaponData.magazineSize;
+        _bulletsLoaded = Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad);
         _bulletsShot = 0;
     }
     
@@ -444,16 +446,12 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     {
         damageModifiers.Add(modifierToAdd);
         _bonusDamage += (_bonusDamage * modifierToAdd.bonusDamage);
-
-        //modifierToAdd.isActive = true;
     }
 
     public void RemoveDamageModifier(DamageModifier modifierToRemove)
     {
         damageModifiers.Remove(modifierToRemove);
         _bonusDamage /= (1 + modifierToRemove.bonusDamage);
-        
-        //modifierToRemove.isActive = false;
     }
 
 
@@ -461,48 +459,36 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
     {
         penetrationModifiers.Add(modifierToAdd);
         _bonusPenetration += modifierToAdd.bonusPenetration;
-        
-        //modifierToAdd.isActive = true;
     }
 
     public void RemovePenetrationModifier(PenetrationModifier modifierToRemove)
     {
         penetrationModifiers.Remove(modifierToRemove);
         _bonusPenetration -= modifierToRemove.bonusPenetration;
-        
-        //modifierToRemove.isActive = false;
     }
 
-    public void AddSpreadModifierModifier(SpreadModifier modifierToAdd)
+    public void AddSpreadModifier(SpreadModifier modifierToAdd)
     {
         spreadModifiers.Add(modifierToAdd);
         _bonusSpread += (_bonusSpread * modifierToAdd.bonusSpread);
-        
-        //modifierToAdd.isActive = true;
     }
 
     public void RemoveSpreadModifier(SpreadModifier modifierToRemove)
     {
         spreadModifiers.Remove(modifierToRemove);
         _bonusSpread /= (1 + modifierToRemove.bonusSpread);
-        
-        //modifierToRemove.isActive = false;
     }
 
     public void AddAttackSpeedModifier(AttackSpeedModifier modifierToAdd)
     {
         fireRateModifiers.Add(modifierToAdd);
         _bonusFireRate += (_bonusFireRate * modifierToAdd.bonusAttackSpeed);
-        
-        //modifierToAdd.isActive = true;
     }
 
     public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove)
     {
         fireRateModifiers.Remove(modifierToRemove);
         _bonusFireRate /= (1 + modifierToRemove.bonusAttackSpeed);
-        
-        //modifierToRemove.isActive = false;
 
     }
 
@@ -512,8 +498,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         _bonusReloadSpeed += (_bonusReloadSpeed * modifierToAdd.bonusReloadSpeed);
         
         CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
-        
-        //modifierToAdd.isActive = true;
     }
 
     public void RemoveReloadSpeedModifier(ReloadSpeedModifier modifierToRemove)
@@ -523,7 +507,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         
         CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
         
-        //modifierToRemove.isActive = false;
     }
 
     public void AddAmmoLoadModifier(AmmoLoadModifier modifierToAdd)
@@ -531,23 +514,24 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IDamager, IHasCooldown, IHa
         ammoLoadModifiers.Add(modifierToAdd);
         _bonusAmmoLoad += (_bonusAmmoLoad * modifierToAdd.bonusAmmoLoad);
         
-        //modifierToAdd.isActive = true;
-
         // Give player's weapon this bonus ammo load (this is because bulletsLoaded is only inside of the SO)
         // Refill the player's weapon before applying new ammo load
         RefillAmmoCompletely();
-        
-        _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
-        
+
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
+        playerEvents.InvokeUpdateMaxAmmoLoadedText(Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad));
+        
     }
 
     public void RemoveAmmoLoadModifier(AmmoLoadModifier modifierToRemove)
     {
         ammoLoadModifiers.Remove(modifierToRemove);
         _bonusAmmoLoad /= (1 + modifierToRemove.bonusAmmoLoad);
-
-        //modifierToRemove.isActive = false;
+        
+        _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
+        
+        playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
+        playerEvents.InvokeUpdateMaxAmmoLoadedText(Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad));
     }
 
     #endregion
