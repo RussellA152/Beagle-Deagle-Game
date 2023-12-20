@@ -47,6 +47,7 @@ public class DeliverItemObjective : MapObjective
         base.OnObjectiveDisable();
         
     }
+    
 
     protected override void OnObjectiveEnable()
     {
@@ -127,8 +128,6 @@ public class DeliverItemObjective : MapObjective
                 _currentDropOff.playerHoldingItem = false;
             }
         }
-        
-        
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -142,6 +141,8 @@ public class DeliverItemObjective : MapObjective
 
          _currentDropOff = newDropOffGameObject.GetComponent<DropOffItem>();
         _currentDropOff.transform.position = potentialDropOffLocations[randomLocationIndex].position;
+        
+        ParticleEffectPlayLocation = _currentDropOff.transform;
         
     }
 

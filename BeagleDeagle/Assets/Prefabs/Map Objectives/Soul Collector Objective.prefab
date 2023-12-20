@@ -114,6 +114,7 @@ MonoBehaviour:
   completionReward:
     xpAmount: 500
     moneyAmount: 500
+  particleEffectOnCompletion: {fileID: 4976828533008296056, guid: 22ef9e826c4f64541b5ce349b36ca227, type: 3}
   collectRequirement: 10
   collectRange: 15
 --- !u!114 &7529365375572421820

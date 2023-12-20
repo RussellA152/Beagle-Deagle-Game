@@ -52,10 +52,15 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     protected bool PlayerInsideStartingArea = false;
     protected bool PlayerInsideExitArea = false;
 
+    // Enable and disable this particle effect when completing the map objective
+    [SerializeField] private GameObject particleEffectOnCompletion;
+    protected Transform ParticleEffectPlayLocation;
+    
+
     private void Awake()
     {
         RangeIndicator = GetComponentInChildren<RangeIndicator>();
-        
+
         OnObjectiveAwake();
     }
 
@@ -65,6 +70,8 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         
         // Hide range until player activates this map objective
         RangeIndicator.gameObject.SetActive(false);
+        
+        ParticleEffectPlayLocation = transform;
     }
 
     private void OnEnable()
@@ -100,6 +107,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         CooldownDuration = timeToFailWhenFarAway;
 
         _mapObjectiveExpire = GetComponent<MapObjectiveExpire>();
+        
     }
 
     protected virtual void OnObjectiveEnable()
@@ -160,7 +168,8 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         currencyEvents.InvokeGiveXp(_actualCompletionReward.xpAmount);
         
         MapObjectiveManager.Instance.StartNewObjectiveAfterEnded(this);
-
+        
+        PlayParticleEffectOnCompletion();
     }
 
     // All objectives will remove their cooldown on completion except for the DefendObjective.
@@ -274,6 +283,14 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         RangeIndicator.gameObject.SetActive(true);
         
         RangeIndicator.SetRadius(startingRange);
+        
+    }
+
+    private void PlayParticleEffectOnCompletion()
+    {
+        // Spawn and play a particle effect on this map objective 
+        PoolableParticle poolableParticle =  Instantiate(particleEffectOnCompletion, ParticleEffectPlayLocation.position, Quaternion.identity).GetComponent<PoolableParticle>();
+        poolableParticle.PlayAllParticles(1f);
         
     }
     

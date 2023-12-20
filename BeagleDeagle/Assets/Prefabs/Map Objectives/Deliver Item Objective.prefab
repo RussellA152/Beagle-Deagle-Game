@@ -113,6 +113,7 @@ MonoBehaviour:
   completionReward:
     xpAmount: 500
     moneyAmount: 500
+  particleEffectOnCompletion: {fileID: 4976828533008296056, guid: 22ef9e826c4f64541b5ce349b36ca227, type: 3}
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   potentialDropOffLocations: []
   dropOffItem: {fileID: 3213695290756387245, guid: dd922c910975a5a488089ac3984b6767, type: 3}

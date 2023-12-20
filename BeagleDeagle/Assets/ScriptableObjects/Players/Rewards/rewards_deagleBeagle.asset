@@ -20,7 +20,7 @@ MonoBehaviour:
   - LevelGiven: 3
     IsChosen: 0
     Icon: {fileID: 0}
-    gunData: {fileID: 11400000, guid: 9f372937a2e3c794dac1091814611bc3, type: 2}
+    gunData: {fileID: 11400000, guid: 9ba71a16711f1a94ba93b40661514b44, type: 2}
   - LevelGiven: 4
     IsChosen: 0
     Icon: {fileID: 0}
