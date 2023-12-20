@@ -78,6 +78,7 @@ public class PlayerControllerTypeManager : MonoBehaviour
             case "Keyboard":
                 _currentControllerType = ControllerType.Keyboard;
                 Cursor.visible = true;
+                
                 Debug.Log("Swapped to keyboard!");
                 break;
             case "Gamepad":
@@ -90,18 +91,21 @@ public class PlayerControllerTypeManager : MonoBehaviour
                     {
                         _currentControllerType = ControllerType.Xbox;
                         Cursor.visible = false;
+                        
                         Debug.Log("Swapped to Xbox gamepad!");
                     }
                     else if (deviceName.Contains("DualShock") || deviceName.Contains("DualSense"))
                     {
                         _currentControllerType = ControllerType.Playstation;
                         Cursor.visible = false;
+                        
                         Debug.Log("Swapped to PlayStation gamepad!");
                     }
                     else
                     {
                         _currentControllerType = ControllerType.Xbox;
                         Cursor.visible = false;
+                        
                         Debug.Log($"Swapped to gamepad: {deviceName}");
                     }
                 }

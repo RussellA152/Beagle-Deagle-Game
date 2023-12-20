@@ -9,6 +9,7 @@ using Color = System.Drawing.Color;
 
 public class CooldownUI : MonoBehaviour
 {
+    [SerializeField] private GameEvents gameEvents;
     [SerializeField] private PlayerEvents playerEvents;
 
     private Canvas parentCanvas;
@@ -45,6 +46,9 @@ public class CooldownUI : MonoBehaviour
     // Use mouse position by default
     private bool _useMousePosition = true;
 
+    // If the game is paused, don't show reload fill on mouse cursor
+    private bool _gamePaused;
+
     private void Awake()
     {
         parentCanvas = GetComponent<Canvas>();
@@ -60,6 +64,9 @@ public class CooldownUI : MonoBehaviour
 
         playerEvents.givePlayerGameObject += GetPlayerCooldownSystem;
 
+        gameEvents.onGamePause += () => _gamePaused = true;
+        gameEvents.onGameResumeAfterPause += () => _gamePaused = false;
+
 
     }
 
@@ -71,6 +78,9 @@ public class CooldownUI : MonoBehaviour
         playerEvents.giveUltimateCooldownId -= SetUltimateCooldownId;
         
         playerEvents.givePlayerGameObject -= GetPlayerCooldownSystem;
+        
+        gameEvents.onGamePause -= () => _gamePaused = true;
+        gameEvents.onGameResumeAfterPause -= () => _gamePaused = false;
     }
 
     private void Start()
@@ -130,7 +140,7 @@ public class CooldownUI : MonoBehaviour
     {
         if (_playerCooldownSystem.IsOnCooldown(_reloadCooldownId))
         {
-            if (_useMousePosition)
+            if (_useMousePosition && !_gamePaused)
             {
                 Vector2 mousePosition = Mouse.current.position.ReadValue();
                 Vector2 uiPosition;
@@ -145,7 +155,7 @@ public class CooldownUI : MonoBehaviour
 
                 Cursor.visible = false;
             }
-            else
+            else if(!_useMousePosition)
             {
                 reloadFillRecTransform.localPosition = reloadOnGamepadPosition.localPosition;
             }
@@ -158,7 +168,7 @@ public class CooldownUI : MonoBehaviour
     }
     private void ReloadFill()
     {
-        if (_playerCooldownSystem.IsOnCooldown(_reloadCooldownId))
+        if (_playerCooldownSystem.IsOnCooldown(_reloadCooldownId) && !_gamePaused)
         {
             reloadFillRecTransform.gameObject.SetActive(true);
             float reloadCooldownTime = _playerCooldownSystem.GetRemainingDuration(_reloadCooldownId) /
