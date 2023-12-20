@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewSpeedBoost", menuName = "ScriptableObjects/Ability/Passive/SpeedBoost")]
+[CreateAssetMenu(fileName = "NewSpeedBoost", menuName = "ScriptableObjects/Stat Modifiers/Speed Boost")]
 
 public class SpeedBoostData : ScriptableObject
 {

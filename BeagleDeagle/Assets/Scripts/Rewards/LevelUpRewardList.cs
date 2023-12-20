@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 public class LevelUpRewardList : ScriptableObject
 {
     [SerializeField, NonReorderable]
-    private List<GunLevelUpReward> gunRewards = new List<GunLevelUpReward>();
+    private List<NewGunLevelUpReward> gunRewards = new List<NewGunLevelUpReward>();
     
     [SerializeField, NonReorderable]
     private List<WeaponStatLevelUpReward> weaponStatRewards = new List<WeaponStatLevelUpReward>();
@@ -21,6 +21,9 @@ public class LevelUpRewardList : ScriptableObject
     
     [SerializeField, NonReorderable, Space(20)]
     private List<UltimateLevelUpReward> ultimateRewards = new List<UltimateLevelUpReward>();
+    
+    [SerializeField, NonReorderable]
+    private List<AbilityStatLevelUpReward> abilityStatRewards = new List<AbilityStatLevelUpReward>();
 
     public readonly List<LevelUpReward> allRewards = new List<LevelUpReward>();
 
@@ -44,6 +47,14 @@ public class LevelUpRewardList : ScriptableObject
                 allRewards.Add(reward);
             }
         }
+        
+        foreach (var reward in passiveRewards)
+        {
+            if (!allRewards.Contains(reward))
+            {
+                allRewards.Add(reward);
+            }
+        }
     
         foreach (var reward in utilityRewards)
         {
@@ -61,14 +72,14 @@ public class LevelUpRewardList : ScriptableObject
             }
         }
         
-        foreach (var reward in passiveRewards)
+        foreach (var reward in abilityStatRewards)
         {
             if (!allRewards.Contains(reward))
             {
                 allRewards.Add(reward);
             }
         }
-        
+
     }
 
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewAbilityWeapon", menuName = "ScriptableObjects/Weapon/Weapon Modifier")]
+[CreateAssetMenu(fileName = "NewWeaponStats", menuName = "ScriptableObjects/Stat Modifiers/Weapon")]
 public class WeaponStatModifierData : ScriptableObject, IHasDescription 
 {
     public DamageModifier DamageModifier;

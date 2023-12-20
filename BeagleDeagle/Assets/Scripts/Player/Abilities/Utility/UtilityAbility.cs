@@ -171,6 +171,8 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         utilityUsesModifiers.Add(modifierToAdd);
         _bonusUtilityUses += modifierToAdd.bonusUtilityUses;
         
+        playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
+        
         //modifierToAdd.isActive = true;
     }
 
@@ -178,6 +180,8 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     {
         utilityUsesModifiers.Remove(modifierToRemove);
         _bonusUtilityUses -= modifierToRemove.bonusUtilityUses;
+        
+        playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
 
         //modifierToRemove.isActive = false;
     }

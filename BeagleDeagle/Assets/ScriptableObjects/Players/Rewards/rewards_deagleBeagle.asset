@@ -33,3 +33,8 @@ MonoBehaviour:
   passiveRewards: []
   utilityRewards: []
   ultimateRewards: []
+  abilityStatRewards:
+  - LevelGiven: 7
+    IsChosen: 0
+    Icon: {fileID: 0}
+    abilityStatModifierData: {fileID: 11400000, guid: bffd3a07487080d42af3decaa176e821, type: 2}

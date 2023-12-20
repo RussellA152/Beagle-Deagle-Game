@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class GunLevelUpReward: LevelUpReward
+public class NewGunLevelUpReward: LevelUpReward
 {
     public GunData gunData;
-    public GunLevelUpReward(GunData data, int level)
+    public NewGunLevelUpReward(GunData data, int level)
     {
         gunData = data;
         LevelGiven = level;

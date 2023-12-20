@@ -13,11 +13,24 @@ MonoBehaviour:
   m_Name: rewards_tBone
   m_EditorClassIdentifier: 
   gunRewards: []
-  weaponStatRewards: []
-  passiveRewards: []
-  utilityRewards: []
-  ultimateRewards:
-  - LevelGiven: 1
+  weaponStatRewards:
+  - LevelGiven: 2
     IsChosen: 0
     Icon: {fileID: 0}
-    ultimateAbilityData: {fileID: 11400000, guid: f660080dbe3c6a04e80c2c3e9908651c, type: 2}
+    weaponStatModifierData: {fileID: 11400000, guid: 326bb5483089c4946a90a5655c97b70b, type: 2}
+  - LevelGiven: 3
+    IsChosen: 0
+    Icon: {fileID: 0}
+    weaponStatModifierData: {fileID: 11400000, guid: 4bff4363a5427d548b187c1f4df6c248, type: 2}
+  - LevelGiven: 4
+    IsChosen: 0
+    Icon: {fileID: 0}
+    weaponStatModifierData: {fileID: 11400000, guid: 5716e4debc469d54283e2457387a5397, type: 2}
+  - LevelGiven: 6
+    IsChosen: 0
+    Icon: {fileID: 0}
+    weaponStatModifierData: {fileID: 11400000, guid: 6d7d306b7389bb7468bffc77a9a2ed10, type: 2}
+  passiveRewards: []
+  utilityRewards: []
+  ultimateRewards: []
+  abilityStatRewards: []
