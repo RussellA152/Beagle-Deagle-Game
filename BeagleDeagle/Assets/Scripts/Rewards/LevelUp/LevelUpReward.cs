@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
@@ -52,6 +53,34 @@ public class GunLevelUpReward: LevelUpReward
     {
         return gunData.GetDescription();
     }
+}
+
+[System.Serializable]
+public class PassiveLevelUpReward: LevelUpReward
+{
+    public PassiveAbilityData passiveAbilityData;
+    public PassiveLevelUpReward(PassiveAbilityData data, int level)
+    {
+        passiveAbilityData = data;
+        LevelGiven = level;
+    }
+
+    public override string GetRewardName()
+    {
+        return "Ultimate Ability Upgrade";
+    }
+    
+    public override void GiveDataToPlayer(GameObject recipientGameObject)
+    {
+        recipientGameObject.GetComponentInChildren<PassiveInventory>().GetNewPassive(passiveAbilityData);
+        Debug.Log($"{recipientGameObject.name} was given {passiveAbilityData}");
+    }
+    
+    public override string GetDescription()
+    {
+        return passiveAbilityData.GetDescription();
+    }
+    
 }
 
 [System.Serializable]

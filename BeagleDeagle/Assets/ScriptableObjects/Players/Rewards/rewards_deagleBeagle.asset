@@ -16,22 +16,19 @@ MonoBehaviour:
   - LevelGiven: 2
     IsChosen: 0
     Icon: {fileID: 0}
-    Description: 
     gunData: {fileID: 11400000, guid: 9f372937a2e3c794dac1091814611bc3, type: 2}
   - LevelGiven: 3
     IsChosen: 0
     Icon: {fileID: 0}
-    Description: 
     gunData: {fileID: 11400000, guid: 9f372937a2e3c794dac1091814611bc3, type: 2}
   - LevelGiven: 4
     IsChosen: 0
     Icon: {fileID: 0}
-    Description: 
     gunData: {fileID: 11400000, guid: 60e93a4221c95fa4f89c60534059eb6d, type: 2}
   - LevelGiven: 6
     IsChosen: 0
     Icon: {fileID: 0}
-    Description: 
     gunData: {fileID: 11400000, guid: 766b9a3aca0094f438190845ea6ad2cf, type: 2}
+  passiveRewads: []
   utilityRewards: []
   ultimateRewards: []

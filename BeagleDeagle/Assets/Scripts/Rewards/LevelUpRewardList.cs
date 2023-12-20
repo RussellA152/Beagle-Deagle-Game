@@ -9,6 +9,9 @@ public class LevelUpRewardList : ScriptableObject
     [SerializeField, NonReorderable]
     private List<GunLevelUpReward> gunRewards = new List<GunLevelUpReward>();
     
+    [SerializeField, NonReorderable]
+    private List<PassiveLevelUpReward> passiveRewads = new List<PassiveLevelUpReward>();
+    
     [SerializeField, NonReorderable, Space(20)]
     private List<UtilityLevelUpReward> utilityRewards = new List<UtilityLevelUpReward>();
     
@@ -39,6 +42,14 @@ public class LevelUpRewardList : ScriptableObject
         }
     
         foreach (var reward in ultimateRewards)
+        {
+            if (!allRewards.Contains(reward))
+            {
+                allRewards.Add(reward);
+            }
+        }
+        
+        foreach (var reward in passiveRewads)
         {
             if (!allRewards.Contains(reward))
             {
