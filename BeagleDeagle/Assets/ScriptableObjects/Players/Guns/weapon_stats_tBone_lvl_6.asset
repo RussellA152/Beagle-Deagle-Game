@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 312babf16a8e5474880680a2d38c41d7, type: 3}
-  m_Name: weapon_stats_deagle_lvl_6
+  m_Name: weapon_stats_tBone_lvl_6
   m_EditorClassIdentifier: 
   DamageModifier:
     modifierName: 
     particleEffect: {fileID: 0}
-    bonusDamage: 0
+    bonusDamage: 0.1
   PenetrationModifier:
     modifierName: 
     particleEffect: {fileID: 0}
-    bonusPenetration: 1
+    bonusPenetration: 0
   SpreadModifier:
     modifierName: 
     particleEffect: {fileID: 0}
@@ -36,4 +36,4 @@ MonoBehaviour:
     modifierName: 
     particleEffect: {fileID: 0}
     bonusAmmoLoad: 0
-  description: +1 Penetration!
+  description: +10% DMG!

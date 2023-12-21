@@ -198,12 +198,12 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         // Refill all ammo 
         RefillAmmoCompletely();
     
-        _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
+        _bulletsLoaded = Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad);
     
         // Change bulletSpawnPoint's position
         bulletSpawnPoint.localPosition = _weaponData.bulletSpawnLocation;
         
-        // Change weapon and muzzle flashes (and their positions aswell)
+        // Change weapon and muzzle flashes (and their positions as well)
         _spriteRenderer.sprite = _weaponData.gunEffectsData.weaponSprite;
         muzzleFlash.sprite = _weaponData.gunEffectsData.muzzleFlashSprite;
         muzzleFlash.transform.localPosition = _weaponData.gunEffectsData.muzzleFlashPosition;

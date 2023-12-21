@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 312babf16a8e5474880680a2d38c41d7, type: 3}
-  m_Name: weapon_stats_ak_lvl_4
+  m_Name: weapon_stats_tBone_lvl_4
   m_EditorClassIdentifier: 
   DamageModifier:
     modifierName: 
@@ -31,9 +31,9 @@ MonoBehaviour:
   AttackSpeedModifier:
     modifierName: 
     particleEffect: {fileID: 0}
-    bonusAttackSpeed: 0.2
+    bonusAttackSpeed: 0.1
   AmmoLoadModifier:
     modifierName: 
     particleEffect: {fileID: 0}
     bonusAmmoLoad: 0
-  description: +20% Firerate!
+  description: +10% Firerate!

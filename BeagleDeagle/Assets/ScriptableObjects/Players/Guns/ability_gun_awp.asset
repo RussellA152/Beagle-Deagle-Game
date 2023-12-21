@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ability_gun_awp
   m_EditorClassIdentifier: 
   gunName: AWP
-  description: A sniper that can penetrate many enemies with a single shot.
+  description: A sniper that can penetrate many enemies with a single shot (affected
+    by gun upgrades).
   gunEffectsData: {fileID: 11400000, guid: 17a63aff508dc3d44aa4a79eb4a3aaef, type: 2}
   fireRate: 1.5
   magazineSize: 5

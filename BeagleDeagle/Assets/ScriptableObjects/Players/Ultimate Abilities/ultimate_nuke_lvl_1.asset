@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ultimate_nuke_lvl_1
   m_EditorClassIdentifier: 
   abilityName: Nuclear Bomb
-  description: Drop a nuke on top of yourself, creating a massive explosion.
+  description: Drop a nuke on top of yourself, creating a massive explosion (affected
+    by explosive upgrades).
   abilitySprite: {fileID: 21300000, guid: 47147c2120c657a49b8ef77fc8a073fc, type: 3}
   abilityDamage: 200
   cooldown: 25
