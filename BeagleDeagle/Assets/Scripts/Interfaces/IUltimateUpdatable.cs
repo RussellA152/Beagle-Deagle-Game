@@ -8,4 +8,9 @@ public interface IUltimateUpdatable: IDataUpdatable<UltimateAbilityData>
     /// Allow or disable the use of the player's ultimate ability
     /// 
     public void AllowUltimate(bool boolean);
+    
+    public void AddUltimateCooldownModifier(UltimateCooldownModifier modifierToAdd);
+
+    public void RemoveUltimateCooldownModifier(UltimateCooldownModifier modifierToRemove);
+    
 }

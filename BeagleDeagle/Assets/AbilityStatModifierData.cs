@@ -9,9 +9,10 @@ public class AbilityStatModifierData : ScriptableObject, IHasDescription
     public UtilityUsesModifier UtilityUsesModifier;
 
     public UtilityCooldownModifier UtilityCooldownModifier;
+
+    [Header("Ultimate Modifiers")]
+    public UltimateCooldownModifier UltimateCooldownModifier;
     
-    //TODO: Will add ultimate ability modifiers soon
-    //[Header("Ultimate Modifiers")]
 
     [SerializeField, Space(10), TextArea(2,3)] 
     private string description;

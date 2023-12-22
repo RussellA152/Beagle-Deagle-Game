@@ -19,6 +19,11 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     private InputAction _ultimateInputAction;
 
     private bool _canUseUltimate = true;
+    
+    [Header("Modifiers")]
+    [SerializeField, NonReorderable] private List<UltimateCooldownModifier> ultimateCooldownModifiers = new List<UltimateCooldownModifier>();
+
+    private float _bonusUltimateCooldown = 1f;
 
     private void Awake()
     {
@@ -46,7 +51,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     {
 
         Id = 10;
-        CooldownDuration = UltimateAbilityData.cooldown;
+        CooldownDuration = UltimateAbilityData.cooldown * _bonusUltimateCooldown;
         
         playerEvents.InvokeUltimateCooldown(Id);
         playerEvents.InvokeNewUltimate(UltimateAbilityData);
@@ -78,8 +83,24 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     {
         _canUseUltimate = boolean;
     }
-    
-    public void UpdateScriptableObject(UltimateAbilityData scriptableObject)
+
+    public void AddUltimateCooldownModifier(UltimateCooldownModifier modifierToAdd)
+    {
+        ultimateCooldownModifiers.Add(modifierToAdd);
+        _bonusUltimateCooldown += (_bonusUltimateCooldown * modifierToAdd.bonusUltimateCooldown);
+        
+        CooldownDuration = UltimateAbilityData.cooldown * _bonusUltimateCooldown;
+    }
+
+    public void RemoveUltimateCooldownModifier(UltimateCooldownModifier modifierToRemove)
+    {
+        ultimateCooldownModifiers.Remove(modifierToRemove);
+        _bonusUltimateCooldown /= (1 + modifierToRemove.bonusUltimateCooldown);
+        
+        CooldownDuration = UltimateAbilityData.cooldown * _bonusUltimateCooldown;
+    }
+
+    public virtual void UpdateScriptableObject(UltimateAbilityData scriptableObject)
     {
         if (scriptableObject is T)
         {

@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 6e87ddfb67f89b7468a2949eab8c8b2f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.4862745, b: 0.85490197, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -113,10 +113,11 @@ GameObject:
   - component: {fileID: 4722336087555608957}
   - component: {fileID: 411679524319823067}
   - component: {fileID: 8207622177421959506}
+  - component: {fileID: 6307064273769473320}
   - component: {fileID: 8164879991046117892}
   - component: {fileID: 7698205712678738710}
   m_Layer: 11
-  m_Name: Smoke Grenade
+  m_Name: Tear Gas Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -152,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 3520225513382146324}
-  poolKey: 34
+  poolKey: 30
   throwSpeed: 15
 --- !u!114 &411679524319823067
 MonoBehaviour:
@@ -179,6 +180,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   removeOnTriggerExit: 1
+--- !u!114 &6307064273769473320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8164879991046117895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34027b9d94afcaa4286ec175a3cabc0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!70 &8164879991046117892
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -272,13 +285,73 @@ PrefabInstance:
       value: Smoke AOE
       objectReference: {fileID: 0}
     - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaExit.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaStay.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaExit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaExit.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaStay.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
       propertyPath: onAreaExit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8207622177421959506}
     - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaExit.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 8164879991046117895}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
       propertyPath: onAreaStay.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8207622177421959506}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaStay.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 6307064273769473320}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaExit.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaStay.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaExit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RemoveEffectFromTarget
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaStay.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ApplyEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaExit.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SlowOnCollision, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaStay.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: DamageOverTimeOnCollision, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaExit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: onAreaStay.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c110ccac61811994b998f8965e050fb7, type: 3}
 --- !u!4 &7589004471731816067 stripped

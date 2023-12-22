@@ -50,4 +50,12 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
         
     }
     
+    public override void UpdateScriptableObject(UtilityAbilityData scriptableObject)
+    {
+        base.UpdateScriptableObject(scriptableObject);
+        
+        _poolKey = UtilityData.smokeGrenadePrefab.GetComponent<IPoolable>().PoolKey;
+        
+    }
+    
 }

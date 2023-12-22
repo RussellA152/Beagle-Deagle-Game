@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c186b2f299cdd0e44ba9de5d6c294b68, type: 3}
-  m_Name: ability_stat_deagle_lvl_7
+  m_Name: ability_stat_tBone_lvl_12
   m_EditorClassIdentifier: 
   UtilityUsesModifier:
     modifierName: 
@@ -20,4 +20,8 @@ MonoBehaviour:
     modifierName: 
     particleEffect: {fileID: 0}
     bonusUtilityCooldown: 0
+  UltimateCooldownModifier:
+    modifierName: 
+    particleEffect: {fileID: 0}
+    bonusUltimateCooldown: 0
   description: +1 Utility Use

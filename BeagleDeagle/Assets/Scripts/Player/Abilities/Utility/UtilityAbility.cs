@@ -67,7 +67,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     protected virtual void Start()
     {
         Id = 12;
-        CooldownDuration = UtilityData.cooldown;
+        CooldownDuration = UtilityData.cooldown * _bonusUtilityCooldown;
         
         playerEvents.InvokeUtilityCooldown(Id);
         playerEvents.InvokeNewUtility(UtilityData);
@@ -135,7 +135,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         _canUseUtility = boolean;
     }
     
-    public void UpdateScriptableObject(UtilityAbilityData scriptableObject)
+    public virtual void UpdateScriptableObject(UtilityAbilityData scriptableObject)
     {
         if (scriptableObject is T)
         {
@@ -154,16 +154,17 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     {
         utilityCooldownModifiers.Add(modifierToAdd);
         _bonusUtilityCooldown += (_bonusUtilityCooldown * modifierToAdd.bonusUtilityCooldown);
+        
+        CooldownDuration = UtilityData.cooldown * _bonusUtilityCooldown;
 
-        //modifierToAdd.isActive = true;
     }
 
     public void RemoveUtilityCooldownModifier(UtilityCooldownModifier modifierToRemove)
     {
         utilityCooldownModifiers.Remove(modifierToRemove);
         _bonusUtilityCooldown /= (1 + modifierToRemove.bonusUtilityCooldown);
-
-        //modifierToRemove.isActive = false;
+        
+        CooldownDuration = UtilityData.cooldown * _bonusUtilityCooldown;
     }
 
     public void AddUtilityUsesModifier(UtilityUsesModifier modifierToAdd)
@@ -172,8 +173,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         _bonusUtilityUses += modifierToAdd.bonusUtilityUses;
         
         playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
-        
-        //modifierToAdd.isActive = true;
+
     }
 
     public void RemoveUtilityUsesModifier(UtilityUsesModifier modifierToRemove)
@@ -183,7 +183,6 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         
         playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
 
-        //modifierToRemove.isActive = false;
     }
 
     #endregion

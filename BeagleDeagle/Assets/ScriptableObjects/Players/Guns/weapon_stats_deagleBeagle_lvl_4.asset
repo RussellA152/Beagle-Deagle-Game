@@ -23,7 +23,7 @@ MonoBehaviour:
   SpreadModifier:
     modifierName: 
     particleEffect: {fileID: 0}
-    bonusSpread: 0.25
+    bonusSpread: -0.25
   ReloadSpeedModifier:
     modifierName: 
     particleEffect: {fileID: 0}

@@ -55,4 +55,11 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
         mightyFootGameObject.SetActive(true);
     }
 
+    public override void UpdateScriptableObject(UtilityAbilityData scriptableObject)
+    {
+        base.UpdateScriptableObject(scriptableObject);
+        
+        PoolKey = UtilityData.mightyFootPrefab.GetComponent<IPoolable>().PoolKey;
+        
+    }
 }
