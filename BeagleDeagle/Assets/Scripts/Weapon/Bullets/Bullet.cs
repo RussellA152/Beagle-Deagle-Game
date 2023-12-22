@@ -73,7 +73,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
             // Change the bullet's collider direction to whatever the scriptable object has
             bulletCollider.direction = bulletData.colliderDirection;
 
-            // Apply the trajectory of this bullet (We probably could do this inside of the gameobject that spawns it?)
+            // Apply the trajectory of this bullet
             ApplyTrajectory();
         }
     }
@@ -100,7 +100,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         StopAllCoroutines();
     }
 
-    private void ApplyTrajectory()
+    protected virtual void ApplyTrajectory()
     {
         rb.velocity = transform.right * bulletData.bulletSpeed;
     }

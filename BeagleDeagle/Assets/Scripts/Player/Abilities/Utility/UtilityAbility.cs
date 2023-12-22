@@ -82,7 +82,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         {
             _utilityUses--;
             
-            Debug.Log(CooldownSystem.GetRemainingDuration(Id));
+            //Debug.Log(CooldownSystem.GetRemainingDuration(Id));
                 
             UtilityAction();
             
