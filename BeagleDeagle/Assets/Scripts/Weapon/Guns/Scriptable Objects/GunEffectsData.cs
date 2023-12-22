@@ -8,6 +8,10 @@ public class GunEffectsData : ScriptableObject
 {
     [Header("Weapon Appearance")]
     public Sprite weaponSprite;
+    // How big should the sprite gameObject be?
+    public Vector2 spriteScale;
+    // Where should the sprite be positioned relative to the player gameObject?
+    public Vector2 spritePosition;
     
     [Header("Muzzle Flash")]
     public Sprite muzzleFlashSprite;

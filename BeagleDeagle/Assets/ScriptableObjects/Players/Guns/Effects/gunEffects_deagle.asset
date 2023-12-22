@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: gunEffects_deagle
   m_EditorClassIdentifier: 
   weaponSprite: {fileID: 21300000, guid: 6c0e83c09de6a0744aada9481ff660a6, type: 3}
+  spriteScale: {x: 0.75, y: 0.75}
+  spritePosition: {x: 0, y: 0}
   muzzleFlashSprite: {fileID: 21300000, guid: 35cd9467eedc6df4e8ba7a1f5aa167a1, type: 3}
-  muzzleFlashPosition: {x: 2.059, y: 0.312}
+  muzzleFlashPosition: {x: 1.821, y: 0.312}
   muzzleFlashDuration: 0.05
   fireClips:
   - {fileID: 8300000, guid: 64fe94543c2ec534ea5449be9b77bc7c, type: 3}

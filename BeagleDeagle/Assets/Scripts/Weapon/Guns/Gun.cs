@@ -14,6 +14,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
     // Where does the muzzle flash appear at?
     [SerializeField] private SpriteRenderer muzzleFlash;
     
+    // The sprite is a child gameObject of the weapon
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
     [Header("Required Components")]
     [SerializeField] private PlayerEvents playerEvents;
     [SerializeField] private SoundEvents soundEvents;
@@ -24,8 +27,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
     private CooldownSystem _cooldownSystem;
 
     private PlayerInput _playerInput;
-    //private TopDownInput _topDownInput;
-    private SpriteRenderer _spriteRenderer;
+    
 
     private InputAction _shootInputAction;
     private InputAction _reloadInputAction;
@@ -80,8 +82,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         
         // Fetch cooldown system component from the player gameObject (always the parent of their gun)
         _cooldownSystem = GetComponentInParent<CooldownSystem>();
-        
-        _spriteRenderer = GetComponent<SpriteRenderer>();
 
         _weaponData = playerData.gunData;
         
@@ -163,6 +163,12 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         }
     }
     
+    private void UpdateWeaponSpriteScale()
+    {
+        spriteRenderer.transform.localScale = _weaponData.gunEffectsData.spriteScale;
+        spriteRenderer.transform.localPosition = _weaponData.gunEffectsData.spritePosition;
+    }
+    
     // Update the GunData scriptable object to a new one (If the player is allowed to. It can be disabled by AWP sniper or by dying)
     // This can change many stats like damage, penetration, fireRate, appearance (sprite), and more.
     public void UpdateScriptableObject(GunData scriptableObject)
@@ -204,7 +210,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         bulletSpawnPoint.localPosition = _weaponData.bulletSpawnLocation;
         
         // Change weapon and muzzle flashes (and their positions as well)
-        _spriteRenderer.sprite = _weaponData.gunEffectsData.weaponSprite;
+        spriteRenderer.sprite = _weaponData.gunEffectsData.weaponSprite;
         muzzleFlash.sprite = _weaponData.gunEffectsData.muzzleFlashSprite;
         muzzleFlash.transform.localPosition = _weaponData.gunEffectsData.muzzleFlashPosition;
         
@@ -219,6 +225,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         playerEvents.InvokeNewWeaponEvent(_weaponData);
         
         playerEvents.InvokeUpdateMaxAmmoLoadedText(Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad));
+        
+        UpdateWeaponSpriteScale();
 
     }
 
