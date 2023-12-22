@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f492b3b4f305fad48b915000aa09ab37, type: 3}
   m_Name: gunEffects_ak47
   m_EditorClassIdentifier: 
-  weaponSprite: {fileID: 21300000, guid: ebd423c7363acb74b9c80545d30934cb, type: 3}
+  weaponSprite: {fileID: 21300000, guid: c9ef79ba59db38f40bd698e29162563d, type: 3}
   muzzleFlashSprite: {fileID: 21300000, guid: 35cd9467eedc6df4e8ba7a1f5aa167a1, type: 3}
-  muzzleFlashPosition: {x: 3.504, y: 0.312}
+  muzzleFlashPosition: {x: 2.702, y: 0.456}
   muzzleFlashDuration: 0.02
   fireClips:
   - {fileID: 8300000, guid: 3ff76d800a9017a4ba511eb08f99454d, type: 3}
