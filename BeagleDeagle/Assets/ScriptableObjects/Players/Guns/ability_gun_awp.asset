@@ -22,7 +22,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   bulletData: {fileID: 11400000, guid: 78505bd38dfc3ca4ea874939b519bf85, type: 2}
   statusEffects: {fileID: 0}
-  bulletSpawnLocation: {x: 2.644, y: 0.377}
+  bulletSpawnLocation: {x: 2.6, y: 0.377}
   bulletSpread: 0.5
   penetrationCount: 8
   abilityData: {fileID: 11400000, guid: 42f995ffd0be09f4486e341d1899a190, type: 2}
