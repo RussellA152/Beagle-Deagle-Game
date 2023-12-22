@@ -24,13 +24,13 @@ public class AbilityStatLevelUpReward : LevelUpReward
         IUtilityUpdatable utilityScript = recipientGameObject.GetComponent<IUtilityUpdatable>();
         IUltimateUpdatable ultimateScript = recipientGameObject.GetComponent<IUltimateUpdatable>();
         
-        if(abilityStatModifierData.UtilityUsesModifier != null)
+        if(abilityStatModifierData.UtilityUsesModifier.IsModifierNameValid())
             utilityScript.AddUtilityUsesModifier(abilityStatModifierData.UtilityUsesModifier);
         
-        if(abilityStatModifierData.UtilityCooldownModifier != null)
+        if(abilityStatModifierData.UtilityCooldownModifier.IsModifierNameValid())
             utilityScript.AddUtilityCooldownModifier(abilityStatModifierData.UtilityCooldownModifier);
         
-        if(abilityStatModifierData.UltimateCooldownModifier != null)
+        if(abilityStatModifierData.UltimateCooldownModifier.IsModifierNameValid())
             ultimateScript.AddUltimateCooldownModifier(abilityStatModifierData.UltimateCooldownModifier);
         
         Debug.Log($"{recipientGameObject.name} was given {abilityStatModifierData}");

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ability_stat_tBone_lvl_12
   m_EditorClassIdentifier: 
   UtilityUsesModifier:
-    modifierName: 
+    modifierName: Level 12 Reward
     particleEffect: {fileID: 0}
     bonusUtilityUses: 1
   UtilityCooldownModifier:

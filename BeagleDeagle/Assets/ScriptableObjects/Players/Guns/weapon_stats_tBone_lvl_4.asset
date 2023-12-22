@@ -29,7 +29,7 @@ MonoBehaviour:
     particleEffect: {fileID: 0}
     bonusReloadSpeed: 0
   AttackSpeedModifier:
-    modifierName: 
+    modifierName: T-Bone Level 4
     particleEffect: {fileID: 0}
     bonusAttackSpeed: 0.1
   AmmoLoadModifier:

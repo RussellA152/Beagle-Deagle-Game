@@ -25,7 +25,7 @@ MonoBehaviour:
     particleEffect: {fileID: 0}
     bonusSpread: 0
   ReloadSpeedModifier:
-    modifierName: 
+    modifierName: Deagle Beagle Level 3
     particleEffect: {fileID: 0}
     bonusReloadSpeed: -0.2
   AttackSpeedModifier:

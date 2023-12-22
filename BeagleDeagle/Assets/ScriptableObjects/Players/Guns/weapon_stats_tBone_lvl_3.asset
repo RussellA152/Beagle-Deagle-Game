@@ -33,7 +33,7 @@ MonoBehaviour:
     particleEffect: {fileID: 0}
     bonusAttackSpeed: 0
   AmmoLoadModifier:
-    modifierName: 
+    modifierName: T-Bone Level 3
     particleEffect: {fileID: 0}
     bonusAmmoLoad: 0.2
   description: +20% Magazine Size!

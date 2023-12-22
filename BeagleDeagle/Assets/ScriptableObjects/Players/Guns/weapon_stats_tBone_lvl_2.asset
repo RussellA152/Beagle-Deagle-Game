@@ -21,7 +21,7 @@ MonoBehaviour:
     particleEffect: {fileID: 0}
     bonusPenetration: 0
   SpreadModifier:
-    modifierName: 
+    modifierName: T-Bone Level 2
     particleEffect: {fileID: 0}
     bonusSpread: -0.2
   ReloadSpeedModifier:

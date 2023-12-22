@@ -22,22 +22,22 @@ public class WeaponStatLevelUpReward: LevelUpReward
     {
         IGunDataUpdatable gunScript = recipientGameObject.GetComponentInChildren<IGunDataUpdatable>();
         
-        if(weaponStatModifierData.DamageModifier != null)
+        if(weaponStatModifierData.DamageModifier.IsModifierNameValid())
             gunScript.AddDamageModifier(weaponStatModifierData.DamageModifier);
         
-        if(weaponStatModifierData.PenetrationModifier != null)
+        if(weaponStatModifierData.PenetrationModifier.IsModifierNameValid())
             gunScript.AddPenetrationModifier(weaponStatModifierData.PenetrationModifier);
 
-        if (weaponStatModifierData.SpreadModifier != null)
+        if (weaponStatModifierData.SpreadModifier.IsModifierNameValid())
             gunScript.AddSpreadModifier(weaponStatModifierData.SpreadModifier);
         
-        if(weaponStatModifierData.ReloadSpeedModifier != null)
+        if(weaponStatModifierData.ReloadSpeedModifier.IsModifierNameValid())
             gunScript.AddReloadSpeedModifier(weaponStatModifierData.ReloadSpeedModifier);
         
-        if(weaponStatModifierData.AttackSpeedModifier != null)
+        if(weaponStatModifierData.AttackSpeedModifier.IsModifierNameValid())
             gunScript.AddReloadSpeedModifier(weaponStatModifierData.ReloadSpeedModifier);
         
-        if(weaponStatModifierData.AmmoLoadModifier != null)
+        if(weaponStatModifierData.AmmoLoadModifier.IsModifierNameValid())
             gunScript.AddAmmoLoadModifier(weaponStatModifierData.AmmoLoadModifier);
         
         Debug.Log($"{recipientGameObject.name} was given {weaponStatModifierData}");

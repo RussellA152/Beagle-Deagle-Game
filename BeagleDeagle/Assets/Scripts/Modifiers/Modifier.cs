@@ -8,5 +8,15 @@ public class Modifier
     [RestrictedPrefab(typeof(PoolableParticle))]
     public GameObject particleEffect;
 
+    ///-///////////////////////////////////////////////////////////
+    /// A modifier is considered "null" if it at least has a name. Don't add it to lists if 
+    /// if its null
+    /// 
+    public bool IsModifierNameValid()
+    {
+        return !string.IsNullOrEmpty(modifierName);
+    }
+
+
 }
 

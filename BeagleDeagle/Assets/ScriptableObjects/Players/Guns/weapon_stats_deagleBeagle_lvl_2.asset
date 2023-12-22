@@ -33,7 +33,7 @@ MonoBehaviour:
     particleEffect: {fileID: 0}
     bonusAttackSpeed: 0
   AmmoLoadModifier:
-    modifierName: 
+    modifierName: Deagle Beagle Level 2
     particleEffect: {fileID: 0}
     bonusAmmoLoad: 0.25
   description: +25% Magazine Size!
