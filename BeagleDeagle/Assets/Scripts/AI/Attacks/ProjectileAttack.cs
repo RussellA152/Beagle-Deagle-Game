@@ -53,6 +53,8 @@ public class ProjectileAttack : AIAttack<ProjectileEnemyData>
             newBullet.transform.rotation = projectileSpawnPoint.rotation;
             
             newBullet.gameObject.SetActive(true);
+            
+            projectile.ActivateBullet();
         }
     }
 }

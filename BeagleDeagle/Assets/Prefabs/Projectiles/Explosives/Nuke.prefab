@@ -98,7 +98,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endSize: {x: 6, y: 6, z: 6}
-  lerpDuration: 3.5
 --- !u!1 &8164879991046117895
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a61110541955836449d8e921f0338c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldDestroy: 1
   sprite: {fileID: 3520225513382146324}
   poolKey: 31
   explosiveParticleGameObject: {fileID: 3136792146325362389, guid: 8d5f6f40932bb594b9f21f39e91cc38e, type: 3}

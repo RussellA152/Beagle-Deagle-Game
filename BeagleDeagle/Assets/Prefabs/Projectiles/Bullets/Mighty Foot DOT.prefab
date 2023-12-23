@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolKey: 22
+  shouldDestroy: 1
   _inanimateParticleLayerMask:
     serializedVersion: 2
     m_Bits: 1024

@@ -17709,6 +17709,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760692578}
   m_CullTransparentMesh: 1
+--- !u!4 &777711983 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6379233007198652893, guid: a699e12754580744a9c7f07b687b2b01, type: 3}
+  m_PrefabInstance: {fileID: 6379233007052663678}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &780516500
 GameObject:
   m_ObjectHideFlags: 0
@@ -21991,7 +21996,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621176, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621178, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_RootOrder
@@ -22796,7 +22801,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2439171421654748759, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
@@ -83728,8 +83733,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6379233007208065621, guid: a699e12754580744a9c7f07b687b2b01, type: 3}
       propertyPath: itemsToPool.Array.size
-      value: 22
+      value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 6379233007208065621, guid: a699e12754580744a9c7f07b687b2b01, type: 3}
+      propertyPath: itemsToPool.Array.data[4].container
+      value: 
+      objectReference: {fileID: 777711983}
+    - target: {fileID: 6379233007208065621, guid: a699e12754580744a9c7f07b687b2b01, type: 3}
+      propertyPath: itemsToPool.Array.data[5].container
+      value: 
+      objectReference: {fileID: 777711983}
     - target: {fileID: 6379233007208065621, guid: a699e12754580744a9c7f07b687b2b01, type: 3}
       propertyPath: itemsToPool.Array.data[19].container
       value: 
@@ -83748,8 +83761,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6379233007208065621, guid: a699e12754580744a9c7f07b687b2b01, type: 3}
       propertyPath: itemsToPool.Array.data[4].amountToPool
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 6379233007208065621, guid: a699e12754580744a9c7f07b687b2b01, type: 3}
+      propertyPath: itemsToPool.Array.data[4].objectToPool
+      value: 
+      objectReference: {fileID: 275455557154390672, guid: c4f63367812a5a644872682e95289609, type: 3}
+    - target: {fileID: 6379233007208065621, guid: a699e12754580744a9c7f07b687b2b01, type: 3}
+      propertyPath: itemsToPool.Array.data[5].amountToPool
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6379233007208065621, guid: a699e12754580744a9c7f07b687b2b01, type: 3}
+      propertyPath: itemsToPool.Array.data[5].objectToPool
+      value: 
+      objectReference: {fileID: 3084706840994566313, guid: c0a56add2938172458a8dca155e4d161, type: 3}
     - target: {fileID: 6379233007208065621, guid: a699e12754580744a9c7f07b687b2b01, type: 3}
       propertyPath: itemsToPool.Array.data[19].amountToPool
       value: 5

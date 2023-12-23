@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a61110541955836449d8e921f0338c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldDestroy: 1
   sprite: {fileID: 3520225513382146324}
   poolKey: 32
   explosiveParticleGameObject: {fileID: 3600658646776412917, guid: 0c6c6f28a17808843ad92d63a3a96e69, type: 3}

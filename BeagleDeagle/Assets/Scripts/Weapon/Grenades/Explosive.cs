@@ -7,6 +7,9 @@ using UnityEngine.Serialization;
 public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T: ExplosiveData
 {
     protected T ExplosiveData;
+
+    // Should this explosive destroy or disable? (use object pool or not)
+    [SerializeField] protected bool shouldDestroy;
     
     [SerializeField] protected GameObject sprite;
 

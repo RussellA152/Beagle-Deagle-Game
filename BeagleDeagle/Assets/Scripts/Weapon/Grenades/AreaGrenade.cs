@@ -73,7 +73,10 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
 
         yield return new WaitForSeconds(Duration);
 
-        gameObject.SetActive(false);
+        if(shouldDestroy)
+            Destroy(gameObject);
+        else
+            gameObject.SetActive(false);
         
     }
 

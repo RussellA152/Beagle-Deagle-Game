@@ -10,9 +10,11 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 {
     protected T bulletData;
 
-    [SerializeField]
-    private int poolKey;
+    [SerializeField] private int poolKey;
     public int PoolKey => poolKey; // Return the pool key (anything that is IPoolable, must have a pool key)
+    
+    // When hitting too many enemies or after a few seconds, should this bullet destroy or get disabled?(use object pool or not)
+    [SerializeField] private bool shouldDestroy;
 
     protected Rigidbody2D rb;
     protected CapsuleCollider2D bulletCollider; // The collider of this bullet
@@ -59,25 +61,6 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         if(inanimateObjectHitParticleEffect != null)
             _inanimateHitParticlePoolKey = inanimateObjectHitParticleEffect.GetComponent<IPoolable>().PoolKey;
     }
-
-    protected virtual void OnEnable()
-    {
-        if (bulletData != null)
-        {
-            // Start time for this bullet to disable
-            StartCoroutine(DisableAfterTime());
-            
-            // Change the bullet's transform scale to whatever the scriptable object has
-            transform.localScale = new Vector2(bulletData.sizeX, bulletData.sizeY);
-
-            // Change the bullet's collider direction to whatever the scriptable object has
-            bulletCollider.direction = bulletData.colliderDirection;
-
-            // Apply the trajectory of this bullet
-            ApplyTrajectory();
-        }
-    }
-
     protected virtual void OnDisable()
     {
         _hitEnemies.Clear();
@@ -98,6 +81,25 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
         // Stop all coroutines when this bullet has been disabled
         StopAllCoroutines();
+    }
+
+    public void ActivateBullet()
+    {
+        if (bulletData != null)
+        {
+            Debug.Log("Yes");
+            // Start time for this bullet to disable
+            StartCoroutine(DisableAfterTime());
+            
+            // Change the bullet's transform scale to whatever the scriptable object has
+            transform.localScale = new Vector2(bulletData.sizeX, bulletData.sizeY);
+
+            // Change the bullet's collider direction to whatever the scriptable object has
+            bulletCollider.direction = bulletData.colliderDirection;
+
+            // Apply the trajectory of this bullet
+            ApplyTrajectory();
+        }
     }
 
     protected virtual void ApplyTrajectory()
@@ -204,7 +206,10 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         // If this bullet has penetrated through too many targets, then disable it
         if (_amountPenetrated >= _penetrationCount)
         {
-            gameObject.SetActive(false);
+            if(shouldDestroy)
+                Destroy(gameObject);
+            else
+                gameObject.SetActive(false);
         }
 
     }
@@ -227,7 +232,11 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     IEnumerator DisableAfterTime()
     {
         yield return new WaitForSeconds(bulletData.GetLifeTime());
-        gameObject.SetActive(false);
+        
+        if(shouldDestroy)
+            Destroy(gameObject);
+        else
+            gameObject.SetActive(false);
     }
 
     public void UpdateScriptableObject(BulletData scriptableObject)

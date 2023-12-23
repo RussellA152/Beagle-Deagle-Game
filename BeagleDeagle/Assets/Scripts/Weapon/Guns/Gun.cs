@@ -291,6 +291,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
             newBullet.transform.rotation = CalculateWeaponSpread();
 
             newBullet.gameObject.SetActive(true);
+            
+            projectile.ActivateBullet();
 
             _bulletsShot++;
 

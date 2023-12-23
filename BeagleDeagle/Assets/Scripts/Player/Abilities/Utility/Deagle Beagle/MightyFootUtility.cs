@@ -6,23 +6,21 @@ using UnityEngine;
 
 public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
 {
-    private int PoolKey;
+    //private int PoolKey;
 
     private TopDownMovement _playerMovementScript;
     
     protected override void Start()
     {
         base.Start();
-        
-        PoolKey = UtilityData.mightyFootPrefab.GetComponent<IPoolable>().PoolKey;
 
         _playerMovementScript = gameObject.GetComponent<TopDownMovement>();
 
     }
     protected override void UtilityAction()
     {
-        // Fetch a grenade from the object pool
-        GameObject mightyFootGameObject = ObjectPooler.Instance.GetPooledObject(PoolKey);
+        // Spawn a new MightyFoot gameObject
+        GameObject mightyFootGameObject = Instantiate(UtilityData.mightyFootPrefab);
         
         // Find direction that player is looking in
         Vector2 aimDirection = _playerMovementScript.ReturnPlayerDirection().normalized;
@@ -33,6 +31,7 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
         // Give MightyFoot the scriptable object it needs
         bulletComponent.UpdateScriptableObject(UtilityData.mightyFootData);
 
+        // Add stats to any status effects that the MightyFoot needs
         foreach (IStatusEffect statusEffect in bulletComponent.GetComponents<IStatusEffect>())
         {
             statusEffect.UpdateWeaponType(UtilityData.statusEffects);
@@ -43,7 +42,6 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
         // Tell the bullet that the player is the transform that shot it
         bulletComponent.UpdateWhoShotThisBullet(transform);
         
-        
 
         mightyFootGameObject.transform.position = (Vector2) (gameObject.transform.position) + aimDirection + new Vector2(UtilityData.offset.x, UtilityData.offset.y);
 
@@ -53,13 +51,8 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
 
         // Reenable the projectile
         mightyFootGameObject.SetActive(true);
-    }
-
-    public override void UpdateScriptableObject(UtilityAbilityData scriptableObject)
-    {
-        base.UpdateScriptableObject(scriptableObject);
         
-        PoolKey = UtilityData.mightyFootPrefab.GetComponent<IPoolable>().PoolKey;
-        
+        bulletComponent.ActivateBullet();
     }
+    
 }

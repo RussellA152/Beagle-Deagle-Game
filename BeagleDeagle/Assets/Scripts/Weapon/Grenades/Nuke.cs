@@ -57,7 +57,10 @@ public class Nuke : Explosive<NukeData>, IPoolable
         yield return new WaitForSeconds(Duration);
 
         // We destroy the nuke instead of disabling it because we don't pool nukes at the moment
-        gameObject.SetActive(false);
+        if(shouldDestroy)
+            Destroy(gameObject);
+        else
+            gameObject.SetActive(false);
 
     }
 

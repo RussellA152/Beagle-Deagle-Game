@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
 {
-    private int _poolKey;
-
     private TopDownMovement _playerMovementScript;
 
     protected override void Start()
     {
         base.Start();
-        
-        _poolKey = UtilityData.smokeGrenadePrefab.GetComponent<IPoolable>().PoolKey;
 
         _playerMovementScript = gameObject.GetComponent<TopDownMovement>();
         
@@ -20,8 +16,8 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
     
     protected override void UtilityAction()
     {
-        // Fetch a grenade from the object pool
-        GameObject grenade = ObjectPooler.Instance.GetPooledObject(_poolKey);
+
+        GameObject grenade = Instantiate(UtilityData.smokeGrenadePrefab);
         
         // Find direction that player is looking in
         Vector2 aimDirection = _playerMovementScript.ReturnPlayerDirection().normalized;
@@ -49,13 +45,5 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
         areaGrenadeComponent.Activate(aimDirection);
         
     }
-    
-    public override void UpdateScriptableObject(UtilityAbilityData scriptableObject)
-    {
-        base.UpdateScriptableObject(scriptableObject);
-        
-        _poolKey = UtilityData.smokeGrenadePrefab.GetComponent<IPoolable>().PoolKey;
-        
-    }
-    
+
 }
