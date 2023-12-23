@@ -9,14 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fd7ce2c1a231034586ef56b7e08cda0, type: 3}
-  m_Name: nuke_explosive
+  m_Script: {fileID: 11500000, guid: 6739aca4244349f4b91015a61e00073e, type: 3}
+  m_Name: aoe_smokeGrenadeStun
   m_EditorClassIdentifier: 
-  physicsMaterial: {fileID: 0}
-  hitThroughWalls: 0
-  detonationTime: 3
-  aoeData: {fileID: 11400000, guid: 76c3dbea33a66a444949fba4a83bc5c6, type: 2}
-  explosiveRadius: 10
-  whatDoesExplosionHit:
+  whatAreaOfEffectCollidesWith:
     serializedVersion: 2
     m_Bits: 256
+  hitThroughWalls: 0
+  aoeSpreadSize: {x: 13, y: 13, z: 13}

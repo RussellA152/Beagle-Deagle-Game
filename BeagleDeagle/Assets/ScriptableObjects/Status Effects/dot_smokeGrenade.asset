@@ -21,4 +21,4 @@ MonoBehaviour:
     damage: 15
     ticks: 5
     tickInterval: 1
-    source: {fileID: 11400000, guid: be83e45970c94bd41812d461c92d3c5a, type: 2}
+    source: {fileID: 11400000, guid: 4cc4fb93b065c954f8673519543ac4af, type: 2}

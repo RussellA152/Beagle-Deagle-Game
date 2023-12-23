@@ -3,25 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
+public class AreaGrenade : Explosive, IPoolable
 {
-    [SerializeField]
-    private int poolKey;
-    
     private Rigidbody2D _rb;
     
     private Collider2D _grenadeCollider;
-
-
+    
     private GrenadeAnimation _grenadeAnimation;
     
 
     [Range(0f, 100f)]
     [SerializeField]
     private float throwSpeed = 15f; // How fast this grenade throws towards enemies (inside of monobehaviour for now)
-
-    public int PoolKey => poolKey; // Return the pool key (anything that is IPoolable, must have a pool key)
-
 
     protected override void Awake()
     {
@@ -54,30 +47,14 @@ public class AreaGrenade : Explosive<UtilityExplosiveData>, IPoolable
         
     }
 
-    // Wait some time, then activate the grenade's explosion
-    // Then after some more time, disable this grenade
-    public override IEnumerator Detonate()
+    protected override void AfterDetonation()
     {
-        yield return new WaitForSeconds(ExplosiveData.detonationTime);
-        
-        AreaOfEffectScript.gameObject.SetActive(true);
-        AreaOfEffectScript.OnAreaOfEffectActivate();
-
+        base.AfterDetonation();
         _grenadeAnimation.BounceOnLandAnimation();
         
         FreezePosition();
-
-        Explode();
-
-        _grenadeCollider.enabled = false;
-
-        yield return new WaitForSeconds(Duration);
-
-        if(shouldDestroy)
-            Destroy(gameObject);
-        else
-            gameObject.SetActive(false);
         
+        _grenadeCollider.enabled = false;
     }
 
     private void OnCollisionEnter2D(Collision2D other)

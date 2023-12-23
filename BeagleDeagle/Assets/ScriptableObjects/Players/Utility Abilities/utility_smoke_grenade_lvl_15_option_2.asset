@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e96020e7a6cb01a4aa6ec56f58f84a3a, type: 3}
-  m_Name: utility_smoke_grenade
+  m_Name: utility_smoke_grenade_lvl_15_option_2
   m_EditorClassIdentifier: 
   abilityName: Smoke Grenade
   description: Throw a grenade that slows enemies in a large area of effect. Can
@@ -20,6 +20,6 @@ MonoBehaviour:
   cooldown: 10
   duration: 5
   maxUses: 2
-  smokeGrenadePrefab: {fileID: 8164879991046117895, guid: cd6eec6d40152204db89a362109b5df2, type: 3}
-  smokeGrenadeData: {fileID: 11400000, guid: 5f9a10b36a0d8ae4598dbeb9bd8d3056, type: 2}
-  statusEffects: {fileID: 11400000, guid: d045b11b0715ade409f1568d05c25d56, type: 2}
+  smokeGrenadePrefab: {fileID: 8164879991046117895, guid: b4bb9f7959e261446808e4461c08eafb, type: 3}
+  smokeGrenadeData: {fileID: 11400000, guid: 163a8d5b945749c4b97322d5f8c6847c, type: 2}
+  statusEffects: {fileID: 11400000, guid: 38f4f66a023a87848aa41a96a8f67a8a, type: 2}

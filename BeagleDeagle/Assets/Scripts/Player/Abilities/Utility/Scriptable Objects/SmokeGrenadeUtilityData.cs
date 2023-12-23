@@ -11,7 +11,7 @@ public class SmokeGrenadeUtilityData : UtilityAbilityData
     public GameObject smokeGrenadePrefab;
 
     // The data the smoke grenade will use
-    public UtilityExplosiveData smokeGrenadeData;
+    public ExplosiveData smokeGrenadeData;
     
     // The data of the status effects that the smoke grenade will have ( * MUST BE COMPATIBLE WITH PREFAB * )
     public StatusEffectTypes statusEffects;

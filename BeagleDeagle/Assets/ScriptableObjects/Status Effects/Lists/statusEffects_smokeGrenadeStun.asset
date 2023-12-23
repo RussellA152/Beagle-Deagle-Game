@@ -9,14 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fd7ce2c1a231034586ef56b7e08cda0, type: 3}
-  m_Name: nuke_bomberZ
+  m_Script: {fileID: 11500000, guid: eb2bc520727d1fb409bc67799e9881b8, type: 3}
+  m_Name: statusEffects_smokeGrenadeStun
   m_EditorClassIdentifier: 
-  physicsMaterial: {fileID: 0}
-  hitThroughWalls: 0
-  detonationTime: 0
-  aoeData: {fileID: 0}
-  explosiveRadius: 4
-  whatDoesExplosionHit:
-    serializedVersion: 2
-    m_Bits: 16512
+  statusEffects:
+  - {fileID: 11400000, guid: 8530572b7c029d943bc78d76e4c183e1, type: 2}
+  - {fileID: 11400000, guid: f99b7cfa7568bb84dab1dca6fc954872, type: 2}

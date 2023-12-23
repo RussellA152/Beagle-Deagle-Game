@@ -24,9 +24,19 @@ public class SlowOnCollision : StatusEffect<SlowData>
             objectHit.GetComponent<IMovable>().RemoveMovementSpeedModifier(StatusEffectData.movementSpeedEffect);
         
             objectHit.GetComponent<IDamager>().RemoveAttackSpeedModifier(StatusEffectData.attackSpeedEffect);
+            
+            //StartCoroutine(WaitToRemoveEffect(objectHit));
         }
         
     }
 
+    private IEnumerator WaitToRemoveEffect(GameObject objectHit)
+    {
+        yield return new WaitForSeconds(StatusEffectData.lingerDuration);
+        
+        objectHit.GetComponent<IMovable>().RemoveMovementSpeedModifier(StatusEffectData.movementSpeedEffect);
+        
+        objectHit.GetComponent<IDamager>().RemoveAttackSpeedModifier(StatusEffectData.attackSpeedEffect);
+    }
     
 }

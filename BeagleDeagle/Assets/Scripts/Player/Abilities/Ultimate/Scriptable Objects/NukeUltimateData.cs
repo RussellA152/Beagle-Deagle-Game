@@ -11,7 +11,7 @@ public class NukeUltimateData : UltimateAbilityData
     public GameObject nukePrefab;
 
     // The data the nuke will use
-    public NukeData nukeData;
+    public ExplosiveData nukeData;
     
     // The data of the status effects that the nuke will have ( * MUST BE COMPATIBLE WITH PREFAB * )
     public StatusEffectTypes statusEffects;

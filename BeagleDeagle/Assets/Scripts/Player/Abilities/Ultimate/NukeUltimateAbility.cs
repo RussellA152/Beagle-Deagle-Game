@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
 {
-    
     protected override void UltimateAction()
     {
         StartCooldown();

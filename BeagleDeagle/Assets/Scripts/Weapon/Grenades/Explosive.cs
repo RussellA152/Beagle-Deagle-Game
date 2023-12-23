@@ -2,16 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T: ExplosiveData
+public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
 {
-    protected T ExplosiveData;
+    protected ExplosiveData ExplosiveData;
+    
+    [SerializeField] private int poolKey;
+
+    public int PoolKey => poolKey;
 
     // Should this explosive destroy or disable? (use object pool or not)
     [SerializeField] protected bool shouldDestroy;
     
     [SerializeField] protected GameObject sprite;
+    
+    [SerializeField, RestrictedPrefab(typeof(PoolableParticle))] 
+    private GameObject explosiveParticleGameObject;
+
+    private PoolableParticle _particleEffectScript;
+
+    private int _explosiveParticlePoolKey;
 
     protected AreaOfEffect AreaOfEffectScript;
 
@@ -22,12 +34,19 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
     protected float Damage;
 
     protected float Duration;
+    
+    // Do something to an enemy that gets hit by this explosion
+    [SerializeField] private UnityEvent<GameObject> onExplosionHitTarget;
 
     protected virtual void Awake()
     {
         ObstructionScript = GetComponentInParent<CheckObstruction>();
         AreaOfEffectScript =
             GetComponentInChildren<AreaOfEffect>();
+        
+        // Find explosive effect if this gameObject needs one
+        if(explosiveParticleGameObject != null)
+            _explosiveParticlePoolKey = explosiveParticleGameObject.GetComponent<IPoolable>().PoolKey;
         
     }
 
@@ -55,14 +74,73 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
     
     // Wait some time, then activate the grenade's explosion
     // Then after some more time, disable this grenade
-    public abstract IEnumerator Detonate();
+    public IEnumerator Detonate()
+    {
+        yield return new WaitForSeconds(ExplosiveData.detonationTime);
+
+        AfterDetonation();
+
+        yield return new WaitForSeconds(Duration);
+
+        AfterDurationEnds();
+    }
+
+    protected virtual void AfterDetonation()
+    {
+        if (AreaOfEffectScript != null)
+        {
+            AreaOfEffectScript.gameObject.SetActive(true);
+            AreaOfEffectScript.OnAreaOfEffectActivate();
+        }
+        
+        Explode();
+        
+        if(explosiveParticleGameObject != null) 
+            PlayParticleEffect();
+    }
+
+    protected virtual void AfterDurationEnds()
+    {
+        // We destroy the nuke instead of disabling it because we don't pool nukes at the moment
+        if(shouldDestroy)
+            Destroy(gameObject);
+        else
+            gameObject.SetActive(false);
+    }
 
     protected virtual void Explode()
     {
         // Play explosion sound
 
         // Screen shake
+
+        // Big explosion hurt all enemies
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, ExplosiveData.explosiveRadius, ExplosiveData.whatDoesExplosionHit);
+
+        foreach (Collider2D targetCollider in hitEnemies)
+        {
+            if (!ObstructionScript.HasObstruction(transform.position, targetCollider.gameObject, WallLayerMask))
+            {
+                IHealth healthScript = targetCollider.gameObject.GetComponent<IHealth>();
+
+                healthScript?.ModifyHealth(-1f * Damage);
+                
+                onExplosionHitTarget?.Invoke(targetCollider.gameObject);
+            }
+        }
     }
+    
+    private void PlayParticleEffect()
+    {
+        GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_explosiveParticlePoolKey);
+
+        _particleEffectScript = newParticleEffect.GetComponent<PoolableParticle>();
+        
+        _particleEffectScript.PlaceParticleOnTransform(transform);
+        
+        _particleEffectScript.PlayAllParticles(ExplosiveData.explosiveRadius);
+    }
+    
 
     public void SetDamage(float explosiveDamage)
     {
@@ -80,13 +158,6 @@ public abstract class Explosive<T> : MonoBehaviour, IExplosiveUpdatable where T:
     }
     public virtual void UpdateScriptableObject(ExplosiveData scriptableObject)
     {
-        if (scriptableObject is T)
-        {
-            ExplosiveData = scriptableObject as T;
-        }
-        else
-        {
-            Debug.Log("ERROR WHEN UPDATING SCRIPTABLE OBJECT! PREFAB DID NOT UPDATE ITS SCRIPTABLE OBJECT");
-        }
+        ExplosiveData = scriptableObject;
     }
 }

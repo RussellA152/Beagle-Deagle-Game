@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f1748149a702641801d68a02ab4751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolKey: 49
+  poolKey: 50
   particleSystemGameObjects:
   - {fileID: 4545254831757050484}
 --- !u!1001 &4976828532211664829

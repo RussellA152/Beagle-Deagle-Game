@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 352a4db3bf1300546bc273d98b806d10, type: 3}
-  m_Name: smoke_grenade_explosive
+  m_Script: {fileID: 11500000, guid: fa03415b034fae140b29c74224498634, type: 3}
+  m_Name: explosive_smokeGrenadeStun
   m_EditorClassIdentifier: 
-  physicsMaterial: {fileID: 6200000, guid: c2cd37aec7ea54d4c8aa8beda6aec249, type: 2}
+  physicsMaterial: {fileID: 0}
   hitThroughWalls: 0
+  explosiveRadius: 5
+  whatDoesExplosionHit:
+    serializedVersion: 2
+    m_Bits: 256
   detonationTime: 0.4
-  aoeData: {fileID: 11400000, guid: be83e45970c94bd41812d461c92d3c5a, type: 2}
+  aoeData: {fileID: 11400000, guid: 9c92bad59dd509f4984331b485ad7279, type: 2}
