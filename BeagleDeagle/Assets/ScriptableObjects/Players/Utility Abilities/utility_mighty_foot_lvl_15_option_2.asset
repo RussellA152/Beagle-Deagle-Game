@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: utility_mighty_foot_lvl_15_option_2
   m_EditorClassIdentifier: 
   abilityName: Roundhouse
-  description: Spins around the player.
+  description: Now performs a circular rotation around Deagle Beagle.
   abilitySprite: {fileID: 21300000, guid: 8f27c983809f687488e79213a9cafc37, type: 3}
   abilityDamage: 40
   cooldown: 3
-  duration: 3
+  duration: 0.6
   maxUses: 1
   mightyFootPrefab: {fileID: 8164879991046117895, guid: 8f4b5e6e44fe85740824268c41a042f0, type: 3}
   mightyFootData: {fileID: 11400000, guid: 69c6fb3f679137348ad88a40479529e5, type: 2}

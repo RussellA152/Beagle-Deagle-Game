@@ -128,7 +128,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   radiusAroundPlayer: 3
-  rotationTime: 1
+  rotationTime: 0.5
 --- !u!114 &647901184296032623
 MonoBehaviour:
   m_ObjectHideFlags: 0
