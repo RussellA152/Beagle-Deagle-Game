@@ -20,11 +20,13 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     protected CapsuleCollider2D bulletCollider; // The collider of this bullet
     private SpriteRenderer _spriteRenderer;
 
-    private Vector3 defaultRotation = new Vector3(0f, 0f, -90f);
+    protected Vector3 DefaultRotation = new Vector3(0f, 0f, -90f);
     
     // Who shot this bullet? (usually player or enemy)
     protected Transform _whoShotThisBullet;
 
+    // False by default, but should be true for projectiles that orbit or ricochet
+    [SerializeField] private bool allowMultipleHitsOnSameEnemy = false;
     private readonly HashSet<Transform> _hitEnemies = new HashSet<Transform>(); // Don't let this bullet hit the same enemy twice (we track what this bullet hit in this HashSet)
 
     private float _damagePerHit; // The damage of the player's gun or enemy that shot this bullet
@@ -61,13 +63,14 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         if(inanimateObjectHitParticleEffect != null)
             _inanimateHitParticlePoolKey = inanimateObjectHitParticleEffect.GetComponent<IPoolable>().PoolKey;
     }
+    
     protected virtual void OnDisable()
     {
         _hitEnemies.Clear();
 
         // Resetting rotation before applying spread
         transform.position = Vector2.zero;
-        transform.rotation = Quaternion.Euler(defaultRotation);
+        transform.rotation = Quaternion.Euler(DefaultRotation);
 
         // Resetting capsule collider direction
         bulletCollider.direction = CapsuleDirection2D.Vertical;
@@ -87,7 +90,6 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     {
         if (bulletData != null)
         {
-            Debug.Log("Yes");
             // Start time for this bullet to disable
             StartCoroutine(DisableAfterTime());
             
@@ -106,13 +108,13 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     {
         rb.velocity = transform.right * bulletData.bulletSpeed;
     }
-
-
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        // If this bullet already hit this enemy, then don't allow penetration or damage to occur
-        if (_hitEnemies.Contains(collision.transform))
+        // If this bullet already hit this enemy (and is not allowed to hit the same enemy more than once),
+        // then don't allow penetration or damage to occur
+        if (!allowMultipleHitsOnSameEnemy && _hitEnemies.Contains(collision.transform))
         {
             return;
         }
@@ -120,8 +122,6 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         // If this bullet hits something that destroys it, disable the bullet
         if((bulletData.whatDestroysBullet.value & (1 << collision.gameObject.layer)) > 0)
         {
-            // Play particle effect on object hit
-            //ActivateParticleEffect(collision.gameObject, false);
             
             ActivateParticleEffect(collision.gameObject);
             gameObject.SetActive(false);
@@ -129,9 +129,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         }
         
         onBulletHit.Invoke(collision.gameObject);
-        //Debug.Log(gameObject + " HIT " +  collision.gameObject);
-        
-        
+
         // If this bullet hits what its allowed to
         if ((bulletData.whatBulletCanPenetrate.value & (1 << collision.gameObject.layer)) > 0)
         {

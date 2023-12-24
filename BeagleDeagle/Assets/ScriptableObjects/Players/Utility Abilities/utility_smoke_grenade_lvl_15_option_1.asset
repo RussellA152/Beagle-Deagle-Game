@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96020e7a6cb01a4aa6ec56f58f84a3a, type: 3}
   m_Name: utility_smoke_grenade_lvl_15_option_1
   m_EditorClassIdentifier: 
-  abilityName: Flashbang
-  description: Smoke now stuns on explosion with an increased AOE size
+  abilityName: Tear Gas Grenade
+  description: Smoke now applies DOT, with an increased AOE size.
   abilitySprite: {fileID: 21300000, guid: 0e070a402f896ad4d8253bb6d4617414, type: 3}
   abilityDamage: 1
   cooldown: 10

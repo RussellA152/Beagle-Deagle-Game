@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ffd2733aba5a224f9df2acdced235ef, type: 3}
-  m_Name: utility_mighty_foot_lvl15
+  m_Name: utility_mighty_foot_lvl_15_option_1
   m_EditorClassIdentifier: 
   abilityName: Flaming Mighty Foot
   description: Now applies DOT to enemies.

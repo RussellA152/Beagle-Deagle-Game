@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicsMaterial: {fileID: 0}
   hitThroughWalls: 0
-  explosiveRadius: 5
+  explosiveRadius: 7
   whatDoesExplosionHit:
     serializedVersion: 2
     m_Bits: 256
