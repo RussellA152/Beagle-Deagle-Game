@@ -18,4 +18,4 @@ MonoBehaviour:
   stunEffect:
     modifierName: Flashbang Stun
     particleEffect: {fileID: 275455557154390672, guid: c4f63367812a5a644872682e95289609, type: 3}
-    stunDuration: 2
+    stunDuration: 3
