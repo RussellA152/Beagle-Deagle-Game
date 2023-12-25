@@ -47,11 +47,14 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
         // Find explosive effect if this gameObject needs one
         if(explosiveParticleGameObject != null)
             _explosiveParticlePoolKey = explosiveParticleGameObject.GetComponent<IPoolable>().PoolKey;
-        
+
     }
 
     private void Start()
     {
+        // Disable AOE at start
+        AreaOfEffectScript.gameObject.SetActive(false);
+        
         WallLayerMask = LayerMask.GetMask("Wall");
     }
 

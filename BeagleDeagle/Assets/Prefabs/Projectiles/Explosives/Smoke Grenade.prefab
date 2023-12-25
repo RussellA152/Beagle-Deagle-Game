@@ -151,10 +151,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5abd305a43f324e995048b3e62ceea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolKey: 34
   shouldDestroy: 1
   sprite: {fileID: 3520225513382146324}
   explosiveParticleGameObject: {fileID: 0}
-  poolKey: 34
+  onExplosionHitTarget:
+    m_PersistentCalls:
+      m_Calls: []
   throwSpeed: 15
 --- !u!114 &411679524319823067
 MonoBehaviour:
@@ -272,6 +275,10 @@ PrefabInstance:
     - target: {fileID: 4093327758296539743, guid: c110ccac61811994b998f8965e050fb7, type: 3}
       propertyPath: m_Name
       value: Smoke AOE
+      objectReference: {fileID: 0}
+    - target: {fileID: 4093327758296539743, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
       propertyPath: onAreaExit.m_PersistentCalls.m_Calls.Array.data[0].m_Target

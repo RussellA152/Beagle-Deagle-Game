@@ -50,6 +50,7 @@ public class AreaGrenade : Explosive, IPoolable
     protected override void AfterDetonation()
     {
         base.AfterDetonation();
+        
         _grenadeAnimation.BounceOnLandAnimation();
         
         FreezePosition();
