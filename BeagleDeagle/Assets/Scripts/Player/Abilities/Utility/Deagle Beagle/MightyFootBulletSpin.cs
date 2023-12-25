@@ -26,6 +26,8 @@ public class MightyFootBulletSpin : MightyFootBullet
                 
                 // Bullet should follow player
                 bulletTransform.position = new Vector3(x + _whoShotThisBullet.transform.position.x, y + _whoShotThisBullet.transform.position.y, bulletTransform.position.z);
+                
+                base.ApplyTrajectory();
             })
             .setLoopClamp();
 

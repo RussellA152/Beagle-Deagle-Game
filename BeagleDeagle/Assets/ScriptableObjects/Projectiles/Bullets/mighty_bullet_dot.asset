@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86ca5c505e791724dafa703d52a40986, type: 3}
-  m_Name: mighty_bullet_roundhouse
+  m_Name: mighty_bullet_dot
   m_EditorClassIdentifier: 
   bulletSprite: {fileID: 0}
   whatBulletCanPenetrate:
@@ -22,10 +22,10 @@ MonoBehaviour:
   whatDestroysBullet:
     serializedVersion: 2
     m_Bits: 0
-  knockBackPower: {x: 40, y: 40}
+  knockBackPower: {x: 60, y: 60}
   bulletSpeed: 40
   colliderDirection: 0
   sizeX: 3
   sizeY: 3
-  mightyFootAbilityData: {fileID: 11400000, guid: b016ea26586188240b477b409be1b83a, type: 2}
+  mightyFootAbilityData: {fileID: 11400000, guid: f346123fc01f8d848945478d5bbe56e3, type: 2}
   numberOfEnemiesCanHit: 150

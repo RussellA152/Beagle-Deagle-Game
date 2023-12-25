@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: utility_mighty_foot_lvl_15_option_1
   m_EditorClassIdentifier: 
   abilityName: Flaming Mighty Foot
-  description: Now inflicts DOT on enemies.
+  description: Now inflicts DOT on enemies and has increased knockback and stun duration.
   abilitySprite: {fileID: 21300000, guid: 8f27c983809f687488e79213a9cafc37, type: 3}
   abilityDamage: 40
   cooldown: 3
   duration: 0.2
   maxUses: 1
   mightyFootPrefab: {fileID: 8164879991046117895, guid: 8b36c8f7aded540448980abc65c7d848, type: 3}
-  mightyFootData: {fileID: 11400000, guid: 7d16991d98ac3644980c8574734b32fc, type: 2}
+  mightyFootData: {fileID: 11400000, guid: 8f0f37945dd7ae543a209308b587cc49, type: 2}
   statusEffects: {fileID: 11400000, guid: f673551b42b58e64eb010ab257d7d78b, type: 2}
   offset: {x: 0, y: 0}
   usePlayerAimAngleForRotation: 1
