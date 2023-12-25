@@ -93,9 +93,9 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
             // Start time for this bullet to disable
             StartCoroutine(DisableAfterTime());
             
-            // Change the bullet's transform scale to whatever the scriptable object has
-            transform.localScale = new Vector2(bulletData.sizeX, bulletData.sizeY);
-
+            // Change the size of the bullet to whatever the BulletData contains
+            UpdateBulletSize();
+            
             // Change the bullet's collider direction to whatever the scriptable object has
             bulletCollider.direction = bulletData.colliderDirection;
 
@@ -210,6 +210,15 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
                 gameObject.SetActive(false);
         }
 
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Use BulletData scriptable object to adjust the local scale of a bullet.
+    /// 
+    protected virtual void UpdateBulletSize()
+    {
+        // Change the bullet's transform scale to whatever the scriptable object has
+        transform.localScale = new Vector2(bulletData.sizeX, bulletData.sizeY);
     }
     
     // Update the damage and penetration values

@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
 {
-    //private int PoolKey;
-
     private TopDownMovement _playerMovementScript;
     
     protected override void Start()
@@ -41,13 +39,28 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
         
         // Tell the bullet that the player is the transform that shot it
         bulletComponent.UpdateWhoShotThisBullet(transform);
-        
 
-        mightyFootGameObject.transform.position = (Vector2) (gameObject.transform.position) + aimDirection + new Vector2(UtilityData.offset.x, UtilityData.offset.y);
-
-        float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+        Vector2 offsetAppliedToBullet = aimDirection;
         
-        mightyFootGameObject.transform.rotation = Quaternion.Euler(0f, 0f, aimAngle);
+        if (aimDirection.x >= 0)
+        {
+            offsetAppliedToBullet += new Vector2(UtilityData.offset.x, UtilityData.offset.y);
+        }
+        else
+        {
+            offsetAppliedToBullet += new Vector2(-UtilityData.offset.x, UtilityData.offset.y);
+        }
+
+        mightyFootGameObject.transform.position = (Vector2)gameObject.transform.position + offsetAppliedToBullet;
+
+        // Adjust rotation of the mighty foot if true (Mighty Foot roundhouse doesn't use this)
+        if (UtilityData.usePlayerAimAngleForRotation)
+        {
+            float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+        
+            mightyFootGameObject.transform.rotation = Quaternion.Euler(0f, 0f, aimAngle);
+        }
+        
 
         // Reenable the projectile
         mightyFootGameObject.SetActive(true);

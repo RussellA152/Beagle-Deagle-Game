@@ -19,4 +19,7 @@ public class MightyFootUtilityData : UtilityAbilityData
     
     [Header("Offset From Player Position")]
     public Vector2 offset; // Offset applied to Mighty Foot projectile when this ability is activated
+
+    // Should the mighty foot rotate depending on where the player is aiming?
+    public bool usePlayerAimAngleForRotation = true;
 }
