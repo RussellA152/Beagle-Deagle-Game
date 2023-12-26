@@ -34,14 +34,14 @@ public class HealCrate : MonoBehaviour, IHasCooldown
 
     private void OnEnable()
     {
-        _healthScript.onObjectDeath += SpawnCrate;
+        _healthScript.onDeath += SpawnCrate;
         _healthPickUp.onPickUpDespawn += StartCooldown;
         _cooldownSystem.OnCooldownEnded += RestoreCrate;
     }
 
     private void OnDisable()
     {
-        _healthScript.onObjectDeath -= SpawnCrate;
+        _healthScript.onDeath -= SpawnCrate;
         _healthPickUp.onPickUpDespawn -= StartCooldown;
         _cooldownSystem.OnCooldownEnded -= RestoreCrate;
     }

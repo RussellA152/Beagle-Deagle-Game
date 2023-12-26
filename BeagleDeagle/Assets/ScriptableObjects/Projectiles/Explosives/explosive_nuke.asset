@@ -20,3 +20,9 @@ MonoBehaviour:
     m_Bits: 256
   detonationTime: 3
   aoeData: {fileID: 11400000, guid: 76c3dbea33a66a444949fba4a83bc5c6, type: 2}
+  activationSound: {fileID: 0}
+  explosionClips:
+  - {fileID: 8300000, guid: 82c362cd3d3a8b643832859237810f31, type: 3}
+  - {fileID: 8300000, guid: 8fbeb4b2cb4a0fe4bb1100f9ff5d4387, type: 3}
+  - {fileID: 8300000, guid: 5778903b251101f468b1c6fcb094e4ca, type: 3}
+  explosiveSoundVolume: 0.75

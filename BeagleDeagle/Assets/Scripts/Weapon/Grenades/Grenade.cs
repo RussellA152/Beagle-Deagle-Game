@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaGrenade : Explosive, IPoolable
+public class Grenade : Explosive, IPoolable
 {
     private Rigidbody2D _rb;
     

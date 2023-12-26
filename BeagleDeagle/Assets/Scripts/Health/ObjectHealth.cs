@@ -15,22 +15,19 @@ public class ObjectHealth : MonoBehaviour, IHealth
     [SerializeField, Range(1f, 5000f)] 
     private float maxHealth;
     
-    // Is the enemy currently dead?
-    private bool _isDead;
+    public event Action onDeath;
 
-    public event Action onObjectDeath; 
+    private bool _isDead;
 
     private void Start()
     {
-        _isDead = false;
-
         _currentHealth = maxHealth;
     }
 
     private void OnEnable()
     {
-        _isDead = false;
         _currentHealth = maxHealth;
+        _isDead = false;
     }
     
 
@@ -46,11 +43,10 @@ public class ObjectHealth : MonoBehaviour, IHealth
         if (newHealth <= 0f)
         {
             _currentHealth = 0f;
-            
-            // Tell listeners that this object died
-            onObjectDeath?.Invoke();
-            
+
             _isDead = true;
+            
+            InvokeDeathEvent();
             
         }
         else
@@ -61,6 +57,11 @@ public class ObjectHealth : MonoBehaviour, IHealth
     public float GetCurrentHealth()
     {
         return _currentHealth;
+    }
+
+    public void InvokeDeathEvent()
+    {
+        onDeath?.Invoke();
     }
 
     public bool IsDead()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Nuke : Explosive, IPoolable
+public class Nuke : Explosive
 {
     private bool _explosionHappening = false;
     

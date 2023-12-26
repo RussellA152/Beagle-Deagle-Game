@@ -2,34 +2,39 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SoundPlayer : MonoBehaviour
 {
     [SerializeField] private SoundEvents soundEvents;
     
     [Header("Audio Sources Used")] 
-    [SerializeField] private AudioSource gunSoundAudioSource;
+    [SerializeField] private AudioSource generalSoundAudioSource;
     [SerializeField] private AudioSource uiAudioSource;
 
     private void OnEnable()
     {
-        soundEvents.onGunSoundPlay += PlayGunSound;
+        soundEvents.onGeneralSoundPlay += PlayGeneralSound;
         soundEvents.onUISoundPlay += PlayUISound;
     }
 
     private void OnDisable()
     {
-        soundEvents.onGunSoundPlay -= PlayGunSound;
+        soundEvents.onGeneralSoundPlay -= PlayGeneralSound;
         soundEvents.onUISoundPlay -= PlayUISound;
     }
 
     ///-///////////////////////////////////////////////////////////
     /// Play sound effects for guns which includes shooting and reloading
     /// 
-    private void PlayGunSound(AudioClip clipToPlay, float volumeOfClip)
+    private void PlayGeneralSound(AudioClip clipToPlay, float volumeOfClip)
     {
-        gunSoundAudioSource.volume = volumeOfClip;
-        gunSoundAudioSource.PlayOneShot(clipToPlay);
+        if (clipToPlay != null)
+        {
+            generalSoundAudioSource.volume = volumeOfClip;
+            generalSoundAudioSource.PlayOneShot(clipToPlay);
+        }
+        
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -37,6 +42,10 @@ public class SoundPlayer : MonoBehaviour
     /// 
     private void PlayUISound(AudioClip clipToPlay, float volumeOfClip)
     {
-        uiAudioSource.PlayOneShot(clipToPlay);
+        if (clipToPlay != null)
+        {
+            uiAudioSource.PlayOneShot(clipToPlay);
+        }
+        
     }
 }

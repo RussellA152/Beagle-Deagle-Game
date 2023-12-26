@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "NewUtility", menuName = "ScriptableObjects/Ability/Utility/SmokeGrenade")]
 public class SmokeGrenadeUtilityData : UtilityAbilityData
 {
-    [RestrictedPrefab(typeof(AreaGrenade))]
+    [RestrictedPrefab(typeof(Grenade))]
     // The smoke grenade to spawn
     public GameObject smokeGrenadePrefab;
 

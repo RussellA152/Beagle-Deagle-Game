@@ -33,13 +33,15 @@ public class DefendObjective : MapObjective
             _timeNeededLeft -= Time.deltaTime;
         
         
-        if(_timeNeededLeft <= 0f || _objectWithHealth.IsDead())
+        if(_timeNeededLeft <= 0f)
             OnObjectiveOutOfTime();
     }
 
     protected override void OnObjectiveEnable()
     {
         base.OnObjectiveEnable();
+
+        _objectWithHealth.onDeath += OnObjectiveOutOfTime;
         
         _previousEnemyTarget = EnemyManager.Instance.GetGlobalTarget();
         

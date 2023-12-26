@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -92,8 +93,15 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
         
         // Re-enable the enemy's body collider (we disable it when they die)
         _bodyCollider.enabled = true;
+
+        HealthScript.onDeath += OnDeath;
     }
-    
+
+    private void OnDisable()
+    {
+        HealthScript.onDeath -= OnDeath;
+    }
+
     public void SetNewTarget(Transform newTarget)
     {
         _target = newTarget;
@@ -128,9 +136,6 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
             case EnemyState.Stunned:
                 OnStun();
                 break;
-            case EnemyState.Death:
-                OnDeath();
-                break;
         }
     }
     
@@ -141,11 +146,11 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     /// 
     protected virtual void CheckState()
     {
-        if (HealthScript.IsDead())
-        {
-            state = EnemyState.Death;
-            return;
-        }
+        // if (HealthScript.IsDead())
+        // {
+        //     state = EnemyState.Death;
+        //     return;
+        // }
 
         if (MovementScript.IsStunned)
         {
@@ -230,6 +235,8 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     
     protected virtual void OnDeath()
     {
+        state = EnemyState.Death;
+        
         // Don't let enemy to move
         MovementScript.SetCanFlip(false);
         MovementScript.AllowMovement(false);

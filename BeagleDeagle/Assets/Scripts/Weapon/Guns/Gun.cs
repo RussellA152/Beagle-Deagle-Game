@@ -363,7 +363,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
             _cooldownSystem.PutOnCooldown(this);
             
             // Play "reloadStart" sound effect
-            soundEvents.InvokeGunSoundPlay(_weaponData.gunEffectsData.reloadStartClip, _weaponData.gunEffectsData.reloadSoundVolume);
+            soundEvents.InvokeGeneralSoundPlay(_weaponData.gunEffectsData.reloadStartClip, _weaponData.gunEffectsData.reloadSoundVolume);
             // Start playing the reload finished sound effect
             StartCoroutine(PlayReloadFinishedSound());
             
@@ -420,7 +420,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
     {
         int randomNumber = Random.Range(0, _weaponData.gunEffectsData.fireClips.Length);
         
-        soundEvents.InvokeGunSoundPlay(_weaponData.gunEffectsData.fireClips[randomNumber], _weaponData.gunEffectsData.fireSoundVolume);
+        soundEvents.InvokeGeneralSoundPlay(_weaponData.gunEffectsData.fireClips[randomNumber], _weaponData.gunEffectsData.fireSoundVolume);
     }
 
     private IEnumerator PlayReloadFinishedSound()
@@ -432,7 +432,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         yield return new WaitForSeconds(halfDuration);
     
         // Play "reloadFinished" sound effect at 50% completion
-        soundEvents.InvokeGunSoundPlay(_weaponData.gunEffectsData.reloadFinishedClip, _weaponData.gunEffectsData.reloadSoundVolume);
+        soundEvents.InvokeGeneralSoundPlay(_weaponData.gunEffectsData.reloadFinishedClip, _weaponData.gunEffectsData.reloadSoundVolume);
 
         // If the gun is not empty upon reloading, then don't play a reload slide sound
         if (_bulletsLoaded != 0)
@@ -445,7 +445,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         yield return new WaitForSeconds(remainingTime);
 
         // Play "reloadSlide" sound effect at 80% completion
-        soundEvents.InvokeGunSoundPlay(_weaponData.gunEffectsData.reloadSlideClip, _weaponData.gunEffectsData.reloadSoundVolume);
+        soundEvents.InvokeGeneralSoundPlay(_weaponData.gunEffectsData.reloadSlideClip, _weaponData.gunEffectsData.reloadSoundVolume);
     }
 
     

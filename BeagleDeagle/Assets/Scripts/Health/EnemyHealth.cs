@@ -21,20 +21,19 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
     // The current health of this enemy
     private float _currentHealth;
     
-    // Is the enemy currently dead?
+    public event Action onDeath;
     private bool _isDead;
 
     protected virtual void OnEnable()
     {
-        _isDead = false;
         _currentHealth = enemyData.maxHealth;
+        _isDead = false;
     }
 
     public virtual float GetCurrentHealth()
     {
         return _currentHealth;
     }
-
 
     public virtual void ModifyHealth(float amount)
     {
@@ -48,6 +47,9 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
         if (newHealth <= 0f)
         {
             _currentHealth = 0f;
+            
+            InvokeDeathEvent();
+            
             _isDead = true;
             
             // Give the player a certain amount of xp upon death
@@ -61,6 +63,11 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
         }
     }
     
+    public void InvokeDeathEvent()
+    {
+        onDeath?.Invoke();
+    }
+
     public bool IsDead()
     {
         return _isDead;

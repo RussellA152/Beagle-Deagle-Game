@@ -18,6 +18,8 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
     private float _currentHealth;
     
     private bool _isDead;
+    
+    public event Action onDeath;
 
     [SerializeField, NonReorderable]
     private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
@@ -49,7 +51,6 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
         CheckHealthRegeneration();
     }
 
-
     public virtual void ModifyHealth(float amount)
     {
         // Calculate the potential new health value
@@ -64,6 +65,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
         {
             _currentHealth = 0f;
             _isDead = true;
+            InvokeDeathEvent();
             // Tell all listeners that the player has died
             playerEvents.InvokePlayerDied();
         }
@@ -106,6 +108,11 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
     public bool IsDead()
     {
         return _isDead;
+    }
+
+    public void InvokeDeathEvent()
+    {
+        onDeath?.Invoke();
     }
 
     public void UpdateScriptableObject(PlayerData scriptableObject)

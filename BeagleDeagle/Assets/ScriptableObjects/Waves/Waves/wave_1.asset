@@ -16,4 +16,5 @@ MonoBehaviour:
   message: Wave 1 is ongoing!
   miniWaves:
   - {fileID: 11400000, guid: a53a01867aa7d484b8992bbe333a05fa, type: 2}
-  duration: 5
+  - {fileID: 11400000, guid: 76b203046932139428df59138d9803b7, type: 2}
+  duration: 60

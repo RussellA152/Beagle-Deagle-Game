@@ -21,10 +21,9 @@ public class SelectButtonOnHighlight : MonoBehaviour, IPointerEnterHandler, ISel
     // Implement the IPointerEnterHandler interface
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // If the mouse cursor is hovering over this button, then 
+        // it is the EventSystem's SelectedGameObject
         EventSystem.current.SetSelectedGameObject(gameObject);
-
-        // Tell listeners that this button has been selected
-        onButtonSelected?.Invoke(_button);
         
     }
     
@@ -33,6 +32,4 @@ public class SelectButtonOnHighlight : MonoBehaviour, IPointerEnterHandler, ISel
         // Tell listeners that this button has been selected
         onButtonSelected?.Invoke(_button);
     }
-
-
 }

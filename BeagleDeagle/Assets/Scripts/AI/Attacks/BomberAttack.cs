@@ -5,16 +5,12 @@ using UnityEngine;
 
 public class BomberAttack : AIAttack<BomberEnemyData>
 {
-    private IHealth _healthScript;
-    private void Start()
-    {
-        _healthScript = GetComponent<IHealth>();
-    }
-
     public override void InitiateAttack()
     {
         // Fetch an explosive GameObject from the object pooler   
-        GameObject explosivePrefab = ObjectPooler.Instance.GetPooledObject(enemyScriptableObject.explosivePrefab.GetComponent<IPoolable>().PoolKey);
+        GameObject explosivePrefab = Instantiate(enemyScriptableObject.explosivePrefab);
+        
+        explosivePrefab.SetActive(false);
 
         // Tell explosive type to give the explosiveData scriptableObject to this prefab
         IExplosiveUpdatable explosiveScript = explosivePrefab.GetComponent<IExplosiveUpdatable>();
@@ -31,9 +27,7 @@ public class BomberAttack : AIAttack<BomberEnemyData>
         
         // Bomber enemies do not use detonation time
         explosiveScript.Activate(transform.position);
-
-        // Bomber enemy will kill themselves on their attack
-        _healthScript.ModifyHealth(-1f * enemyScriptableObject.maxHealth);
+        
     }
     
 }

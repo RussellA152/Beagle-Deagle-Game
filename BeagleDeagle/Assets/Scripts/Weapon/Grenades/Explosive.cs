@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
 {
     protected ExplosiveData ExplosiveData;
+
+    [SerializeField] private SoundEvents soundEvents;
     
     [SerializeField] private int poolKey;
 
@@ -53,7 +56,8 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
     private void Start()
     {
         // Disable AOE at start
-        AreaOfEffectScript.gameObject.SetActive(false);
+        if(AreaOfEffectScript != null)
+            AreaOfEffectScript.gameObject.SetActive(false);
         
         WallLayerMask = LayerMask.GetMask("Wall");
     }
@@ -72,6 +76,9 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
     {
         if(AreaOfEffectScript != null)
             AreaOfEffectScript.UpdateAOEData(ExplosiveData.aoeData);
+        
+        // Play a sound indicating that this explosive has activated (ex. grenade pin pull)
+        soundEvents.InvokeGeneralSoundPlay(ExplosiveData.activationSound, ExplosiveData.explosiveSoundVolume);
     }
 
     
@@ -114,7 +121,8 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
     protected virtual void Explode()
     {
         // Play explosion sound
-
+        PlaySoundEffects();
+        
         // Screen shake
 
         // Big explosion hurt all enemies
@@ -131,6 +139,17 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
                 onExplosionHitTarget?.Invoke(targetCollider.gameObject);
             }
         }
+    }
+
+    private void PlaySoundEffects()
+    {
+        if (ExplosiveData.explosionClips != null)
+        {
+            int randomNumber = Random.Range(0, ExplosiveData.explosionClips.Length);
+        
+            soundEvents.InvokeGeneralSoundPlay(ExplosiveData.explosionClips[randomNumber], ExplosiveData.explosiveSoundVolume);
+        }
+        
     }
     
     private void PlayParticleEffect()

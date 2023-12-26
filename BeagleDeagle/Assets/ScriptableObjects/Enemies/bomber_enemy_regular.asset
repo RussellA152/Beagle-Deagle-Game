@@ -30,6 +30,6 @@ MonoBehaviour:
     xpAmount: 150
     moneyAmount: 0
   explosivePrefab: {fileID: 8164879991046117895, guid: 7b69bf609bb9e114aa6b929f6eb799c8, type: 3}
-  explosiveData: {fileID: 11400000, guid: 7b04de4d71b41ae40a256eb3d35990be, type: 2}
+  explosiveData: {fileID: 11400000, guid: a1523f9a3c64eba46882b5c4c9c13480, type: 2}
   statusEffects: {fileID: 0}
   explosiveDuration: 0.5

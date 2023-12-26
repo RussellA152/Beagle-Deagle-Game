@@ -17,6 +17,12 @@ MonoBehaviour:
   explosiveRadius: 4
   whatDoesExplosionHit:
     serializedVersion: 2
-    m_Bits: 16512
+    m_Bits: 16768
   detonationTime: 0
   aoeData: {fileID: 0}
+  activationSound: {fileID: 0}
+  explosionClips:
+  - {fileID: 8300000, guid: 4b65fe8a0b9608043aa5a08b776a29a0, type: 3}
+  - {fileID: 8300000, guid: 2bb4b6d0060793b46b8a169d385406cb, type: 3}
+  - {fileID: 8300000, guid: bcf131a1c7af8ce4891bd2dce9f4c30d, type: 3}
+  explosiveSoundVolume: 0.75

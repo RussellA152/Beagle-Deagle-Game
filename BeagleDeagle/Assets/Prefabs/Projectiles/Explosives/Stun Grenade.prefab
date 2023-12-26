@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5abd305a43f324e995048b3e62ceea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   poolKey: 35
   shouldDestroy: 1
   sprite: {fileID: 3520225513382146324}

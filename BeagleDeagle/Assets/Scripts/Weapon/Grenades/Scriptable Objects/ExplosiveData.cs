@@ -20,4 +20,12 @@ public class ExplosiveData : ScriptableObject
     // What AOE does this explosive use?
     public AreaOfEffectData aoeData;
 
+    [Header("Sounds")] 
+    // What sound is played when this explosive gets enabled (ex. grenade pin being pulled sound)
+    public AudioClip activationSound;
+    // What sound is played when this detonates?
+    public AudioClip[] explosionClips;
+    [Range(0.1f, 1f)]
+    public float explosiveSoundVolume;
+
 }

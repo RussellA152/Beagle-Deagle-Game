@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 3303157699561240973}
   - component: {fileID: 2545099573175394811}
   - component: {fileID: 8507382927394827998}
+  - component: {fileID: 1385456491146321098}
   m_Layer: 5
   m_Name: Reward Choice Button
   m_TagString: Untagged
@@ -287,6 +288,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355202b7d19bc874996b3d1e89f22c40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1385456491146321098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3303157699561240971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01742775739fac246b4fb41e2fa1b5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
+  uiSounds: {fileID: 11400000, guid: c36320ce01f0749439a065e1564caa88, type: 2}
 --- !u!1 &3303157699833693871
 GameObject:
   m_ObjectHideFlags: 0

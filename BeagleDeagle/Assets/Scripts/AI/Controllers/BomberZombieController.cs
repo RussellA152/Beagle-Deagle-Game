@@ -10,4 +10,12 @@ public class BomberZombieController : AIController<BomberEnemyData>
         MovementScript.SetCanFlip(false);
         base.OnAttack();
     }
+
+    protected override void OnDeath()
+    {
+        base.OnDeath();
+
+        // Spawn an explosion on death
+        AttackScript.InitiateAttack();
+    }
 }

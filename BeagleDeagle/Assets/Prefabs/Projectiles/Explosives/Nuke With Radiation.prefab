@@ -146,10 +146,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a61110541955836449d8e921f0338c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
+  poolKey: 33
   shouldDestroy: 1
   sprite: {fileID: 1141473951731115707}
-  poolKey: 33
   explosiveParticleGameObject: {fileID: 3136792146325362389, guid: 8d5f6f40932bb594b9f21f39e91cc38e, type: 3}
+  onExplosionHitTarget:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5263291236087894076
 MonoBehaviour:
   m_ObjectHideFlags: 0

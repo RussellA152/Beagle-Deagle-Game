@@ -20146,7 +20146,7 @@ Transform:
   - {fileID: 438538322}
   - {fileID: 846615043}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1039440844
 GameObject:
@@ -21121,7 +21121,7 @@ Transform:
   m_Children:
   - {fileID: 1791262540}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1185188390
 MonoBehaviour:
@@ -21149,6 +21149,7 @@ GameObject:
   - component: {fileID: 1190919862}
   - component: {fileID: 1190919861}
   - component: {fileID: 1190919864}
+  - component: {fileID: 1190919865}
   m_Layer: 5
   m_Name: Resume Button
   m_TagString: Untagged
@@ -21271,6 +21272,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355202b7d19bc874996b3d1e89f22c40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1190919865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190919859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01742775739fac246b4fb41e2fa1b5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
+  uiSounds: {fileID: 11400000, guid: c36320ce01f0749439a065e1564caa88, type: 2}
 --- !u!1001 &1207273888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21861,6 +21876,7 @@ GameObject:
   - component: {fileID: 1294275962}
   - component: {fileID: 1294275961}
   - component: {fileID: 1294275964}
+  - component: {fileID: 1294275965}
   m_Layer: 5
   m_Name: Options Button
   m_TagString: Untagged
@@ -21983,6 +21999,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355202b7d19bc874996b3d1e89f22c40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1294275965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294275959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01742775739fac246b4fb41e2fa1b5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
+  uiSounds: {fileID: 11400000, guid: c36320ce01f0749439a065e1564caa88, type: 2}
 --- !u!1001 &1294553206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21996,7 +22026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621176, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621178, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_RootOrder
@@ -22753,7 +22783,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2439171421654748757, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
       propertyPath: m_RootOrder
-      value: 22
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 2439171421654748757, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22801,7 +22831,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2439171421654748759, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
@@ -22819,6 +22849,7 @@ GameObject:
   - component: {fileID: 1510609085}
   - component: {fileID: 1510609088}
   - component: {fileID: 1510609089}
+  - component: {fileID: 1510609090}
   m_Layer: 5
   m_Name: Quit Button
   m_TagString: Untagged
@@ -22955,6 +22986,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonComponent: {fileID: 0}
   selectableLevel: 0
+--- !u!114 &1510609090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510609083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01742775739fac246b4fb41e2fa1b5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
+  uiSounds: {fileID: 11400000, guid: c36320ce01f0749439a065e1564caa88, type: 2}
 --- !u!1 &1516373251
 GameObject:
   m_ObjectHideFlags: 0
@@ -23183,6 +23228,7 @@ GameObject:
   - component: {fileID: 1619077674}
   - component: {fileID: 1619077676}
   - component: {fileID: 1619077679}
+  - component: {fileID: 1619077680}
   m_Layer: 5
   m_Name: Continue Button
   m_TagString: Untagged
@@ -23319,6 +23365,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonComponent: {fileID: 0}
   selectableLevel: 0
+--- !u!114 &1619077680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619077673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01742775739fac246b4fb41e2fa1b5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
+  uiSounds: {fileID: 11400000, guid: c36320ce01f0749439a065e1564caa88, type: 2}
 --- !u!1 &1674004702
 GameObject:
   m_ObjectHideFlags: 0
@@ -83194,7 +83254,7 @@ PrefabInstance:
       objectReference: {fileID: 415020560}
     - target: {fileID: 1436872484727355876, guid: a7466519c616725409d414cbd9d21e2f, type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 1436872484727355876, guid: a7466519c616725409d414cbd9d21e2f, type: 3}
       propertyPath: m_LocalPosition.x
