@@ -10,21 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7ef8290e72c3a04c94af5b08902ea2d, type: 3}
-  m_Name: regular_bullet_policeBullet
+  m_Name: regular_bullet_deagle
   m_EditorClassIdentifier: 
   bulletSprite: {fileID: 21300000, guid: 52c053ccea2949643bf449827c710fea, type: 3}
   whatBulletCanPenetrate:
     serializedVersion: 2
-    m_Bits: 16512
+    m_Bits: 33024
   whatBulletCanDamage:
     serializedVersion: 2
-    m_Bits: 16512
+    m_Bits: 33024
   whatDestroysBullet:
     serializedVersion: 2
     m_Bits: 1024
   knockBackPower: {x: 0, y: 0}
-  bulletSpeed: 10
+  bulletSpeed: 70
   colliderDirection: 1
-  sizeX: 1
-  sizeY: 1
+  sizeX: 0.7
+  sizeY: 0.7
+  hitSounds: []
+  hitSoundVolume: 0.5
   duration: 3

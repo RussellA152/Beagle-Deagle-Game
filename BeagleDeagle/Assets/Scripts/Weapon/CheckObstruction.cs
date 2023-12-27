@@ -10,7 +10,6 @@ public class CheckObstruction : MonoBehaviour
     ///
     public bool HasObstruction(Vector2 sourcePosition, GameObject target, LayerMask layerMask)
     {
-        
         // Calculate distance and direction to shoot raycast
         Vector2 targetPosition = target.transform.position;
         

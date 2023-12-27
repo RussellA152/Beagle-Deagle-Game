@@ -27,5 +27,10 @@ MonoBehaviour:
   colliderDirection: 0
   sizeX: 3
   sizeY: 3
+  hitSounds:
+  - {fileID: 8300000, guid: 9c07229c2d8665e428ccb1b540440862, type: 3}
+  - {fileID: 8300000, guid: 2414724179884784f974042815ef06ee, type: 3}
+  - {fileID: 8300000, guid: 26167fd3e52e5fd42aa1eceef4c2b5e7, type: 3}
+  hitSoundVolume: 0.5
   mightyFootAbilityData: {fileID: 11400000, guid: b016ea26586188240b477b409be1b83a, type: 2}
   numberOfEnemiesCanHit: 150

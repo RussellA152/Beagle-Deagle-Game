@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0a05e8e9d85d34d8d75e1ab9d89eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   poolKey: 22
   shouldDestroy: 1
   allowMultipleHitsOnSameEnemy: 0

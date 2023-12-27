@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class BulletData : ScriptableObject
 {
@@ -24,8 +25,12 @@ public abstract class BulletData : ScriptableObject
     public float sizeX; // What is the width of this bullet's transform scale?
     [Range(0f, 100f)]
     public float sizeY; // What is the height of this bullet's transform scale?
-    
 
+    [Header("Sounds")] 
+    // What sounds are played when damaging an entity?
+    public AudioClip[] hitSounds;
+    [Range(0.1f, 1f)] public float hitSoundVolume;
+    
     ///-///////////////////////////////////////////////////////////
     /// Return the "duration" of the bullet
     /// Might come from the bullet itself, or an ability

@@ -121,7 +121,7 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
     protected virtual void Explode()
     {
         // Play explosion sound
-        PlaySoundEffects();
+        PlayExplosionSound();
         
         // Screen shake
 
@@ -141,9 +141,9 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
         }
     }
 
-    private void PlaySoundEffects()
+    private void PlayExplosionSound()
     {
-        if (ExplosiveData.explosionClips != null)
+        if (ExplosiveData.explosionClips.Length > 0)
         {
             int randomNumber = Random.Range(0, ExplosiveData.explosionClips.Length);
         

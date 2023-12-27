@@ -12,18 +12,16 @@ public class MightyFootBullet : Bullet<MightyFootBulletData>
     {
         base.Awake();
         _obstructionScript = GetComponent<CheckObstruction>();
+        
+        _wallLayerMask = LayerMask.GetMask("Wall");
     }
 
-    private void Start()
-     {
-         _wallLayerMask = LayerMask.GetMask("Wall");
-     }
-    
     protected override void DamageOnHit(GameObject objectHit)
     {
-        if (!_obstructionScript.HasObstruction(_whoShotThisBullet.transform.position, objectHit, _wallLayerMask)) 
+        // If a wall is between the shooter and target, don't let mighty foot damage the target
+        if (_obstructionScript.HasObstruction(_whoShotThisBullet.transform.position, objectHit, _wallLayerMask)) 
             return;
-        
+
         // Make target take damage
         base.DamageOnHit(objectHit);
         

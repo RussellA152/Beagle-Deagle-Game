@@ -10,13 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8164879991046117893}
   - component: {fileID: 8164879991046117894}
-  - component: {fileID: 1503870407334469075}
-  - component: {fileID: 647901184296032623}
-  - component: {fileID: 8638057732453701793}
+  - component: {fileID: 6172494632885314514}
   - component: {fileID: 7698205712678738710}
   - component: {fileID: 8164879991046117892}
   m_Layer: 9
-  m_Name: Mighty Foot Roundhouse
+  m_Name: Regular Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,18 +76,18 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: b7019445ca51a8b488b647a4d4fe35bb, type: 3}
-  m_Color: {r: 0.57445264, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 52c053ccea2949643bf449827c710fea, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.12, y: 5.12}
+  m_Size: {x: 1, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1503870407334469075
+--- !u!114 &6172494632885314514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,61 +96,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 8164879991046117895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08c945bbdbee3bf43bc2cb4a46c18445, type: 3}
+  m_Script: {fileID: 11500000, guid: fe0736df704317543b38434065661512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolKey: 23
-  shouldDestroy: 1
-  allowMultipleHitsOnSameEnemy: 1
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
+  poolKey: 20
+  shouldDestroy: 0
+  allowMultipleHitsOnSameEnemy: 0
   _inanimateParticleLayerMask:
     serializedVersion: 2
-    m_Bits: 1024
-  inanimateObjectHitParticleEffect: {fileID: 0}
+    m_Bits: 33792
+  inanimateObjectHitParticleEffect: {fileID: 7371912302769336663, guid: 23b0a20e6957fd54995c5dcea11f49f9, type: 3}
   _enemyParticleLayerMask:
     serializedVersion: 2
     m_Bits: 256
   enemyHitParticleEffect: {fileID: 1688976237673181899, guid: 97d7d94ed58b9be4d8cbff990df23596, type: 3}
   onBulletHit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8638057732453701793}
-        m_TargetAssemblyTypeName: StunOnCollision, Assembly-CSharp
-        m_MethodName: ApplyEffect
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  radiusAroundPlayer: 3.5
-  rotationTime: 0.5
---- !u!114 &647901184296032623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8164879991046117895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b206ab9bde7910408f9de3b8c266de5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8638057732453701793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8164879991046117895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a471a590a0af95f4ca6d3ce982297639, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+      m_Calls: []
 --- !u!50 &7698205712678738710
 Rigidbody2D:
   serializedVersion: 4
@@ -188,5 +149,5 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
-  m_Direction: 0
+  m_Size: {x: 1.35, y: 1}
+  m_Direction: 1

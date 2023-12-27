@@ -9,23 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86ca5c505e791724dafa703d52a40986, type: 3}
-  m_Name: mighty_bullet_dot
+  m_Script: {fileID: 11500000, guid: f7ef8290e72c3a04c94af5b08902ea2d, type: 3}
+  m_Name: regular_bullet_AK
   m_EditorClassIdentifier: 
-  bulletSprite: {fileID: 0}
+  bulletSprite: {fileID: 21300000, guid: 52c053ccea2949643bf449827c710fea, type: 3}
   whatBulletCanPenetrate:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 33024
   whatBulletCanDamage:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 33024
   whatDestroysBullet:
     serializedVersion: 2
-    m_Bits: 0
-  knockBackPower: {x: 60, y: 60}
-  bulletSpeed: 40
-  colliderDirection: 0
-  sizeX: 3
-  sizeY: 3
-  mightyFootAbilityData: {fileID: 11400000, guid: f346123fc01f8d848945478d5bbe56e3, type: 2}
-  numberOfEnemiesCanHit: 150
+    m_Bits: 1024
+  knockBackPower: {x: 0, y: 0}
+  bulletSpeed: 70
+  colliderDirection: 1
+  sizeX: 0.5
+  sizeY: 0.5
+  hitSounds: []
+  hitSoundVolume: 0.5
+  duration: 3

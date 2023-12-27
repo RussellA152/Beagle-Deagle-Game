@@ -5,16 +5,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: BulletData
 {
     protected T bulletData;
 
+    [SerializeField] private SoundEvents soundEvents;
+
     [SerializeField] private int poolKey;
     public int PoolKey => poolKey; // Return the pool key (anything that is IPoolable, must have a pool key)
     
-    // When hitting too many enemies or after a few seconds, should this bullet destroy or get disabled?(use object pool or not)
-    [SerializeField] private bool shouldDestroy;
+    [SerializeField] private bool shouldDestroy; // When hitting too many enemies or after a few seconds, should this bullet destroy or get disabled?(use object pool or not)
 
     protected Rigidbody2D rb;
     protected CapsuleCollider2D bulletCollider; // The collider of this bullet
@@ -22,11 +24,9 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
     protected Vector3 DefaultRotation = new Vector3(0f, 0f, -90f);
     
-    // Who shot this bullet? (usually player or enemy)
-    protected Transform _whoShotThisBullet;
-
-    // False by default, but should be true for projectiles that orbit or ricochet
-    [SerializeField] private bool allowMultipleHitsOnSameEnemy = false;
+    protected Transform _whoShotThisBullet; // Who shot this bullet? (usually player or enemy)
+    
+    [SerializeField] private bool allowMultipleHitsOnSameEnemy = false; // False by default, but should be true for projectiles that orbit or ricochet
     private readonly HashSet<Transform> _hitEnemies = new HashSet<Transform>(); // Don't let this bullet hit the same enemy twice (we track what this bullet hit in this HashSet)
 
     private float _damagePerHit; // The damage of the player's gun or enemy that shot this bullet
@@ -36,13 +36,11 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     private int _amountPenetrated; // How many enemies has this bullet penetrated through?
 
 
-    [Header("Impact Particle Effects")] 
-    // When hitting inanimate object, instantiate a particle effect on it (typically a spark)
-    [SerializeField] private LayerMask _inanimateParticleLayerMask;
+    [Header("Impact Particle Effects")]
+    [SerializeField] private LayerMask _inanimateParticleLayerMask; // When hitting inanimate object, instantiate a particle effect on it (typically a spark)
     [SerializeField] private GameObject inanimateObjectHitParticleEffect;
     private int _inanimateHitParticlePoolKey;
-    // When hitting a player or enemy, instantiate a particle effect on them (typically a blood particle effect)
-    [SerializeField] private LayerMask _enemyParticleLayerMask;
+    [SerializeField] private LayerMask _enemyParticleLayerMask; // When hitting a player or enemy, instantiate a particle effect on them (typically a blood particle effect)
     [SerializeField] private GameObject enemyHitParticleEffect;
     private int _enemyHitParticlePoolKey;
     
@@ -127,8 +125,6 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
             gameObject.SetActive(false);
             return;
         }
-        
-        onBulletHit.Invoke(collision.gameObject);
 
         // If this bullet hits what its allowed to
         if ((bulletData.whatBulletCanPenetrate.value & (1 << collision.gameObject.layer)) > 0)
@@ -163,11 +159,13 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
     protected virtual void DamageOnHit(GameObject objectHit)
     {
-        // Make objectHit take damage, then play blood particle effect on them
-        // TODO: This assumes we hit a player or enemy, not something inanimate
         IHealth healthScript = objectHit.GetComponent<IHealth>();
 
         healthScript?.ModifyHealth(-1 * _damagePerHit);
+        
+        onBulletHit.Invoke(objectHit);
+        
+        PlayDamageSound();
     }
 
     private void ActivateParticleEffect(GameObject objectHit)
@@ -210,6 +208,18 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
                 gameObject.SetActive(false);
         }
 
+    }
+
+    private void PlayDamageSound()
+    {
+        // Play a hit sound effect
+        if (bulletData.hitSounds.Length > 0)
+        {
+            int randomNumber = Random.Range(0, bulletData.hitSounds.Length);
+        
+            soundEvents.InvokeGeneralSoundPlay(bulletData.hitSounds[randomNumber], bulletData.hitSoundVolume);
+            
+        }
     }
 
     ///-///////////////////////////////////////////////////////////
