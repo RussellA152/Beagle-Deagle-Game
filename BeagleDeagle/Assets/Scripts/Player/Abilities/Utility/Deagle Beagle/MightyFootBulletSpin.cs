@@ -23,14 +23,13 @@ public class MightyFootBulletSpin : MightyFootBullet
                 float angle = val * Mathf.Deg2Rad;
                 float x = Mathf.Cos(angle) * radiusAroundPlayer;
                 float y = Mathf.Sin(angle) * radiusAroundPlayer;
-                
+
                 // Bullet should follow player
-                bulletTransform.position = new Vector3(x + _whoShotThisBullet.transform.position.x, y + _whoShotThisBullet.transform.position.y, bulletTransform.position.z);
-                
+                bulletTransform.position = new Vector3(x + _whoShotThisBullet.transform.position.x,
+                    y + _whoShotThisBullet.transform.position.y, bulletTransform.position.z);
+
                 base.ApplyTrajectory();
             })
             .setLoopClamp();
-
     }
 }
-

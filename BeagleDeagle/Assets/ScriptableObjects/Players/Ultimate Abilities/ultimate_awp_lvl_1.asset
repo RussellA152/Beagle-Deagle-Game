@@ -21,5 +21,5 @@ MonoBehaviour:
   duration: 5.5
   activationSound: {fileID: 8300000, guid: 80ba0d34937bcbf4482184a0d277811c, type: 3}
   activationSoundVolume: 0.5
-  startDelay: 0.25
+  startDelay: 0.15
   awpGunData: {fileID: 11400000, guid: fa8fd2ad5ce7d5741b9621155f0030b6, type: 2}

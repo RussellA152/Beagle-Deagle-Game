@@ -19,7 +19,9 @@ MonoBehaviour:
   abilityDamage: 200
   cooldown: 25
   duration: 5
-  startTime: 0
+  activationSound: {fileID: 8300000, guid: 3a65f36d2aa323346999b28702d255f2, type: 3}
+  activationSoundVolume: 0.5
+  startDelay: 0
   nukePrefab: {fileID: 8164879991046117895, guid: aa33ae65cdafcb0459a60d94822c128b, type: 3}
   nukeData: {fileID: 11400000, guid: b8a3872162214e34fb60707c8cb58cac, type: 2}
   statusEffects: {fileID: 11400000, guid: eb0f225d81135ad45aa8645300b4c896, type: 2}

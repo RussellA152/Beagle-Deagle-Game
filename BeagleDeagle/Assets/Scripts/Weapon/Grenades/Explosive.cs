@@ -76,9 +76,6 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
     {
         if(AreaOfEffectScript != null)
             AreaOfEffectScript.UpdateAOEData(ExplosiveData.aoeData);
-        
-        // Play a sound indicating that this explosive has activated (ex. grenade pin pull)
-        soundEvents.InvokeGeneralSoundPlay(ExplosiveData.activationSound, ExplosiveData.explosiveSoundVolume);
     }
 
     

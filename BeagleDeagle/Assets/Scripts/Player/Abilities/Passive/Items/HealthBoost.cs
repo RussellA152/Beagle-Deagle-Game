@@ -9,8 +9,6 @@ public class HealthBoost : PassiveAbility
     {
         IHealthWithModifiers playerHealth = Player.GetComponent<IHealthWithModifiers>();
         
-        Debug.Log("GIVE INCREASED HEALTH");
-        
         // Add max health modifier to the player
         // Increases player's max health
         playerHealth?.AddMaxHealthModifier(healthBoostData.maxHealthModifier);
