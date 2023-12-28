@@ -20,6 +20,11 @@ public class AbilityData : ScriptableObject, IHasDescription
 
     [Range(0f,240f)]
     public float duration; // How long smoke grenade lasts for & life time for mighty foot bullet
+
+    [Header("Sounds")] 
+    public AudioClip activationSound;
+    [Range(0.1f, 1f)]
+    public float activationSoundVolume;
     
     public string GetDescription()
     {

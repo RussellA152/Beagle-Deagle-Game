@@ -296,6 +296,7 @@ MonoBehaviour:
   state: 0
   poolKey: 10
   enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   deathParticleEffect: {fileID: 5497711690300594199, guid: 446ab0f07b2f4b44fa8bc1bd51f439ea, type: 3}
 --- !u!114 &2060393728062037017
 MonoBehaviour:

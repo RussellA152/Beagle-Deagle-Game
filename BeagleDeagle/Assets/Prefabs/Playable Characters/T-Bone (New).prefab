@@ -415,6 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   CooldownSystem: {fileID: 0}
   utilityCooldownModifiers: []
@@ -432,6 +433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   ultimateCooldownModifiers: []
   _previousWeaponData: {fileID: 0}

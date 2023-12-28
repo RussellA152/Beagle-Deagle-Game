@@ -18,5 +18,7 @@ MonoBehaviour:
   abilityDamage: 200
   cooldown: 25
   duration: 5.5
-  startTime: 0.5
+  activationSound: {fileID: 8300000, guid: 80ba0d34937bcbf4482184a0d277811c, type: 3}
+  activationSoundVolume: 0.5
+  startDelay: 0.25
   awpGunData: {fileID: 11400000, guid: c1887e064c2190a47b5704b02c511d8d, type: 2}

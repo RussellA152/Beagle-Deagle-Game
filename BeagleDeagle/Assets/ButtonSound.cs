@@ -21,13 +21,13 @@ public class ButtonSound : MonoBehaviour
     private void OnEnable()
     {
         _button.onClick.AddListener(OnClick);
-        _selectButtonOnHighlight.onButtonSelected += OnSelect;
+        //_selectButtonOnHighlight.onButtonSelected += OnSelect;
     }
 
     private void OnDisable()
     {
         _button.onClick.RemoveListener(OnClick);
-        _selectButtonOnHighlight.onButtonSelected -= OnSelect;
+        //_selectButtonOnHighlight.onButtonSelected -= OnSelect;
     }
 
     private void OnClick()
@@ -35,9 +35,9 @@ public class ButtonSound : MonoBehaviour
         soundEvents.InvokeUISoundPlay(uiSounds.clickSound, uiSounds.volume);
     }
 
-    private void OnSelect(Button button)
-    {
-        soundEvents.InvokeUISoundPlay(uiSounds.selectSound, uiSounds.volume);
-    }
+    // private void OnSelect(Button button)
+    // {
+    //     soundEvents.InvokeUISoundPlay(uiSounds.selectSound, uiSounds.volume);
+    // }
     
 }

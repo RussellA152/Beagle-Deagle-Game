@@ -6,7 +6,7 @@ using UnityEngine;
 public class UISounds : ScriptableObject
 {
     // Sound to play when a UI button has been hovered over with a mouse cursor
-    public AudioClip selectSound;
+    //public AudioClip selectSound;
     
     // Sound to play when clicking on the selected button
     public AudioClip clickSound;

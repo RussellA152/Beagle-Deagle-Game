@@ -19,6 +19,8 @@ MonoBehaviour:
   abilityDamage: 40
   cooldown: 6
   duration: 0.2
+  activationSound: {fileID: 8300000, guid: da396a16a7f24f64cbb0054f5a56b46a, type: 3}
+  activationSoundVolume: 0.5
   maxUses: 2
   mightyFootPrefab: {fileID: 8164879991046117895, guid: 8b36c8f7aded540448980abc65c7d848, type: 3}
   mightyFootData: {fileID: 11400000, guid: 8f0f37945dd7ae543a209308b587cc49, type: 2}

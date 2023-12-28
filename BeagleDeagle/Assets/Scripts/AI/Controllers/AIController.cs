@@ -20,8 +20,9 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     public T enemyScriptableObject;
     
     private Transform _target; // Who this enemy will chase and attack?
-    
-    [Header("Required Components")]
+
+    [Header("Required Components")] 
+    [SerializeField] private SoundEvents soundEvents;
     private NavMeshAgent _agent;
     private Collider2D _bodyCollider;
     [SerializeField] private GameObject deathParticleEffect;
@@ -146,12 +147,6 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     /// 
     protected virtual void CheckState()
     {
-        // if (HealthScript.IsDead())
-        // {
-        //     state = EnemyState.Death;
-        //     return;
-        // }
-
         if (MovementScript.IsStunned)
         {
             state = EnemyState.Stunned;
@@ -259,10 +254,14 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     {
         GameObject particleEffect = ObjectPooler.Instance.GetPooledObject(_deathParticleEffectPoolKey);
 
-        PoolableParticle particleUsed = particleEffect.GetComponent<PoolableParticle>();
+        if (particleEffect != null)
+        {
+            PoolableParticle particleUsed = particleEffect.GetComponent<PoolableParticle>();
         
-        particleUsed.PlaceParticleOnTransform(transform);
-        particleUsed.PlayAllParticles(1f);
+            particleUsed.PlaceParticleOnTransform(transform);
+            particleUsed.PlayAllParticles(1f);
+        }
+        
         
         gameObject.SetActive(false);
 

@@ -10,13 +10,13 @@ using UnityEngine;
 public class SoundEvents : ScriptableObject
 {
     public event Action<AudioClip, float> onGeneralSoundPlay;
-    
     public event Action<AudioClip, float> onUISoundPlay;
 
     public void InvokeGeneralSoundPlay(AudioClip clip, float volumeOfClip)
     {
         onGeneralSoundPlay?.Invoke(clip, volumeOfClip);
     }
+
     public void InvokeUISoundPlay(AudioClip clip, float volumeOfClip)
     {
         onUISoundPlay?.Invoke(clip, volumeOfClip);

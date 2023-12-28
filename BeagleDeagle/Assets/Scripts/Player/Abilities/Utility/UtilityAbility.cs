@@ -9,14 +9,14 @@ using static UnityEngine.InputSystem.InputAction;
 public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHasCooldown, IHasInput where T: UtilityAbilityData
 {
     [SerializeField] private PlayerEvents playerEvents;
+    [SerializeField] private SoundEvents soundEvents;
 
     [SerializeField] private PlayerData playerData;
     protected T UtilityData;
 
-    public CooldownSystem CooldownSystem;
+    private CooldownSystem _cooldownSystem;
 
     private PlayerInput _playerInput;
-    //private TopDownInput _topDownInput;
 
     private InputAction _utilityInputAction;
 
@@ -41,7 +41,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
-        CooldownSystem = GetComponent<CooldownSystem>();
+        _cooldownSystem = GetComponent<CooldownSystem>();
 
         _utilityInputAction = _playerInput.currentActionMap.FindAction("Utility");
         
@@ -55,13 +55,13 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         _utilityInputAction.performed += ActivateUtility;
         _utilityUses = UtilityData.maxUses;
 
-        CooldownSystem.OnCooldownEnded += UtilityUsesModified;
+        _cooldownSystem.OnCooldownEnded += UtilityUsesModified;
     }
 
     private void OnDisable()
     {
         _utilityInputAction.performed -= ActivateUtility;
-        CooldownSystem.OnCooldownEnded -= UtilityUsesModified;
+        _cooldownSystem.OnCooldownEnded -= UtilityUsesModified;
     }
     
     protected virtual void Start()
@@ -82,7 +82,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         {
             _utilityUses--;
             
-            //Debug.Log(CooldownSystem.GetRemainingDuration(Id));
+            PlayActivationSound();
                 
             UtilityAction();
             
@@ -110,11 +110,11 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     /// 
     private IEnumerator WaitCooldown()
     {
-        while (CooldownSystem.IsOnCooldown(Id))
+        while (_cooldownSystem.IsOnCooldown(Id))
         {
             yield return null;
         }
-        CooldownSystem.PutOnCooldown(this);
+        _cooldownSystem.PutOnCooldown(this);
     }
     
 
@@ -128,6 +128,12 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         yield return new WaitForSeconds(_delayBetweenUse);
     
         _onDelayCooldown = true;
+    }
+
+    private void PlayActivationSound()
+    {
+        if(UtilityData.activationSound != null)
+            soundEvents.InvokeGeneralSoundPlay(UtilityData.activationSound, UtilityData.activationSoundVolume);
     }
 
     public void AllowUtility(bool boolean)

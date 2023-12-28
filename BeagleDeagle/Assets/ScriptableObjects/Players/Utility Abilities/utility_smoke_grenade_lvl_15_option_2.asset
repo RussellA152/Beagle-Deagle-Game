@@ -18,6 +18,8 @@ MonoBehaviour:
   abilityDamage: 100
   cooldown: 10
   duration: 5
+  activationSound: {fileID: 8300000, guid: 705d9285ed4fbf44bb8de3b4f75ff969, type: 3}
+  activationSoundVolume: 0.5
   maxUses: 2
   smokeGrenadePrefab: {fileID: 8164879991046117895, guid: b4bb9f7959e261446808e4461c08eafb, type: 3}
   smokeGrenadeData: {fileID: 11400000, guid: 163a8d5b945749c4b97322d5f8c6847c, type: 2}

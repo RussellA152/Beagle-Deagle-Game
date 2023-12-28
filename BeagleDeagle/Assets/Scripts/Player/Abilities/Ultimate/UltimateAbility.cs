@@ -8,6 +8,7 @@ using static UnityEngine.InputSystem.InputAction;
 public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IHasCooldown, IHasInput where T: UltimateAbilityData
 {
     [SerializeField] protected PlayerEvents playerEvents;
+    [SerializeField] private SoundEvents soundEvents;
 
     [SerializeField] private PlayerData playerData;
     protected T UltimateAbilityData;
@@ -68,11 +69,26 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
         {
             Debug.Log("Activate ultimate!");
 
-            UltimateAction();
+            StartCoroutine(StartDelay());
 
         }
     }
     protected abstract void UltimateAction();
+
+    // Wait a few seconds to activate ultimate ability
+    // Play activation sound before delay
+    private IEnumerator StartDelay()
+    {
+        PlayActivationSound();
+        yield return new WaitForSeconds(UltimateAbilityData.startDelay);
+        UltimateAction();
+    }
+    
+    private void PlayActivationSound()
+    {
+        if(UltimateAbilityData.activationSound != null)
+            soundEvents.InvokeGeneralSoundPlay(UltimateAbilityData.activationSound, UltimateAbilityData.activationSoundVolume);
+    }
     
     protected void StartCooldown()
     {

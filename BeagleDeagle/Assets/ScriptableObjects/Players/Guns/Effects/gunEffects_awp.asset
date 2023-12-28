@@ -27,4 +27,4 @@ MonoBehaviour:
   reloadFinishedClip: {fileID: 0}
   reloadSlideClip: {fileID: 0}
   fireSoundVolume: 0.4
-  reloadSoundVolume: 0.6
+  reloadSoundVolume: 0.4

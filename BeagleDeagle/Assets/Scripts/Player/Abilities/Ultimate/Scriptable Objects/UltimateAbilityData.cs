@@ -11,6 +11,6 @@ using UnityEngine.Serialization;
 public abstract class UltimateAbilityData : AbilityData
 {
     [Range(0f, 3f)]
-    public float startTime;
+    public float startDelay;
     
 }

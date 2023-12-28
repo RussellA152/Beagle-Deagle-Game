@@ -27,5 +27,5 @@ MonoBehaviour:
   reloadStartClip: {fileID: 8300000, guid: 3a12b73546783d940becbc2a3922ca98, type: 3}
   reloadFinishedClip: {fileID: 8300000, guid: 8502f5f670ef2614d9ff532855fcc3ec, type: 3}
   reloadSlideClip: {fileID: 8300000, guid: 6b6ad81a7bc93d343859c08157818623, type: 3}
-  fireSoundVolume: 0.6
-  reloadSoundVolume: 0.6
+  fireSoundVolume: 0.4
+  reloadSoundVolume: 0.4
