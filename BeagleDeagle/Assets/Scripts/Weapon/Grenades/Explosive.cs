@@ -97,7 +97,13 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
         if (AreaOfEffectScript != null)
         {
             AreaOfEffectScript.gameObject.SetActive(true);
+            
+            // Tell AOE to activate itself
             AreaOfEffectScript.OnAreaOfEffectActivate();
+            
+            // Play AOE sound for "Duration" amount of seconds
+            // We play this here because AOE depend on explosives to activate
+            AreaOfEffectScript.PlayAreaofEffectSound(Duration);
         }
         
         Explode();

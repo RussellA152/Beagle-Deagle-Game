@@ -12,6 +12,8 @@ public class SoundEvents : ScriptableObject
     public event Action<AudioClip, float> onGeneralSoundPlay;
     public event Action<AudioClip, float> onUISoundPlay;
 
+    public event Action<AudioClip, float, float> onDurationSoundPlay; 
+
     public void InvokeGeneralSoundPlay(AudioClip clip, float volumeOfClip)
     {
         onGeneralSoundPlay?.Invoke(clip, volumeOfClip);
@@ -20,5 +22,10 @@ public class SoundEvents : ScriptableObject
     public void InvokeUISoundPlay(AudioClip clip, float volumeOfClip)
     {
         onUISoundPlay?.Invoke(clip, volumeOfClip);
+    }
+
+    public void InvokePlayWhileDuration(AudioClip clip, float volumeOfClip, float duration)
+    {
+        onDurationSoundPlay?.Invoke(clip, volumeOfClip, duration);
     }
 }

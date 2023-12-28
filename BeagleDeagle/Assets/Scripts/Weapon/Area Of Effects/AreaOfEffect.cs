@@ -8,7 +8,8 @@ using UnityEngine.Serialization;
 
 public class AreaOfEffect : MonoBehaviour
 {
-    [SerializeField] protected AreaOfEffectData areaOfEffectData;
+    [SerializeField] private SoundEvents soundEvents;
+    protected AreaOfEffectData areaOfEffectData;
 
     [SerializeField, RestrictedPrefab(typeof(PoolableParticle))] 
     private GameObject areaOfEffectParticleEffect;
@@ -55,6 +56,7 @@ public class AreaOfEffect : MonoBehaviour
         _wallLayerMask = LayerMask.GetMask("Wall");
 
     }
+    
 
     private void OnDisable()
     {
@@ -69,10 +71,8 @@ public class AreaOfEffect : MonoBehaviour
     {
         // Resetting the size of the trigger collider when destroyed
         _triggerCollider.size = new Vector2(1f, 1f);
-        
-        
+
     }
-    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -135,6 +135,15 @@ public class AreaOfEffect : MonoBehaviour
 
             _particleUsed.PlayAllParticles(areaOfEffectData.aoeSpreadSize.x);
         }
+        
+    }
+
+    public void PlayAreaofEffectSound(float duration)
+    {
+        if (areaOfEffectData.activationSound != null)
+        {
+            soundEvents.InvokePlayWhileDuration(areaOfEffectData.activationSound, areaOfEffectData.activationSoundVolume, duration);
+        }
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -149,11 +158,5 @@ public class AreaOfEffect : MonoBehaviour
         transform.localScale = areaOfEffectData.aoeSpreadSize;
         
     }
-
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.blue;
-    //     
-    //     Gizmos.DrawWireSphere(transform.position, areaOfEffectData.aoeSpreadSize.x);
-    // }
+    
 }

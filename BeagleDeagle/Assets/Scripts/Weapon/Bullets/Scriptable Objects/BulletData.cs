@@ -28,8 +28,10 @@ public abstract class BulletData : ScriptableObject
 
     [Header("Sounds")] 
     // What sounds are played when damaging an entity?
-    public AudioClip[] hitSounds;
-    [Range(0.1f, 1f)] public float hitSoundVolume;
+    public AudioClip[] hitBodySounds;
+
+    public AudioClip[] hitWallSound;
+    [Range(0.1f, 1f)] public float volume;
     
     ///-///////////////////////////////////////////////////////////
     /// Return the "duration" of the bullet

@@ -177,8 +177,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   generalSoundAudioSource: {fileID: 5849866453865513358}
-  enemyDeathSoundAudioSource: {fileID: 6783141307732298080}
   uiAudioSource: {fileID: 5849866454268224693}
+  audioSourcePooledItem: {fileID: 4631111303503852310, guid: c6f9ddfde825c114e8290aa8f4f680b0, type: 3}
+  amountToPool: 20
 --- !u!1 &5849866453865513352
 GameObject:
   m_ObjectHideFlags: 0

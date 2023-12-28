@@ -86,7 +86,7 @@ MonoBehaviour:
     container: {fileID: 6379233008279484352}
     pooled: []
     poolKey: 0
-  - amountToPool: 40
+  - amountToPool: 75
     objectToPool: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
     shouldExpand: 0
     container: {fileID: 6379233007983541758}
@@ -116,7 +116,7 @@ MonoBehaviour:
     container: {fileID: 6379233007198652893}
     pooled: []
     poolKey: 0
-  - amountToPool: 35
+  - amountToPool: 45
     objectToPool: {fileID: 3711592478197892634, guid: 10c2b1323b40b0b47839b417306663f4, type: 3}
     shouldExpand: 0
     container: {fileID: 6379233007983541758}

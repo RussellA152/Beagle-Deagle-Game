@@ -37,4 +37,9 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
         explosiveScript.Activate(transform.position);
 
     }
+
+    protected override void PlayActivationSound()
+    {
+        soundEvents.InvokePlayWhileDuration(UltimateAbilityData.activationSound, UltimateAbilityData.activationSoundVolume, UltimateAbilityData.nukeData.detonationTime);
+    }
 }

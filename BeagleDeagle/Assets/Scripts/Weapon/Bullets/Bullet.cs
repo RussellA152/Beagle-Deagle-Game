@@ -122,6 +122,9 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         {
             
             ActivateParticleEffect(collision.gameObject);
+            
+            PlayDamageSound(true);
+            
             gameObject.SetActive(false);
             return;
         }
@@ -137,6 +140,8 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
                 _hitEnemies.Add(collision.transform);
                 
                 DamageOnHit(collision.gameObject);
+                
+                PlayDamageSound(false);
                 
                 // Play particle effect on enemy hit
                 ActivateParticleEffect(collision.gameObject);
@@ -165,7 +170,6 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         
         onBulletHit.Invoke(objectHit);
         
-        PlayDamageSound();
     }
 
     private void ActivateParticleEffect(GameObject objectHit)
@@ -210,17 +214,31 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
     }
 
-    private void PlayDamageSound()
+    private void PlayDamageSound(bool isInanimate)
     {
-        // Play a hit sound effect
-        if (bulletData.hitSounds.Length > 0)
+        if (isInanimate)
         {
-            int randomNumber = Random.Range(0, bulletData.hitSounds.Length);
+            if (bulletData.hitWallSound.Length > 0)
+            {
+                int randomNumber = Random.Range(0, bulletData.hitWallSound.Length);
         
-            soundEvents.InvokeGeneralSoundPlay(bulletData.hitSounds[randomNumber], bulletData.hitSoundVolume);
+                soundEvents.InvokeGeneralSoundPlay(bulletData.hitWallSound[randomNumber], bulletData.volume);
             
+            }
+        }
+        else
+        {
+            // Play a hit sound effect
+            if (bulletData.hitBodySounds.Length > 0)
+            {
+                int randomNumber = Random.Range(0, bulletData.hitBodySounds.Length);
+        
+                soundEvents.InvokeGeneralSoundPlay(bulletData.hitBodySounds[randomNumber], bulletData.volume);
+            
+            }
         }
     }
+    
 
     ///-///////////////////////////////////////////////////////////
     /// Use BulletData scriptable object to adjust the local scale of a bullet.

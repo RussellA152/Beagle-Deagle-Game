@@ -17,4 +17,9 @@ public class AreaOfEffectData : ScriptableObject
     [Header("Size of the Area of Effect")]
     public Vector3 aoeSpreadSize;
 
+    [Header("Sounds")]
+    public AudioClip activationSound;
+    [Range(0.1f, 1f)] 
+    public float activationSoundVolume;
+
 }

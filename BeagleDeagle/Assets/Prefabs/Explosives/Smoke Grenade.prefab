@@ -282,6 +282,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
+      propertyPath: soundEvents
+      value: 
+      objectReference: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
+    - target: {fileID: 6232466163799408795, guid: c110ccac61811994b998f8965e050fb7, type: 3}
       propertyPath: onAreaExit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8207622177421959506}

@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 584fc77bd578a8944958f5d9ccb62ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areaOfEffectData: {fileID: 0}
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   areaOfEffectParticleEffect: {fileID: 5841027399942595212, guid: 0929f7ebdcba2aa4ebb6e4ff1000a5e5, type: 3}
   onAreaEnter:
     m_PersistentCalls:
