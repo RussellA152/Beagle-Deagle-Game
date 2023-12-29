@@ -29,6 +29,10 @@ public class PlayerData : ScriptableObject
     [Range(0f, 100f)] public float movementSpeed;
     public Vector2 rollPower;
     [Range(0.1f, 30f)] public float rollCooldown;
+    
+    public AudioClip[] rollSounds;
+    [Range(0.1f, 1f)]
+    public float rollSoundVolume;
 
     [Header("Starting Weapon and Abilities")]
     public GunData gunData;

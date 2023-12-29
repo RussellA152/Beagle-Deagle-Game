@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class SoundPlayer : MonoBehaviour
+public class SoundManager : MonoBehaviour
 {
     [SerializeField] private GameEvents gameEvents;
     [SerializeField] private SoundEvents soundEvents;

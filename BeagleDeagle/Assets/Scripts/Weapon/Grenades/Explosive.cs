@@ -10,8 +10,6 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
 {
     protected ExplosiveData ExplosiveData;
 
-    [SerializeField] private SoundEvents soundEvents;
-    
     [SerializeField] private int poolKey;
 
     public int PoolKey => poolKey;
@@ -31,6 +29,8 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
     protected AreaOfEffect AreaOfEffectScript;
 
     protected CheckObstruction ObstructionScript;
+
+    private AudioClipPlayer _audioClipPlayer;
     
     protected int WallLayerMask;
 
@@ -46,6 +46,8 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
         ObstructionScript = GetComponentInParent<CheckObstruction>();
         AreaOfEffectScript =
             GetComponentInChildren<AreaOfEffect>();
+
+        _audioClipPlayer = GetComponent<AudioClipPlayer>();
         
         // Find explosive effect if this gameObject needs one
         if(explosiveParticleGameObject != null)
@@ -150,7 +152,7 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
         {
             int randomNumber = Random.Range(0, ExplosiveData.explosionClips.Length);
         
-            soundEvents.InvokeGeneralSoundPlay(ExplosiveData.explosionClips[randomNumber], ExplosiveData.explosiveSoundVolume);
+            _audioClipPlayer.PlayGeneralAudioClip(ExplosiveData.explosionClips[randomNumber], ExplosiveData.explosiveSoundVolume);
         }
         
     }

@@ -10,8 +10,9 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 {
     [SerializeField] private PlayerData playerData;
     [SerializeField] private PlayerEvents playerEvents;
-
+    
     public CooldownSystem cooldownSystem;
+    private AudioClipPlayer _audioClipPlayer;
     private ParticleEffectHandler _particleEffectHandler;
 
     private PlayerInput _playerInput;
@@ -58,6 +59,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         _rb = GetComponent<Rigidbody2D>();
 
         _playerInput = GetComponent<PlayerInput>();
+
+        _audioClipPlayer = GetComponent<AudioClipPlayer>();
 
         // Set up input for user to control movement
         _movementInputAction = _playerInput.currentActionMap.FindAction("Move");
@@ -255,6 +258,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
                 _rb.AddForce(new Vector2(playerData.rollPower.x, 0f));
             
             RollDirection();
+            
+            _audioClipPlayer.PlayRandomGeneralAudioClip(playerData.rollSounds, playerData.rollSoundVolume);
 
             // Ignore collisions between "Player" and "HitBox" layers
             Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("HitBox"), true);
@@ -375,7 +380,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
                     break;
             }
         }
-
     }
 
     public void AllowMovement(bool boolean)

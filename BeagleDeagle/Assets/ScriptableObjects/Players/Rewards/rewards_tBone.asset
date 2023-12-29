@@ -32,11 +32,11 @@ MonoBehaviour:
     weaponStatModifierData: {fileID: 11400000, guid: 6d7d306b7389bb7468bffc77a9a2ed10, type: 2}
   passiveRewards: []
   utilityRewards:
-  - LevelGiven: 15
+  - LevelGiven: 5
     IsChosen: 1
     Icon: {fileID: 0}
     utilityAbilityData: {fileID: 11400000, guid: e553993fcb2d2d946a33b75522dfef50, type: 2}
-  - LevelGiven: 15
+  - LevelGiven: 5
     IsChosen: 1
     Icon: {fileID: 0}
     utilityAbilityData: {fileID: 11400000, guid: e8b5027c7a56e3d40a65840df59ab178, type: 2}

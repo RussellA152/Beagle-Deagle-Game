@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8164879991046117893}
   - component: {fileID: 8164879991046117894}
+  - component: {fileID: -6938750682590811582}
   - component: {fileID: 6630679290743430282}
   - component: {fileID: 647901184296032623}
   - component: {fileID: 8638057732453701793}
@@ -89,6 +90,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6938750682590811582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8164879991046117895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d35b5712b0da054d96e2fd3b52d4f84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
 --- !u!114 &6630679290743430282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,7 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0a05e8e9d85d34d8d75e1ab9d89eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   poolKey: 21
   shouldDestroy: 1
   allowMultipleHitsOnSameEnemy: 0

@@ -8,7 +8,7 @@ using static UnityEngine.InputSystem.InputAction;
 public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IHasCooldown, IHasInput where T: UltimateAbilityData
 {
     [SerializeField] protected PlayerEvents playerEvents;
-    [SerializeField] protected SoundEvents soundEvents;
+    protected AudioClipPlayer AudioClipPlayer;
 
     [SerializeField] private PlayerData playerData;
     protected T UltimateAbilityData;
@@ -28,9 +28,10 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
 
     private void Awake()
     {
-        //_topDownInput = new TopDownInput();
         _playerInput = GetComponent<PlayerInput>();
         _cooldownSystem = GetComponent<CooldownSystem>();
+        AudioClipPlayer = GetComponent<AudioClipPlayer>();
+        
         _ultimateInputAction = _playerInput.currentActionMap.FindAction("Ultimate");
         
         UltimateAbilityData = (T) playerData.ultimateAbilityData;
@@ -79,16 +80,16 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     // Play activation sound before delay
     private IEnumerator StartDelay()
     {
-        if(UltimateAbilityData.activationSound != null)
-            PlayActivationSound();
+        PlayActivationSound();
         
         yield return new WaitForSeconds(UltimateAbilityData.startDelay);
+        
         UltimateAction();
     }
     
     protected virtual void PlayActivationSound()
     {
-        soundEvents.InvokeGeneralSoundPlay(UltimateAbilityData.activationSound, UltimateAbilityData.activationSoundVolume);
+        AudioClipPlayer.PlayGeneralAudioClip(UltimateAbilityData.activationSound, UltimateAbilityData.activationSoundVolume);
     }
     
     protected void StartCooldown()

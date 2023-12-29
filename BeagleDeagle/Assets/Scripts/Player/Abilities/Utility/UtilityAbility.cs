@@ -9,7 +9,7 @@ using static UnityEngine.InputSystem.InputAction;
 public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHasCooldown, IHasInput where T: UtilityAbilityData
 {
     [SerializeField] private PlayerEvents playerEvents;
-    [SerializeField] private SoundEvents soundEvents;
+    private AudioClipPlayer _audioClipPlayer;
 
     [SerializeField] private PlayerData playerData;
     protected T UtilityData;
@@ -42,6 +42,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     {
         _playerInput = GetComponent<PlayerInput>();
         _cooldownSystem = GetComponent<CooldownSystem>();
+        _audioClipPlayer = GetComponent<AudioClipPlayer>();
 
         _utilityInputAction = _playerInput.currentActionMap.FindAction("Utility");
         
@@ -132,8 +133,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
     private void PlayActivationSound()
     {
-        if(UtilityData.activationSound != null)
-            soundEvents.InvokeGeneralSoundPlay(UtilityData.activationSound, UtilityData.activationSoundVolume);
+        _audioClipPlayer.PlayGeneralAudioClip(UtilityData.activationSound, UtilityData.activationSoundVolume);
     }
 
     public void AllowUtility(bool boolean)

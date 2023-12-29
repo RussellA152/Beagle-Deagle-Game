@@ -36,4 +36,4 @@ MonoBehaviour:
     modifierName: 
     particleEffect: {fileID: 0}
     bonusAmmoLoad: 0
-  description: +1 Penetration!
+  description: +1 Pierce!

@@ -21,8 +21,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     
     private Transform _target; // Who this enemy will chase and attack?
 
-    [Header("Required Components")] 
-    [SerializeField] private SoundEvents soundEvents;
+    [Header("Required Components")]
     private NavMeshAgent _agent;
     private Collider2D _bodyCollider;
     [SerializeField] private GameObject deathParticleEffect;

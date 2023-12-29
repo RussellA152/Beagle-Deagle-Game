@@ -40,6 +40,6 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
 
     protected override void PlayActivationSound()
     {
-        soundEvents.InvokePlayWhileDuration(UltimateAbilityData.activationSound, UltimateAbilityData.activationSoundVolume, UltimateAbilityData.nukeData.detonationTime);
+        AudioClipPlayer.PlayForDurationAudioClip(UltimateAbilityData.activationSound, UltimateAbilityData.activationSoundVolume, UltimateAbilityData.nukeData.detonationTime);
     }
 }

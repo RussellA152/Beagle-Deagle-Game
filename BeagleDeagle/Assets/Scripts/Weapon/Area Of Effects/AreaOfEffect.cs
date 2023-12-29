@@ -8,7 +8,6 @@ using UnityEngine.Serialization;
 
 public class AreaOfEffect : MonoBehaviour
 {
-    [SerializeField] private SoundEvents soundEvents;
     protected AreaOfEffectData areaOfEffectData;
 
     [SerializeField, RestrictedPrefab(typeof(PoolableParticle))] 
@@ -19,6 +18,7 @@ public class AreaOfEffect : MonoBehaviour
     private int _particlePoolKey;
  
     private CheckObstruction _obstructionScript;
+    private AudioClipPlayer _audioClipPlayer;
 
     private Outliner _outliner;
     
@@ -45,6 +45,8 @@ public class AreaOfEffect : MonoBehaviour
         _outliner = GetComponent<Outliner>();
 
         _obstructionScript = GetComponentInParent<CheckObstruction>();
+
+        _audioClipPlayer = GetComponentInParent<AudioClipPlayer>();
         
         if(areaOfEffectParticleEffect != null)
             _particlePoolKey = areaOfEffectParticleEffect.GetComponent<IPoolable>().PoolKey;
@@ -142,7 +144,7 @@ public class AreaOfEffect : MonoBehaviour
     {
         if (areaOfEffectData.activationSound != null)
         {
-            soundEvents.InvokePlayWhileDuration(areaOfEffectData.activationSound, areaOfEffectData.activationSoundVolume, duration);
+            _audioClipPlayer.PlayForDurationAudioClip(areaOfEffectData.activationSound, areaOfEffectData.activationSoundVolume, duration);
         }
     }
 

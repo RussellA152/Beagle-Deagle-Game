@@ -11,8 +11,6 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 {
     protected T bulletData;
 
-    [SerializeField] private SoundEvents soundEvents;
-
     [SerializeField] private int poolKey;
     public int PoolKey => poolKey; // Return the pool key (anything that is IPoolable, must have a pool key)
     
@@ -43,6 +41,8 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     [SerializeField] private LayerMask _enemyParticleLayerMask; // When hitting a player or enemy, instantiate a particle effect on them (typically a blood particle effect)
     [SerializeField] private GameObject enemyHitParticleEffect;
     private int _enemyHitParticlePoolKey;
+
+    private AudioClipPlayer _audioClipPlayer;
     
     [SerializeField]
     // What should bullet do (besides just damaging target..)
@@ -54,6 +54,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         rb = GetComponent<Rigidbody2D>();
         bulletCollider = GetComponent<CapsuleCollider2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _audioClipPlayer = GetComponent<AudioClipPlayer>();
         
         if(enemyHitParticleEffect != null)
             _enemyHitParticlePoolKey = enemyHitParticleEffect.GetComponent<IPoolable>().PoolKey;
@@ -218,24 +219,11 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     {
         if (isInanimate)
         {
-            if (bulletData.hitWallSound.Length > 0)
-            {
-                int randomNumber = Random.Range(0, bulletData.hitWallSound.Length);
-        
-                soundEvents.InvokeGeneralSoundPlay(bulletData.hitWallSound[randomNumber], bulletData.volume);
-            
-            }
+            _audioClipPlayer.PlayRandomGeneralAudioClip(bulletData.hitWallSound, bulletData.volume);
         }
         else
         {
-            // Play a hit sound effect
-            if (bulletData.hitBodySounds.Length > 0)
-            {
-                int randomNumber = Random.Range(0, bulletData.hitBodySounds.Length);
-        
-                soundEvents.InvokeGeneralSoundPlay(bulletData.hitBodySounds[randomNumber], bulletData.volume);
-            
-            }
+            _audioClipPlayer.PlayRandomGeneralAudioClip(bulletData.hitBodySounds, bulletData.volume);
         }
     }
     

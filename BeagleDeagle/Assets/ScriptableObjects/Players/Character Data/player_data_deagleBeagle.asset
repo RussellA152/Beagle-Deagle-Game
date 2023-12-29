@@ -21,6 +21,10 @@ MonoBehaviour:
   movementSpeed: 10
   rollPower: {x: 1000, y: 1000}
   rollCooldown: 3
+  rollSounds:
+  - {fileID: 8300000, guid: 73db09c4405cbb54488ddf08c43d3824, type: 3}
+  - {fileID: 8300000, guid: 60b5bb902f53c6544901f2f5f0d5d0c3, type: 3}
+  rollSoundVolume: 0.5
   gunData: {fileID: 11400000, guid: 487a1b6c73e208344acd0c1c91b30cbc, type: 2}
   passiveAbilityData: {fileID: 11400000, guid: 7654338b5d8bcaf47a42c1f6ab6e3cfb, type: 2}
   utilityAbilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
