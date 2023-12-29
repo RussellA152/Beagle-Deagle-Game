@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f492b3b4f305fad48b915000aa09ab37, type: 3}
   m_Name: gunEffects_awp
   m_EditorClassIdentifier: 
-  weaponSprite: {fileID: 21300000, guid: e801f2ba888ca2a4da5fe10e6dbf5a1e, type: 3}
-  spriteScale: {x: 0.7, y: 0.7}
-  spritePosition: {x: 0.739, y: 0.213}
+  weaponSprite: {fileID: 21300000, guid: 4c83114e2ce904248b9e2236ac1e2e1b, type: 3}
+  spriteScale: {x: 0.4, y: 0.4}
+  spritePosition: {x: 0, y: 0}
   muzzleFlashSprite: {fileID: 21300000, guid: 35cd9467eedc6df4e8ba7a1f5aa167a1, type: 3}
   muzzleFlashPosition: {x: 2.879, y: 0.472}
   muzzleFlashDuration: 0.1
