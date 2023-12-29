@@ -14,12 +14,17 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
     [SerializeField] private StatusEffectTypes statusEffectData;
     private CooldownSystem _cooldownSystem;
 
+    [SerializeField] private AudioClip pickUpSound;
+
+    [SerializeField, Range(0.1f, 1f)] private float volume;
+    
+    // Can play sounds on pick up
+    private AudioClipPlayer _audioClipPlayer;
+
     [SerializeField, Range(1f, 60f)] 
     // How long will this pick up remain on the ground?
     private float pickUpDuration = 30f;
     
-    [HideInInspector] public bool retrieved;
-
 
     public event Action onPickUpDespawn;
     
@@ -30,6 +35,7 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
     {
         _statusEffects = GetComponents<IStatusEffect>();
         _cooldownSystem = GetComponent<CooldownSystem>();
+        _audioClipPlayer = GetComponent<AudioClipPlayer>();
         
         Id = 21;
         CooldownDuration = pickUpDuration;
@@ -45,9 +51,7 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
 
     private void OnEnable()
     {
-        // Reset pick up when enabled
-        retrieved = false;
-        
+
         _cooldownSystem.OnCooldownEnded += Despawn;
         
         // Start timer until disappear
@@ -75,6 +79,8 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
         if ((whoCanPickup.value & (1 << other.gameObject.layer)) > 0)
         {
             onPickUp?.Invoke(other.gameObject);
+            
+            _audioClipPlayer.PlayGeneralAudioClip(pickUpSound, volume);
             
             Despawn(Id);
             

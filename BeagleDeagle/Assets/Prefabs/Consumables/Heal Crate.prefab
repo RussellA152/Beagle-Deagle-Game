@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 591967952262205607}
   - component: {fileID: 591967952262205605}
   - component: {fileID: 591967952262205606}
+  - component: {fileID: 1188136507351754812}
   - component: {fileID: 591967952262205602}
   - component: {fileID: 591967952262205604}
   m_Layer: 0
@@ -291,8 +292,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   statusEffectData: {fileID: 11400000, guid: 18f8e406d93585f43bcc4618e55f954c, type: 2}
+  pickUpSound: {fileID: 8300000, guid: 6d68951eb1ce59c45b15c3faa065aa8e, type: 3}
+  volume: 0.5
   pickUpDuration: 30
-  retrieved: 0
   onPickUp:
     m_PersistentCalls:
       m_Calls:
@@ -320,6 +322,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3841b85e7c9ddf14fb042de93d84e212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1188136507351754812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591967952262205656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d35b5712b0da054d96e2fd3b52d4f84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
 --- !u!114 &591967952262205602
 MonoBehaviour:
   m_ObjectHideFlags: 0
