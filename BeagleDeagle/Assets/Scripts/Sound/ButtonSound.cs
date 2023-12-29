@@ -15,7 +15,7 @@ public class ButtonSound : MonoBehaviour
     private void Awake()
     {
         _button = GetComponent<Button>();
-        _selectButtonOnHighlight = GetComponent<SelectButtonOnHighlight>();
+        //_selectButtonOnHighlight = GetComponent<SelectButtonOnHighlight>();
     }
 
     private void OnEnable()

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8590283920421078022}
   - component: {fileID: 8590283920421078041}
   - component: {fileID: 8590283920421078040}
+  - component: {fileID: 8757754420250707050}
   - component: {fileID: 8590283920421078021}
   m_Layer: 0
   m_Name: Deliver Item Objective
@@ -113,6 +114,8 @@ MonoBehaviour:
   completionReward:
     xpAmount: 500
     moneyAmount: 500
+  completionSound: {fileID: 8300000, guid: ca76f253125b68a4e9bd9786c33a5f7a, type: 3}
+  volume: 0.5
   particleEffectOnCompletion: {fileID: 4976828533008296056, guid: 22ef9e826c4f64541b5ce349b36ca227, type: 3}
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   potentialDropOffLocations: []
@@ -144,6 +147,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba08b74eeb911614ca6401f78022aaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8757754420250707050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8590283920421078042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d35b5712b0da054d96e2fd3b52d4f84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
 --- !u!114 &8590283920421078021
 MonoBehaviour:
   m_ObjectHideFlags: 0

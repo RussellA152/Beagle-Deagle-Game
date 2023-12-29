@@ -53,7 +53,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   currentMapObjective: {fileID: 0}
-  timeBetweenObjectives: 30
+  timeBetweenObjectives: 7
   rewardScalePercentage: 0.1
 --- !u!114 &4608479753219126514
 MonoBehaviour:

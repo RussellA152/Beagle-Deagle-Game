@@ -33,8 +33,20 @@ public class RewardSelectionUI : MonoBehaviour
     // Need access to player to give them reward
     private GameObject _playerGameObject;
 
+    [Header("Sounds")] 
+    [SerializeField] private AudioClip optionalRewardSound;
+    [SerializeField] private AudioClip mandatoryRewardSound;
+    [SerializeField, Range(0.1f, 1f)] 
+    private float volume;
+    private AudioClipPlayer _audioClipPlayer;
+
     // Did the player pick a reward? If so, don't allow any other choices
     private bool _rewardWasChosen;
+
+    private void Awake()
+    {
+        _audioClipPlayer = GetComponent<AudioClipPlayer>();
+    }
 
     private void OnEnable()
     {
@@ -72,6 +84,8 @@ public class RewardSelectionUI : MonoBehaviour
         
         optionalRewardPanel.enabled = true;
         
+        if(_audioClipPlayer != null)
+            _audioClipPlayer.PlayGeneralAudioClip(optionalRewardSound, volume);
 
         foreach (LevelUpReward potentialReward in rewardChoices)
         {
@@ -128,6 +142,9 @@ public class RewardSelectionUI : MonoBehaviour
 
     private void DisplayMandatoryRewardDescription(LevelUpReward mandatoryLevelUpReward)
     {
+        if(_audioClipPlayer != null)
+            _audioClipPlayer.PlayGeneralAudioClip(mandatoryRewardSound, volume);
+        
         StartCoroutine(RemoveDescriptionAfterTime(mandatoryLevelUpReward));
     }
 

@@ -1268,6 +1268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 345368481}
   - component: {fileID: 345368482}
+  - component: {fileID: 345368483}
   m_Layer: 5
   m_Name: Rewards Information
   m_TagString: Untagged
@@ -1315,6 +1316,22 @@ MonoBehaviour:
   choicePrefab: {fileID: 3303157699561240971, guid: 1d27d11468dd85744844ba421de186df, type: 3}
   mandatoryRewardDescription: {fileID: 721218665}
   rewardDescriptionDisplayTime: 3
+  optionalRewardSound: {fileID: 8300000, guid: 2da3b1dd6e7361f489e799cfbc3897a9, type: 3}
+  mandatoryRewardSound: {fileID: 8300000, guid: 71d292f1abbd57a48b6bc7a729674574, type: 3}
+  volume: 0.5
+--- !u!114 &345368483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345368480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d35b5712b0da054d96e2fd3b52d4f84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
 --- !u!1 &379227440
 GameObject:
   m_ObjectHideFlags: 0
@@ -83782,6 +83799,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sound Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7876271133301581044, guid: 450c9614106dc3a4e93fb5916e45874a, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 11c18a0b3a82a4645b3479685dfcbca0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 450c9614106dc3a4e93fb5916e45874a, type: 3}
 --- !u!1001 &6379233007052663678

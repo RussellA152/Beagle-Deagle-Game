@@ -51,7 +51,6 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
 
     private void OnEnable()
     {
-
         _cooldownSystem.OnCooldownEnded += Despawn;
         
         // Start timer until disappear

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 737767748583867274}
   - component: {fileID: 737767748583867275}
   - component: {fileID: 737767748583867272}
+  - component: {fileID: 5008405244015242992}
   - component: {fileID: 737767748583867271}
   m_Layer: 0
   m_Name: Survive In Area Objective
@@ -114,6 +115,8 @@ MonoBehaviour:
   completionReward:
     xpAmount: 500
     moneyAmount: 500
+  completionSound: {fileID: 8300000, guid: ca76f253125b68a4e9bd9786c33a5f7a, type: 3}
+  volume: 0.5
   particleEffectOnCompletion: {fileID: 4976828533008296056, guid: 22ef9e826c4f64541b5ce349b36ca227, type: 3}
   timeRequiredToStayInside: 15
 --- !u!114 &737767748583867275
@@ -141,6 +144,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba08b74eeb911614ca6401f78022aaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5008405244015242992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737767748583867278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d35b5712b0da054d96e2fd3b52d4f84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
 --- !u!114 &737767748583867271
 MonoBehaviour:
   m_ObjectHideFlags: 0

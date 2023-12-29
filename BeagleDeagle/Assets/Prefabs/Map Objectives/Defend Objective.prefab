@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfa26e7f451ca241b6fc7b668a57934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2000
+  maxHealth: 3600
 --- !u!70 &1436872484060827089
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 1436872484727355874}
   - component: {fileID: 1436872484727355873}
   - component: {fileID: 1436872484727355872}
+  - component: {fileID: 5522484574164760630}
   - component: {fileID: 1436872484727355877}
   m_Layer: 0
   m_Name: Defend Objective
@@ -230,6 +231,8 @@ MonoBehaviour:
   completionReward:
     xpAmount: 500
     moneyAmount: 500
+  completionSound: {fileID: 8300000, guid: ca76f253125b68a4e9bd9786c33a5f7a, type: 3}
+  volume: 0.5
   particleEffectOnCompletion: {fileID: 4976828533008296056, guid: 22ef9e826c4f64541b5ce349b36ca227, type: 3}
   timeRequiredToDefend: 30
 --- !u!114 &1436872484727355873
@@ -257,6 +260,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba08b74eeb911614ca6401f78022aaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5522484574164760630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436872484727355886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d35b5712b0da054d96e2fd3b52d4f84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
 --- !u!114 &1436872484727355877
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -86,13 +86,13 @@ MonoBehaviour:
     container: {fileID: 6379233008279484352}
     pooled: []
     poolKey: 0
-  - amountToPool: 75
+  - amountToPool: 100
     objectToPool: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
     shouldExpand: 0
     container: {fileID: 6379233007983541758}
     pooled: []
     poolKey: 0
-  - amountToPool: 40
+  - amountToPool: 50
     objectToPool: {fileID: 3711592478197892634, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
     shouldExpand: 0
     container: {fileID: 6379233007983541758}

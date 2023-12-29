@@ -43,6 +43,14 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     private CooldownSystem _cooldownSystem;
     private MapObjectiveExpire _mapObjectiveExpire;
 
+    [Header("Sounds")]
+    // Will play a sound that indicates that the objective was completed
+    private AudioClipPlayer _audioClipPlayer;
+
+    [SerializeField] private AudioClip completionSound;
+    [SerializeField, Range(0.1f, 1f)] 
+    private float volume;
+
     // Range indicator will display one of the ranges of a map objective (ex. Soul Collect range, survival range, etc.)
     protected RangeIndicator RangeIndicator;
 
@@ -52,6 +60,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     protected bool PlayerInsideStartingArea = false;
     protected bool PlayerInsideExitArea = false;
 
+    [Header("Particle Effects")]
     // Enable and disable this particle effect when completing the map objective
     [SerializeField] private GameObject particleEffectOnCompletion;
     protected Transform ParticleEffectPlayLocation;
@@ -59,8 +68,6 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
 
     private void Awake()
     {
-        RangeIndicator = GetComponentInChildren<RangeIndicator>();
-
         OnObjectiveAwake();
     }
 
@@ -101,6 +108,9 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
 
     protected virtual void OnObjectiveAwake()
     {
+        RangeIndicator = GetComponentInChildren<RangeIndicator>();
+        _audioClipPlayer = GetComponent<AudioClipPlayer>();
+        
         Id = 50;
         _cooldownSystem = GetComponent<CooldownSystem>();
 
@@ -166,6 +176,8 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
     {
         // Give reward
         currencyEvents.InvokeGiveXp(_actualCompletionReward.xpAmount);
+        
+        _audioClipPlayer.PlayGeneralAudioClip(completionSound, volume);
         
         MapObjectiveManager.Instance.StartNewObjectiveAfterEnded(this);
         

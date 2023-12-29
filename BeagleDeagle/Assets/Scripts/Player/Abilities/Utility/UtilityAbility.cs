@@ -101,6 +101,9 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         if (id == Id)
         {
             _utilityUses++;
+            // Make sure utility uses doesn't go past maximum allowed
+            _utilityUses = Mathf.Clamp(_utilityUses, 0, UtilityData.maxUses);
+            
             playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
         }
         
@@ -131,6 +134,16 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         _onDelayCooldown = true;
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Refill all uses and stop any ongoing usage cooldown.
+    /// 
+    private void RefillAllUsages()
+    {
+        _utilityUses = UtilityData.maxUses;
+        playerEvents.InvokeUtilityUsesUpdatedEvent(_utilityUses + _bonusUtilityUses);
+        _cooldownSystem.RemoveCooldown(Id);
+    }
+
     private void PlayActivationSound()
     {
         _audioClipPlayer.PlayGeneralAudioClip(UtilityData.activationSound, UtilityData.activationSoundVolume);
@@ -147,6 +160,9 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         {
             UtilityData = scriptableObject as T;
             playerEvents.InvokeNewUtility(UtilityData);
+            
+            RefillAllUsages();
+            
         }
         else
         {

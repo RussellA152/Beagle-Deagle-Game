@@ -40,6 +40,9 @@ public class DefendObjective : MapObjective
     protected override void OnObjectiveEnable()
     {
         base.OnObjectiveEnable();
+        
+        // Defend object is not enabled until objective has started
+        _objectWithHealth.gameObject.SetActive(false);
 
         _objectWithHealth.onDeath += OnObjectiveOutOfTime;
         
@@ -52,6 +55,8 @@ public class DefendObjective : MapObjective
     protected override void OnObjectiveEnter()
     {
         base.OnObjectiveEnter();
+        
+        _objectWithHealth.gameObject.SetActive(true);
         
         // Change all enemy targets to be this defended object
         EnemyManager.Instance.ChangeAllEnemyTarget(_objectWithHealth.transform);
