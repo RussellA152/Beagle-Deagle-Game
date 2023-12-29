@@ -35,10 +35,14 @@ MonoBehaviour:
   - LevelGiven: 15
     IsChosen: 1
     Icon: {fileID: 0}
+    utilityAbilityData: {fileID: 11400000, guid: f346123fc01f8d848945478d5bbe56e3, type: 2}
+  - LevelGiven: 15
+    IsChosen: 1
+    Icon: {fileID: 0}
     utilityAbilityData: {fileID: 11400000, guid: b016ea26586188240b477b409be1b83a, type: 2}
   ultimateRewards: []
   abilityStatRewards:
-  - LevelGiven: 2
+  - LevelGiven: 12
     IsChosen: 0
     Icon: {fileID: 0}
     abilityStatModifierData: {fileID: 11400000, guid: bffd3a07487080d42af3decaa176e821, type: 2}

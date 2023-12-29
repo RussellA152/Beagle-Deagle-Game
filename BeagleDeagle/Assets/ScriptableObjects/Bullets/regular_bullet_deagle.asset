@@ -31,7 +31,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cc1d5287fd8cfee44ac98f9395405031, type: 3}
   - {fileID: 8300000, guid: 2e3b1594068f72a41a722551c93e93f4, type: 3}
   - {fileID: 8300000, guid: 260a9388fa3c28a40a0ef64b008aa939, type: 3}
-  - {fileID: 8300000, guid: 49281df8348992d4683505342e546e1a, type: 3}
+  - {fileID: 8300000, guid: 8e56305c9607fac4f8fffc8bb645a82a, type: 3}
+  - {fileID: 8300000, guid: 9a56b7b774dfe374295a18edffe0b37e, type: 3}
   hitWallSound:
   - {fileID: 8300000, guid: 2c278f6684af6e2469e755b7ae7da7d1, type: 3}
   volume: 0.5
