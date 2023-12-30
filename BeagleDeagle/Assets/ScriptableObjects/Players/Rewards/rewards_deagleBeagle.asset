@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f1042b87f5c1f54e98e9f88cd6dfc62, type: 3}
   m_Name: rewards_deagleBeagle
   m_EditorClassIdentifier: 
-  gunRewards: []
+  gunRewards:
+  - LevelGiven: 2
+    IsChosen: 1
+    Icon: {fileID: 0}
+    gunData: {fileID: 11400000, guid: 9221d5724147de946b4cc12cfb6f6b88, type: 2}
+  - LevelGiven: 2
+    IsChosen: 1
+    Icon: {fileID: 0}
+    gunData: {fileID: 11400000, guid: d4e9612faa29d434e9b8f0eb2705af3e, type: 2}
   weaponStatRewards:
   - LevelGiven: 2
     IsChosen: 0

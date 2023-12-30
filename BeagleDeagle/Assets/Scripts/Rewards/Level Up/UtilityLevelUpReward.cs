@@ -14,7 +14,7 @@ public class UtilityLevelUpReward: LevelUpReward
     }
     public override string GetRewardName()
     {
-        return "Utility Ability Upgrade";
+        return utilityAbilityData.abilityName;
     }
     
     public override void GiveDataToPlayer(GameObject recipientGameObject)

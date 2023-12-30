@@ -15,7 +15,7 @@ public class WeaponStatLevelUpReward: LevelUpReward
     }
     public override string GetRewardName()
     {
-        return "Weapon Stat Upgrade";
+        return "Weapon Stat Modifier";
     }
     
     public override void GiveDataToPlayer(GameObject recipientGameObject)

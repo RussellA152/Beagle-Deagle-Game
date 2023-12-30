@@ -14,7 +14,7 @@ public class PassiveLevelUpReward: LevelUpReward
 
     public override string GetRewardName()
     {
-        return "New Passive Ability";
+        return passiveAbilityData.passiveName;
     }
     
     public override void GiveDataToPlayer(GameObject recipientGameObject)

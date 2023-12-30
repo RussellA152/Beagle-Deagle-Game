@@ -6,7 +6,7 @@ using UnityEngine;
 ///-///////////////////////////////////////////////////////////
 /// Objects that can be affected by modifiers and will have particle effects play on top of them will require this script.
 /// 
-public class ParticleEffectHandler : MonoBehaviour
+public class ModifierParticleEffectHandler : MonoBehaviour
 {
     // All modifiers currently playing on this object
     private Dictionary<Modifier, PoolableParticle> _activeModifierParticles = new Dictionary<Modifier, PoolableParticle>();

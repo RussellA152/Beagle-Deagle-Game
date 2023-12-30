@@ -14,7 +14,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable//,
     private NavMeshAgent _agent;
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
-    private ParticleEffectHandler _particleEffectHandler;
+    private ModifierParticleEffectHandler _modifierParticleEffectHandler;
 
     [Header("Required Scripts")]
     private ZombieAnimationHandler _animationScript;
@@ -43,7 +43,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable//,
         
         _animationScript = GetComponent<ZombieAnimationHandler>();
 
-        _particleEffectHandler = GetComponent<ParticleEffectHandler>();
+        _modifierParticleEffectHandler = GetComponent<ModifierParticleEffectHandler>();
     }
 
     private void Start()
@@ -105,7 +105,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable//,
     {
         if (!IsStunned)
         {
-            _particleEffectHandler.StartPlayingParticle(stunModifier, true);
+            _modifierParticleEffectHandler.StartPlayingParticle(stunModifier, true);
             StartCoroutine(RemoveStunCoroutine(stunModifier));
             
         }
@@ -123,7 +123,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable//,
         
         IsStunned = false;
         
-        _particleEffectHandler.StopSpecificParticle(stunModifier);
+        _modifierParticleEffectHandler.StopSpecificParticle(stunModifier);
         
     }
     #endregion
@@ -172,7 +172,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable//,
         _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
         
-        _particleEffectHandler.StartPlayingParticle(modifierToAdd, true);
+        _modifierParticleEffectHandler.StartPlayingParticle(modifierToAdd, true);
         
         // Increase or decrease the animation speed of the movement animation
         _animationScript.SetMovementAnimationSpeed(modifierToAdd.bonusMovementSpeed);
@@ -181,7 +181,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable//,
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
-        _particleEffectHandler.StopSpecificParticle(modifierToRemove);
+        _modifierParticleEffectHandler.StopSpecificParticle(modifierToRemove);
         
         movementSpeedModifiers.Remove(modifierToRemove);
         _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);

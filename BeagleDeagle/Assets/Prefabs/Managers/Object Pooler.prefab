@@ -164,6 +164,18 @@ MonoBehaviour:
     container: {fileID: 6379233007198652893}
     pooled: []
     poolKey: 0
+  - amountToPool: 50
+    objectToPool: {fileID: 8164879991046117895, guid: 385590d839a20bd45bbdf3a92ebef177, type: 3}
+    shouldExpand: 1
+    container: {fileID: 6379233008279484352}
+    pooled: []
+    poolKey: 0
+  - amountToPool: 5
+    objectToPool: {fileID: 5096364322818260755, guid: c44a6bda5a85bac46ae99a5218c198a2, type: 3}
+    shouldExpand: 1
+    container: {fileID: 6379233007198652893}
+    pooled: []
+    poolKey: 0
 --- !u!1 &6379233007725893306
 GameObject:
   m_ObjectHideFlags: 0

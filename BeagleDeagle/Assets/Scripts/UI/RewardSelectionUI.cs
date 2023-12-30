@@ -134,8 +134,14 @@ public class RewardSelectionUI : MonoBehaviour
             
             Destroy(buttonChoice.gameObject);
         }
-
+        
+        _allButtons.Clear();
+    
+        // Hide button panel
         optionalRewardPanel.enabled = false;
+        
+        // Reset bool back to false so player can choose another reward in future level ups
+        _rewardWasChosen = false;
         
         gamePauser.ResumeGame();
     }

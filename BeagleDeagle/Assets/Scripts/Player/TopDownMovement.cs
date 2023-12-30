@@ -13,7 +13,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     
     public CooldownSystem cooldownSystem;
     private AudioClipPlayer _audioClipPlayer;
-    private ParticleEffectHandler _particleEffectHandler;
+    private ModifierParticleEffectHandler _modifierParticleEffectHandler;
 
     private PlayerInput _playerInput;
 
@@ -69,7 +69,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
         cooldownSystem = GetComponent<CooldownSystem>();
 
-        _particleEffectHandler = GetComponent<ParticleEffectHandler>();
+        _modifierParticleEffectHandler = GetComponent<ModifierParticleEffectHandler>();
 
         Id = 9;
         CooldownDuration = playerData.rollCooldown;
@@ -204,12 +204,12 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         movementSpeedModifiers.Add(modifierToAdd);
         _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
 
-        _particleEffectHandler.StartPlayingParticle(modifierToAdd, true);
+        _modifierParticleEffectHandler.StartPlayingParticle(modifierToAdd, true);
     }
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
-        _particleEffectHandler.StopSpecificParticle(modifierToRemove);
+        _modifierParticleEffectHandler.StopSpecificParticle(modifierToRemove);
         
         movementSpeedModifiers.Remove(modifierToRemove);
 

@@ -27,7 +27,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     [SerializeField] private bool allowMultipleHitsOnSameEnemy = false; // False by default, but should be true for projectiles that orbit or ricochet
     private readonly HashSet<Transform> _hitEnemies = new HashSet<Transform>(); // Don't let this bullet hit the same enemy twice (we track what this bullet hit in this HashSet)
 
-    private float _damagePerHit; // The damage of the player's gun or enemy that shot this bullet
+    protected float DamagePerHit; // The damage of the player's gun or enemy that shot this bullet
 
     [Header("Penetration")]
     private int _penetrationCount; // The amount of penetration of the player's gun or enemy that shot this bullet
@@ -42,7 +42,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     [SerializeField] private GameObject enemyHitParticleEffect;
     private int _enemyHitParticlePoolKey;
 
-    private AudioClipPlayer _audioClipPlayer;
+    protected AudioClipPlayer AudioClipPlayer;
     
     [SerializeField]
     // What should bullet do (besides just damaging target..)
@@ -54,7 +54,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         rb = GetComponent<Rigidbody2D>();
         bulletCollider = GetComponent<CapsuleCollider2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _audioClipPlayer = GetComponent<AudioClipPlayer>();
+        AudioClipPlayer = GetComponent<AudioClipPlayer>();
         
         if(enemyHitParticleEffect != null)
             _enemyHitParticlePoolKey = enemyHitParticleEffect.GetComponent<IPoolable>().PoolKey;
@@ -79,7 +79,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         _penetrationCount = 0;
 
         // Reset damage
-        _damagePerHit = 0;
+        DamagePerHit = 0;
 
         // Stop all coroutines when this bullet has been disabled
         StopAllCoroutines();
@@ -167,7 +167,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     {
         IHealth healthScript = objectHit.GetComponent<IHealth>();
 
-        healthScript?.ModifyHealth(-1 * _damagePerHit);
+        healthScript?.ModifyHealth(-1 * DamagePerHit);
         
         onBulletHit.Invoke(objectHit);
         
@@ -219,11 +219,11 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     {
         if (isInanimate)
         {
-            _audioClipPlayer.PlayRandomGeneralAudioClip(bulletData.hitWallSound, bulletData.volume);
+            AudioClipPlayer.PlayRandomGeneralAudioClip(bulletData.hitWallSound, bulletData.volume);
         }
         else
         {
-            _audioClipPlayer.PlayRandomGeneralAudioClip(bulletData.hitBodySounds, bulletData.volume);
+            AudioClipPlayer.PlayRandomGeneralAudioClip(bulletData.hitBodySounds, bulletData.volume);
         }
     }
     
@@ -240,7 +240,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     // Update the damage and penetration values
     public void UpdateDamageAndPenetrationValues(float damage, int penetration)
     {
-        _damagePerHit += damage;
+        DamagePerHit += damage;
 
         _penetrationCount += penetration;
         

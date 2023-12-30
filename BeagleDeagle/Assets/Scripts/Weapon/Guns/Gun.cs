@@ -202,6 +202,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         }
     
         _weaponData = scriptableObject;
+        
+        // Fetch new bullets from object pool
+        _bulletPoolKey = _weaponData.bulletPrefab.GetComponent<IPoolable>().PoolKey;
     
         // Refill all ammo after receiving new weapon
         RefillAmmoCompletely();

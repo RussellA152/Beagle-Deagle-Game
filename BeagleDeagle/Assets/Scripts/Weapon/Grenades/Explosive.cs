@@ -152,12 +152,7 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
 
     private void PlayExplosionSound()
     {
-        if (ExplosiveData.explosionClips.Length > 0)
-        {
-            int randomNumber = Random.Range(0, ExplosiveData.explosionClips.Length);
-        
-            _audioClipPlayer.PlayGeneralAudioClip(ExplosiveData.explosionClips[randomNumber], ExplosiveData.explosiveSoundVolume);
-        }
+        _audioClipPlayer.PlayRandomGeneralAudioClip(ExplosiveData.explosionClips, ExplosiveData.explosiveSoundVolume);
         
     }
     

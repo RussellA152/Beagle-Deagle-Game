@@ -15,7 +15,7 @@ public class UltimateLevelUpReward : LevelUpReward
 
     public override string GetRewardName()
     {
-        return "Ultimate Ability Upgrade";
+        return ultimateAbilityData.abilityName;
     }
 
     public override void GiveDataToPlayer(GameObject recipientGameObject)

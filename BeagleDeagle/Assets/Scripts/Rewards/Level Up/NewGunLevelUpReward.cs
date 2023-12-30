@@ -15,7 +15,7 @@ public class NewGunLevelUpReward: LevelUpReward
 
     public override string GetRewardName()
     {
-        return "Weapon Upgrade";
+        return gunData.gunName;
     }
 
     public override void GiveDataToPlayer(GameObject recipientGameObject)
