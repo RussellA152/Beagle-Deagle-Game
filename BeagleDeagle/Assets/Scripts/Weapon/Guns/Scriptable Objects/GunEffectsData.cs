@@ -18,6 +18,9 @@ public class GunEffectsData : ScriptableObject
     public Vector2 muzzleFlashPosition;
     [Range(0.01f, 0.25f)] public float muzzleFlashDuration;
 
+    [Header("Screen Shaking")] 
+    public ScreenShakeData screenShakeData;
+    
     [Header("Gun Sounds")]
     public AudioClip[] fireClips;
     

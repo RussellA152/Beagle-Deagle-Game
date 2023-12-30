@@ -20,7 +20,7 @@ MonoBehaviour:
     m_Bits: 16768
   detonationTime: 0
   aoeData: {fileID: 0}
-  activationSound: {fileID: 0}
+  screenShakeData: {fileID: 11400000, guid: 936398f2c4026d14d99c7b549546794d, type: 2}
   explosionClips:
   - {fileID: 8300000, guid: 4b65fe8a0b9608043aa5a08b776a29a0, type: 3}
   - {fileID: 8300000, guid: 2bb4b6d0060793b46b8a169d385406cb, type: 3}

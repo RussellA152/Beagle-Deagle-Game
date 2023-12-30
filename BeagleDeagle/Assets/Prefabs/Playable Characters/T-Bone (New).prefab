@@ -227,11 +227,11 @@ GameObject:
   - component: {fileID: 3378843165075915667}
   - component: {fileID: 2119711290176759343}
   - component: {fileID: 1777428645584621154}
+  - component: {fileID: 1777428645584621180}
   - component: {fileID: 1777428645584621153}
   - component: {fileID: 6218275219637812029}
   - component: {fileID: -2774385688362917830}
   - component: {fileID: 5628253088591228291}
-  - component: {fileID: 1777428645584621180}
   - component: {fileID: 611969991595103788}
   - component: {fileID: 504447593957459383}
   - component: {fileID: 1777428645584621179}
@@ -345,6 +345,27 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   healthRegenDelay: 2.5
   maxHealthModifiers: []
+--- !u!114 &1777428645584621180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777428645584621176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b349a021fc7a72a4b809632e17656f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  cooldownSystem: {fileID: 0}
+  aimCollider: {fileID: 3573752587559370938}
+  weaponAimTransform: {fileID: 1777428646219782325}
+  rotationRadius: 0.1
+  bodySr: {fileID: 1777428645335658747}
+  headSr: {fileID: 1777428646164562768}
+  movementSpeedModifiers: []
 --- !u!114 &1777428645584621153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,27 +416,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
---- !u!114 &1777428645584621180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777428645584621176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b349a021fc7a72a4b809632e17656f32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
-  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  cooldownSystem: {fileID: 0}
-  aimCollider: {fileID: 3573752587559370938}
-  weaponAimTransform: {fileID: 1777428646219782325}
-  rotationRadius: 0.1
-  bodySr: {fileID: 1777428645335658747}
-  headSr: {fileID: 1777428646164562768}
-  movementSpeedModifiers: []
 --- !u!114 &611969991595103788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,7 +429,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   utilityCooldownModifiers: []
   utilityUsesModifiers: []
@@ -446,7 +445,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   ultimateCooldownModifiers: []
   _previousWeaponData: {fileID: 0}

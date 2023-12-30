@@ -31,9 +31,9 @@ MonoBehaviour:
   AttackSpeedModifier:
     modifierName: T-Bone Level 4
     particleEffect: {fileID: 0}
-    bonusAttackSpeed: 0.1
+    bonusAttackSpeed: 0.15
   AmmoLoadModifier:
     modifierName: 
     particleEffect: {fileID: 0}
     bonusAmmoLoad: 0
-  description: +10% Firerate!
+  description: +15% Firerate!

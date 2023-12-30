@@ -104,7 +104,7 @@ MonoBehaviour:
     container: {fileID: 6379233007725893307}
     pooled: []
     poolKey: 0
-  - amountToPool: 20
+  - amountToPool: 50
     objectToPool: {fileID: 275455557154390672, guid: c4f63367812a5a644872682e95289609, type: 3}
     shouldExpand: 0
     container: {fileID: 6379233007198652893}
@@ -122,7 +122,7 @@ MonoBehaviour:
     container: {fileID: 6379233007983541758}
     pooled: []
     poolKey: 0
-  - amountToPool: 20
+  - amountToPool: 50
     objectToPool: {fileID: 1688976237673181899, guid: 06e8d67468ac26743ba758345361863d, type: 3}
     shouldExpand: 1
     container: {fileID: 6379233007983541758}
@@ -152,7 +152,7 @@ MonoBehaviour:
     container: {fileID: 6379233007198652893}
     pooled: []
     poolKey: 0
-  - amountToPool: 15
+  - amountToPool: 25
     objectToPool: {fileID: 1688976237673181899, guid: 97d7d94ed58b9be4d8cbff990df23596, type: 3}
     shouldExpand: 1
     container: {fileID: 6379233007198652893}

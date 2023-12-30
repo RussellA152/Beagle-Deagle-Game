@@ -30,6 +30,8 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
 
     protected CheckObstruction ObstructionScript;
 
+    private CameraShaker _cameraShaker;
+
     private AudioClipPlayer _audioClipPlayer;
     
     protected int WallLayerMask;
@@ -47,6 +49,7 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
         AreaOfEffectScript =
             GetComponentInChildren<AreaOfEffect>();
 
+        _cameraShaker = GetComponent<CameraShaker>();
         _audioClipPlayer = GetComponent<AudioClipPlayer>();
         
         // Find explosive effect if this gameObject needs one
@@ -129,7 +132,8 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
         PlayExplosionSound();
         
         // Screen shake
-
+        _cameraShaker.ShakePlayerCamera(ExplosiveData.screenShakeData);
+        
         // Big explosion hurt all enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, ExplosiveData.explosiveRadius, ExplosiveData.whatDoesExplosionHit);
 

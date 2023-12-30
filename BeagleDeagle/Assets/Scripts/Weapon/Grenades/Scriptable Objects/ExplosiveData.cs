@@ -20,6 +20,9 @@ public class ExplosiveData : ScriptableObject
     // What AOE does this explosive use?
     public AreaOfEffectData aoeData;
 
+    [Header("Screen Shaking")] 
+    public ScreenShakeData screenShakeData;
+
     [Header("Sounds")]
     // What sound is played when this detonates?
     public AudioClip[] explosionClips;

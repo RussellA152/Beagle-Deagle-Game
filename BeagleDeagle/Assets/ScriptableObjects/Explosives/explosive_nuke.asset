@@ -18,9 +18,9 @@ MonoBehaviour:
   whatDoesExplosionHit:
     serializedVersion: 2
     m_Bits: 256
-  detonationTime: 3
+  detonationTime: 2.5
   aoeData: {fileID: 11400000, guid: 76c3dbea33a66a444949fba4a83bc5c6, type: 2}
-  activationSound: {fileID: 0}
+  screenShakeData: {fileID: 11400000, guid: 8cae6bd950d1b064db20c0ae6bb2bdbb, type: 2}
   explosionClips:
   - {fileID: 8300000, guid: 82c362cd3d3a8b643832859237810f31, type: 3}
   - {fileID: 8300000, guid: 8fbeb4b2cb4a0fe4bb1100f9ff5d4387, type: 3}

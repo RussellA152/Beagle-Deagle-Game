@@ -20,12 +20,11 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
     [Header("Required Components")]
     [SerializeField] private PlayerEvents playerEvents;
     private AudioClipPlayer _audioClipPlayer;
-    // Player data determines which weapon to start with
-    [SerializeField] private PlayerData playerData;
+    [SerializeField] private PlayerData playerData; // Player data determines which weapon to start with
     private GunData _weaponData;
-
     private CooldownSystem _cooldownSystem;
-
+    private CameraShaker _cameraShaker;
+        
     private PlayerInput _playerInput;
     
 
@@ -82,9 +81,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         
         // Fetch cooldown system component from the player gameObject (always the parent of their gun)
         _cooldownSystem = GetComponentInParent<CooldownSystem>();
-
+        
         _audioClipPlayer = GetComponentInParent<AudioClipPlayer>();
-
+        _cameraShaker = GetComponent<CameraShaker>();
+        
         _weaponData = playerData.gunData;
         
 
@@ -203,11 +203,9 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
     
         _weaponData = scriptableObject;
     
-        // Refill all ammo 
+        // Refill all ammo after receiving new weapon
         RefillAmmoCompletely();
-    
-        _bulletsLoaded = Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad);
-    
+        
         // Change bulletSpawnPoint's position
         bulletSpawnPoint.localPosition = _weaponData.bulletSpawnLocation;
         
@@ -304,6 +302,10 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
 
         // Play a shoot sound effect
         PlayShootSound();
+        
+        // Tell camera shaker to shake the player's camera
+        _cameraShaker.ShakePlayerCamera(_weaponData.gunEffectsData.screenShakeData);
+        
         // Play a muzzle flash effect
         StartCoroutine(PlayMuzzleFlash());
 
@@ -380,7 +382,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
     public void OnReload(CallbackContext context)
     {
         // Only allow manual reloading if the player has some ammo, but not empty
-        if(_bulletsLoaded > 0f && _bulletsLoaded < _weaponData.magazineSize * _bonusAmmoLoad)
+        if(_bulletsLoaded > 0f && _bulletsShot > 0 && _bulletsLoaded < _weaponData.magazineSize * _bonusAmmoLoad)
             PerformReload();
     }
 

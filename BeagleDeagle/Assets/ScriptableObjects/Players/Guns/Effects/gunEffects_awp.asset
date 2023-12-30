@@ -18,6 +18,7 @@ MonoBehaviour:
   muzzleFlashSprite: {fileID: 21300000, guid: 35cd9467eedc6df4e8ba7a1f5aa167a1, type: 3}
   muzzleFlashPosition: {x: 2.879, y: 0.472}
   muzzleFlashDuration: 0.1
+  screenShakeData: {fileID: 11400000, guid: 0d48e10b30d1b0d459ba7dff55c2fcaf, type: 2}
   fireClips:
   - {fileID: 8300000, guid: d8c0108c4493f0744add231878f3dc28, type: 3}
   - {fileID: 8300000, guid: a14f27198f6e2fd45b0d095d4f68dd5c, type: 3}
