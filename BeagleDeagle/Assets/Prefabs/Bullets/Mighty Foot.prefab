@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8638057732453701793}
   - component: {fileID: 7698205712678738710}
   - component: {fileID: 8164879991046117892}
-  m_Layer: 9
+  m_Layer: 16
   m_Name: Mighty Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

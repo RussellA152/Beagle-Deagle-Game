@@ -88,37 +88,37 @@ MonoBehaviour:
     poolKey: 0
   - amountToPool: 100
     objectToPool: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-    shouldExpand: 0
+    shouldExpand: 1
     container: {fileID: 6379233007983541758}
     pooled: []
     poolKey: 0
   - amountToPool: 50
     objectToPool: {fileID: 3711592478197892634, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
-    shouldExpand: 0
+    shouldExpand: 1
     container: {fileID: 6379233007983541758}
     pooled: []
     poolKey: 0
   - amountToPool: 30
     objectToPool: {fileID: 5497711690300594199, guid: 446ab0f07b2f4b44fa8bc1bd51f439ea, type: 3}
-    shouldExpand: 0
+    shouldExpand: 1
     container: {fileID: 6379233007725893307}
     pooled: []
     poolKey: 0
   - amountToPool: 50
     objectToPool: {fileID: 275455557154390672, guid: c4f63367812a5a644872682e95289609, type: 3}
-    shouldExpand: 0
+    shouldExpand: 1
     container: {fileID: 6379233007198652893}
     pooled: []
     poolKey: 0
   - amountToPool: 60
     objectToPool: {fileID: 3084706840994566313, guid: c0a56add2938172458a8dca155e4d161, type: 3}
-    shouldExpand: 0
+    shouldExpand: 1
     container: {fileID: 6379233007198652893}
     pooled: []
     poolKey: 0
   - amountToPool: 45
     objectToPool: {fileID: 3711592478197892634, guid: 10c2b1323b40b0b47839b417306663f4, type: 3}
-    shouldExpand: 0
+    shouldExpand: 1
     container: {fileID: 6379233007983541758}
     pooled: []
     poolKey: 0

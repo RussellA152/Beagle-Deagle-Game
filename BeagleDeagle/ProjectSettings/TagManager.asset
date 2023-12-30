@@ -23,7 +23,7 @@ TagManager:
   - HitBox
   - Ally
   - DestroyableObstacle
-  - 
+  - DestroyEnemyBullet
   - 
   - 
   - 
