@@ -7,11 +7,13 @@ public class MightyFootBullet : Bullet<MightyFootBulletData>
 {
     private int _wallLayerMask;
     private CheckObstruction _obstructionScript;
+    private CameraShaker _cameraShaker;
 
     protected override void Awake()
     {
         base.Awake();
         _obstructionScript = GetComponent<CheckObstruction>();
+        _cameraShaker = GetComponent<CameraShaker>();
         
         _wallLayerMask = LayerMask.GetMask("Wall");
     }
@@ -24,6 +26,8 @@ public class MightyFootBullet : Bullet<MightyFootBulletData>
 
         // Make target take damage
         base.DamageOnHit(objectHit);
+        
+        _cameraShaker.ShakePlayerCamera(bulletData.screenShakeData);
         
     }
 

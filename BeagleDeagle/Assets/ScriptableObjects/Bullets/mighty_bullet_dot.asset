@@ -34,4 +34,5 @@ MonoBehaviour:
   hitWallSound: []
   volume: 0.5
   mightyFootAbilityData: {fileID: 11400000, guid: f346123fc01f8d848945478d5bbe56e3, type: 2}
+  screenShakeData: {fileID: 11400000, guid: b607ba9cb83046843bfabb88c5524fb4, type: 2}
   numberOfEnemiesCanHit: 150
