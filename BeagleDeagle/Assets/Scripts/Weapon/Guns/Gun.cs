@@ -134,6 +134,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         _cooldownSystem.OnCooldownEnded -= OnReloadFinish;
         _shootInputAction.Disable();
         _reloadInputAction.Disable();
+        
+        _reloadInputAction.performed -= OnReload;
     }
 
     private void Update()

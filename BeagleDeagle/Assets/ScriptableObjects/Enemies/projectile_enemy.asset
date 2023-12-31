@@ -29,8 +29,6 @@ MonoBehaviour:
   currencyRewardOnDeath:
     xpAmount: 150
     moneyAmount: 0
-  deathSound: {fileID: 8300000, guid: 280b017818a58384588bda3151029bab, type: 3}
-  deathSoundVolume: 0.2
   bulletPrefab: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   bulletData: {fileID: 11400000, guid: be1d615a5892cc443a06ea3aed7be291, type: 2}
   statusEffects: {fileID: 0}

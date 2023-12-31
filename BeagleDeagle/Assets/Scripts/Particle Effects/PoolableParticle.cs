@@ -11,15 +11,10 @@ public class PoolableParticle : MonoBehaviour, IPoolable
 
     public ParticleSystem[] particleSystemGameObjects;
 
-    // Particles that should not rotate no matter what object they play on top of
-    //public ParticleSystem[] staticRotationParticles;
-
     private Vector3 _originalSize;
 
     private Transform _originalParent;
     private Transform _currentParent;
-    
-    
 
     private void Awake()
     {

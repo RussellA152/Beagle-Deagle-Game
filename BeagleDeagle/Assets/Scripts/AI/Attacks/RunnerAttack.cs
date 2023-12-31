@@ -19,11 +19,14 @@ public class RunnerAttack : AIAttack<RunnerEnemyData>
 
     public override void InitiateAttack()
     {
+        Debug.Log("Gonna try initiating an attack!");
         // For each hitBox on the enemy, check if any of them collided with something
         // We check this in the Update() of AIController
         foreach (BoxCollider2D hitBox in _hitBoxes)
         {
             CheckHitBox(hitBox);
+            
+            Debug.Log("I am initiating an attack!");
         }
     }
 

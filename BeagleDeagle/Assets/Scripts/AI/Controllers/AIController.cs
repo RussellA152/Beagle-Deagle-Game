@@ -137,6 +137,8 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
                 OnStun();
                 break;
         }
+        
+        Debug.Log("Can I attack? " + AttackScript.GetCanAttack());
     }
     
     ///-///////////////////////////////////////////////////////////

@@ -18,7 +18,7 @@ MonoBehaviour:
   movementSpeed: 5
   attackDamage: 100
   attackCooldown: 1.5
-  attackRange: 2.5
+  attackRange: 8
   chaseRange: 150
   attackLayer:
     serializedVersion: 2
@@ -29,8 +29,6 @@ MonoBehaviour:
   currencyRewardOnDeath:
     xpAmount: 100
     moneyAmount: 0
-  deathSound: {fileID: 8300000, guid: 280b017818a58384588bda3151029bab, type: 3}
-  deathSoundVolume: 0.2
   whatHitBoxDamages:
     serializedVersion: 2
     m_Bits: 16512

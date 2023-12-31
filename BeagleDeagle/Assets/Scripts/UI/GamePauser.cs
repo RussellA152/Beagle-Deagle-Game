@@ -23,14 +23,14 @@ public class GamePauser : MonoBehaviour
 
     // When the game is paused, put a small delay before the game can be unpaused
     private float _gameResumeDelay = 0.5f;
-    
+
     [SerializeField] private GameObject[] pauseMenuObjects;
     
     [SerializeField] private Button resumeButton;
 
-    private void Awake()
+    private void Start()
     {
-        // Hide the pause menu on awake
+        // Hide all pause menu gameObjects at the start
         foreach (GameObject pauseMenuGameObject in pauseMenuObjects)
         {
             pauseMenuGameObject.SetActive(false);
@@ -51,11 +51,13 @@ public class GamePauser : MonoBehaviour
         playerEvents.givePlayerGameObject -= FindPlayerInput;
         
         resumeButton.onClick.RemoveListener(ResumeButton);
+        
     }
 
     // Get the player's PlayerInput component to get their "Pause" binding
     private void FindPlayerInput(GameObject playerGameObject)
     {
+        Debug.Log("Hello player: " + playerGameObject);
         _playerInput = playerGameObject.GetComponent<PlayerInput>();
 
         // Pausing and resuming the game both use "Pause" binding
@@ -68,16 +70,18 @@ public class GamePauser : MonoBehaviour
     {
         // Pause the game only if the game is not already paused
         if (_gamePausedManually || _gamePausedAutomatically) return;
-
-        _gamePausedManually = true;
         
+        _gamePausedManually = true;
+
         EventSystem.current.SetSelectedGameObject(resumeButton.gameObject);
+        
 
         foreach (GameObject pauseMenuGameObject in pauseMenuObjects)
         {
             pauseMenuGameObject.SetActive(true);
         }
         
+
         PauseGame();
     }
 

@@ -56,5 +56,7 @@ public class ProjectileAttack : AIAttack<ProjectileEnemyData>
             
             projectile.ActivateBullet();
         }
+        
+        //BeginCooldown();
     }
 }
