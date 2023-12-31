@@ -11,8 +11,10 @@ public class RunnerAttack : AIAttack<RunnerEnemyData>
     // A list of all colliders that weres damaged by this enemy's attack
     private List<Collider2D> _collidersDamaged = new List<Collider2D>();
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+        
         // Grab all hitBoxes inside of the enemy
         _hitBoxes = GetComponentsInChildren<BoxCollider2D>();
     }
