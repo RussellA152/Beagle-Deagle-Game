@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlowOnCollision : StatusEffect<SlowData>
+public class SlowOnCollision : StatusEffect<SlowEffectData>
 {
     public bool removeOnTriggerExit;
 
@@ -30,13 +30,13 @@ public class SlowOnCollision : StatusEffect<SlowData>
         
     }
 
-    private IEnumerator WaitToRemoveEffect(GameObject objectHit)
-    {
-        yield return new WaitForSeconds(StatusEffectData.lingerDuration);
-        
-        objectHit.GetComponent<IMovable>().RemoveMovementSpeedModifier(StatusEffectData.movementSpeedEffect);
-        
-        objectHit.GetComponent<IDamager>().RemoveAttackSpeedModifier(StatusEffectData.attackSpeedEffect);
-    }
+    // private IEnumerator WaitToRemoveEffect(GameObject objectHit)
+    // {
+    //     yield return new WaitForSeconds(StatusEffectData.lingerDuration);
+    //     
+    //     objectHit.GetComponent<IMovable>().RemoveMovementSpeedModifier(StatusEffectData.movementSpeedEffect);
+    //     
+    //     objectHit.GetComponent<IDamager>().RemoveAttackSpeedModifier(StatusEffectData.attackSpeedEffect);
+    // }
     
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealOnCollision : StatusEffect<HealData>
+public class HealOnCollision : StatusEffect<HealEffectData>
 {
     public override void ApplyEffect(GameObject objectHit)
     {

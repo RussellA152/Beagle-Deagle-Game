@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StunOnCollision : StatusEffect<StunData>
+public class StunOnCollision : StatusEffect<StunEffectData>
 {
     public override void ApplyEffect(GameObject objectHit)
     {

@@ -398,6 +398,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
 
         AllowShoot(true);
+        
+        playerEvents.InvokePlayerFinishedReloadEvent();
 
     }
 

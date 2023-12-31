@@ -52,6 +52,9 @@ public class PlayerEvents : ScriptableObject
     // Pass a reference to the player's max ammo loaded (invoked when the player's max ammo changes)
     public event Action<int> onPlayerMaxAmmoLoadedChanged;
 
+    // When the player's current gun has finished reloading
+    public event Action onPlayerReloadFinished;
+
     // Pass a reference to the player's current utility data (ex. player is currently using Mighty Foot)
     public event Action<UtilityAbilityData> onPlayerObtainedNewUtility;
     
@@ -157,6 +160,11 @@ public class PlayerEvents : ScriptableObject
     public void InvokeUpdateMaxAmmoLoadedText(int maxAmmoLoaded)
     {
         onPlayerMaxAmmoLoadedChanged?.Invoke(maxAmmoLoaded);
+    }
+
+    public void InvokePlayerFinishedReloadEvent()
+    {
+        onPlayerReloadFinished?.Invoke();
     }
     
     public void InvokeReloadCooldown(int id)
