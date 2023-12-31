@@ -11,7 +11,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     [SerializeField] private PlayerData playerData;
     [SerializeField] private PlayerEvents playerEvents;
     
-    public CooldownSystem cooldownSystem;
+    private CooldownSystem _cooldownSystem;
     private AudioClipPlayer _audioClipPlayer;
     private ModifierParticleEffectHandler _modifierParticleEffectHandler;
 
@@ -67,12 +67,10 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         _rotationInputAction = _playerInput.currentActionMap.FindAction("Look");
         _rollInputAction = _playerInput.currentActionMap.FindAction("Roll");
 
-        cooldownSystem = GetComponent<CooldownSystem>();
+        _cooldownSystem = GetComponent<CooldownSystem>();
 
         _modifierParticleEffectHandler = GetComponent<ModifierParticleEffectHandler>();
-
-        Id = 9;
-        CooldownDuration = playerData.rollCooldown;
+        
     }
 
     private void OnEnable()
@@ -94,6 +92,10 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     private void Start()
     {
         IsRolling = false;
+        
+        Id = _cooldownSystem.GetAssignableId();
+        CooldownDuration = playerData.rollCooldown;
+        
         playerEvents.InvokeRollCooldown(Id);
     }
 
@@ -244,10 +246,10 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
     public void OnRoll(CallbackContext context)
     {
-        if (!cooldownSystem.IsOnCooldown(Id) && _canRoll)
+        if (!_cooldownSystem.IsOnCooldown(Id) && _canRoll)
         {
             // Put roll on cooldown
-            cooldownSystem.PutOnCooldown(this);
+            _cooldownSystem.PutOnCooldown(this);
             
             _rb.velocity = Vector2.zero;
 

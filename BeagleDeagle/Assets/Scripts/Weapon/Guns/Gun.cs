@@ -99,7 +99,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
 
     private void Start()
     {
-        Id = 11;
+        Id = _cooldownSystem.GetAssignableId();
         CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
         
         UpdateScriptableObject(_weaponData);

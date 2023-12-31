@@ -26,6 +26,7 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
 
     [SerializeField, Range(0.1f, 1f)] 
     private float rewardScalePercentage;
+    
     // Manager will need a cooldown to start another objective
     private CooldownSystem _cooldownSystem;
 
@@ -34,11 +35,7 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
     private void Awake()
     {
         Instance = this;
-        
-        // Setting cooldown Id and cooldown duration
-        Id = 30;
-        CooldownDuration = timeBetweenObjectives;
-        
+
         _cooldownSystem = GetComponent<CooldownSystem>();
 
         // Pick a random objective when cooldown ends
@@ -50,6 +47,10 @@ public class MapObjectiveManager : MonoBehaviour, IHasCooldown
 
     private void Start()
     {
+        // Setting cooldown Id and cooldown duration
+        Id = _cooldownSystem.GetAssignableId();
+        CooldownDuration = timeBetweenObjectives;
+        
         // Start a cooldown for the first objective to start
         _cooldownSystem.PutOnCooldown(this);
 

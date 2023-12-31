@@ -79,6 +79,9 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         RangeIndicator.gameObject.SetActive(false);
         
         ParticleEffectPlayLocation = transform;
+        
+        Id = _cooldownSystem.GetAssignableId();
+        CooldownDuration = timeToFailWhenFarAway;
     }
 
     private void OnEnable()
@@ -111,10 +114,7 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         RangeIndicator = GetComponentInChildren<RangeIndicator>();
         _audioClipPlayer = GetComponent<AudioClipPlayer>();
         
-        Id = 50;
         _cooldownSystem = GetComponent<CooldownSystem>();
-
-        CooldownDuration = timeToFailWhenFarAway;
 
         _mapObjectiveExpire = GetComponent<MapObjectiveExpire>();
         

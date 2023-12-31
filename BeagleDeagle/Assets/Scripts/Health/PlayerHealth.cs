@@ -31,7 +31,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
 
     private void Start()
     {
-        Id = 8;
+        Id = _cooldownSystem.GetAssignableId();
         
         _isDead = false;
 

@@ -67,7 +67,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     
     protected virtual void Start()
     {
-        Id = 12;
+        Id = _cooldownSystem.GetAssignableId();
         CooldownDuration = UtilityData.cooldown * _bonusUtilityCooldown;
         
         playerEvents.InvokeUtilityCooldown(Id);

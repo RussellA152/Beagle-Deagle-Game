@@ -40,8 +40,12 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     {
         _animationScript = GetComponent<ZombieAnimationHandler>();
         _cooldownSystem = GetComponent<CooldownSystem>();
+        
+    }
 
-        Id = 20;
+    private void Start()
+    {
+        Id = _cooldownSystem.GetAssignableId();
         CooldownDuration = enemyScriptableObject.attackCooldown;
     }
 

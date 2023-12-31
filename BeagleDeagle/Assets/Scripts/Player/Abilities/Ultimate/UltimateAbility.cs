@@ -52,7 +52,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     protected virtual void Start()
     {
 
-        Id = 10;
+        Id = _cooldownSystem.GetAssignableId();
         CooldownDuration = UltimateAbilityData.cooldown * _bonusUltimateCooldown;
         
         playerEvents.InvokeUltimateCooldown(Id);

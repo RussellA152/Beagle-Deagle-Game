@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +9,28 @@ public class CooldownSystem : MonoBehaviour
 {
     private readonly List<CooldownData> _cooldowns = new List<CooldownData>();
 
+    /* A hash set of id's that are ready to be assigned to any monobehaviours that need one
+     This removes the need of having to make sure two monobehaviours don't accidentally have the same cooldown ID*/
+    private HashSet<int> _assignedIds;
+    
+    [SerializeField, Range(1, 50)] 
+    private int assignableIdCount = 20; // How many ID's are needed for this cooldown system?
+
+
     public Action<int> OnCooldownEnded;
+
+    private void Awake()
+    {
+        // Initialize the assigned IDs HashSet
+        _assignedIds = new HashSet<int>();
+
+        // Assign unique IDs to the HashSet
+        for (int i = 0; i < assignableIdCount; i++)
+        {
+            _assignedIds.Add(i);
+        }
+    }
+
 
     private void Update()
     {
@@ -110,6 +132,23 @@ public class CooldownSystem : MonoBehaviour
 
         //If we couldn't find it, its false
         return false;
+    }
+
+    public int GetAssignableId()
+    {
+        if (_assignedIds.Count > 0)
+        {
+            // Get the first available ID from the HashSet
+            int id = _assignedIds.First();
+            
+            // Remove the assigned ID from the HashSet
+            _assignedIds.Remove(id);
+            
+            return id;
+        }
+        
+        Debug.LogError("No more unique IDs available.");
+        return -1; // Indicate that no unique ID is available
     }
 
     public float GetStartingDuration(int id)

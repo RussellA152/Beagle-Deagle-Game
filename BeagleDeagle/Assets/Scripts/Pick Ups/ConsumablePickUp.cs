@@ -37,12 +37,13 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
         _cooldownSystem = GetComponent<CooldownSystem>();
         _audioClipPlayer = GetComponent<AudioClipPlayer>();
         
-        Id = 21;
-        CooldownDuration = pickUpDuration;
     }
 
     private void Start()
     {
+        Id = _cooldownSystem.GetAssignableId();
+        CooldownDuration = pickUpDuration;
+        
         foreach (IStatusEffect statusEffect in _statusEffects)
         {
             statusEffect.UpdateWeaponType(statusEffectData);

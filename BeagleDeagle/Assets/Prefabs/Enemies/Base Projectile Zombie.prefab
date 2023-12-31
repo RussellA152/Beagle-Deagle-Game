@@ -94,7 +94,6 @@ MonoBehaviour:
   state: 0
   poolKey: 11
   enemyScriptableObject: {fileID: 11400000, guid: d97f4e9283956124cb59f55f59a122be, type: 2}
-  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   deathParticleEffect: {fileID: 5497711690300594199, guid: 446ab0f07b2f4b44fa8bc1bd51f439ea, type: 3}
 --- !u!114 &7500669978799673356
 MonoBehaviour:
@@ -153,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba08b74eeb911614ca6401f78022aaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assignableIdCount: 5
 --- !u!114 &-4139390413299684877
 MonoBehaviour:
   m_ObjectHideFlags: 0

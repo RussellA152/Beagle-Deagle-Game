@@ -25,7 +25,7 @@ public class HealCrate : MonoBehaviour, IHasCooldown
 
     private void Start()
     {
-        Id = 20;
+        Id = _cooldownSystem.GetAssignableId();
         CooldownDuration = restoreTimer;
         
         crateGameObject.SetActive(true);

@@ -16,14 +16,15 @@ public class MapObjectiveExpire : MonoBehaviour, IHasCooldown
     
     private void Awake()
     {
-        Id = 40;
+        
         _cooldownSystem = GetComponent<CooldownSystem>();
-        CooldownDuration = timeUntilExpire;
 
     }
 
     private void Start()
     {
+        Id = _cooldownSystem.GetAssignableId();
+        CooldownDuration = timeUntilExpire;
         _cooldownSystem.OnCooldownEnded += ObjectiveExpired;
     }
 
