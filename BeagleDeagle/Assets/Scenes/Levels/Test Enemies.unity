@@ -22688,7 +22688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db6f5aea36871fc469d511640f83157f, type: 3}
@@ -83883,6 +83883,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4608479753219126513, guid: cb891dbcd79a7a44c90db84ac53cbc2d, type: 3}
+      propertyPath: timeBetweenObjectives
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4608479753219126513, guid: cb891dbcd79a7a44c90db84ac53cbc2d, type: 3}
       propertyPath: potentialMapObjectives.Array.data[0]
       value: 

@@ -16,7 +16,6 @@ public class MapObjectiveExpire : MonoBehaviour, IHasCooldown
     
     private void Awake()
     {
-        
         _cooldownSystem = GetComponent<CooldownSystem>();
 
     }

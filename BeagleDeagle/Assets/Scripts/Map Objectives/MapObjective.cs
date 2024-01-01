@@ -71,8 +71,9 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         OnObjectiveAwake();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
+        
         _cooldownSystem.OnCooldownEnded += ObjectiveOutOfTime;
         
         // Hide range until player activates this map objective
@@ -82,6 +83,9 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         
         Id = _cooldownSystem.GetAssignableId();
         CooldownDuration = timeToFailWhenFarAway;
+        
+        
+        Debug.Log("Map Objective gets its ID now! " + this);
     }
 
     private void OnEnable()
@@ -117,6 +121,8 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         _cooldownSystem = GetComponent<CooldownSystem>();
 
         _mapObjectiveExpire = GetComponent<MapObjectiveExpire>();
+
+        Debug.Log("Hi get awake?");
         
     }
 
