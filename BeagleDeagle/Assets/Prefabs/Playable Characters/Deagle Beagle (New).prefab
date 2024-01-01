@@ -362,7 +362,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  cooldownSystem: {fileID: 0}
   aimCollider: {fileID: 5886235219759038886}
   weaponAimTransform: {fileID: 2439171422092810394}
   rotationRadius: 0.1
@@ -394,6 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba08b74eeb911614ca6401f78022aaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assignableIdCount: 20
 --- !u!114 &-1146197955663851578
 MonoBehaviour:
   m_ObjectHideFlags: 0

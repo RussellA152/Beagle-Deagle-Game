@@ -83,9 +83,6 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
         
         Id = _cooldownSystem.GetAssignableId();
         CooldownDuration = timeToFailWhenFarAway;
-        
-        
-        Debug.Log("Map Objective gets its ID now! " + this);
     }
 
     private void OnEnable()
@@ -122,8 +119,6 @@ public abstract class MapObjective : MonoBehaviour, IHasCooldown
 
         _mapObjectiveExpire = GetComponent<MapObjectiveExpire>();
 
-        Debug.Log("Hi get awake?");
-        
     }
 
     protected virtual void OnObjectiveEnable()

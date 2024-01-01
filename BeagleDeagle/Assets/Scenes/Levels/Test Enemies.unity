@@ -22684,11 +22684,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
       propertyPath: m_Name
-      value: Base Zombie Runner
+      value: Base Zombie Runner Test
       objectReference: {fileID: 0}
     - target: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db6f5aea36871fc469d511640f83157f, type: 3}

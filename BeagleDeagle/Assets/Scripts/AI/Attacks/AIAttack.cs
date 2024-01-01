@@ -47,6 +47,8 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     {
         Id = _cooldownSystem.GetAssignableId();
         CooldownDuration = enemyScriptableObject.attackCooldown;
+        
+        BeginCooldown();
     }
 
     protected virtual void OnEnable()
@@ -73,8 +75,12 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     /// 
     public void BeginCooldown()
     {
-        _cooldownSystem.PutOnCooldown(this);
-        _canAttack = false;
+        if (!_cooldownSystem.IsOnCooldown(Id))
+        {
+            _cooldownSystem.PutOnCooldown(this);
+            _canAttack = false;
+        }
+        
     }
 
     ///-///////////////////////////////////////////////////////////

@@ -24,11 +24,13 @@ public class CooldownSystem : MonoBehaviour
         // Initialize the assigned IDs HashSet
         _assignedIds = new HashSet<int>();
 
-        // Assign unique IDs to the HashSet
-        for (int i = 0; i < assignableIdCount; i++)
+        // Assign unique IDs to the HashSet (starts at 1...this can break for some gameObjects if Ids are set to 0 for some reason?)
+        for (int i = 1; i < assignableIdCount + 1; i++)
         {
             _assignedIds.Add(i);
         }
+        Debug.Log("made id's for " + gameObject.name);
+        
     }
 
 
@@ -143,6 +145,8 @@ public class CooldownSystem : MonoBehaviour
             
             // Remove the assigned ID from the HashSet
             _assignedIds.Remove(id);
+            
+            Debug.Log("fetched " + id + " for " + gameObject.name);
             
             return id;
         }

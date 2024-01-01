@@ -18,7 +18,7 @@ MonoBehaviour:
   movementSpeed: 5
   attackDamage: 100
   attackCooldown: 1.5
-  attackRange: 2.5
+  attackRange: 3
   chaseRange: 150
   attackLayer:
     serializedVersion: 2

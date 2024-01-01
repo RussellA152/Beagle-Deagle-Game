@@ -21,6 +21,7 @@ public class HealCrate : MonoBehaviour, IHasCooldown
         _healthScript = crateGameObject.GetComponent<ObjectHealth>();
         _healthPickUp = healItemGameObject.GetComponent<ConsumablePickUp>();
         _cooldownSystem = GetComponent<CooldownSystem>();
+        
     }
 
     private void Start()
