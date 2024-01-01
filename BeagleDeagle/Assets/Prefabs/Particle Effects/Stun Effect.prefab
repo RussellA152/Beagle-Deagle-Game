@@ -50,8 +50,6 @@ MonoBehaviour:
   particleSystemGameObjects:
   - {fileID: 1655819222667347796}
   - {fileID: 6939982945536340919}
-  staticRotationParticles:
-  - {fileID: 1655819222667347796}
 --- !u!1001 &275455557258559901
 PrefabInstance:
   m_ObjectHideFlags: 0

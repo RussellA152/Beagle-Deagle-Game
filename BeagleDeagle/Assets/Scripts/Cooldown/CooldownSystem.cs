@@ -29,8 +29,7 @@ public class CooldownSystem : MonoBehaviour
         {
             _assignedIds.Add(i);
         }
-        Debug.Log("made id's for " + gameObject.name);
-        
+
     }
 
 
@@ -146,12 +145,12 @@ public class CooldownSystem : MonoBehaviour
             // Remove the assigned ID from the HashSet
             _assignedIds.Remove(id);
             
-            Debug.Log("fetched " + id + " for " + gameObject.name);
+            //Debug.Log("fetched " + id + " for " + gameObject.name);
             
             return id;
         }
         
-        Debug.LogError("No more unique IDs available.");
+        Debug.LogError("No more unique IDs available for " + gameObject.name);
         return -1; // Indicate that no unique ID is available
     }
 
