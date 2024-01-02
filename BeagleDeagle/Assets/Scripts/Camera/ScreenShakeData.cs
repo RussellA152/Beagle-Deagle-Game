@@ -9,8 +9,14 @@ public class ScreenShakeData : ScriptableObject
     public float impactTime = 0.2f;
 
     public float impactForce = 1f;
-    public Vector3 defaultVelocity = new Vector3(0, -1f, 0f);
 
+    public float minVelocityX;
+    public float maxVelocityX;
+    public float minVelocityY;
+    public float maxVelocityY;
+    
+    //public Vector3 defaultVelocity = new Vector3(0, -1f, 0f);
+    
     public AnimationCurve impulseCurve;
 
     [Header("Impulse Listener Settings")] 

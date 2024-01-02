@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -49,7 +50,13 @@ public class PlayerCamera : MonoBehaviour
         
         // Change the impulse source settings
         _impulseDefinition.m_ImpulseDuration = screenShakeData.impactTime;
-        impulseSource.m_DefaultVelocity = screenShakeData.defaultVelocity;
+        
+        // Get a random velocity
+        float randomX = Random.Range(screenShakeData.minVelocityX, screenShakeData.maxVelocityX);
+        float randomY = Random.Range(screenShakeData.minVelocityY, screenShakeData.maxVelocityY);
+        
+        impulseSource.m_DefaultVelocity = new Vector3(randomX, randomY, 0f);
+        
         _impulseDefinition.m_CustomImpulseShape = screenShakeData.impulseCurve;
         
         // Change the impulse listener settings
