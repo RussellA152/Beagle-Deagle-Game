@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a0137b2e36069d4eb08be6ca2a0fe05, type: 3}
-  m_Name: shake_gun_deagle
+  m_Name: shake_bullet_runnerAttack
   m_EditorClassIdentifier: 
   impactTime: 0.35
-  impactForce: 0.2
-  minVelocityX: -0.5
-  maxVelocityX: 0.5
-  minVelocityY: -0.5
-  maxVelocityY: -0.5
+  impactForce: 0.5
+  minVelocityX: -1
+  maxVelocityX: 1
+  minVelocityY: -1
+  maxVelocityY: 1
   impulseCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
-      tangentMode: 34
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -35,13 +35,13 @@ MonoBehaviour:
       value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 34
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  listenerAmplitude: 3
-  listenerFrequency: 2
-  listenerDuration: 0.2
+  listenerAmplitude: 4
+  listenerFrequency: 3
+  listenerDuration: 0.35

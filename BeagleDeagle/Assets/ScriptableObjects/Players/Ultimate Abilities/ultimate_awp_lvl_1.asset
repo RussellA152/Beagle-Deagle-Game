@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: AWP Sniper
   description: Pull out a sniper rifle that fires a high damage shot that pierces
-    through all enemies (can shoot atleast 5 times and is affected by gun upgrades).
+    through many enemies. Lasts 4 seconds and is affected by gun upgrades.
   abilitySprite: {fileID: 21300000, guid: 5f9e104afa36dd3429900d6332b7a411, type: 3}
   abilityDamage: 200
   cooldown: 25

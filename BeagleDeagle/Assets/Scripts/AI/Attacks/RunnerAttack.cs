@@ -16,7 +16,6 @@ public class RunnerAttack : AIAttack<RunnerEnemyData>
     private CameraShaker _cameraShaker;
 
     // Particle effects to play when attack lands
-    [SerializeField, RestrictedPrefab(typeof(PoolableParticle))] private GameObject damageParticleEffect;
     private PoolableParticle _poolableParticle;
     private int _poolableParticleKey;
 
@@ -31,8 +30,7 @@ public class RunnerAttack : AIAttack<RunnerEnemyData>
         _cameraShaker = GetComponent<CameraShaker>();
         
         // Get particle effect
-        _poolableParticleKey = damageParticleEffect.GetComponent<IPoolable>().PoolKey;
-        _poolableParticle = ObjectPooler.Instance.GetPooledObject(_poolableParticleKey).GetComponent<PoolableParticle>();
+        _poolableParticleKey = enemyScriptableObject.damageParticleEffect.GetComponent<IPoolable>().PoolKey;
     }
 
     public override void InitiateAttack()
@@ -73,20 +71,26 @@ public class RunnerAttack : AIAttack<RunnerEnemyData>
                 
                 // Play a random melee attack sound
                 _audioClipPlayer.PlayRandomGeneralAudioClip(enemyScriptableObject.attackLandedSounds, enemyScriptableObject.volume);
-                
-                // Play damage effect on the target
-                if (_poolableParticle != null)
-                {
-                    _poolableParticle.PlaceParticleOnTransform(hitBox.transform);
-                    _poolableParticle.PlayAllParticles(hitBox.transform.localScale.x);
-                }
 
                 if (_cameraShaker != null)
                 {
                     _cameraShaker.ShakePlayerCamera(enemyScriptableObject.screenShakeData);
                 }
                 
+                PlayDamageParticleEffect(hitBox);
             }
+        }
+    }
+
+    // Play damage effect on the target
+    private void PlayDamageParticleEffect(Collider2D hitBox)
+    {
+        _poolableParticle = ObjectPooler.Instance.GetPooledObject(_poolableParticleKey).GetComponent<PoolableParticle>();
+                
+        if (_poolableParticle != null)
+        {
+            _poolableParticle.PlaceParticleOnTransform(hitBox.transform);
+            _poolableParticle.PlayAllParticles(hitBox.transform.localScale.x);
         }
     }
 

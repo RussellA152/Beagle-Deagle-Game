@@ -17,7 +17,7 @@ MonoBehaviour:
   minVelocityX: -1
   maxVelocityX: 1
   minVelocityY: -1
-  maxVelocityY: 1
+  maxVelocityY: -1
   impulseCurve:
     serializedVersion: 2
     m_Curve:

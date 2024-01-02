@@ -12,6 +12,9 @@ public class RunnerEnemyData : EnemyData
     public LayerMask whatHitBoxDamages;
 
     [Header("Attack Landing Effects")]
+    
+    [RestrictedPrefab(typeof(PoolableParticle))] public GameObject damageParticleEffect;
+    
     // Damage sound effect
     public AudioClip[] attackLandedSounds;
     [Range(0.1f, 1f)] public float volume;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: shake_explosive_nuke
   m_EditorClassIdentifier: 
   impactTime: 2
-  impactForce: 2
+  impactForce: 3
   minVelocityX: -0.5
   maxVelocityX: 0.5
   minVelocityY: -0.5
