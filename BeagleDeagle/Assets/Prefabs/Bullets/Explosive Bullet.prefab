@@ -117,7 +117,7 @@ MonoBehaviour:
   onBulletHit:
     m_PersistentCalls:
       m_Calls: []
-  explosiveParticleGameObject: {fileID: 3600658646776412917, guid: 0c6c6f28a17808843ad92d63a3a96e69, type: 3}
+  explosiveParticleGameObject: {fileID: 1723585843440828714, guid: 9cf4145bd7e7c91448abb5dd0f7a297b, type: 3}
 --- !u!114 &690564877444385247
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RunnerAttack : AIAttack<RunnerEnemyData>
 {
@@ -11,24 +12,37 @@ public class RunnerAttack : AIAttack<RunnerEnemyData>
     // A list of all colliders that weres damaged by this enemy's attack
     private List<Collider2D> _collidersDamaged = new List<Collider2D>();
 
+    private AudioClipPlayer _audioClipPlayer;
+    private CameraShaker _cameraShaker;
+
+    // Particle effects to play when attack lands
+    [SerializeField, RestrictedPrefab(typeof(PoolableParticle))] private GameObject damageParticleEffect;
+    private PoolableParticle _poolableParticle;
+    private int _poolableParticleKey;
+
     protected override void Start()
     {
         base.Start();
         
         // Grab all hitBoxes inside of the enemy
         _hitBoxes = GetComponentsInChildren<BoxCollider2D>();
+
+        _audioClipPlayer = GetComponent<AudioClipPlayer>();
+        _cameraShaker = GetComponent<CameraShaker>();
+        
+        // Get particle effect
+        _poolableParticleKey = damageParticleEffect.GetComponent<IPoolable>().PoolKey;
+        _poolableParticle = ObjectPooler.Instance.GetPooledObject(_poolableParticleKey).GetComponent<PoolableParticle>();
     }
 
     public override void InitiateAttack()
     {
-        Debug.Log("Gonna try initiating an attack!");
         // For each hitBox on the enemy, check if any of them collided with something
         // We check this in the Update() of AIController
         foreach (BoxCollider2D hitBox in _hitBoxes)
         {
             CheckHitBox(hitBox);
             
-            Debug.Log("I am initiating an attack!");
         }
     }
 
@@ -55,6 +69,23 @@ public class RunnerAttack : AIAttack<RunnerEnemyData>
             {
                 _collidersDamaged.Add(collidersToDamage[i]);
                 collidersToDamage[i].gameObject.GetComponent<IHealth>().ModifyHealth(-1f * enemyScriptableObject.attackDamage);
+                
+                
+                // Play a random melee attack sound
+                _audioClipPlayer.PlayRandomGeneralAudioClip(enemyScriptableObject.attackLandedSounds, enemyScriptableObject.volume);
+                
+                // Play damage effect on the target
+                if (_poolableParticle != null)
+                {
+                    _poolableParticle.PlaceParticleOnTransform(hitBox.transform);
+                    _poolableParticle.PlayAllParticles(hitBox.transform.localScale.x);
+                }
+
+                if (_cameraShaker != null)
+                {
+                    _cameraShaker.ShakePlayerCamera(enemyScriptableObject.screenShakeData);
+                }
+                
             }
         }
     }

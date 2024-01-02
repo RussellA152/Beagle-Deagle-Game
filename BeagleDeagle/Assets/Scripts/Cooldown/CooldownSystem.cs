@@ -15,8 +15,7 @@ public class CooldownSystem : MonoBehaviour
     
     [SerializeField, Range(1, 50)] 
     private int assignableIdCount = 20; // How many ID's are needed for this cooldown system?
-
-
+    
     public Action<int> OnCooldownEnded;
 
     private void Awake()
@@ -29,10 +28,9 @@ public class CooldownSystem : MonoBehaviour
         {
             _assignedIds.Add(i);
         }
-
+        
     }
-
-
+    
     private void Update()
     {
         ProcessCooldowns();

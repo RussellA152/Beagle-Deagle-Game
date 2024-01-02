@@ -18,7 +18,7 @@ MonoBehaviour:
   movementSpeed: 5
   attackDamage: 100
   attackCooldown: 1.5
-  attackRange: 3
+  attackRange: 2
   chaseRange: 150
   attackLayer:
     serializedVersion: 2
@@ -32,3 +32,10 @@ MonoBehaviour:
   whatHitBoxDamages:
     serializedVersion: 2
     m_Bits: 16512
+  attackLandedSounds:
+  - {fileID: 8300000, guid: fbe7cb5babf05b843bec56e0235582bb, type: 3}
+  - {fileID: 8300000, guid: 1b5d2ff2a8184654586da0fb88873499, type: 3}
+  - {fileID: 8300000, guid: 8f26046a8969e064da8c41757b90d10e, type: 3}
+  - {fileID: 8300000, guid: 0c787306537eb0545b1067e59f548881, type: 3}
+  volume: 0.5
+  screenShakeData: {fileID: 11400000, guid: b607ba9cb83046843bfabb88c5524fb4, type: 2}
