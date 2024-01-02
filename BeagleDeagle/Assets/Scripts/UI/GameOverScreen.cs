@@ -23,6 +23,8 @@ public class GameOverScreen : MonoBehaviour
     // The button to be selected when the victory screen appears
     [SerializeField] private GameObject continueButtonGameObject;
 
+    [SerializeField, Range(1f, 5f)] private float delayUntilGameOver;
+
     private void Start()
     {
         foreach (GameObject gameObj in gameOverGameObjects)
@@ -47,14 +49,20 @@ public class GameOverScreen : MonoBehaviour
     private void DeathScreen()
     {
         menuTitle.text = "You Died!";
-        
-        ShowScreen();
+
+        StartCoroutine(DelayUntilGameOverScreen());
     }
 
     private void VictoryScreen()
     {
         menuTitle.text = "You Win!";
         
+        ShowScreen();
+    }
+
+    private IEnumerator DelayUntilGameOverScreen()
+    {
+        yield return new WaitForSeconds(delayUntilGameOver);
         ShowScreen();
     }
 

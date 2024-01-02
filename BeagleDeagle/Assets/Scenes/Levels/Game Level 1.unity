@@ -24676,6 +24676,7 @@ MonoBehaviour:
   - {fileID: 760692578}
   menuTitle: {fileID: 760692580}
   continueButtonGameObject: {fileID: 1619077673}
+  delayUntilGameOver: 3
 --- !u!1 &1993452181
 GameObject:
   m_ObjectHideFlags: 0

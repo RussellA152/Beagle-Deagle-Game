@@ -48,7 +48,8 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
 
     private void Update()
     {
-        CheckHealthRegeneration();
+        if(!_isDead)
+            CheckHealthRegeneration();
     }
 
     public virtual void ModifyHealth(float amount)
