@@ -69,7 +69,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3448442548241916601, guid: acbcc08f22f2d0c4db2cf1fe751bb466, type: 3}
       propertyPath: clearBehavior
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3448442548241916602, guid: acbcc08f22f2d0c4db2cf1fe751bb466, type: 3}
       propertyPath: m_RootOrder
@@ -184,7 +184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3448442548241916601, guid: acbcc08f22f2d0c4db2cf1fe751bb466, type: 3}
       propertyPath: clearBehavior
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3448442548241916602, guid: acbcc08f22f2d0c4db2cf1fe751bb466, type: 3}
       propertyPath: m_RootOrder
@@ -443,7 +443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224359172294465387, guid: 7991853ab8fb7e9499bc95650f099d40, type: 3}
       propertyPath: clearBehavior
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5224359172451660146, guid: 7991853ab8fb7e9499bc95650f099d40, type: 3}
       propertyPath: m_LocalScale.x
@@ -487,23 +487,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5224359173087392338, guid: 7991853ab8fb7e9499bc95650f099d40, type: 3}
       propertyPath: m_Range
-      value: 4
+      value: 10.204379
       objectReference: {fileID: 0}
     - target: {fileID: 5224359173087392338, guid: 7991853ab8fb7e9499bc95650f099d40, type: 3}
       propertyPath: m_Color.b
-      value: 0.05240625
+      value: 0.051320706
       objectReference: {fileID: 0}
     - target: {fileID: 5224359173087392338, guid: 7991853ab8fb7e9499bc95650f099d40, type: 3}
       propertyPath: m_Color.g
-      value: 0.17468749
+      value: 0.34921053
       objectReference: {fileID: 0}
     - target: {fileID: 5224359173087392338, guid: 7991853ab8fb7e9499bc95650f099d40, type: 3}
       propertyPath: m_Color.r
-      value: 0.559
+      value: 0.7245672
       objectReference: {fileID: 0}
     - target: {fileID: 5224359173087392338, guid: 7991853ab8fb7e9499bc95650f099d40, type: 3}
       propertyPath: m_Intensity
-      value: 0
+      value: 4.36582
       objectReference: {fileID: 0}
     - target: {fileID: 5480061073565115534, guid: 7991853ab8fb7e9499bc95650f099d40, type: 3}
       propertyPath: m_LocalScale.x
@@ -611,7 +611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3448442548241916601, guid: acbcc08f22f2d0c4db2cf1fe751bb466, type: 3}
       propertyPath: clearBehavior
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3448442548241916602, guid: acbcc08f22f2d0c4db2cf1fe751bb466, type: 3}
       propertyPath: m_RootOrder
@@ -726,7 +726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3448442548241916601, guid: acbcc08f22f2d0c4db2cf1fe751bb466, type: 3}
       propertyPath: clearBehavior
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3448442548241916602, guid: acbcc08f22f2d0c4db2cf1fe751bb466, type: 3}
       propertyPath: m_RootOrder
