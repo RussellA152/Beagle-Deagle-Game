@@ -19,7 +19,8 @@ public class BomberAttack : AIAttack<BomberEnemyData>
         explosiveScript.SetDamage(enemyScriptableObject.attackDamage);
         explosiveScript.SetDuration(enemyScriptableObject.explosiveDuration);
         
-        explosivePrefab.transform.position = transform.position;
+        //explosivePrefab.transform.position = transform.position;
+        
         explosivePrefab.SetActive(true);
         
         // Give bomber's explosive the data it needs

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e4ffcfe5c934f4c82d783ebc8aa316, type: 3}
+  m_Name: ultimate_nuke_lvl_20_option_1
+  m_EditorClassIdentifier: 
+  abilityName: Fallout
+  description: Nuke leaves behind a radiation field that applies DOT to enemies that
+    enter. Slightly larger blast radius.
+  abilitySprite: {fileID: 21300000, guid: 47147c2120c657a49b8ef77fc8a073fc, type: 3}
+  abilityDamage: 200
+  cooldown: 25
+  duration: 10
+  activationSound: {fileID: 8300000, guid: fb3628707a50858409db0f715e738651, type: 3}
+  activationSoundVolume: 0.5
+  startDelay: 0
+  nukePrefab: {fileID: 8164879991046117895, guid: 04d23e21491c2d046997d1b62cfca20f, type: 3}
+  nukeData: {fileID: 11400000, guid: c0e56d5c9399b9a4c8a5a68d7a112937, type: 2}
+  statusEffects: {fileID: 11400000, guid: 643eecbca194f044bac5ed932d6fc5b8, type: 2}

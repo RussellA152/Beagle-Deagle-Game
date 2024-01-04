@@ -13,8 +13,6 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
 
         nuclearBomb.SetActive(false);
 
-        nuclearBomb.transform.position = gameObject.transform.position;
-
         IExplosiveUpdatable explosiveScript = nuclearBomb.GetComponent<IExplosiveUpdatable>();
 
         // Give the nuke the data it needs

@@ -24,7 +24,12 @@ public class Nuke : Explosive
 
         StartCoroutine(BrieflyShowGizmo());
     }
-    
+
+    protected override void PlayActivationSound()
+    {
+        AudioClipPlayer.PlayForDurationAudioClip(ExplosiveData.activationSound,ExplosiveData.explosiveSoundVolume, ExplosiveData.detonationTime);
+    }
+
 
     private void OnDrawGizmos()
     {
@@ -35,11 +40,11 @@ public class Nuke : Explosive
             Gizmos.DrawWireSphere(transform.position, ExplosiveData.explosiveRadius);
         }
     }
-
+    
     private IEnumerator BrieflyShowGizmo()
     {
         _explosionHappening = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         _explosionHappening = false;
     }
     

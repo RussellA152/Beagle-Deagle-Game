@@ -23,7 +23,9 @@ public class ExplosiveData : ScriptableObject
     [Header("Screen Shaking")] 
     public ScreenShakeData screenShakeData;
 
-    [Header("Sounds")]
+    [Header("Sounds")] 
+    // What sound is played when this explosive activates?
+    public AudioClip activationSound;
     // What sound is played when this detonates?
     public AudioClip[] explosionClips;
     [Range(0.1f, 1f)]

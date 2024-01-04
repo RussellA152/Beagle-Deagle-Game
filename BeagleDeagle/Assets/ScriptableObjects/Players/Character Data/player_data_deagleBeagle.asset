@@ -28,5 +28,5 @@ MonoBehaviour:
   gunData: {fileID: 11400000, guid: 487a1b6c73e208344acd0c1c91b30cbc, type: 2}
   passiveAbilityData: {fileID: 11400000, guid: 7654338b5d8bcaf47a42c1f6ab6e3cfb, type: 2}
   utilityAbilityData: {fileID: 11400000, guid: f5e58791645c70d4c81f3d817d054320, type: 2}
-  ultimateAbilityData: {fileID: 11400000, guid: 8d978ad8039192b42b0c5c89926fcb38, type: 2}
+  ultimateAbilityData: {fileID: 11400000, guid: 70fb5495b437b1f4788f9e04c2e8cc5e, type: 2}
   xpNeededPerLevel: f4010000e8030000dc050000d0070000c4090000b80b0000a00f00008813000070170000581b0000401f00002224000004290000e02e0000bc340000983a00006e410000444800001a4f0000f0550000

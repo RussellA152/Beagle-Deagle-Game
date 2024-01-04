@@ -26,13 +26,11 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
 
     private int _explosiveParticlePoolKey;
 
+    [Header("Required Scripts")]
     protected AreaOfEffect AreaOfEffectScript;
-
     protected CheckObstruction ObstructionScript;
-
     private CameraShaker _cameraShaker;
-
-    private AudioClipPlayer _audioClipPlayer;
+    protected AudioClipPlayer AudioClipPlayer;
     
     protected int WallLayerMask;
 
@@ -50,7 +48,7 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
             GetComponentInChildren<AreaOfEffect>();
 
         _cameraShaker = GetComponent<CameraShaker>();
-        _audioClipPlayer = GetComponent<AudioClipPlayer>();
+        AudioClipPlayer = GetComponent<AudioClipPlayer>();
         
         // Find explosive effect if this gameObject needs one
         if(explosiveParticleGameObject != null)
@@ -79,8 +77,12 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
 
     public virtual void Activate(Vector2 aimDirection)
     {
+        // Activate AOE, if there is one
         if(AreaOfEffectScript != null)
             AreaOfEffectScript.UpdateAOEData(ExplosiveData.aoeData);
+        
+        // Play an activation sound, if there is one
+        PlayActivationSound();
     }
 
     
@@ -150,11 +152,18 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
         }
     }
 
+    protected virtual void PlayActivationSound()
+    {
+        // Play an activation sound until this explosive detonating
+        AudioClipPlayer.PlayGeneralAudioClip(ExplosiveData.activationSound,ExplosiveData.explosiveSoundVolume);
+    }
     private void PlayExplosionSound()
     {
-        _audioClipPlayer.PlayRandomGeneralAudioClip(ExplosiveData.explosionClips, ExplosiveData.explosiveSoundVolume);
+        AudioClipPlayer.PlayRandomGeneralAudioClip(ExplosiveData.explosionClips, ExplosiveData.explosiveSoundVolume);
         
     }
+    
+    
     
     private void PlayParticleEffect()
     {

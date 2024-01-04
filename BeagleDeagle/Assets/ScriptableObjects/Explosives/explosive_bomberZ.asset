@@ -21,8 +21,9 @@ MonoBehaviour:
   detonationTime: 0
   aoeData: {fileID: 0}
   screenShakeData: {fileID: 11400000, guid: 936398f2c4026d14d99c7b549546794d, type: 2}
+  activationSound: {fileID: 0}
   explosionClips:
   - {fileID: 8300000, guid: 4b65fe8a0b9608043aa5a08b776a29a0, type: 3}
   - {fileID: 8300000, guid: 2bb4b6d0060793b46b8a169d385406cb, type: 3}
   - {fileID: 8300000, guid: bcf131a1c7af8ce4891bd2dce9f4c30d, type: 3}
-  explosiveSoundVolume: 0.75
+  explosiveSoundVolume: 0.5
