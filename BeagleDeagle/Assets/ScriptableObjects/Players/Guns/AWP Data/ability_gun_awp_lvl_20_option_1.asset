@@ -23,5 +23,5 @@ MonoBehaviour:
   statusEffects: {fileID: 0}
   bulletSpawnLocation: {x: 2.6, y: 0.377}
   bulletSpread: 0.5
-  penetrationCount: 20
+  penetrationCount: 100
   abilityData: {fileID: 11400000, guid: f660080dbe3c6a04e80c2c3e9908651c, type: 2}

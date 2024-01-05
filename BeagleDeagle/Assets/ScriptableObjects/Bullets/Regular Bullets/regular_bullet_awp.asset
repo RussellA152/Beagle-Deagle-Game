@@ -36,4 +36,4 @@ MonoBehaviour:
   hitWallSound:
   - {fileID: 8300000, guid: 2c278f6684af6e2469e755b7ae7da7d1, type: 3}
   volume: 0.5
-  duration: 3
+  duration: 6

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ultimate_awp_lvl_20_option_2
   m_EditorClassIdentifier: 
   abilityName: Target Priority
-  description: Bullets deal increased damage for each enemy pierced.
+  description: ' Damage increases by 10% (of base damage) for each enemy pierced.
+    Pierces infinitely.'
   abilitySprite: {fileID: 21300000, guid: 5f9e104afa36dd3429900d6332b7a411, type: 3}
   abilityDamage: 200
   cooldown: 25

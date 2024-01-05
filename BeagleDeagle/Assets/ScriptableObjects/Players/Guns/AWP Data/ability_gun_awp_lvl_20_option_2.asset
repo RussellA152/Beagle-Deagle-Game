@@ -18,10 +18,10 @@ MonoBehaviour:
   fireRate: 1.5
   magazineSize: 4
   totalReloadTime: 2.5
-  bulletPrefab: {fileID: 8164879991046117895, guid: 1c225e61e7cfda8428a8c9435cf8b683, type: 3}
-  bulletData: {fileID: 11400000, guid: 78505bd38dfc3ca4ea874939b519bf85, type: 2}
+  bulletPrefab: {fileID: 8164879991046117895, guid: 22e386a42542c5c45bb654b426b04807, type: 3}
+  bulletData: {fileID: 11400000, guid: 9e30134446d56664789d436e6c442d73, type: 2}
   statusEffects: {fileID: 0}
   bulletSpawnLocation: {x: 2.6, y: 0.377}
   bulletSpread: 0.5
-  penetrationCount: 20
-  abilityData: {fileID: 11400000, guid: f660080dbe3c6a04e80c2c3e9908651c, type: 2}
+  penetrationCount: 100
+  abilityData: {fileID: 11400000, guid: 0a266fe27a68c0b4fb54f620292b1bfe, type: 2}

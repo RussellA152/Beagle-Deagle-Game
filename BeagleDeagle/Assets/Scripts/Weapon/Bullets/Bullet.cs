@@ -206,7 +206,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     }
 
     // Call this function each time this bullet hits their target
-    private void Penetrate()
+    protected virtual void Penetrate()
     {
         _amountPenetrated++;
 
@@ -218,6 +218,8 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
             else
                 gameObject.SetActive(false);
         }
+        
+        Debug.Log("Penetrated: " + _amountPenetrated);
 
     }
 

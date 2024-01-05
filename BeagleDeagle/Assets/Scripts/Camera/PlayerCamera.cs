@@ -10,9 +10,13 @@ public class PlayerCamera : MonoBehaviour
     public static PlayerCamera Instance;
     [SerializeField] private PlayerEvents playerEvents;
 
+    private Camera mainCamera;
+
     private CinemachineVirtualCamera _cinemachineVirtualCamera;
     private CinemachineImpulseListener _impulseListener;
     private CinemachineImpulseDefinition _impulseDefinition;
+    
+    
     
 
     private void Awake()
@@ -23,11 +27,14 @@ public class PlayerCamera : MonoBehaviour
         if (Instance == null)
             Instance = this;
         
+        mainCamera = Camera.main;
+        
     }
 
     private void OnEnable()
     {
         playerEvents.givePlayerGameObject += SetCameraFollowTarget;
+        
     }
 
     private void OnDisable()
@@ -63,6 +70,29 @@ public class PlayerCamera : MonoBehaviour
         _impulseListener.m_ReactionSettings.m_AmplitudeGain = screenShakeData.listenerAmplitude;
         _impulseListener.m_ReactionSettings.m_FrequencyGain = screenShakeData.listenerFrequency;
         _impulseListener.m_ReactionSettings.m_Duration = screenShakeData.listenerDuration;
+    }
+
+    public bool IsTransformOffCameraView(Transform transform)
+    {
+        Vector3 viewPos = mainCamera.WorldToViewportPoint(transform.position);
+        
+        if ((viewPos.x < 0 || viewPos.x > 1 || viewPos.y < 0 || viewPos.y > 1))
+        {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public Vector2 GetScreenCenter()
+    {
+        return new Vector2(Screen.width / 2, Screen.height / 2);
+    }
+
+    public Camera GetMainCamera()
+    {
+        return mainCamera;
     }
 
     ///-///////////////////////////////////////////////////////////
