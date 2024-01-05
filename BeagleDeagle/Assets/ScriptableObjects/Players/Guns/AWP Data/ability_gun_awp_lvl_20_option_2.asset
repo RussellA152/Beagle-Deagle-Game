@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f000695150f3216448aeec1e683707db, type: 3}
+  m_Name: ability_gun_awp_lvl_20_option_2
+  m_EditorClassIdentifier: 
+  gunName: AWP Ramp Up
+  description: Shots deal increased damage for each enemy pierced.
+  gunEffectsData: {fileID: 11400000, guid: 17a63aff508dc3d44aa4a79eb4a3aaef, type: 2}
+  fireRate: 1.5
+  magazineSize: 4
+  totalReloadTime: 2.5
+  bulletPrefab: {fileID: 8164879991046117895, guid: 1c225e61e7cfda8428a8c9435cf8b683, type: 3}
+  bulletData: {fileID: 11400000, guid: 78505bd38dfc3ca4ea874939b519bf85, type: 2}
+  statusEffects: {fileID: 0}
+  bulletSpawnLocation: {x: 2.6, y: 0.377}
+  bulletSpread: 0.5
+  penetrationCount: 20
+  abilityData: {fileID: 11400000, guid: f660080dbe3c6a04e80c2c3e9908651c, type: 2}

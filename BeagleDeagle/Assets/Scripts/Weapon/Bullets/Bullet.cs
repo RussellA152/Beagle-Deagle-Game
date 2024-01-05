@@ -62,7 +62,13 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         if(inanimateObjectHitParticleEffect != null)
             _inanimateHitParticlePoolKey = inanimateObjectHitParticleEffect.GetComponent<IPoolable>().PoolKey;
     }
-    
+
+    protected virtual void OnEnable()
+    {
+        
+    }
+
+
     protected virtual void OnDisable()
     {
         _hitEnemies.Clear();
@@ -85,7 +91,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         StopAllCoroutines();
     }
 
-    public void ActivateBullet()
+    public virtual void ActivateBullet()
     {
         if (bulletData != null)
         {

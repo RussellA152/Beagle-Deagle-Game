@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ultimate_nuke_lvl_20_option_2
   m_EditorClassIdentifier: 
   abilityName: World War
-  description: Drop  4 extra nukes with accelerated detonation upon activation.
+  description: Drop 4 extra nukes with accelerated detonation upon activation.
   abilitySprite: {fileID: 21300000, guid: 47147c2120c657a49b8ef77fc8a073fc, type: 3}
   abilityDamage: 200
   cooldown: 25

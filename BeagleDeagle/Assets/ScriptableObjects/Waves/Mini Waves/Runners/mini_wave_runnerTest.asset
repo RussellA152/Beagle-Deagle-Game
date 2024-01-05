@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   miniWaveName: Runner Zombie Waves
   delayBetweenSpawn: 2
-  enemiesPerSpawn: 1
+  enemiesPerSpawn: 5
   waveDuration: 60
   enemyPrefab: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
   enemyData: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
