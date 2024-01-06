@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa03415b034fae140b29c74224498634, type: 3}
+  m_Name: explosive_bomberRegular
+  m_EditorClassIdentifier: 
+  physicsMaterial: {fileID: 0}
+  hitThroughWalls: 0
+  explosiveRadius: 4
+  whatDoesExplosionHit:
+    serializedVersion: 2
+    m_Bits: 16768
+  detonationTime: 0
+  aoeData: {fileID: 0}
+  screenShakeData: {fileID: 11400000, guid: 936398f2c4026d14d99c7b549546794d, type: 2}
+  activationSound: {fileID: 0}
+  explosionClips:
+  - {fileID: 8300000, guid: 4b65fe8a0b9608043aa5a08b776a29a0, type: 3}
+  - {fileID: 8300000, guid: 2bb4b6d0060793b46b8a169d385406cb, type: 3}
+  - {fileID: 8300000, guid: bcf131a1c7af8ce4891bd2dce9f4c30d, type: 3}
+  explosiveSoundVolume: 0.5

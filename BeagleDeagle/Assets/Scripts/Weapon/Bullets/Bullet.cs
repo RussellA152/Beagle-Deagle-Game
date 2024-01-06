@@ -264,6 +264,11 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     {
         yield return new WaitForSeconds(bulletData.GetLifeTime());
         
+        OnExpiration();
+    }
+
+    protected virtual void OnExpiration()
+    {
         if(shouldDestroy)
             Destroy(gameObject);
         else

@@ -10,7 +10,9 @@ public class EnemyData : ScriptableObject
     // Name to display in-game
     public string characterName;
     
+    [Header("Appearance")]
     public RuntimeAnimatorController animatorController;
+    public Color spriteColor;
 
     [Header("Health")]
     [Range(1f, 2500f)]

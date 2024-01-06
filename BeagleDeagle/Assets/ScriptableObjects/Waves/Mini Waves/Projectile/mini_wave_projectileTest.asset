@@ -17,4 +17,4 @@ MonoBehaviour:
   enemiesPerSpawn: 1
   waveDuration: 60
   enemyPrefab: {fileID: 3711592478197892634, guid: 1a4d3eae861f95f4c861e3b8b5bb6df0, type: 3}
-  enemyData: {fileID: 11400000, guid: d97f4e9283956124cb59f55f59a122be, type: 2}
+  enemyData: {fileID: 11400000, guid: 5d33113122d215a4f8e1a724621aced6, type: 2}

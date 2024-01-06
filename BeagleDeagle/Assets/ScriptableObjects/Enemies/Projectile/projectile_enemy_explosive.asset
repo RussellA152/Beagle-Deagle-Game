@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0609f4a24628c1e468147ee54aa07378, type: 3}
+  m_Name: projectile_enemy_explosive
+  m_EditorClassIdentifier: 
+  characterName: Projectile Enemy
+  animatorController: {fileID: 9100000, guid: 7ec07fe532d25ee48843c2c0f4b1a230, type: 2}
+  spriteColor: {r: 1, g: 0.5843237, b: 0, a: 1}
+  maxHealth: 100
+  movementSpeed: 5
+  attackDamage: 100
+  attackCooldown: 2.5
+  attackRange: 10
+  chaseRange: 150
+  attackLayer:
+    serializedVersion: 2
+    m_Bits: 16512
+  chaseLayer:
+    serializedVersion: 2
+    m_Bits: 16512
+  currencyRewardOnDeath:
+    xpAmount: 150
+    moneyAmount: 0
+  bulletPrefab: {fileID: 8164879991046117895, guid: 385590d839a20bd45bbdf3a92ebef177, type: 3}
+  bulletData: {fileID: 11400000, guid: fd5f3bc9731d5314690c61a0c060d79b, type: 2}
+  statusEffects: {fileID: 0}
+  bulletPenetration: 1
+  numberOfProjectiles: 1

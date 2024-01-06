@@ -17,4 +17,5 @@ MonoBehaviour:
   miniWaves:
   - {fileID: 11400000, guid: 312bd9f01ca191848bc5f6dfb2eb3ed0, type: 2}
   - {fileID: 11400000, guid: e487ee3588be999488df2a7048ef10cc, type: 2}
+  - {fileID: 11400000, guid: 941f664ebf350384e9d92b5e7e3c6b8d, type: 2}
   duration: 60

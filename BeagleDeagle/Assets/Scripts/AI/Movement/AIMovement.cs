@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable//, IModifierWithParticle
+public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, IEnemyDataUpdatable
 {
     
     [Header("Data to Use")]
@@ -215,4 +215,9 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable//,
         }
     }
 
+    public void UpdateScriptableObject(EnemyData scriptableObject)
+    {
+        enemyScriptableObject = scriptableObject;
+        _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
+    }
 }

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa03415b034fae140b29c74224498634, type: 3}
-  m_Name: explosive_bomberZ
+  m_Name: explosive_bomberSlow
   m_EditorClassIdentifier: 
   physicsMaterial: {fileID: 0}
   hitThroughWalls: 0
-  explosiveRadius: 4
+  explosiveRadius: 6
   whatDoesExplosionHit:
     serializedVersion: 2
     m_Bits: 16768

@@ -76,6 +76,8 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
     public void UpdateScriptableObject(EnemyData scriptableObject)
     {
         enemyData = scriptableObject;
+        
+        _currentHealth = enemyData.maxHealth;
     }
 
     #region HealthModifiers

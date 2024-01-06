@@ -10,6 +10,9 @@ public class ExplosiveBulletData : BulletData
     
     [Range(0, 1000f)]
     public float explosiveDamage;
+
+    // When this bullet expires, should it explode?
+    public bool explodeOnExpiration;
     
     [Header("Lifetime For This Bullet")]
     [SerializeField] private float duration;

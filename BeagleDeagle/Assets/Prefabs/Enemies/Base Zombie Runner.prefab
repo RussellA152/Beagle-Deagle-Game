@@ -284,6 +284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   _enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
+  spriteColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &508925504358572946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +345,6 @@ MonoBehaviour:
   enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
   damageModifiers: []
   attackSpeedModifiers: []
-  damageParticleEffect: {fileID: 7371912302769336663, guid: 23b0a20e6957fd54995c5dcea11f49f9, type: 3}
 --- !u!114 &3277179601076203350
 MonoBehaviour:
   m_ObjectHideFlags: 0

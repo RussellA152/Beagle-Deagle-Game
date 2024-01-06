@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 public class BasicAnimationHandler : MonoBehaviour
 {
     [HideInInspector] public Animator animator;
+
+    protected SpriteRenderer SpriteRenderer;
     
     protected int IsIdle;
     protected int IsMoving;
@@ -18,6 +20,8 @@ public class BasicAnimationHandler : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+
+        SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     protected virtual void Start()

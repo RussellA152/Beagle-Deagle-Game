@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0609f4a24628c1e468147ee54aa07378, type: 3}
-  m_Name: projectile_enemy
+  m_Name: projectile_enemy_regular
   m_EditorClassIdentifier: 
   characterName: Projectile Enemy
   animatorController: {fileID: 9100000, guid: 7ec07fe532d25ee48843c2c0f4b1a230, type: 2}
+  spriteColor: {r: 1, g: 1, b: 1, a: 1}
   maxHealth: 100
-  movementSpeed: 6
+  movementSpeed: 5
   attackDamage: 50
   attackCooldown: 2.5
   attackRange: 10
@@ -33,4 +34,4 @@ MonoBehaviour:
   bulletData: {fileID: 11400000, guid: be1d615a5892cc443a06ea3aed7be291, type: 2}
   statusEffects: {fileID: 0}
   bulletPenetration: 1
-  numberOfProjectiles: 0
+  numberOfProjectiles: 1

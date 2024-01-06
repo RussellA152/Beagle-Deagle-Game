@@ -7,7 +7,9 @@ public class ZombieAnimationHandler : BasicAnimationHandler, IEnemyDataUpdatable
 {
     // Enemy scriptable object contains a runtime animator controller
     [SerializeField] private EnemyData _enemyScriptableObject;
-    
+
+    private Color _originalColor;
+
     // Enemies can be stunned (unlike player), so we need to play an animation for that
     private int _isStunned;
     
@@ -25,6 +27,9 @@ public class ZombieAnimationHandler : BasicAnimationHandler, IEnemyDataUpdatable
         _isAttacking = Animator.StringToHash("isAttacking");
         _isStunned = Animator.StringToHash("isStunned");
         _attackSpeed = Animator.StringToHash("attackSpeed");
+
+        _originalColor = SpriteRenderer.color;
+
     }
 
     protected override void OnEnable()
@@ -33,6 +38,11 @@ public class ZombieAnimationHandler : BasicAnimationHandler, IEnemyDataUpdatable
         
         // Reset animation movement speed
         animator.SetFloat(_attackSpeed, 1f);
+
+        // Change the color of this sprite
+        // TODO: Will eventually just use new sprites instead of colors
+        SpriteRenderer.color = _enemyScriptableObject.spriteColor;
+
     }
 
     public override void PlayIdleAnimation()
@@ -93,5 +103,8 @@ public class ZombieAnimationHandler : BasicAnimationHandler, IEnemyDataUpdatable
     public void UpdateScriptableObject(EnemyData scriptableObject)
     {
         _enemyScriptableObject = scriptableObject;
+        
+        // TODO: Will eventually just use new sprites instead of colors
+        SpriteRenderer.color = _enemyScriptableObject.spriteColor;
     }
 }

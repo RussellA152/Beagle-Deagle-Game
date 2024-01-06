@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2be1097169d17ba4d814782640071766, type: 3}
-  m_Name: runner_enemy
+  m_Name: runner_enemy_regular
   m_EditorClassIdentifier: 
   characterName: Runner
   animatorController: {fileID: 9100000, guid: 8e94e09a0d339a447a28fad4a00ccb89, type: 2}
+  spriteColor: {r: 1, g: 1, b: 1, a: 1}
   maxHealth: 150
   movementSpeed: 5
   attackDamage: 100

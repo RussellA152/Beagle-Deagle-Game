@@ -162,6 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   _enemyScriptableObject: {fileID: 11400000, guid: 71d70c706a557ab40b070f97ff8e034f, type: 2}
+  spriteColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &4259895515871267229
 MonoBehaviour:
   m_ObjectHideFlags: 0

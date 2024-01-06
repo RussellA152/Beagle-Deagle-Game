@@ -30,6 +30,11 @@ public class ExplosiveBullet : Bullet<ExplosiveBulletData>
     {
         base.DamageOnHit(objectHit);
         
+        Explode();
+    }
+
+    private void Explode()
+    {
         PlayParticleEffect();
         
         // Play explosive sound
@@ -48,7 +53,15 @@ public class ExplosiveBullet : Bullet<ExplosiveBulletData>
             healthScript?.ModifyHealth(-1f * bulletData.explosiveDamage);
         }
     }
-    
+
+    protected override void OnExpiration()
+    {
+        if(bulletData.explodeOnExpiration)
+            Explode();
+            
+        base.OnExpiration();
+    }
+
     private void PlayParticleEffect()
     {
         GameObject newParticleEffect = ObjectPooler.Instance.GetPooledObject(_explosiveParticlePoolKey);
