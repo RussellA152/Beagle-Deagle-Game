@@ -29,6 +29,7 @@ public class RewardSelectionUI : MonoBehaviour
     
 
     private List<Button> _allButtons = new List<Button>();
+    private Queue<List<LevelUpReward>> _rewardQueue = new Queue<List<LevelUpReward>>();
 
     // Need access to player to give them reward
     private GameObject _playerGameObject;
@@ -42,6 +43,9 @@ public class RewardSelectionUI : MonoBehaviour
 
     // Did the player pick a reward? If so, don't allow any other choices
     private bool _rewardWasChosen;
+    
+    // Is there currently a reward being displayed on screen? If so, wait until that one goes away for another to appear
+    private bool _rewardIsBeingDisplayed;
 
     private void Awake()
     {
@@ -50,6 +54,8 @@ public class RewardSelectionUI : MonoBehaviour
 
     private void OnEnable()
     {
+        _rewardQueue.Clear();
+        
         playerEvents.givePlayerGameObject += FindPlayer;
 
         playerEvents.onPlayerReceivedOptionalRewards += AddChoiceButton;
@@ -71,6 +77,7 @@ public class RewardSelectionUI : MonoBehaviour
         optionalRewardPanel.enabled = false;
         
         _rewardWasChosen = false;
+        _rewardIsBeingDisplayed = false;
     }
 
     private void FindPlayer(GameObject pGameObject)
@@ -80,6 +87,18 @@ public class RewardSelectionUI : MonoBehaviour
 
     public void AddChoiceButton(List<LevelUpReward> rewardChoices)
     {
+        // Add any rewards from a level to a queue (prevents multiple rewards from differing levels from appearing at once)
+        _rewardQueue.Enqueue(rewardChoices);
+        
+        // Don't display more than one set of rewards at a time
+        if(!_rewardIsBeingDisplayed)
+            AddChoices(rewardChoices);
+    }
+
+    private void AddChoices(List<LevelUpReward> rewardChoices)
+    {
+        _rewardIsBeingDisplayed = true;
+        
         gamePauser.PauseGameAutomatically();
         
         optionalRewardPanel.enabled = true;
@@ -105,7 +124,6 @@ public class RewardSelectionUI : MonoBehaviour
         
         // Set UI EventSystem's "firstSelected" gameObject to the first reward choice button
         EventSystem.current.SetSelectedGameObject(_allButtons[0].gameObject);
-
     }
 
     private void GiveRewardToPlayerOnClick(LevelUpReward chosenLevelUpReward)
@@ -117,10 +135,20 @@ public class RewardSelectionUI : MonoBehaviour
 
         _rewardWasChosen = true;
         
+        _rewardIsBeingDisplayed = false;
+        
+        // Remove the current set of rewards from the queue, because the player has made their choice
+        _rewardQueue.Dequeue();
+        
         // Have reward give its data to the player
         chosenLevelUpReward.GiveDataToPlayer(_playerGameObject);
         
         RemoveAllButtons();
+        
+        // If there are still other rewards to be chosen, then display them to the player
+        if(_rewardQueue.Count > 0)
+            AddChoices(_rewardQueue.Peek());
+        
     }
     
     ///-///////////////////////////////////////////////////////////
