@@ -234,6 +234,7 @@ GameObject:
   - component: {fileID: 5628253088591228291}
   - component: {fileID: 611969991595103788}
   - component: {fileID: 504447593957459383}
+  - component: {fileID: 6017469622240923607}
   - component: {fileID: 1777428645584621179}
   - component: {fileID: 1777428645584621181}
   - component: {fileID: -5207931082719075331}
@@ -359,7 +360,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  cooldownSystem: {fileID: 0}
   aimCollider: {fileID: 3573752587559370938}
   weaponAimTransform: {fileID: 1777428646219782325}
   rotationRadius: 0.1
@@ -391,6 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba08b74eeb911614ca6401f78022aaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assignableIdCount: 20
 --- !u!114 &-2774385688362917830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,6 +449,18 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   ultimateCooldownModifiers: []
   _previousWeaponData: {fileID: 0}
+--- !u!114 &6017469622240923607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777428645584621176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5588afce5839fdf4db5b4683b7d74262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &1777428645584621179
 Rigidbody2D:
   serializedVersion: 4
@@ -966,6 +979,10 @@ PrefabInstance:
       propertyPath: playerData
       value: 
       objectReference: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
+    - target: {fileID: 4077318060314352052, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+      propertyPath: modifierListGameObject
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4222888226475715275, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.504

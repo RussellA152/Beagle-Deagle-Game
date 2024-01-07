@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: rewards_deagleBeagle
   m_EditorClassIdentifier: 
   gunRewards:
-  - LevelGiven: 3
+  - LevelGiven: 10
     IsChosen: 1
     Icon: {fileID: 0}
     gunData: {fileID: 11400000, guid: 9221d5724147de946b4cc12cfb6f6b88, type: 2}
-  - LevelGiven: 3
+  - LevelGiven: 10
     IsChosen: 1
     Icon: {fileID: 0}
     gunData: {fileID: 11400000, guid: d4e9612faa29d434e9b8f0eb2705af3e, type: 2}
@@ -40,20 +40,20 @@ MonoBehaviour:
     weaponStatModifierData: {fileID: 11400000, guid: 7d10cddf1523aa74f99ba02fce452211, type: 2}
   passiveRewards: []
   utilityRewards:
-  - LevelGiven: 5
+  - LevelGiven: 15
     IsChosen: 1
     Icon: {fileID: 0}
     utilityAbilityData: {fileID: 11400000, guid: f346123fc01f8d848945478d5bbe56e3, type: 2}
-  - LevelGiven: 5
+  - LevelGiven: 15
     IsChosen: 1
     Icon: {fileID: 0}
     utilityAbilityData: {fileID: 11400000, guid: b016ea26586188240b477b409be1b83a, type: 2}
   ultimateRewards:
-  - LevelGiven: 2
+  - LevelGiven: 20
     IsChosen: 1
     Icon: {fileID: 0}
     ultimateAbilityData: {fileID: 11400000, guid: 70fb5495b437b1f4788f9e04c2e8cc5e, type: 2}
-  - LevelGiven: 2
+  - LevelGiven: 20
     IsChosen: 1
     Icon: {fileID: 0}
     ultimateAbilityData: {fileID: 11400000, guid: f76ad2440b427164fb47bf397b92fef3, type: 2}

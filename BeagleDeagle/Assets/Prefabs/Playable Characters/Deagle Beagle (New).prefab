@@ -237,6 +237,7 @@ GameObject:
   - component: {fileID: 1399063824031874519}
   - component: {fileID: 4636272489488665696}
   - component: {fileID: 443772047473096241}
+  - component: {fileID: 5735584207337465472}
   - component: {fileID: 2439171421654748756}
   - component: {fileID: 7025367066541412181}
   - component: {fileID: 7354758610668571234}
@@ -450,6 +451,18 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
   ultimateCooldownModifiers: []
+--- !u!114 &5735584207337465472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439171421654748759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5588afce5839fdf4db5b4683b7d74262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &2439171421654748756
 Rigidbody2D:
   serializedVersion: 4
@@ -977,6 +990,10 @@ PrefabInstance:
       propertyPath: weaponData
       value: 
       objectReference: {fileID: 11400000, guid: 487a1b6c73e208344acd0c1c91b30cbc, type: 2}
+    - target: {fileID: 4077318060314352052, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+      propertyPath: modifierListGameObject
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4222888226475715275, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.821
