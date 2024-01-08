@@ -32,6 +32,8 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
         
         RegisterAllAddModifierMethods();
         RegisterAllRemoveModifierMethods();
+        
+        
     }
 
     private void Start()
@@ -43,12 +45,14 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
 
         // After getting hit, how does it take to start regenerating health?
         CooldownDuration = healthRegenDelay;
-
+        
+        // Passives occur in start, so put this in on enable
         _currentHealth = playerData.maxHealth * _bonusMaxHealth;
-
+        
         // Tell all listeners the value of the player's current and max health
         playerEvents.InvokeCurrentHealthEvent(_currentHealth);
         playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * _bonusMaxHealth);
+        
 
     }
 
@@ -134,8 +138,11 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
         maxHealthModifiers.Add(modifierToAdd);
         _bonusMaxHealth += modifierToAdd.bonusMaxHealth;
 
+        _currentHealth = playerData.maxHealth * _bonusMaxHealth;
+        
         playerEvents.InvokeCurrentHealthEvent(_currentHealth);
         playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * _bonusMaxHealth);
+        
     }
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
@@ -143,8 +150,11 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
         maxHealthModifiers.Remove(modifierToRemove);
         _bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
         
+        _currentHealth = playerData.maxHealth * _bonusMaxHealth;
+        
         playerEvents.InvokeCurrentHealthEvent(_currentHealth);
         playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * _bonusMaxHealth);
+
     }
     #endregion
 
