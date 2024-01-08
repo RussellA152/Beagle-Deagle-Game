@@ -229,12 +229,12 @@ GameObject:
   - component: {fileID: 1777428645584621154}
   - component: {fileID: 1777428645584621180}
   - component: {fileID: 1777428645584621153}
+  - component: {fileID: -7252143793663374725}
   - component: {fileID: 6218275219637812029}
   - component: {fileID: -2774385688362917830}
   - component: {fileID: 5628253088591228291}
   - component: {fileID: 611969991595103788}
   - component: {fileID: 504447593957459383}
-  - component: {fileID: 6017469622240923607}
   - component: {fileID: 1777428645584621179}
   - component: {fileID: 1777428645584621181}
   - component: {fileID: -5207931082719075331}
@@ -379,6 +379,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageOverTimeEffects: []
+--- !u!114 &-7252143793663374725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777428645584621176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57d5f39560b5bfd44b31f67e154e292a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosiveRadiusModifiers: []
 --- !u!114 &6218275219637812029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,18 +462,6 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   ultimateCooldownModifiers: []
   _previousWeaponData: {fileID: 0}
---- !u!114 &6017469622240923607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777428645584621176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5588afce5839fdf4db5b4683b7d74262, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &1777428645584621179
 Rigidbody2D:
   serializedVersion: 4

@@ -25,6 +25,12 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
 
         IExplosiveUpdatable areaGrenadeComponent = grenade.GetComponent<IExplosiveUpdatable>();
         
+        // Give smoke grenade any extra modifiers (ex. giving grenade "bonusExplosiveRadius")
+        foreach (IHasMiscellaneousModifier hasMiscellaneousModifier in grenade.GetComponents<IHasMiscellaneousModifier>())
+        {
+            hasMiscellaneousModifier.GiveMiscellaneousModifierList(MiscellaneousModifierList);
+        }
+        
         areaGrenadeComponent.SetDamage(UtilityData.abilityDamage);
         areaGrenadeComponent.SetDuration(UtilityData.duration); ;
 

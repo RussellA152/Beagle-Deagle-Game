@@ -14,6 +14,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     protected T UltimateAbilityData;
 
     private CooldownSystem _cooldownSystem;
+    protected MiscellaneousModifierList MiscellaneousModifierList;
     
     private PlayerInput _playerInput;
 
@@ -31,6 +32,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
         _playerInput = GetComponent<PlayerInput>();
         _cooldownSystem = GetComponent<CooldownSystem>();
         AudioClipPlayer = GetComponent<AudioClipPlayer>();
+        MiscellaneousModifierList = GetComponent<MiscellaneousModifierList>();
         
         _ultimateInputAction = _playerInput.currentActionMap.FindAction("Ultimate");
         

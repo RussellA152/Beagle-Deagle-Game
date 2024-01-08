@@ -24,6 +24,9 @@ public class LevelUpRewardList : ScriptableObject
     
     [SerializeField, NonReorderable]
     private List<AbilityStatLevelUpReward> abilityStatRewards = new List<AbilityStatLevelUpReward>();
+    
+    [SerializeField, NonReorderable]
+    private List<MiscellaneousStatLevelUpReward> miscellaneousStatRewards = new List<MiscellaneousStatLevelUpReward>();
 
     public readonly List<LevelUpReward> allRewards = new List<LevelUpReward>();
 
@@ -73,6 +76,14 @@ public class LevelUpRewardList : ScriptableObject
         }
         
         foreach (var reward in abilityStatRewards)
+        {
+            if (!allRewards.Contains(reward))
+            {
+                allRewards.Add(reward);
+            }
+        }
+
+        foreach (var reward in miscellaneousStatRewards)
         {
             if (!allRewards.Contains(reward))
             {

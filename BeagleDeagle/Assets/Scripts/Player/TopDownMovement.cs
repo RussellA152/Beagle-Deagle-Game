@@ -17,7 +17,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
     private PlayerInput _playerInput;
 
-    private float _bonusSpeed = 1;
+    private float _bonusSpeed = 1f;
     
     // Input actions needed for movement
     private InputAction _movementInputAction;

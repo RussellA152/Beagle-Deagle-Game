@@ -219,8 +219,6 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
                 gameObject.SetActive(false);
         }
         
-        Debug.Log("Penetrated: " + _amountPenetrated);
-
     }
 
     private void PlayDamageSound(bool isInanimate)

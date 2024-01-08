@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
+public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable, IHasMiscellaneousModifier
 {
     protected ExplosiveData ExplosiveData;
 
@@ -37,6 +37,8 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
     protected float Damage;
 
     protected float Duration;
+    
+    private float _bonusExplosiveRadius = 1f;
     
     // Do something to an enemy that gets hit by this explosion
     [SerializeField] private UnityEvent<GameObject> onExplosionHitTarget;
@@ -73,6 +75,8 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
         sprite.SetActive(true);
 
         StopAllCoroutines();
+
+        ResetMiscellaneousBonuses();
     }
 
     public virtual void Activate(Vector2 aimDirection)
@@ -137,7 +141,7 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
         _cameraShaker.ShakePlayerCamera(ExplosiveData.screenShakeData);
         
         // Big explosion hurt all enemies
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, ExplosiveData.explosiveRadius, ExplosiveData.whatDoesExplosionHit);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, ExplosiveData.explosiveRadius * _bonusExplosiveRadius, ExplosiveData.whatDoesExplosionHit);
 
         foreach (Collider2D targetCollider in hitEnemies)
         {
@@ -173,7 +177,7 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
         
         _particleEffectScript.PlaceParticleOnTransform(transform);
         
-        _particleEffectScript.PlayAllParticles(ExplosiveData.explosiveRadius);
+        _particleEffectScript.PlayAllParticles(ExplosiveData.explosiveRadius * _bonusExplosiveRadius);
     }
     
 
@@ -194,5 +198,15 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable
     public virtual void UpdateScriptableObject(ExplosiveData scriptableObject)
     {
         ExplosiveData = scriptableObject;
+    }
+
+    public void GiveMiscellaneousModifierList(MiscellaneousModifierList miscellaneousModifierList)
+    {
+        _bonusExplosiveRadius = miscellaneousModifierList.BonusExplosiveRadius;
+    }
+
+    public void ResetMiscellaneousBonuses()
+    {
+        _bonusExplosiveRadius = 1f;
     }
 }

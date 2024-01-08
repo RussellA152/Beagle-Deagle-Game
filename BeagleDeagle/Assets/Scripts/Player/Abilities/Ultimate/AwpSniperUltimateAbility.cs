@@ -58,7 +58,6 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
             StopCoroutine(_durationCoroutine);
             
             StartCoroutine(ReturnOriginalWeapon());
-            //ReturnOriginalWeapon();
 
         }
     }

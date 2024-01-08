@@ -24,6 +24,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
     private GunData _weaponData;
     private CooldownSystem _cooldownSystem;
     private CameraShaker _cameraShaker;
+    private MiscellaneousModifierList _miscellaneousModifierList;
         
     private PlayerInput _playerInput;
     
@@ -84,6 +85,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         
         _audioClipPlayer = GetComponentInParent<AudioClipPlayer>();
         _cameraShaker = GetComponent<CameraShaker>();
+        
+        _miscellaneousModifierList = GetComponentInParent<MiscellaneousModifierList>();
         
         _weaponData = playerData.gunData;
         
@@ -280,6 +283,12 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
                 {
                     statusEffect.UpdateWeaponType(_weaponData.statusEffects);
                 }
+            }
+
+            // Give bullet any extra modifiers (ex. giving an explosive bullet "bonusExplosiveRadius")
+            foreach (IHasMiscellaneousModifier hasMiscellaneousModifier in newBullet.GetComponents<IHasMiscellaneousModifier>())
+            {
+                hasMiscellaneousModifier.GiveMiscellaneousModifierList(_miscellaneousModifierList);
             }
 
             projectile.UpdateScriptableObject(_weaponData.bulletData);

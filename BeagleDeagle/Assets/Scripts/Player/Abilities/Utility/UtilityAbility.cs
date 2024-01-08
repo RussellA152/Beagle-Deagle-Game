@@ -15,6 +15,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     protected T UtilityData;
 
     private CooldownSystem _cooldownSystem;
+    protected MiscellaneousModifierList MiscellaneousModifierList;
 
     private PlayerInput _playerInput;
 
@@ -43,6 +44,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         _playerInput = GetComponent<PlayerInput>();
         _cooldownSystem = GetComponent<CooldownSystem>();
         _audioClipPlayer = GetComponent<AudioClipPlayer>();
+        MiscellaneousModifierList = GetComponent<MiscellaneousModifierList>();
 
         _utilityInputAction = _playerInput.currentActionMap.FindAction("Utility");
         

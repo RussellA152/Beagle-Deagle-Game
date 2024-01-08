@@ -27,6 +27,12 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
             statusEffect.UpdateWeaponType(UltimateAbilityData.statusEffects);
         }
         
+        // Give nuke any extra modifiers (ex. giving a nuke "bonusExplosiveRadius")
+        foreach (IHasMiscellaneousModifier hasMiscellaneousModifier in nuclearBomb.GetComponents<IHasMiscellaneousModifier>())
+        {
+            hasMiscellaneousModifier.GiveMiscellaneousModifierList(MiscellaneousModifierList);
+        }
+        
         nuclearBomb.SetActive(true);
         
         // Play nuke animation

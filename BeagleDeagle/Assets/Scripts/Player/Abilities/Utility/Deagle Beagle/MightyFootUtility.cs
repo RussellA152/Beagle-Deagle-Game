@@ -35,6 +35,12 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
             statusEffect.UpdateWeaponType(UtilityData.statusEffects);
         }
         
+        // Give mighty foot any extra modifiers (ex. giving mighty foot "bonusStunDuration")
+        foreach (IHasMiscellaneousModifier hasMiscellaneousModifier in bulletComponent.GetComponents<IHasMiscellaneousModifier>())
+        {
+            hasMiscellaneousModifier.GiveMiscellaneousModifierList(MiscellaneousModifierList);
+        }
+        
         bulletComponent.UpdateDamageAndPenetrationValues(UtilityData.abilityDamage, UtilityData.mightyFootData.numberOfEnemiesCanHit);
         
         // Tell the bullet that the player is the transform that shot it

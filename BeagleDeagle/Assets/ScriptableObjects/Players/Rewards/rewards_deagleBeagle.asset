@@ -62,3 +62,8 @@ MonoBehaviour:
     IsChosen: 0
     Icon: {fileID: 0}
     abilityStatModifierData: {fileID: 11400000, guid: bffd3a07487080d42af3decaa176e821, type: 2}
+  miscellaneousStatRewards:
+  - LevelGiven: 2
+    IsChosen: 1
+    Icon: {fileID: 0}
+    miscellaneousModifierData: {fileID: 11400000, guid: c185087b2113bcd45b77f57b52e7e954, type: 2}

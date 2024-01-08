@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
     [SerializeField] private float healthRegenDelay = 1f;
 
     private CooldownSystem _cooldownSystem;
+    //private ModifierManager _modifierManager;
 
     private float _bonusMaxHealth = 1f; // a bonus percentage applied to the player's max health (Ex. 500 max health * 120%, would mean 120% extra max health)
 
@@ -27,6 +28,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
     private void Awake()
     {
         _cooldownSystem = GetComponent<CooldownSystem>();
+        //_modifierManager = GetComponent<ModifierManager>();
     }
 
     private void Start()

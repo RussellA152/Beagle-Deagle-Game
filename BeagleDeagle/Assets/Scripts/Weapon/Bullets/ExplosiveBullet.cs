@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosiveBullet : Bullet<ExplosiveBulletData>
+public class ExplosiveBullet : Bullet<ExplosiveBulletData>, IHasMiscellaneousModifier
 {
     private CameraShaker _cameraShaker;
 
@@ -13,6 +13,8 @@ public class ExplosiveBullet : Bullet<ExplosiveBulletData>
     private int _explosiveParticlePoolKey;
     
     private CheckObstruction _obstructionScript;
+    
+    private float _bonusExplosiveRadius = 1f;
 
     protected override void Awake()
     {
@@ -24,6 +26,13 @@ public class ExplosiveBullet : Bullet<ExplosiveBulletData>
         // Find explosive effect if this gameObject needs one
         if(explosiveParticleGameObject != null)
             _explosiveParticlePoolKey = explosiveParticleGameObject.GetComponent<IPoolable>().PoolKey;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        ResetMiscellaneousBonuses();
     }
 
     protected override void DamageOnHit(GameObject objectHit)
@@ -44,7 +53,7 @@ public class ExplosiveBullet : Bullet<ExplosiveBulletData>
         _cameraShaker.ShakePlayerCamera(bulletData.explosiveData.screenShakeData);
         
         // Big explosion hurt all enemies
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, bulletData.explosiveData.explosiveRadius, bulletData.explosiveData.whatDoesExplosionHit);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, bulletData.explosiveData.explosiveRadius * _bonusExplosiveRadius, bulletData.explosiveData.whatDoesExplosionHit);
 
         foreach (Collider2D targetCollider in hitEnemies)
         {
@@ -70,6 +79,16 @@ public class ExplosiveBullet : Bullet<ExplosiveBulletData>
         
         _particleEffectScript.PlaceParticleOnTransform(transform);
         
-        _particleEffectScript.PlayAllParticles(bulletData.explosiveData.explosiveRadius);
+        _particleEffectScript.PlayAllParticles(bulletData.explosiveData.explosiveRadius * _bonusExplosiveRadius);
+    }
+
+    public void GiveMiscellaneousModifierList(MiscellaneousModifierList miscellaneousModifierList)
+    {
+        _bonusExplosiveRadius = miscellaneousModifierList.BonusExplosiveRadius;
+    }
+
+    public void ResetMiscellaneousBonuses()
+    {
+        _bonusExplosiveRadius = 1f;
     }
 }
