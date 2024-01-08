@@ -7,8 +7,8 @@ using UnityEngine.Serialization;
 public class ReloadFireRateBoost : PassiveAbility, IHasCooldown
 {
     [SerializeField] private PlayerEvents playerEvents;
-    
-    private IGunDataUpdatable _gunDataUpdatable;
+
+    private ModifierManager _modifierManager;
     private CooldownSystem _cooldownSystem;
     
     [SerializeField] private AttackSpeedBoostData attackSpeedBoost;
@@ -23,14 +23,16 @@ public class ReloadFireRateBoost : PassiveAbility, IHasCooldown
     {
         base.Awake();
         
-        _gunDataUpdatable = Player.GetComponentInChildren<IGunDataUpdatable>();
+        _modifierManager = Player.GetComponent<ModifierManager>();
         _cooldownSystem = Player.GetComponent<CooldownSystem>();
     }
 
-    private void Start()
+    protected override void Start()
     {
         Id = _cooldownSystem.GetAssignableId();
         CooldownDuration = duration;
+        
+        base.Start();
     }
 
     protected override void ActivatePassive()
@@ -55,7 +57,7 @@ public class ReloadFireRateBoost : PassiveAbility, IHasCooldown
     {
         if (!_playerHasFireRateBoost)
         {
-            _gunDataUpdatable.AddAttackSpeedModifier(attackSpeedBoost.attackSpeedModifier);
+            _modifierManager.AddModifier(attackSpeedBoost.attackSpeedModifier);
             _cooldownSystem.PutOnCooldown(this);
             _playerHasFireRateBoost = true;
         }
@@ -65,7 +67,7 @@ public class ReloadFireRateBoost : PassiveAbility, IHasCooldown
     {
         if (Id == id && _playerHasFireRateBoost)
         {
-            _gunDataUpdatable.RemoveAttackSpeedModifier(attackSpeedBoost.attackSpeedModifier);
+            _modifierManager.RemoveModifier(attackSpeedBoost.attackSpeedModifier);
             _playerHasFireRateBoost = false;
         }
         

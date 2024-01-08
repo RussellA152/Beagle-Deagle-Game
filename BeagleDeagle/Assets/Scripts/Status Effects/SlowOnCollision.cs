@@ -10,9 +10,11 @@ public class SlowOnCollision : StatusEffect<SlowEffectData>
     {
         if (DoesThisAffectTarget(objectHit))
         {
-            objectHit.GetComponent<IMovable>().AddMovementSpeedModifier(StatusEffectData.movementSpeedEffect);
-        
-            objectHit.GetComponent<IDamager>().AddAttackSpeedModifier(StatusEffectData.attackSpeedEffect);
+            ModifierManager modifierManager = objectHit.GetComponent<ModifierManager>();
+            
+            modifierManager.AddModifier(StatusEffectData.movementSpeedEffect);
+            modifierManager.AddModifier(StatusEffectData.attackSpeedEffect);
+
         }
         
     }
@@ -21,22 +23,13 @@ public class SlowOnCollision : StatusEffect<SlowEffectData>
     {
         if (DoesThisAffectTarget(objectHit) && removeOnTriggerExit)
         {
-            objectHit.GetComponent<IMovable>().RemoveMovementSpeedModifier(StatusEffectData.movementSpeedEffect);
-        
-            objectHit.GetComponent<IDamager>().RemoveAttackSpeedModifier(StatusEffectData.attackSpeedEffect);
+            ModifierManager modifierManager = objectHit.GetComponent<ModifierManager>();
             
-            //StartCoroutine(WaitToRemoveEffect(objectHit));
+            modifierManager.RemoveModifierAfterDelay(StatusEffectData.movementSpeedEffect, StatusEffectData.lingerDuration);
+            modifierManager.RemoveModifierAfterDelay(StatusEffectData.attackSpeedEffect, StatusEffectData.lingerDuration);
         }
         
     }
-
-    // private IEnumerator WaitToRemoveEffect(GameObject objectHit)
-    // {
-    //     yield return new WaitForSeconds(StatusEffectData.lingerDuration);
-    //     
-    //     objectHit.GetComponent<IMovable>().RemoveMovementSpeedModifier(StatusEffectData.movementSpeedEffect);
-    //     
-    //     objectHit.GetComponent<IDamager>().RemoveAttackSpeedModifier(StatusEffectData.attackSpeedEffect);
-    // }
+    
     
 }

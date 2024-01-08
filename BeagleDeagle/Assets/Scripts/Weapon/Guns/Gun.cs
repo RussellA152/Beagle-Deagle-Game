@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 using Random = UnityEngine.Random;
 
-public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
+public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IRegisterModifierMethods
 {
     // Where does this bullet get shot from? (i.e the barrel)
     [SerializeField] private Transform bulletSpawnPoint;
@@ -24,6 +24,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
     private GunData _weaponData;
     private CooldownSystem _cooldownSystem;
     private CameraShaker _cameraShaker;
+    private ModifierManager _modifierManager;
     private MiscellaneousModifierList _miscellaneousModifierList;
         
     private PlayerInput _playerInput;
@@ -85,6 +86,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         
         _audioClipPlayer = GetComponentInParent<AudioClipPlayer>();
         _cameraShaker = GetComponent<CameraShaker>();
+
+        _modifierManager = GetComponentInParent<ModifierManager>();
         
         _miscellaneousModifierList = GetComponentInParent<MiscellaneousModifierList>();
         
@@ -97,7 +100,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
         
         _reloadInputAction.performed += OnReload;
         
-
+        RegisterAllAddModifierMethods();
+        RegisterAllRemoveModifierMethods();
     }
 
     private void Start()
@@ -583,5 +587,25 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput
             _shootInputAction.Disable();
             _reloadInputAction.Disable();
         }
+    }
+
+    public void RegisterAllAddModifierMethods()
+    {
+        _modifierManager.RegisterAddMethod<DamageModifier>(AddDamageModifier);
+        _modifierManager.RegisterAddMethod<PenetrationModifier>(AddPenetrationModifier);
+        _modifierManager.RegisterAddMethod<SpreadModifier>(AddSpreadModifier);
+        _modifierManager.RegisterAddMethod<AttackSpeedModifier>(AddAttackSpeedModifier);
+        _modifierManager.RegisterAddMethod<ReloadSpeedModifier>(AddReloadSpeedModifier);
+        _modifierManager.RegisterAddMethod<AmmoLoadModifier>(AddAmmoLoadModifier);
+    }
+
+    public void RegisterAllRemoveModifierMethods()
+    {
+        _modifierManager.RegisterRemoveMethod<DamageModifier>(RemoveDamageModifier);
+        _modifierManager.RegisterRemoveMethod<PenetrationModifier>(RemovePenetrationModifier);
+        _modifierManager.RegisterRemoveMethod<SpreadModifier>(RemoveSpreadModifier);
+        _modifierManager.RegisterRemoveMethod<AttackSpeedModifier>(RemoveAttackSpeedModifier);
+        _modifierManager.RegisterRemoveMethod<ReloadSpeedModifier>(RemoveReloadSpeedModifier);
+        _modifierManager.RegisterRemoveMethod<AmmoLoadModifier>(RemoveAmmoLoadModifier);
     }
 }

@@ -216,6 +216,7 @@ GameObject:
   - component: {fileID: 3711592478197892578}
   - component: {fileID: 1452773915677320547}
   - component: {fileID: 3277179601076203350}
+  - component: {fileID: 6542883597517909818}
   - component: {fileID: 7645405754992922946}
   - component: {fileID: -436538610406420608}
   - component: {fileID: 7251259714929792027}
@@ -284,7 +285,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   _enemyScriptableObject: {fileID: 11400000, guid: 1701e5752adb945448e4c1f6753f64af, type: 2}
-  spriteColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &508925504358572946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,6 +358,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assignableIdCount: 5
+--- !u!114 &6542883597517909818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711592478197892634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5588afce5839fdf4db5b4683b7d74262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7645405754992922946
 MonoBehaviour:
   m_ObjectHideFlags: 0

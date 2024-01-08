@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class NoShootSpeedBoost : PassiveAbility
 {
-    [FormerlySerializedAs("speedBoost")] [SerializeField] private MovementSpeedBoostData movementSpeedBoost;
+    [SerializeField] private MovementSpeedBoostData movementSpeedBoost;
     
     // How long must the player not attack for, to receive a speed boost?
     [Range(0f, 10f)]
@@ -16,14 +16,14 @@ public class NoShootSpeedBoost : PassiveAbility
     
     private Gun _gunScript;
 
-    private IMovable _movementScript;
+    private ModifierManager _modifierManager;
     
     protected override void OnEnable()
     {
         // Fetch gun script from the gun gameObject
         _gunScript = Player.GetComponentInChildren<Gun>();
         
-        _movementScript = Player.GetComponent<IMovable>();
+        _modifierManager = Player.GetComponent<ModifierManager>();
         
         base.OnEnable();
         
@@ -54,24 +54,24 @@ public class NoShootSpeedBoost : PassiveAbility
             {
                 _speedIncreased = true;
 
-                _movementScript.AddMovementSpeedModifier(movementSpeedBoost.movementSpeedModifier);
+                _modifierManager.AddModifier(movementSpeedBoost.movementSpeedModifier);
            
             }
             else if (_speedIncreased && _gunScript.ReturnLastTimeShot() < minimumTimeRequired)
             {
                 _speedIncreased = false;
 
-                _movementScript.RemoveMovementSpeedModifier(movementSpeedBoost.movementSpeedModifier);
+                _modifierManager.RemoveModifier(movementSpeedBoost.movementSpeedModifier);
             }
             yield return null;
         }
+        
     }
 
     protected override void RemovePassive()
     {
-        IMovable movementScript = Player.GetComponent<IMovable>();
-
-        movementScript.RemoveMovementSpeedModifier(movementSpeedBoost.movementSpeedModifier);
+        
+        _modifierManager.RemoveModifier(movementSpeedBoost.movementSpeedModifier);
         
     }
 }

@@ -10,5 +10,8 @@ public class SlowEffectData : StatusEffectData
 
     // The effect that the slow will apply to attack speed
     public AttackSpeedModifier attackSpeedEffect;
-    
+
+    [Range(0.1f, 5f)]
+    public float lingerDuration;
+
 }

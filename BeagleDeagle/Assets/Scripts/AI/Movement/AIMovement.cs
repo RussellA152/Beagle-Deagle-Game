@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, IEnemyDataUpdatable
+public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, IEnemyDataUpdatable, IRegisterModifierMethods
 {
-    
     [Header("Data to Use")]
     [SerializeField] private EnemyData enemyScriptableObject; // Data for enemy's movement (contains movement speed)
     
@@ -14,6 +13,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     private NavMeshAgent _agent;
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
+    private ModifierManager _modifierManager;
     private ModifierParticleEffectHandler _modifierParticleEffectHandler;
 
     [Header("Required Scripts")]
@@ -42,8 +42,12 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         
         _animationScript = GetComponent<ZombieAnimationHandler>();
+        _modifierManager = GetComponent<ModifierManager>();
 
         _modifierParticleEffectHandler = GetComponent<ModifierParticleEffectHandler>();
+        
+        RegisterAllAddModifierMethods();
+        RegisterAllRemoveModifierMethods();
     }
 
     private void Start()
@@ -194,6 +198,8 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
 
     public void RevertAllModifiers()
     {
+        if (!(movementSpeedModifiers.Count > 0)) return;
+        
         // Remove speed modifiers from list when spawning
         foreach (MovementSpeedModifier movementModifier in  movementSpeedModifiers)
         {
@@ -219,5 +225,15 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     {
         enemyScriptableObject = scriptableObject;
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
+    }
+
+    public void RegisterAllAddModifierMethods()
+    {
+        _modifierManager.RegisterAddMethod<MovementSpeedModifier>(AddMovementSpeedModifier);
+    }
+
+    public void RegisterAllRemoveModifierMethods()
+    {
+        _modifierManager.RegisterRemoveMethod<MovementSpeedModifier>(RemoveMovementSpeedModifier);
     }
 }

@@ -20,25 +20,25 @@ public class WeaponStatLevelUpReward: LevelUpReward
     
     public override void GiveDataToPlayer(GameObject recipientGameObject)
     {
-        IGunDataUpdatable gunScript = recipientGameObject.GetComponentInChildren<IGunDataUpdatable>();
-        
+        ModifierManager modifierManager = recipientGameObject.GetComponent<ModifierManager>();
+
         if(weaponStatModifierData.DamageModifier.IsModifierNameValid())
-            gunScript.AddDamageModifier(weaponStatModifierData.DamageModifier);
+            modifierManager.AddModifier(weaponStatModifierData.DamageModifier);
         
         if(weaponStatModifierData.PenetrationModifier.IsModifierNameValid())
-            gunScript.AddPenetrationModifier(weaponStatModifierData.PenetrationModifier);
+            modifierManager.AddModifier(weaponStatModifierData.PenetrationModifier);
 
         if (weaponStatModifierData.SpreadModifier.IsModifierNameValid())
-            gunScript.AddSpreadModifier(weaponStatModifierData.SpreadModifier);
+            modifierManager.AddModifier(weaponStatModifierData.SpreadModifier);
         
         if(weaponStatModifierData.ReloadSpeedModifier.IsModifierNameValid())
-            gunScript.AddReloadSpeedModifier(weaponStatModifierData.ReloadSpeedModifier);
+            modifierManager.AddModifier(weaponStatModifierData.ReloadSpeedModifier);
         
         if(weaponStatModifierData.AttackSpeedModifier.IsModifierNameValid())
-            gunScript.AddReloadSpeedModifier(weaponStatModifierData.ReloadSpeedModifier);
+            modifierManager.AddModifier(weaponStatModifierData.ReloadSpeedModifier);
         
         if(weaponStatModifierData.AmmoLoadModifier.IsModifierNameValid())
-            gunScript.AddAmmoLoadModifier(weaponStatModifierData.AmmoLoadModifier);
+            modifierManager.AddModifier(weaponStatModifierData.AmmoLoadModifier);
         
         Debug.Log($"{recipientGameObject.name} was given {weaponStatModifierData}");
     }

@@ -6,13 +6,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 
-public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IHasCooldown, IHasInput//, IModifierWithParticle
+public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IHasCooldown, IHasInput, IRegisterModifierMethods
 {
     [SerializeField] private PlayerData playerData;
     [SerializeField] private PlayerEvents playerEvents;
     
     private CooldownSystem _cooldownSystem;
     private AudioClipPlayer _audioClipPlayer;
+    private ModifierManager _modifierManager;
     private ModifierParticleEffectHandler _modifierParticleEffectHandler;
 
     private PlayerInput _playerInput;
@@ -61,6 +62,7 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         _playerInput = GetComponent<PlayerInput>();
 
         _audioClipPlayer = GetComponent<AudioClipPlayer>();
+        _modifierManager = GetComponent<ModifierManager>();
 
         // Set up input for user to control movement
         _movementInputAction = _playerInput.currentActionMap.FindAction("Move");
@@ -71,6 +73,9 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
         _modifierParticleEffectHandler = GetComponent<ModifierParticleEffectHandler>();
         
+        RegisterAllAddModifierMethods();
+        RegisterAllRemoveModifierMethods();
+
     }
 
     private void OnEnable()
@@ -421,5 +426,14 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
             _rollInputAction.Disable();
         }
     }
-    
+
+    public void RegisterAllAddModifierMethods()
+    {
+        _modifierManager.RegisterAddMethod<MovementSpeedModifier>(AddMovementSpeedModifier);
+    }
+
+    public void RegisterAllRemoveModifierMethods()
+    {
+        _modifierManager.RegisterRemoveMethod<MovementSpeedModifier>(RemoveMovementSpeedModifier);
+    }
 }

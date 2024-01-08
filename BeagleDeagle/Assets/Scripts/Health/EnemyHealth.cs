@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDataUpdatable
+public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDataUpdatable, IRegisterModifierMethods
 {
     [SerializeField] private CurrencyEvents currencyEvents;
     
     [Header("Data to Use")]
     [SerializeField] private EnemyData enemyData;
+
+    private ModifierManager _modifierManager;
     
 
     [Header("Modifiers")]
@@ -23,6 +25,14 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
     
     public event Action onDeath;
     private bool _isDead;
+
+    private void Awake()
+    {
+        _modifierManager = GetComponent<ModifierManager>();
+        
+        RegisterAllAddModifierMethods();
+        RegisterAllRemoveModifierMethods();
+    }
 
     protected virtual void OnEnable()
     {
@@ -85,16 +95,12 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
     {
         maxHealthModifiers.Add(modifierToAdd);
         _bonusMaxHealth += modifierToAdd.bonusMaxHealth;
-
-        //modifierToAdd.isActive = true;
     }
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
     {
         maxHealthModifiers.Remove(modifierToRemove);
         _bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
-
-        //modifierToRemove.isActive = false;
     }
 
     public void RevertAllModifiers()
@@ -105,5 +111,14 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
         }
     }
     #endregion
-    
+
+    public void RegisterAllAddModifierMethods()
+    {
+        _modifierManager.RegisterAddMethod<MaxHealthModifier>(AddMaxHealthModifier);
+    }
+
+    public void RegisterAllRemoveModifierMethods()
+    {
+        _modifierManager.RegisterRemoveMethod<MaxHealthModifier>(RemoveMaxHealthModifier);
+    }
 }

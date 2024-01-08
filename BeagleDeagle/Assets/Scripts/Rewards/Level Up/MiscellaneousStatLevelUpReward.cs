@@ -21,10 +21,10 @@ public class MiscellaneousStatLevelUpReward: LevelUpReward
     
     public override void GiveDataToPlayer(GameObject recipientGameObject)
     {
-        MiscellaneousModifierList miscellaneousModifierList = recipientGameObject.GetComponent<MiscellaneousModifierList>();
+        ModifierManager miscellaneousModifierList = recipientGameObject.GetComponent<ModifierManager>();
         
         if(miscellaneousModifierData.explosiveRadiusModifier.IsModifierNameValid())
-            miscellaneousModifierList.AddExplosiveRadiusModifier(miscellaneousModifierData.explosiveRadiusModifier);
+            miscellaneousModifierList.AddModifier(miscellaneousModifierData.explosiveRadiusModifier);
         
         Debug.Log($"{recipientGameObject.name} was given {miscellaneousModifierData}");
     }

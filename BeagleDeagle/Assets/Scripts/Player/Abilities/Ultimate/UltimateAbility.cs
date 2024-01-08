@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IHasCooldown, IHasInput where T: UltimateAbilityData
+public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IHasCooldown, IHasInput, IRegisterModifierMethods where T: UltimateAbilityData
 {
     [SerializeField] protected PlayerEvents playerEvents;
     protected AudioClipPlayer AudioClipPlayer;
@@ -15,6 +15,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
 
     private CooldownSystem _cooldownSystem;
     protected MiscellaneousModifierList MiscellaneousModifierList;
+    private ModifierManager _modifierManager;
     
     private PlayerInput _playerInput;
 
@@ -33,10 +34,15 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
         _cooldownSystem = GetComponent<CooldownSystem>();
         AudioClipPlayer = GetComponent<AudioClipPlayer>();
         MiscellaneousModifierList = GetComponent<MiscellaneousModifierList>();
+
+        _modifierManager = GetComponent<ModifierManager>();
         
         _ultimateInputAction = _playerInput.currentActionMap.FindAction("Ultimate");
         
         UltimateAbilityData = (T) playerData.ultimateAbilityData;
+        
+        RegisterAllAddModifierMethods();
+        RegisterAllRemoveModifierMethods();
         
     }
 
@@ -145,6 +151,16 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
         {
             _ultimateInputAction.Disable();
         }
+    }
+
+    public void RegisterAllAddModifierMethods()
+    {
+        _modifierManager.RegisterAddMethod<UltimateCooldownModifier>(AddUltimateCooldownModifier);
+    }
+
+    public void RegisterAllRemoveModifierMethods()
+    {
+        _modifierManager.RegisterRemoveMethod<UltimateCooldownModifier>(RemoveUltimateCooldownModifier);
     }
 }
 

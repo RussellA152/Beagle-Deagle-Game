@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlayerDataUpdatable, IHasCooldown
+public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlayerDataUpdatable, IHasCooldown, IRegisterModifierMethods
 {
     [SerializeField] private PlayerEvents playerEvents;
     
@@ -12,7 +12,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
     [SerializeField] private float healthRegenDelay = 1f;
 
     private CooldownSystem _cooldownSystem;
-    //private ModifierManager _modifierManager;
+    private ModifierManager _modifierManager;
 
     private float _bonusMaxHealth = 1f; // a bonus percentage applied to the player's max health (Ex. 500 max health * 120%, would mean 120% extra max health)
 
@@ -28,11 +28,15 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
     private void Awake()
     {
         _cooldownSystem = GetComponent<CooldownSystem>();
-        //_modifierManager = GetComponent<ModifierManager>();
+        _modifierManager = GetComponent<ModifierManager>();
+        
+        RegisterAllAddModifierMethods();
+        RegisterAllRemoveModifierMethods();
     }
 
     private void Start()
     {
+        
         Id = _cooldownSystem.GetAssignableId();
         
         _isDead = false;
@@ -146,4 +150,13 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
 
     public int Id { get; set; }
     public float CooldownDuration { get; set; }
+    public void RegisterAllAddModifierMethods()
+    {
+        _modifierManager.RegisterAddMethod<MaxHealthModifier>(AddMaxHealthModifier);
+    }
+
+    public void RegisterAllRemoveModifierMethods()
+    {
+        _modifierManager.RegisterRemoveMethod<MaxHealthModifier>(RemoveMaxHealthModifier);
+    }
 }

@@ -7,20 +7,20 @@ public class HealthBoost : PassiveAbility
     [SerializeField] private HealthBoostData healthBoostData;
     protected override void ActivatePassive()
     {
-        IHealthWithModifiers playerHealth = Player.GetComponent<IHealthWithModifiers>();
+        ModifierManager playerHealth = Player.GetComponent<ModifierManager>();
         
         // Add max health modifier to the player
         // Increases player's max health
-        playerHealth?.AddMaxHealthModifier(healthBoostData.maxHealthModifier);
+        playerHealth.AddModifier(healthBoostData.maxHealthModifier);
         
     }
 
     protected override void RemovePassive()
     {
-        IHealthWithModifiers playerHealth = Player.GetComponent<IHealthWithModifiers>();
+        ModifierManager playerHealth = Player.GetComponent<ModifierManager>();
         
         // Add max health modifier to the player
         // Increases player's max health
-        playerHealth?.RemoveMaxHealthModifier(healthBoostData.maxHealthModifier);
+        playerHealth.RemoveModifier(healthBoostData.maxHealthModifier);
     }
 }

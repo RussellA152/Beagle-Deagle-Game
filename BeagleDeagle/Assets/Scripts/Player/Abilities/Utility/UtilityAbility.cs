@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 
-public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHasCooldown, IHasInput where T: UtilityAbilityData
+public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHasCooldown, IHasInput, IRegisterModifierMethods where T: UtilityAbilityData
 {
     [SerializeField] private PlayerEvents playerEvents;
     private AudioClipPlayer _audioClipPlayer;
@@ -15,6 +15,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     protected T UtilityData;
 
     private CooldownSystem _cooldownSystem;
+    private ModifierManager _modifierManager;
     protected MiscellaneousModifierList MiscellaneousModifierList;
 
     private PlayerInput _playerInput;
@@ -45,10 +46,14 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         _cooldownSystem = GetComponent<CooldownSystem>();
         _audioClipPlayer = GetComponent<AudioClipPlayer>();
         MiscellaneousModifierList = GetComponent<MiscellaneousModifierList>();
+        _modifierManager = GetComponent<ModifierManager>();
 
         _utilityInputAction = _playerInput.currentActionMap.FindAction("Utility");
         
         UtilityData = (T) playerData.utilityAbilityData;
+        
+        RegisterAllAddModifierMethods();
+        RegisterAllRemoveModifierMethods();
         
         
     }
@@ -223,5 +228,17 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         {
             _utilityInputAction.Disable();
         }
+    }
+
+    public void RegisterAllAddModifierMethods()
+    {
+        _modifierManager.RegisterAddMethod<UtilityCooldownModifier>(AddUtilityCooldownModifier);
+        _modifierManager.RegisterAddMethod<UtilityUsesModifier>(AddUtilityUsesModifier);
+    }
+
+    public void RegisterAllRemoveModifierMethods()
+    {
+        _modifierManager.RegisterRemoveMethod<UtilityCooldownModifier>(RemoveUtilityCooldownModifier);
+        _modifierManager.RegisterRemoveMethod<UtilityUsesModifier>(RemoveUtilityUsesModifier);
     }
 }

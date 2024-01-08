@@ -23,4 +23,4 @@ MonoBehaviour:
     modifierName: Slow Smoke
     particleEffect: {fileID: 0}
     bonusAttackSpeed: -0.3
-  lingerDuration: 2
+  lingerDuration: 1

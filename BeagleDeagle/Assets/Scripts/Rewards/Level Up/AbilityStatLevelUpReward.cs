@@ -21,17 +21,16 @@ public class AbilityStatLevelUpReward : LevelUpReward
     
     public override void GiveDataToPlayer(GameObject recipientGameObject)
     {
-        IUtilityUpdatable utilityScript = recipientGameObject.GetComponent<IUtilityUpdatable>();
-        IUltimateUpdatable ultimateScript = recipientGameObject.GetComponent<IUltimateUpdatable>();
+        ModifierManager modifierManager = recipientGameObject.GetComponent<ModifierManager>();
         
         if(abilityStatModifierData.UtilityUsesModifier.IsModifierNameValid())
-            utilityScript.AddUtilityUsesModifier(abilityStatModifierData.UtilityUsesModifier);
+            modifierManager.AddModifier(abilityStatModifierData.UtilityUsesModifier);
         
         if(abilityStatModifierData.UtilityCooldownModifier.IsModifierNameValid())
-            utilityScript.AddUtilityCooldownModifier(abilityStatModifierData.UtilityCooldownModifier);
+            modifierManager.AddModifier(abilityStatModifierData.UtilityCooldownModifier);
         
         if(abilityStatModifierData.UltimateCooldownModifier.IsModifierNameValid())
-            ultimateScript.AddUltimateCooldownModifier(abilityStatModifierData.UltimateCooldownModifier);
+            modifierManager.AddModifier(abilityStatModifierData.UltimateCooldownModifier);
         
         Debug.Log($"{recipientGameObject.name} was given {abilityStatModifierData}");
     }

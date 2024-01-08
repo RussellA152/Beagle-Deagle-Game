@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager, IHasCooldown where T: EnemyData
+public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager, IHasCooldown, IRegisterModifierMethods where T: EnemyData
 {
     [Header("Data to Use")]
     [SerializeField]
@@ -14,6 +14,7 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     [Header("Required Scripts")] 
     private CooldownSystem _cooldownSystem;
     private ZombieAnimationHandler _animationScript;
+    private ModifierManager _modifierManager;
 
     [Header("Modifiers")]
     // A list of damage modifiers applied to the enemy's attack damage
@@ -40,7 +41,12 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     {
         _animationScript = GetComponent<ZombieAnimationHandler>();
         _cooldownSystem = GetComponent<CooldownSystem>();
-        
+
+        _modifierManager = GetComponent<ModifierManager>();
+
+        RegisterAllAddModifierMethods();
+        RegisterAllRemoveModifierMethods();
+
     }
 
     protected virtual void Start()
@@ -99,22 +105,6 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         return _canAttack;
     }
 
-    ///-///////////////////////////////////////////////////////////
-    /// Remove all damage and attackspeed modifiers from this enemy
-    ///
-    public void RevertAllModifiers()
-    {
-        foreach (DamageModifier damageModifier in damageModifiers)
-        {
-            RemoveDamageModifier(damageModifier);
-        }
-
-        foreach (AttackSpeedModifier attackSpeedModifier in attackSpeedModifiers)
-        {
-            RemoveAttackSpeedModifier(attackSpeedModifier);
-        }
-    }
-    
     public void SetTarget(Transform newTarget)
     {
         Target = newTarget;
@@ -137,16 +127,12 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     {
         damageModifiers.Add(modifierToAdd);
         _bonusDamage += (_bonusDamage * modifierToAdd.bonusDamage);
-
-        //modifierToAdd.isActive = true;
     }
 
     public void RemoveDamageModifier(DamageModifier modifierToRemove)
     {
         damageModifiers.Remove(modifierToRemove);
         _bonusDamage /= (1 + modifierToRemove.bonusDamage);
-        
-        //modifierToRemove.isActive = false;
     }
 
     public void AddAttackSpeedModifier(AttackSpeedModifier modifierToAdd)
@@ -156,8 +142,6 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         
         // Increase or decrease the animation speed of the movement animation
         _animationScript.SetAttackAnimationSpeed(modifierToAdd.bonusAttackSpeed);
-        
-        //modifierToAdd.isActive = true;
     }
 
     public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove)
@@ -166,12 +150,37 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         _bonusAttackSpeed /= (1 + modifierToRemove.bonusAttackSpeed);
         
         _animationScript.SetAttackAnimationSpeed(-1f * modifierToRemove.bonusAttackSpeed);
+    }
+    
+    ///-///////////////////////////////////////////////////////////
+    /// Remove all damage and attack speed modifiers from this enemy.
+    ///
+    public void RevertAllModifiers()
+    {
+        foreach (DamageModifier damageModifier in damageModifiers)
+        {
+            RemoveDamageModifier(damageModifier);
+        }
 
-        //modifierToRemove.isActive = false;
+        foreach (AttackSpeedModifier attackSpeedModifier in attackSpeedModifiers)
+        {
+            RemoveAttackSpeedModifier(attackSpeedModifier);
+        }
     }
 
     #endregion
     
     public int Id { get; set; }
     public float CooldownDuration { get; set; }
+    public void RegisterAllAddModifierMethods()
+    {
+        _modifierManager.RegisterAddMethod<DamageModifier>(AddDamageModifier);
+        _modifierManager.RegisterAddMethod<AttackSpeedModifier>(AddAttackSpeedModifier);
+    }
+
+    public void RegisterAllRemoveModifierMethods()
+    {
+        _modifierManager.RegisterRemoveMethod<DamageModifier>(RemoveDamageModifier);
+        _modifierManager.RegisterRemoveMethod<AttackSpeedModifier>(RemoveAttackSpeedModifier);
+    }
 }

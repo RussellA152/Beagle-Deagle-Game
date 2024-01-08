@@ -41,6 +41,21 @@ public class ModifierManager : MonoBehaviour
         Type type = typeof(T);
         _removeMethods[type] = obj => removeMethod.Invoke((T)obj);
     }
+    
+    public void RemoveModifier<T>(T modifierToRemove) where T : Modifier
+    {
+        // Find and invoke the remove method for the type T
+        Type type = typeof(T);
+        
+        if (_removeMethods.TryGetValue(type, out Action<object> removeMethod))
+        {
+            removeMethod.Invoke(modifierToRemove);
+        }
+        else
+        {
+            Debug.LogError($"{gameObject.name} does not have {type} modifier that they can remove. Or they haven't registered the remove method.");
+        }
+    }
 
     public void RemoveModifierAfterDelay<T>(T modifierToRemove, float delay) where T : Modifier
     {
@@ -50,19 +65,9 @@ public class ModifierManager : MonoBehaviour
     // Coroutine to remove a modifier after a delay
     private IEnumerator RemoveDelayCoroutine<T>(T modifierToRemove, float delay) where T : Modifier
     {
-
         yield return new WaitForSeconds(delay);
 
-        // Find and invoke the remove method for the type T
-        Type type = typeof(T);
-        if (_removeMethods.TryGetValue(type, out Action<object> removeMethod))
-        {
-            removeMethod.Invoke(modifierToRemove);
-        }
-        else
-        {
-            Debug.LogError($"{gameObject.name} does not have {type} modifier that they can remove. Or they haven't registered the remove method.");
-        }
+        RemoveModifier(modifierToRemove);
     }
     
 }
