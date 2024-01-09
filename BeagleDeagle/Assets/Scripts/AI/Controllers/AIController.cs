@@ -33,6 +33,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     protected EnemyHealth HealthScript;
     protected DamageOverTimeHandler DamageOverTimeScript;
     protected ZombieAnimationHandler AnimationHandlerScript;
+    private ModifierManager _modifierManager;
     
     private bool _inAttackRange; // Is the player within this enemy's attack range?
     private bool _inChaseRange; // Is the player within this enemy's chase/follow range?
@@ -54,6 +55,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
         HealthScript = GetComponent<EnemyHealth>();
         DamageOverTimeScript = GetComponent<DamageOverTimeHandler>();
         AnimationHandlerScript = GetComponent<ZombieAnimationHandler>();
+        _modifierManager = GetComponent<ModifierManager>();
 
         _deathParticleEffectPoolKey = deathParticleEffect.GetComponent<IPoolable>().PoolKey;
     }

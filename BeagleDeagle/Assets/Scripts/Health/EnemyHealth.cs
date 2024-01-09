@@ -105,10 +105,11 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
 
     public void RevertAllModifiers()
     {
-        foreach (MaxHealthModifier maxHealthModifier in maxHealthModifiers)
+        for (int i = maxHealthModifiers.Count - 1; i >= 0; i--)
         {
-            RemoveMaxHealthModifier(maxHealthModifier);
+            RemoveMaxHealthModifier(maxHealthModifiers[i]);
         }
+        
     }
     #endregion
 

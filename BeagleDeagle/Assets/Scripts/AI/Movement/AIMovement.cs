@@ -198,12 +198,10 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
 
     public void RevertAllModifiers()
     {
-        if (!(movementSpeedModifiers.Count > 0)) return;
-        
         // Remove speed modifiers from list when spawning
-        foreach (MovementSpeedModifier movementModifier in  movementSpeedModifiers)
+        for (int i = movementSpeedModifiers.Count - 1; i >= 0; i--)
         {
-            RemoveMovementSpeedModifier(movementModifier);
+            RemoveMovementSpeedModifier(movementSpeedModifiers[i]);
         }
     }
 
