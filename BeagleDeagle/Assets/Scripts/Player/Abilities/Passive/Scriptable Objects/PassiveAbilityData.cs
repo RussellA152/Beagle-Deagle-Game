@@ -13,7 +13,6 @@ public class PassiveAbilityData : ScriptableObject, IHasDescription
     [Space(10), TextArea(2,3)]
     public string description;
     
-    //[RestrictedPrefab(typeof(PassiveAbility<>))]
     public GameObject gameObjectWithPassive;
 
     public string GetDescription()

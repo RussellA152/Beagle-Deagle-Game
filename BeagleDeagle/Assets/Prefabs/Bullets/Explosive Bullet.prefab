@@ -108,7 +108,7 @@ MonoBehaviour:
   allowMultipleHitsOnSameEnemy: 0
   _inanimateParticleLayerMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 33792
   inanimateObjectHitParticleEffect: {fileID: 7371912302769336663, guid: 23b0a20e6957fd54995c5dcea11f49f9, type: 3}
   _enemyParticleLayerMask:
     serializedVersion: 2

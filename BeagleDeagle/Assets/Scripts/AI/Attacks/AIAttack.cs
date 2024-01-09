@@ -157,15 +157,21 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     ///
     public void RevertAllModifiers()
     {
-        foreach (DamageModifier damageModifier in damageModifiers)
+        if (damageModifiers.Count > 0)
         {
-            RemoveDamageModifier(damageModifier);
+            foreach (DamageModifier damageModifier in damageModifiers)
+            {
+                RemoveDamageModifier(damageModifier);
+            }
+        }
+        if (attackSpeedModifiers.Count > 0)
+        {
+            foreach (AttackSpeedModifier attackSpeedModifier in attackSpeedModifiers)
+            {
+                RemoveAttackSpeedModifier(attackSpeedModifier);
+            }
         }
 
-        foreach (AttackSpeedModifier attackSpeedModifier in attackSpeedModifiers)
-        {
-            RemoveAttackSpeedModifier(attackSpeedModifier);
-        }
     }
 
     #endregion

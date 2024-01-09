@@ -5,7 +5,11 @@ using UnityEngine;
 
 public abstract class PassiveAbility: MonoBehaviour
 {
+    [SerializeField] protected PlayerEvents playerEvents;
+    
     protected GameObject Player;
+    
+    [SerializeField] protected PassiveAbilityData passiveAbilityData;
 
     protected virtual void Awake()
     {
@@ -31,5 +35,6 @@ public abstract class PassiveAbility: MonoBehaviour
     protected abstract void ActivatePassive();
 
     protected abstract void RemovePassive();
+    
     
 }

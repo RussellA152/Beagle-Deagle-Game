@@ -45,5 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  passiveAbilityData: {fileID: 11400000, guid: 2be902dab7442ea4183af0a85dbfca88, type: 2}
   attackSpeedBoost: {fileID: 11400000, guid: aaa9f67a7d7e0ef47a1f7099260dec69, type: 2}
   duration: 5

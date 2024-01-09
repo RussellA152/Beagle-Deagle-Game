@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596ece807630f8c42b5c7d6af170e5e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  passiveAbilityData: {fileID: 11400000, guid: 7654338b5d8bcaf47a42c1f6ab6e3cfb, type: 2}
   healthBoostData: {fileID: 11400000, guid: 05c221c08f911334ba6af2abfddb31cb, type: 2}

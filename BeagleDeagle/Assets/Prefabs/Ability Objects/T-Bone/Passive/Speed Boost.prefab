@@ -44,5 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71712cd2b779f4f438d9eb2d7cd0bb93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  passiveAbilityData: {fileID: 11400000, guid: a1e5f73d4e871e84999b5fd197524bfe, type: 2}
   movementSpeedBoost: {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}
   minimumTimeRequired: 2.5

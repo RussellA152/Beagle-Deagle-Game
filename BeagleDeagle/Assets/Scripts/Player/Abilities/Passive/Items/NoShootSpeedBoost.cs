@@ -55,6 +55,9 @@ public class NoShootSpeedBoost : PassiveAbility
                 _speedIncreased = true;
 
                 _modifierManager.AddModifier(movementSpeedBoost.movementSpeedModifier);
+                
+                playerEvents.InvokePassiveActivated(passiveAbilityData);
+                
            
             }
             else if (_speedIncreased && _gunScript.ReturnLastTimeShot() < minimumTimeRequired)
@@ -62,6 +65,8 @@ public class NoShootSpeedBoost : PassiveAbility
                 _speedIncreased = false;
 
                 _modifierManager.RemoveModifier(movementSpeedBoost.movementSpeedModifier);
+                
+                playerEvents.InvokePassiveDeactivated(passiveAbilityData);
             }
             yield return null;
         }

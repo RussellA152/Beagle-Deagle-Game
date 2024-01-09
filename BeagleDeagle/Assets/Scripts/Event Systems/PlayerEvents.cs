@@ -63,7 +63,10 @@ public class PlayerEvents : ScriptableObject
     
     
     // Pass a reference to the player's current ultimate data (ex. player is currently using Nuke)
-    public event Action<UltimateAbilityData> onPlayerObtainedNewUltimate; 
+    public event Action<UltimateAbilityData> onPlayerObtainedNewUltimate;
+
+    public event Action<PassiveAbilityData> onPlayerPassiveActivated;
+    public event Action<PassiveAbilityData> onPlayerPassiveDeactivated;
     
     // Give references to the player's specific cooldown IDs (these are needed by the Cooldown UI script)
     public event Action<int> givePlayerReloadCooldownId;
@@ -194,6 +197,16 @@ public class PlayerEvents : ScriptableObject
     public void InvokeNewUltimate(UltimateAbilityData newUltimateData)
     {
         onPlayerObtainedNewUltimate?.Invoke(newUltimateData);
+    }
+
+    public void InvokePassiveActivated(PassiveAbilityData passiveAbilityData)
+    {
+        onPlayerPassiveActivated?.Invoke(passiveAbilityData);
+    }
+    
+    public void InvokePassiveDeactivated(PassiveAbilityData passiveAbilityData)
+    {
+        onPlayerPassiveDeactivated?.Invoke(passiveAbilityData);
     }
     // When the player uses a utility ability, invoke this function.
     // This should pass around the current number of uses that the player's currently utility has (ex. HUD needs to update utility uses display)

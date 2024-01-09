@@ -23,5 +23,6 @@ public class PassiveInventory : MonoBehaviour
     public void GetNewPassive(PassiveAbilityData newPassive)
     {
         Instantiate(newPassive.gameObjectWithPassive, Vector3.zero, Quaternion.identity, transform);
+        
     }
 }

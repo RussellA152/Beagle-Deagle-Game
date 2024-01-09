@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: passive_GreasedMechanics
   m_EditorClassIdentifier: 
   passiveName: Greased Mechanics
-  abilityIcon: {fileID: 21300000, guid: f3255a27924357d4d84819edbe61115e, type: 3}
+  abilityIcon: {fileID: 21300000, guid: b46324f6fa1c49f41a359249012205f5, type: 3}
   description: Finishing a reload grants increased 30% increased fire rate for 5
     seconds.
   gameObjectWithPassive: {fileID: 4349616696555974631, guid: b817b8518f6984a44af16c188d5adb2b, type: 3}
