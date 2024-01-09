@@ -77084,10 +77084,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Time Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 4326370238792045270, guid: af54c4d8b263bcf4e9d0b10c4620892c, type: 3}
-      propertyPath: targetGameDuration
-      value: 900
-      objectReference: {fileID: 0}
     - target: {fileID: 4326370238792045271, guid: af54c4d8b263bcf4e9d0b10c4620892c, type: 3}
       propertyPath: m_RootOrder
       value: 1

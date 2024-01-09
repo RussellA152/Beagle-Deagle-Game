@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61db9bc775a513843a189473e5ebd7db, type: 3}
-  m_Name: mini_wave_bombers_3
+  m_Name: mini_wave_bombers_superSlow_1
   m_EditorClassIdentifier: 
   miniWaveName: Bomber Wave
-  delayBetweenSpawn: 4
-  enemiesPerSpawn: 2
+  delayBetweenSpawn: 6
+  enemiesPerSpawn: 1
   enemyPrefab: {fileID: 3711592478197892634, guid: 10c2b1323b40b0b47839b417306663f4, type: 3}
-  enemyData: {fileID: 11400000, guid: 71d70c706a557ab40b070f97ff8e034f, type: 2}
+  enemyData: {fileID: 11400000, guid: fdc68b252e7754f4f9314613daff8f78, type: 2}

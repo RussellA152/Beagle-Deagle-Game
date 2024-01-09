@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2be1097169d17ba4d814782640071766, type: 3}
-  m_Name: runner_enemy_fast
+  m_Name: runner_enemy_superSlow
   m_EditorClassIdentifier: 
   characterName: Runner
   animatorController: {fileID: 9100000, guid: 8e94e09a0d339a447a28fad4a00ccb89, type: 2}
-  spriteColor: {r: 1, g: 0.1764706, b: 0.6156863, a: 1}
-  maxHealth: 125
-  movementSpeed: 6.5
+  spriteColor: {r: 0.8509804, g: 0.26666668, b: 0, a: 1}
+  maxHealth: 400
+  movementSpeed: 2
   attackDamage: 100
   attackCooldown: 1.5
   attackRange: 2
@@ -28,7 +28,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16512
   currencyRewardOnDeath:
-    xpAmount: 150
+    xpAmount: 200
     moneyAmount: 0
   whatHitBoxDamages:
     serializedVersion: 2

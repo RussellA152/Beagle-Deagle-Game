@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: wave_2
   m_EditorClassIdentifier: 
   waveName: Wave 2
+  duration: 60
   message: Wave 2 is ongoing!
   miniWaves:
   - {fileID: 11400000, guid: bce0d881626c9f14da7a0d01a55279b9, type: 2}
-  duration: 5

@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: wave_4
   m_EditorClassIdentifier: 
   waveName: Wave 4
+  duration: 90
   message: Wave 4 is ongoing!
   miniWaves:
   - {fileID: 11400000, guid: 20bb747677f8c3340a9e76549d13ae26, type: 2}
   - {fileID: 11400000, guid: 2611343e801b23644b7bdb6b300c5ba0, type: 2}
-  duration: 30
+  - {fileID: 11400000, guid: 694f91c39c510aa4499568f546fb8784, type: 2}

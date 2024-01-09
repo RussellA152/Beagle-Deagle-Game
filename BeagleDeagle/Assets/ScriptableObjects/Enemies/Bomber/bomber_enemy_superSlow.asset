@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79c98774174b7a94db0b7331889de335, type: 3}
-  m_Name: bomber_enemy_slow
+  m_Name: bomber_enemy_superSlow
   m_EditorClassIdentifier: 
   characterName: Bomber Zombie
   animatorController: {fileID: 9100000, guid: c448c9f56ba351b44b689c6933277582, type: 2}

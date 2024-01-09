@@ -35,7 +35,7 @@ public class WaveGenerator : MonoBehaviour
                 // Set the duration of the wave to be the HIGHEST duration of all mini waves
                 // Ex. if we have three mini waves: 1 Bat every 2 seconds for 10 seconds, 1 Skeleton every 2 seconds for 5 seconds
                 // Then the duration of the wave should be 10 seconds to accomodate for all mini waves
-                W.duration = W.miniWaves.Max(v => v.waveDuration);
+                //W.wav = W.miniWaves.Max(v => v.waveDuration);
 
                 // if there is currently a wave ongoing, don't start a new wave yet
                 if (W != _mCurrentWave && _mCurrentWave.duration > 0)
@@ -57,7 +57,7 @@ public class WaveGenerator : MonoBehaviour
                     
                     // Start spawning those enemies for that mini wave
                     // We use a coroutine so we can have multiple mini waves concurrently spawning enemies
-                    StartCoroutine(StartMiniWave(A));
+                    StartCoroutine(StartMiniWave(W, A));
                 }
 
                 //if(m_CurrentWave.downTime > 0)
@@ -76,7 +76,7 @@ public class WaveGenerator : MonoBehaviour
         Debug.Log("WAVES SETUP COMPLETE!");
     }
 
-    IEnumerator StartMiniWave(MiniWaveData A)
+    IEnumerator StartMiniWave(WaveData wave, MiniWaveData A)
     {
         float startTime = Time.time;
         float elapsedTime = 0f;
@@ -84,7 +84,7 @@ public class WaveGenerator : MonoBehaviour
         GameObject enemyPrefab = A.GetEnemyPrefab();
 
         // While this mini wave's still has duration left
-        while (elapsedTime < A.waveDuration)
+        while (elapsedTime < wave.duration)
         {
             // Spawn an enemy per delay (ex. 1 zombie per second)
             if (A.delayBetweenSpawn > 0)

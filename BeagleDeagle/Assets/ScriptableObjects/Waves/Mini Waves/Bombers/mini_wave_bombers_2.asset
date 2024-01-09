@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: mini_wave_bombers_2
   m_EditorClassIdentifier: 
   miniWaveName: Bomber Wave
-  delayBetweenSpawn: 10
-  enemiesPerSpawn: 2
-  waveDuration: 120
+  delayBetweenSpawn: 6
+  enemiesPerSpawn: 3
   enemyPrefab: {fileID: 3711592478197892634, guid: 10c2b1323b40b0b47839b417306663f4, type: 3}
   enemyData: {fileID: 11400000, guid: 71d70c706a557ab40b070f97ff8e034f, type: 2}

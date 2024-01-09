@@ -31,5 +31,6 @@ MonoBehaviour:
   hitWallSound: []
   volume: 0.5
   explosiveData: {fileID: 11400000, guid: 1971cab37b8ee7f469463d69974055fb, type: 2}
-  explosiveDamage: 200
+  explosiveDamage: 50
+  explodeOnExpiration: 0
   duration: 3

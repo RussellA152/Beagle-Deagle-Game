@@ -113,7 +113,7 @@ MonoBehaviour:
   startingRange: 10
   exitingRange: 20
   completionReward:
-    xpAmount: 500
+    xpAmount: 1000
     moneyAmount: 500
   completionSound: {fileID: 8300000, guid: ca76f253125b68a4e9bd9786c33a5f7a, type: 3}
   volume: 0.5
