@@ -60,7 +60,7 @@ public class ReloadFireRateBoost : PassiveAbility, IHasCooldown
             _cooldownSystem.PutOnCooldown(this);
             _playerHasFireRateBoost = true;
             
-            playerEvents.InvokePassiveActivated(passiveAbilityData);
+            playerEvents.InvokePassiveActivated(passiveAbilityData.abilityIcon);
         }
     }
 
@@ -71,7 +71,7 @@ public class ReloadFireRateBoost : PassiveAbility, IHasCooldown
             _modifierManager.RemoveModifier(attackSpeedBoost.attackSpeedModifier);
             _playerHasFireRateBoost = false;
             
-            playerEvents.InvokePassiveDeactivated(passiveAbilityData);
+            playerEvents.InvokePassiveDeactivated(passiveAbilityData.abilityIcon);
         }
         
     }

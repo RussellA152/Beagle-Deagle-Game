@@ -8,19 +8,22 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
     [SerializeField] private PlayerEvents playerEvents;
     
     [SerializeField] private PlayerData playerData;
-
-    [SerializeField] private float healthRegenDelay = 1f;
-
+    
     private CooldownSystem _cooldownSystem;
+    
     private ModifierManager _modifierManager;
 
     private float _bonusMaxHealth = 1f; // a bonus percentage applied to the player's max health (Ex. 500 max health * 120%, would mean 120% extra max health)
 
     private float _currentHealth;
     
-    private bool _isDead;
+    [Range(0.5f, 15f)] public float healthRegenDelay = 1f;
     
+    private bool _isDead;
+
     public event Action onDeath;
+    
+    public event Action onTookDamage;
 
     [SerializeField, NonReorderable]
     private List<MaxHealthModifier> maxHealthModifiers = new List<MaxHealthModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
@@ -38,14 +41,13 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
 
     private void Start()
     {
-        
         Id = _cooldownSystem.GetAssignableId();
         
         _isDead = false;
 
         // After getting hit, how does it take to start regenerating health?
         CooldownDuration = healthRegenDelay;
-        
+
         // Passives occur in start, so put this in on enable
         _currentHealth = playerData.maxHealth * _bonusMaxHealth;
         
@@ -53,13 +55,13 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
         playerEvents.InvokeCurrentHealthEvent(_currentHealth);
         playerEvents.InvokeMaxHealthEvent(playerData.maxHealth * _bonusMaxHealth);
         
-
     }
-
+    
     private void Update()
     {
-        if(!_isDead)
-            CheckHealthRegeneration();
+        // Regenerate health while player's health is below a certain percentage
+        if (!_isDead && IsHealthBelowPercentage(playerData.healthRegenData.regenThreshold) && !_cooldownSystem.IsOnCooldown(Id))
+            ModifyHealth(playerData.healthRegenData.regenRate * Time.deltaTime);
     }
 
     public virtual void ModifyHealth(float amount)
@@ -76,16 +78,16 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
         {
             _currentHealth = 0f;
             _isDead = true;
-            InvokeDeathEvent();
+            
             // Tell all listeners that the player has died
-            playerEvents.InvokePlayerDied();
+            InvokeDeathEvent();
         }
         else
         {
             // Player took damage 
             if (newHealth < _currentHealth)
             {
-                playerEvents.InvokePlayerTookDamage();
+                InvokeTookDamageEvent();
                 
                 // Place cooldown on health regeneration
                 // Reset cooldown if player was hit while regenerating
@@ -93,7 +95,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
                     _cooldownSystem.PutOnCooldown(this);
                 else
                     _cooldownSystem.RefreshCooldown(Id);
-
+                
             }
             _currentHealth = newHealth;
         }
@@ -102,27 +104,31 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
         playerEvents.InvokeCurrentHealthEvent(_currentHealth);
     }
 
-    private void CheckHealthRegeneration()
-    {
-        if (_currentHealth < (playerData.maxHealth * _bonusMaxHealth) * playerData.healthRegenPercentage && !_cooldownSystem.IsOnCooldown(Id))
-        {
-            ModifyHealth(playerData.regenRate * Time.deltaTime);
-        }
-    }
-
     public float GetCurrentHealth()
     {
         return _currentHealth;
     }
 
-    // Do something when this entity dies
+    public bool IsHealthBelowPercentage(float healthPercentage)
+    {
+        return (_currentHealth < ((playerData.maxHealth * _bonusMaxHealth) * healthPercentage));
+    }
+    
+    public void InvokeTookDamageEvent()
+    {
+        playerEvents.InvokePlayerTookDamage();
+        onTookDamage?.Invoke();
+    }
+
     public bool IsDead()
     {
         return _isDead;
     }
 
+    // Do something when this entity dies
     public void InvokeDeathEvent()
     {
+        playerEvents.InvokePlayerDied();
         onDeath?.Invoke();
     }
 

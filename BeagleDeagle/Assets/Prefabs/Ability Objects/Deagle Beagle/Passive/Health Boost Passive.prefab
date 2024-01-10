@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 239182395596861639}
   - component: {fileID: -2562529841962014862}
   m_Layer: 0
-  m_Name: Health Boost
+  m_Name: Health Boost Passive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

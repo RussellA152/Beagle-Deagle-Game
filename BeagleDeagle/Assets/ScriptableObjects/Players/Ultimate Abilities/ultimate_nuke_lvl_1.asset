@@ -15,9 +15,9 @@ MonoBehaviour:
   abilityName: Nuclear Bomb
   description: Drop a nuke on top of yourself, creating a massive explosion. Affected
     by explosive upgrades.
-  abilitySprite: {fileID: 21300000, guid: 47147c2120c657a49b8ef77fc8a073fc, type: 3}
+  abilitySprite: {fileID: 21300000, guid: e84b35eca592cb048b60a771d28a3d6e, type: 3}
   abilityDamage: 500
-  cooldown: 25
+  cooldown: 30
   duration: 5
   activationSound: {fileID: 8300000, guid: fb3628707a50858409db0f715e738651, type: 3}
   activationSoundVolume: 0.5

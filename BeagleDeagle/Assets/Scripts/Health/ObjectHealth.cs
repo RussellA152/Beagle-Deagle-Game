@@ -16,6 +16,7 @@ public class ObjectHealth : MonoBehaviour, IHealth
     private float maxHealth;
     
     public event Action onDeath;
+    public event Action onTookDamage;
 
     private bool _isDead;
 
@@ -52,6 +53,7 @@ public class ObjectHealth : MonoBehaviour, IHealth
         else
         {
             _currentHealth = newHealth;
+            InvokeTookDamageEvent();
         }
     }
     public float GetCurrentHealth()
@@ -59,9 +61,19 @@ public class ObjectHealth : MonoBehaviour, IHealth
         return _currentHealth;
     }
 
+    public bool IsHealthBelowPercentage(float healthPercentage)
+    {
+        return _currentHealth < maxHealth * healthPercentage;
+    }
+
     public void InvokeDeathEvent()
     {
         onDeath?.Invoke();
+    }
+
+    public void InvokeTookDamageEvent()
+    {
+        onTookDamage?.Invoke();
     }
 
     public bool IsDead()

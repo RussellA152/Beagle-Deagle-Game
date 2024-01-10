@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Trickshot
   description: Bullets ricochet 3 times off the edge of the screen. Pierces infinitely.
-  abilitySprite: {fileID: 21300000, guid: 5f9e104afa36dd3429900d6332b7a411, type: 3}
+  abilitySprite: {fileID: 21300000, guid: 4e2a69e937bbfdd4e98a9dbcc5a215c1, type: 3}
   abilityDamage: 200
-  cooldown: 25
+  cooldown: 30
   duration: 5
   activationSound: {fileID: 8300000, guid: 80ba0d34937bcbf4482184a0d277811c, type: 3}
   activationSoundVolume: 0.5

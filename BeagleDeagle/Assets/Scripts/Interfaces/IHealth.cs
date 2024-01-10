@@ -7,6 +7,8 @@ public interface IHealth
 {
     public event Action onDeath;
     
+    public event Action onTookDamage;
+    
     ///-///////////////////////////////////////////////////////////
     /// Add or subtract from this entity's current health value
     /// 
@@ -17,10 +19,14 @@ public interface IHealth
     /// 
     public float GetCurrentHealth();
 
+    public bool IsHealthBelowPercentage(float healthPercentage);
+
     ///-///////////////////////////////////////////////////////////
     /// Do something when this entity dies
     /// 
     public void InvokeDeathEvent();
+
+    public void InvokeTookDamageEvent();
 
     public bool IsDead();
 }

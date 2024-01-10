@@ -24,6 +24,7 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
     private float _currentHealth;
     
     public event Action onDeath;
+    public event Action onTookDamage;
     private bool _isDead;
 
     private void Awake()
@@ -45,6 +46,11 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
         return _currentHealth;
     }
 
+    public bool IsHealthBelowPercentage(float healthPercentage)
+    {
+        return (_currentHealth < ((enemyData.maxHealth * _bonusMaxHealth) * healthPercentage));
+    }
+
     public virtual void ModifyHealth(float amount)
     {
         // Calculate the potential new health value
@@ -62,20 +68,27 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
             
             _isDead = true;
             
-            // Give the player a certain amount of xp upon death
-            currencyEvents.InvokeGiveXp(enemyData.currencyRewardOnDeath.xpAmount);
-            // Tell other scripts that this enemy has died
-            EnemyManager.Instance.InvokeEnemyDeathGiveGameObject(gameObject);
         }
         else
         {
             _currentHealth = newHealth;
+            InvokeTookDamageEvent();
         }
     }
     
     public void InvokeDeathEvent()
     {
+        // Give the player a certain amount of xp upon death
+        currencyEvents.InvokeGiveXp(enemyData.currencyRewardOnDeath.xpAmount);
+        // Tell other scripts that this enemy has died
+        EnemyManager.Instance.InvokeEnemyDeathGiveGameObject(gameObject);
+        
         onDeath?.Invoke();
+    }
+
+    public void InvokeTookDamageEvent()
+    {
+        onTookDamage?.Invoke();
     }
 
     public bool IsDead()

@@ -56,7 +56,7 @@ public class NoShootSpeedBoost : PassiveAbility
 
                 _modifierManager.AddModifier(movementSpeedBoost.movementSpeedModifier);
                 
-                playerEvents.InvokePassiveActivated(passiveAbilityData);
+                playerEvents.InvokePassiveActivated(passiveAbilityData.abilityIcon);
                 
            
             }
@@ -66,7 +66,7 @@ public class NoShootSpeedBoost : PassiveAbility
 
                 _modifierManager.RemoveModifier(movementSpeedBoost.movementSpeedModifier);
                 
-                playerEvents.InvokePassiveDeactivated(passiveAbilityData);
+                playerEvents.InvokePassiveDeactivated(passiveAbilityData.abilityIcon);
             }
             yield return null;
         }
