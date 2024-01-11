@@ -15,6 +15,9 @@ public class ModifierManager : MonoBehaviour
     // Dictionary to store the remove modifier methods
     private Dictionary<Type, Action<Modifier>> _removeMethods = new Dictionary<Type, Action<Modifier>>();
 
+    // When the entity had a modifier removed, return it to any listeners
+    public event Action<Modifier> onModifierWasRemoved; 
+
     // Register an add method for a specific Modifier type
     public void RegisterAddMethod<T>(Action<T> addMethod) where T : Modifier
     {
@@ -59,6 +62,9 @@ public class ModifierManager : MonoBehaviour
         if (_removeMethods.TryGetValue(type, out Action<Modifier> removeMethod))
         {
             removeMethod.Invoke(modifierToRemove);
+            
+            // Tell any listeners which modifier got removed
+            onModifierWasRemoved?.Invoke(modifierToRemove);
         }
         else
         {
@@ -81,6 +87,7 @@ public class ModifierManager : MonoBehaviour
 
         RemoveModifier(modifierToRemove);
     }
+    
     
     
 }

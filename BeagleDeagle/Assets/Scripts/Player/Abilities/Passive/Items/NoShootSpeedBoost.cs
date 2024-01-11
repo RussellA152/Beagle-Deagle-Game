@@ -75,7 +75,6 @@ public class NoShootSpeedBoost : PassiveAbility
 
     protected override void RemovePassive()
     {
-        
         _modifierManager.RemoveModifier(movementSpeedBoost.movementSpeedModifier);
         
     }
