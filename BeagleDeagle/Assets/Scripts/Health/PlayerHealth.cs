@@ -153,6 +153,8 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
     {
+        if (!maxHealthModifiers.Contains(modifierToRemove)) return;
+        
         maxHealthModifiers.Remove(modifierToRemove);
         _bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
         

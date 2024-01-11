@@ -190,6 +190,8 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
     public void RemoveUtilityCooldownModifier(UtilityCooldownModifier modifierToRemove)
     {
+        if (!utilityCooldownModifiers.Contains(modifierToRemove)) return;
+        
         utilityCooldownModifiers.Remove(modifierToRemove);
         _bonusUtilityCooldown /= (1 + modifierToRemove.bonusUtilityCooldown);
         
@@ -207,6 +209,8 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
     public void RemoveUtilityUsesModifier(UtilityUsesModifier modifierToRemove)
     {
+        if (!utilityUsesModifiers.Contains(modifierToRemove)) return;
+        
         utilityUsesModifiers.Remove(modifierToRemove);
         _bonusUtilityUses -= modifierToRemove.bonusUtilityUses;
         

@@ -59,6 +59,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     private void OnEnable()
     {
         IsStunned = false;
+        
         // Set the speed of the enemy
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
     }
@@ -185,6 +186,8 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
+        if (!movementSpeedModifiers.Contains(modifierToRemove)) return;
+        
         _modifierParticleEffectHandler.StopSpecificParticle(modifierToRemove);
         
         movementSpeedModifiers.Remove(modifierToRemove);

@@ -43,6 +43,13 @@ public abstract class GunData : ScriptableObject, IHasDescription
     [Header("Penetration")]
     [Range(1f, 100f)]
     public int penetrationCount; // how many enemies can this gun's bullet pass through?
+
+    [Header("Critical Hits")]
+    [Range(0f, 1f)]
+    public float criticalChance; // what is the chance of dealing extra damage?
+
+    [Range(1.1f, 3f)]
+    public float criticalHitMultiplier = 2f; // What is being multiplied to the gun's base damage? (ex. 2x damage)
     
     ///-///////////////////////////////////////////////////////////
     /// Return the damage of this weapon.

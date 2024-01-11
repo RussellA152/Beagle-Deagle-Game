@@ -36,4 +36,8 @@ MonoBehaviour:
     modifierName: 
     particleEffect: {fileID: 0}
     bonusAmmoLoad: 0
-  description: +10% DMG!
+  CriticalChanceModifier:
+    modifierName: 
+    particleEffect: {fileID: 0}
+    bonusCriticalChance: 0
+  description: +10% Gun DMG!

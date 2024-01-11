@@ -120,6 +120,8 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
 
     public void RemoveUltimateCooldownModifier(UltimateCooldownModifier modifierToRemove)
     {
+        if (!ultimateCooldownModifiers.Contains(modifierToRemove)) return;
+        
         ultimateCooldownModifiers.Remove(modifierToRemove);
         _bonusUltimateCooldown /= (1 + modifierToRemove.bonusUltimateCooldown);
         

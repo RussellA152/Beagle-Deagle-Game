@@ -23,4 +23,8 @@ public interface IGunDataUpdatable : IDataUpdatable<GunData>, IDamager
     public void AddAmmoLoadModifier(AmmoLoadModifier modifierToAdd);
 
     public void RemoveAmmoLoadModifier(AmmoLoadModifier modifierToRemove);
+
+    public void AddCriticalHitChanceModifier(CriticalChanceModifier modifierToAdd);
+
+    public void RemoveCriticalHitChanceModifier(CriticalChanceModifier modifierToRemove);
 }

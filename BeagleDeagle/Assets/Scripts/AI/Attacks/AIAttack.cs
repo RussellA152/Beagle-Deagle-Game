@@ -131,6 +131,8 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
 
     public void RemoveDamageModifier(DamageModifier modifierToRemove)
     {
+        if (!damageModifiers.Contains(modifierToRemove)) return;
+        
         damageModifiers.Remove(modifierToRemove);
         _bonusDamage /= (1 + modifierToRemove.bonusDamage);
     }
@@ -146,6 +148,8 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
 
     public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove)
     {
+        if (!attackSpeedModifiers.Contains(modifierToRemove)) return;
+        
         attackSpeedModifiers.Remove(modifierToRemove);
         _bonusAttackSpeed /= (1 + modifierToRemove.bonusAttackSpeed);
         

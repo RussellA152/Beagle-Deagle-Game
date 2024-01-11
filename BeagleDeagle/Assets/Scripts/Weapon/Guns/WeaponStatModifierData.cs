@@ -17,6 +17,8 @@ public class WeaponStatModifierData : ScriptableObject, IHasDescription
 
     public AmmoLoadModifier AmmoLoadModifier;
 
+    public CriticalChanceModifier CriticalChanceModifier;
+
     [SerializeField, Space(10), TextArea(2,3)] 
     private string description;
     

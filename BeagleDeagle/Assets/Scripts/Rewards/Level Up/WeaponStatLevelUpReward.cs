@@ -40,6 +40,9 @@ public class WeaponStatLevelUpReward: LevelUpReward
         if(weaponStatModifierData.AmmoLoadModifier.IsModifierNameValid())
             modifierManager.AddModifier(weaponStatModifierData.AmmoLoadModifier);
         
+        if(weaponStatModifierData.CriticalChanceModifier.IsModifierNameValid())
+            modifierManager.AddModifier(weaponStatModifierData.CriticalChanceModifier);
+        
         Debug.Log($"{recipientGameObject.name} was given {weaponStatModifierData}");
     }
     

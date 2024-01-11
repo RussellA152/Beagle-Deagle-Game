@@ -7,11 +7,12 @@ using UnityEngine.Serialization;
 public class MiscellaneousModifierList : MonoBehaviour, IRegisterModifierMethods
 {
     private ModifierManager _modifierManager;
-    
-    [Header("Modifiers")]
-    [SerializeField, NonReorderable]
-    private List<ExplosiveRadiusModifier> explosiveRadiusModifiers = new List<ExplosiveRadiusModifier>(); // display all modifiers applied to the bonusMaxHealth (for debugging mainly)
 
+    [Header("Modifiers")]
+
+    [SerializeField, NonReorderable]
+    private List<ExplosiveRadiusModifier> explosiveRadiusModifiers = new List<ExplosiveRadiusModifier>(); // display all modifiers applied to the explosives (for debugging mainly)
+    
     public float BonusExplosiveRadius { get; private set; } = 1f;
 
     private void Awake()
@@ -36,6 +37,8 @@ public class MiscellaneousModifierList : MonoBehaviour, IRegisterModifierMethods
 
     public void RemoveExplosiveRadiusModifier(ExplosiveRadiusModifier modifierToRemove)
     {
+        if (!explosiveRadiusModifiers.Contains(modifierToRemove)) return;
+        
         explosiveRadiusModifiers.Remove(modifierToRemove);
         BonusExplosiveRadius /= (1 + modifierToRemove.bonusRadius);
         

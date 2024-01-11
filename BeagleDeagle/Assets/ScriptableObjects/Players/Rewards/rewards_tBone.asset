@@ -38,6 +38,10 @@ MonoBehaviour:
     IsChosen: 0
     Icon: {fileID: 0}
     weaponStatModifierData: {fileID: 11400000, guid: fe27bdc4c359d284b8cc3bd1d3e353eb, type: 2}
+  - LevelGiven: 5
+    IsChosen: 1
+    Icon: {fileID: 0}
+    weaponStatModifierData: {fileID: 11400000, guid: 86f4c00446ab3bf4db3cf0549227e8ec, type: 2}
   passiveRewards:
   - LevelGiven: 10
     IsChosen: 1

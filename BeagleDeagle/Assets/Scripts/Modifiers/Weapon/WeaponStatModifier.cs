@@ -99,3 +99,16 @@ public class AmmoLoadModifier: Modifier
     }
 }
 
+[System.Serializable]
+public class CriticalChanceModifier : Modifier
+{
+    [Range(-1f, 1f)] 
+    public float bonusCriticalChance;
+    
+    public CriticalChanceModifier(string name, float criticalChance)
+    {
+        modifierName = name;
+        bonusCriticalChance = criticalChance;
+    }
+}
+

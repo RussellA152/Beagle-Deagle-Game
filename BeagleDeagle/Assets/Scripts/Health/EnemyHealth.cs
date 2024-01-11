@@ -112,6 +112,8 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)
     {
+        if (!maxHealthModifiers.Contains(modifierToRemove)) return;
+        
         maxHealthModifiers.Remove(modifierToRemove);
         _bonusMaxHealth /= (1 + modifierToRemove.bonusMaxHealth);
     }

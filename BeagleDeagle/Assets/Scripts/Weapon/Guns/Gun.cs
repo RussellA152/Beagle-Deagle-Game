@@ -59,6 +59,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
     [SerializeField, NonReorderable]
     private List<DamageModifier> damageModifiers = new List<DamageModifier>(); // A bonus percentage applied to the gun's damage
     [SerializeField, NonReorderable]
+    private List<CriticalChanceModifier> criticalChanceModifiers = new List<CriticalChanceModifier>();
+    [SerializeField, NonReorderable]
     private List<PenetrationModifier> penetrationModifiers = new List<PenetrationModifier>();
     [SerializeField, NonReorderable]
     private List<SpreadModifier> spreadModifiers = new List<SpreadModifier>();
@@ -75,6 +77,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
     private float _bonusFireRate = 1f;
     private float _bonusReloadSpeed = 1f;
     private float _bonusAmmoLoad = 1f;
+    private float _bonusCriticalChance = 0f;
 
     private void Awake()
     {
@@ -299,7 +302,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
             
             // Pass in the damage and penetration values of this gun, to the bullet being shot
             // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
-            projectile.UpdateDamageAndPenetrationValues(_weaponData.GetDamage() * _bonusDamage, _weaponData.penetrationCount + _bonusPenetration);
+            projectile.UpdateDamageAndPenetrationValues(CalculateDamage(), _weaponData.penetrationCount + _bonusPenetration);
             
 
             // Set the position to be at the barrel of the gun
@@ -354,6 +357,19 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
         float spreadAngle = Random.Range(-_weaponData.bulletSpread * _bonusSpread, _weaponData.bulletSpread * _bonusSpread);
 
         return Quaternion.Euler(0f, 0f, spreadAngle) * bulletSpawnPoint.rotation;
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Return damage of the gun after calculating any critical hit chance and bonus damage.
+    /// 
+    private float CalculateDamage()
+    {
+        float damageToDeal = _weaponData.GetDamage() * _bonusDamage;
+        
+        if (Random.value < _weaponData.criticalChance + _bonusCriticalChance)
+            return damageToDeal * _weaponData.criticalHitMultiplier;
+        
+        return damageToDeal;
     }
 
     public void AllowShoot(bool boolean)
@@ -569,6 +585,17 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
         playerEvents.InvokeUpdateMaxAmmoLoadedText(Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad));
     }
+    public void AddCriticalHitChanceModifier(CriticalChanceModifier modifierToAdd)
+    {
+        criticalChanceModifiers.Add(modifierToAdd);
+        _bonusCriticalChance += (_bonusFireRate * modifierToAdd.bonusCriticalChance);
+    }
+
+    public void RemoveCriticalHitChanceModifier(CriticalChanceModifier modifierToRemove)
+    {
+        criticalChanceModifiers.Remove(modifierToRemove);
+        _bonusCriticalChance /= (1 + modifierToRemove.bonusCriticalChance);
+    }
 
     #endregion
 
@@ -597,6 +624,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
         _modifierManager.RegisterAddMethod<AttackSpeedModifier>(AddAttackSpeedModifier);
         _modifierManager.RegisterAddMethod<ReloadSpeedModifier>(AddReloadSpeedModifier);
         _modifierManager.RegisterAddMethod<AmmoLoadModifier>(AddAmmoLoadModifier);
+        _modifierManager.RegisterAddMethod<CriticalChanceModifier>(AddCriticalHitChanceModifier);
     }
 
     public void RegisterAllRemoveModifierMethods()
@@ -607,5 +635,6 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
         _modifierManager.RegisterRemoveMethod<AttackSpeedModifier>(RemoveAttackSpeedModifier);
         _modifierManager.RegisterRemoveMethod<ReloadSpeedModifier>(RemoveReloadSpeedModifier);
         _modifierManager.RegisterRemoveMethod<AmmoLoadModifier>(RemoveAmmoLoadModifier);
+        _modifierManager.RegisterRemoveMethod<CriticalChanceModifier>(RemoveCriticalHitChanceModifier);
     }
 }

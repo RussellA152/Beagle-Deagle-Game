@@ -216,6 +216,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
+        if (!movementSpeedModifiers.Contains(modifierToRemove)) return;
+        
         _modifierParticleEffectHandler.StopSpecificParticle(modifierToRemove);
         
         movementSpeedModifiers.Remove(modifierToRemove);
