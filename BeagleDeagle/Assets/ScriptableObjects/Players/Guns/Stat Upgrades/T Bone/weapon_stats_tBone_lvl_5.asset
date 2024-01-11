@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 312babf16a8e5474880680a2d38c41d7, type: 3}
-  m_Name: weapon_stats_tBone_lvl_6
+  m_Name: weapon_stats_tBone_lvl_5
   m_EditorClassIdentifier: 
   DamageModifier:
-    modifierName: T-Bone Level 6
+    modifierName: 
     particleEffect: {fileID: 0}
-    bonusDamage: 0.1
+    bonusDamage: 0
   PenetrationModifier:
     modifierName: 
     particleEffect: {fileID: 0}
@@ -37,7 +37,7 @@ MonoBehaviour:
     particleEffect: {fileID: 0}
     bonusAmmoLoad: 0
   CriticalChanceModifier:
-    modifierName: 
+    modifierName: T-Bone Level 5
     particleEffect: {fileID: 0}
-    bonusCriticalChance: 0
-  description: +10% Gun DMG!
+    bonusCriticalChance: 0.25
+  description: +25% Gun Crit Chance!

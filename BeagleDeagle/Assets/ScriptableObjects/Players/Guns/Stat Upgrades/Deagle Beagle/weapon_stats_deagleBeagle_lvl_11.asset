@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 312babf16a8e5474880680a2d38c41d7, type: 3}
-  m_Name: weapon_stats_tBone_lvl_12
+  m_Name: weapon_stats_deagleBeagle_lvl_11
   m_EditorClassIdentifier: 
   DamageModifier:
-    modifierName: T-Bone Level 6
+    modifierName: Deagle Beagle Level 11
     particleEffect: {fileID: 0}
     bonusDamage: 0.25
   PenetrationModifier:
@@ -36,4 +36,8 @@ MonoBehaviour:
     modifierName: 
     particleEffect: {fileID: 0}
     bonusAmmoLoad: 0
-  description: +25% DMG!
+  CriticalChanceModifier:
+    modifierName: 
+    particleEffect: {fileID: 0}
+    bonusCriticalChance: 0
+  description: +25% Gun DMG!

@@ -35,7 +35,7 @@ public class WeaponStatLevelUpReward: LevelUpReward
             modifierManager.AddModifier(weaponStatModifierData.ReloadSpeedModifier);
         
         if(weaponStatModifierData.AttackSpeedModifier.IsModifierNameValid())
-            modifierManager.AddModifier(weaponStatModifierData.ReloadSpeedModifier);
+            modifierManager.AddModifier(weaponStatModifierData.AttackSpeedModifier);
         
         if(weaponStatModifierData.AmmoLoadModifier.IsModifierNameValid())
             modifierManager.AddModifier(weaponStatModifierData.AmmoLoadModifier);

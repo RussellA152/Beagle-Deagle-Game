@@ -502,6 +502,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
 
     public void RemoveDamageModifier(DamageModifier modifierToRemove)
     {
+        if (!damageModifiers.Contains(modifierToRemove)) return;
+        
         damageModifiers.Remove(modifierToRemove);
         _bonusDamage /= (1 + modifierToRemove.bonusDamage);
     }
@@ -515,6 +517,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
 
     public void RemovePenetrationModifier(PenetrationModifier modifierToRemove)
     {
+        if (!penetrationModifiers.Contains(modifierToRemove)) return;
+        
         penetrationModifiers.Remove(modifierToRemove);
         _bonusPenetration -= modifierToRemove.bonusPenetration;
     }
@@ -527,6 +531,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
 
     public void RemoveSpreadModifier(SpreadModifier modifierToRemove)
     {
+        if (!spreadModifiers.Contains(modifierToRemove)) return;
+        
         spreadModifiers.Remove(modifierToRemove);
         _bonusSpread /= (1 + modifierToRemove.bonusSpread);
     }
@@ -539,6 +545,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
 
     public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove)
     {
+        if (!fireRateModifiers.Contains(modifierToRemove)) return;
+        
         fireRateModifiers.Remove(modifierToRemove);
         _bonusFireRate /= (1 + modifierToRemove.bonusAttackSpeed);
 
@@ -554,6 +562,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
 
     public void RemoveReloadSpeedModifier(ReloadSpeedModifier modifierToRemove)
     {
+        if (!reloadSpeedModifiers.Contains(modifierToRemove)) return;
+        
         reloadSpeedModifiers.Remove(modifierToRemove);
         _bonusReloadSpeed /= (1 + modifierToRemove.bonusReloadSpeed);
         
@@ -577,6 +587,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
 
     public void RemoveAmmoLoadModifier(AmmoLoadModifier modifierToRemove)
     {
+        if (!ammoLoadModifiers.Contains(modifierToRemove)) return;
+        
         ammoLoadModifiers.Remove(modifierToRemove);
         _bonusAmmoLoad /= (1 + modifierToRemove.bonusAmmoLoad);
         
@@ -593,6 +605,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
 
     public void RemoveCriticalHitChanceModifier(CriticalChanceModifier modifierToRemove)
     {
+        if (!criticalChanceModifiers.Contains(modifierToRemove)) return;
+        
         criticalChanceModifiers.Remove(modifierToRemove);
         _bonusCriticalChance /= (1 + modifierToRemove.bonusCriticalChance);
     }

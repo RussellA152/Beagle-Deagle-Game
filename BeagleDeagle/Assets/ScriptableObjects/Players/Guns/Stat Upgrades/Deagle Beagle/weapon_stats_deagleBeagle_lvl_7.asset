@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 312babf16a8e5474880680a2d38c41d7, type: 3}
-  m_Name: weapon_stats_tBone_lvl_4
+  m_Name: weapon_stats_deagleBeagle_lvl_7
   m_EditorClassIdentifier: 
   DamageModifier:
     modifierName: 
@@ -25,15 +25,21 @@ MonoBehaviour:
     particleEffect: {fileID: 0}
     bonusSpread: 0
   ReloadSpeedModifier:
-    modifierName: 
+    modifierName: 'Deagle Beagle Level '
     particleEffect: {fileID: 0}
-    bonusReloadSpeed: 0
+    bonusReloadSpeed: -0.2
   AttackSpeedModifier:
-    modifierName: T-Bone Level 4
+    modifierName: Deagle Beagle Level 7
     particleEffect: {fileID: 0}
-    bonusAttackSpeed: 0.15
+    bonusAttackSpeed: -0.15
   AmmoLoadModifier:
     modifierName: 
     particleEffect: {fileID: 0}
     bonusAmmoLoad: 0
-  description: +15% Firerate!
+  CriticalChanceModifier:
+    modifierName: 
+    particleEffect: {fileID: 0}
+    bonusCriticalChance: 0
+  description: '+15% Fire Rate!
+
+    +20% Reload Speed!'
