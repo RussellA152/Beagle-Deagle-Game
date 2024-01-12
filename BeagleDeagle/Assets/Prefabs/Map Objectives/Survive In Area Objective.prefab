@@ -118,7 +118,7 @@ MonoBehaviour:
   completionSound: {fileID: 8300000, guid: ca76f253125b68a4e9bd9786c33a5f7a, type: 3}
   volume: 0.5
   particleEffectOnCompletion: {fileID: 4976828533008296056, guid: 22ef9e826c4f64541b5ce349b36ca227, type: 3}
-  timeRequiredToStayInside: 15
+  timeRequiredToStayInside: 10
 --- !u!114 &737767748583867275
 MonoBehaviour:
   m_ObjectHideFlags: 0

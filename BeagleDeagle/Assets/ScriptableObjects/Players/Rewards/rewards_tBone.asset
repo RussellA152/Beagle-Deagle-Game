@@ -55,6 +55,10 @@ MonoBehaviour:
     IsChosen: 1
     Icon: {fileID: 0}
     passiveAbilityData: {fileID: 11400000, guid: 2be902dab7442ea4183af0a85dbfca88, type: 2}
+  - LevelGiven: 5
+    IsChosen: 1
+    Icon: {fileID: 0}
+    passiveAbilityData: {fileID: 11400000, guid: 0f523cd3395c86b478d7dfac586b7c28, type: 2}
   utilityRewards:
   - LevelGiven: 15
     IsChosen: 1

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a5a17c7038d5cd47b7196071af34d59, type: 3}
-  m_Name: passive_killSpeed
+  m_Name: passive_speedOnKill
   m_EditorClassIdentifier: 
   passiveName: Hit & Run
-  abilityIcon: {fileID: 21300000, guid: d9ab4370b87d087449d4f89f059d8698, type: 3}
+  abilityIcon: {fileID: 21300000, guid: 6d9d501324742a040bf54af900a3703b, type: 3}
   description: Killing 3 enemies within 5 seconds grants a 30% speed boost for 6
     seconds.
   gameObjectWithPassive: {fileID: 8960436445765275906, guid: 28dd1372b69866c49b31327096343a7b, type: 3}

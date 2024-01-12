@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KillSpeedBoost : PassiveAbility, IHasCooldown
+public class SpeedBoostOnKill : PassiveAbility, IHasCooldown
 {
     [SerializeField] private MovementSpeedBoostData movementSpeedBoostData;
 
@@ -73,6 +73,7 @@ public class KillSpeedBoost : PassiveAbility, IHasCooldown
             _playerHasSpeedBoost = true;
             
             DisplayPassiveOnBuffBar();
+            
         }
     }
 
