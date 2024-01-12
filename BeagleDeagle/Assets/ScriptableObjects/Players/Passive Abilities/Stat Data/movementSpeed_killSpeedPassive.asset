@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bdd07501426668d4385793ec2f63919a, type: 3}
-  m_Name: movementSpeed_boost
+  m_Name: movementSpeed_killSpeedPassive
   m_EditorClassIdentifier: 
-  minimumTimeRequired: 2.5
   movementSpeedModifier:
-    modifierName: T-Bone Speed Boost
+    modifierName: T-Bone Speed On Kill Boost
+    particleEffect: {fileID: 0}
     bonusMovementSpeed: 0.3

@@ -43,6 +43,14 @@ public class ModifierManager : MonoBehaviour
         }
     }
 
+    public void AddModifierOnlyForDuration<T>(T modifierToAdd, float duration) where T : Modifier
+    {
+        // Add a modifier, the remove after sometime
+        AddModifier(modifierToAdd);
+        
+        RemoveModifierAfterDelay(modifierToAdd, duration);
+    }
+
     // Register a remove method for a specific Modifier type
     public void RegisterRemoveMethod<T>(Action<T> removeMethod) where T : Modifier
     {

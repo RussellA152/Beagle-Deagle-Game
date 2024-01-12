@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4349616696555974631
+--- !u!1 &8960436445765275906
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 808061762903179882}
-  - component: {fileID: 7119921015610259218}
+  - component: {fileID: 8960436445765275904}
+  - component: {fileID: 8960436445765275905}
   m_Layer: 0
-  m_Name: Speed Boost Passive
+  m_Name: Hit & Run Passive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &808061762903179882
+--- !u!4 &8960436445765275904
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4349616696555974631}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 8960436445765275906}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -32,19 +32,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7119921015610259218
+--- !u!114 &8960436445765275905
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4349616696555974631}
+  m_GameObject: {fileID: 8960436445765275906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71712cd2b779f4f438d9eb2d7cd0bb93, type: 3}
+  m_Script: {fileID: 11500000, guid: 091a26606114f0046b3d90c5c192b6b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
-  passiveAbilityData: {fileID: 11400000, guid: a1e5f73d4e871e84999b5fd197524bfe, type: 2}
-  movementSpeedBoost: {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}
-  minimumTimeRequired: 2
+  passiveAbilityData: {fileID: 11400000, guid: 0f523cd3395c86b478d7dfac586b7c28, type: 2}
+  movementSpeedBoostData: {fileID: 11400000, guid: 87c13df1ca0d10745b60d5d3e13406a5, type: 2}
+  killsRequired: 3
+  resetKillCountTimer: 5
+  movementSpeedBoostDuration: 6

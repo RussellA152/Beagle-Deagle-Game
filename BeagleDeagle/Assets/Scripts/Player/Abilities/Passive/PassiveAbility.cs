@@ -35,6 +35,18 @@ public abstract class PassiveAbility: MonoBehaviour
     protected abstract void ActivatePassive();
 
     protected abstract void RemovePassive();
+
+    // Show the ability icon of this passive on the hud's buff bar 
+    protected void DisplayPassiveOnBuffBar()
+    {
+        playerEvents.InvokePassiveActivated(passiveAbilityData.abilityIcon);
+    }
+
+    // Hide the ability icon of this passive on the hud's buff bar 
+    protected void RemovePassiveFromBuffBar()
+    {
+        playerEvents.InvokePassiveDeactivated(passiveAbilityData.abilityIcon);
+    }
     
     
 }

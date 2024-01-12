@@ -28,14 +28,14 @@ public class HealthRegeneration : PassiveAbility
     protected override void ActivatePassive()
     {
         _allowRegeneration = true;
-        playerEvents.InvokePassiveActivated(passiveAbilityData.abilityIcon);
+        DisplayPassiveOnBuffBar();
     }
     
     protected override void RemovePassive()
     {
         _allowRegeneration = false;
         
-        playerEvents.InvokePassiveDeactivated(passiveAbilityData.abilityIcon);
+        RemovePassiveFromBuffBar();
     }
 
 }
