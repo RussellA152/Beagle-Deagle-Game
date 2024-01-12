@@ -15,8 +15,16 @@ public class ModifierManager : MonoBehaviour
     // Dictionary to store the remove modifier methods
     private Dictionary<Type, Action<Modifier>> _removeMethods = new Dictionary<Type, Action<Modifier>>();
 
+    private Dictionary<Modifier, Coroutine> _removeTimers = new Dictionary<Modifier, Coroutine>();
+
     // When the entity had a modifier removed, return it to any listeners
-    public event Action<Modifier> onModifierWasRemoved; 
+    public event Action<Modifier> onModifierWasRemoved;
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        _removeTimers.Clear();
+    }
 
     // Register an add method for a specific Modifier type
     public void RegisterAddMethod<T>(Action<T> addMethod) where T : Modifier
@@ -85,7 +93,26 @@ public class ModifierManager : MonoBehaviour
     /// 
     public void RemoveModifierAfterDelay<T>(T modifierToRemove, float delay) where T : Modifier
     {
-        StartCoroutine(RemoveDelayCoroutine(modifierToRemove, delay));
+        Coroutine newRemoveTimer =  StartCoroutine(RemoveDelayCoroutine(modifierToRemove, delay));
+        
+        _removeTimers[modifierToRemove] = newRemoveTimer;
+    }
+
+    public void RefreshTimerOnRemoveModifier<T>(T modifierToRefreshTimerFor, float newTimer) where T : Modifier
+    {
+        if (_removeTimers.TryGetValue(modifierToRefreshTimerFor, out Coroutine existingTimer))
+        {
+            Debug.Log("Refreshing cooldown for: " + modifierToRefreshTimerFor);
+            // Stop the existing timer
+            StopCoroutine(existingTimer);
+            
+            // Start a new timer
+            Coroutine newRemoveTimer = StartCoroutine(RemoveDelayCoroutine(modifierToRefreshTimerFor, newTimer));
+        
+            _removeTimers[modifierToRefreshTimerFor] = newRemoveTimer;
+        }
+        
+        
     }
 
     // Wait a few seconds before removing the modifier from the gameObject
@@ -93,7 +120,10 @@ public class ModifierManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
+        _removeTimers.Remove(modifierToRemove);
+        
         RemoveModifier(modifierToRemove);
+        
     }
     
     

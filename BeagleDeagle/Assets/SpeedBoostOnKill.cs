@@ -66,13 +66,24 @@ public class SpeedBoostOnKill : PassiveAbility, IHasCooldown
 
     private void CheckIfPlayerMetKillRequirement()
     {
-        // If the player reaches the kill requirement, give them the movement speed boost they need
-        if (_enemyKillCount >= killsRequired && !_playerHasSpeedBoost)
+        // If the player reaches the kill requirement (ex. 3 kills or every 3 kills), give them the movement speed boost they need
+        if (_enemyKillCount % killsRequired  == 0)
         {
-            _modifierManager.AddModifierOnlyForDuration(movementSpeedBoostData.movementSpeedModifier, movementSpeedBoostDuration);
-            _playerHasSpeedBoost = true;
+            // If player doesn't have the speed boost, give it to them for the first time
+            if (!_playerHasSpeedBoost)
+            {
+                _modifierManager.AddModifierOnlyForDuration(movementSpeedBoostData.movementSpeedModifier, movementSpeedBoostDuration);
+                _playerHasSpeedBoost = true;
             
-            DisplayPassiveOnBuffBar();
+                DisplayPassiveOnBuffBar();
+            }
+            // If player already has the speed boost and meets kill requirements again, then refresh the timer on their movement speed boost
+            else
+            {
+                _cooldownSystem.RefreshCooldown(Id);
+                _modifierManager.RefreshTimerOnRemoveModifier(movementSpeedBoostData.movementSpeedModifier, movementSpeedBoostDuration);
+            }
+            
             
         }
     }
