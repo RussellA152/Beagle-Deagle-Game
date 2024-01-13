@@ -10,8 +10,9 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
 {
     [SerializeField] private LayerMask whoCanPickup;
 
-    private IStatusEffect[] _statusEffects;
-    [SerializeField] private StatusEffectTypes statusEffectData;
+    //private IStatusEffect[] _statusEffects;
+    //[SerializeField] private StatusEffectTypes statusEffectData;
+    
     private CooldownSystem _cooldownSystem;
 
     [SerializeField] private AudioClip pickUpSound;
@@ -33,7 +34,8 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
 
     private void Awake()
     {
-        _statusEffects = GetComponents<IStatusEffect>();
+       // _statusEffects = GetComponents<IStatusEffect>();
+       
         _cooldownSystem = GetComponent<CooldownSystem>();
         _audioClipPlayer = GetComponent<AudioClipPlayer>();
         
@@ -44,10 +46,10 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
         Id = _cooldownSystem.GetAssignableId();
         CooldownDuration = pickUpDuration;
         
-        foreach (IStatusEffect statusEffect in _statusEffects)
-        {
-            statusEffect.UpdateWeaponType(statusEffectData);
-        }
+        // foreach (IStatusEffect statusEffect in _statusEffects)
+        // {
+        //     statusEffect.UpdateWeaponType(statusEffectData);
+        // }
     }
 
     private void OnEnable()

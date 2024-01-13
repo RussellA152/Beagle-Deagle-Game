@@ -24,8 +24,7 @@ public class ObjectPoolItem
 public class ObjectPooler : MonoBehaviour
 {
     public static ObjectPooler Instance;
-
-    [NonReorderable]
+    
     public List<ObjectPoolItem> itemsToPool;
 
     private Dictionary<int, ObjectPoolItem> _allUniqueItems = new Dictionary<int, ObjectPoolItem>();
@@ -76,6 +75,46 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Add a certain amount of gameObject to the object pool, if its not already in the object pool
+    /// 
+    // public void AddNewGameObject(GameObject newPooledItem, int amountToPool)
+    // {
+    //     int poolKey = newPooledItem.GetComponent<IPoolable>().PoolKey;
+    //
+    //     if (!IsItemInPool(poolKey)) return;
+    //     
+    //     ObjectPoolItem newItem = new ObjectPoolItem();
+    //
+    //     newItem.objectToPool = newPooledItem;
+    //     
+    //     newItem.pooled = new List<GameObject>();
+    //     // iterate through all items that we want to object pool
+    //     // cache a reference to their pool key so we don't have to get component too often
+    //     newItem.poolKey = poolKey;
+    //
+    //     // Add the unique item to a dictionary
+    //     _allUniqueItems.Add(newItem.poolKey, newItem);
+    //
+    //
+    //     for (int i = 0; i < amountToPool; i++)
+    //     {
+    //         // Create the new object
+    //         GameObject obj = Instantiate(newItem.objectToPool);
+    //
+    //         obj.name = obj.name + " " + i;
+    //
+    //         // Set its parent to a container (if it exists)
+    //         if (newItem.container != null)
+    //         {
+    //             obj.transform.SetParent(newItem.container);
+    //         }
+    //
+    //         obj.SetActive(false);
+    //         newItem.pooled.Add(obj);
+    //     }
+    // }
+
     public GameObject GetPooledObject(int key)
     {
         ObjectPoolItem itemRequested = null;
@@ -111,5 +150,15 @@ public class ObjectPooler : MonoBehaviour
             
         }
         return null;
+    }
+
+    public bool IsItemInPool(int key)
+    {
+        if (_allUniqueItems.TryGetValue(key, out ObjectPoolItem itemRequested))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

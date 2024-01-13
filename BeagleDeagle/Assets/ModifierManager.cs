@@ -98,11 +98,15 @@ public class ModifierManager : MonoBehaviour
         _removeTimers[modifierToRemove] = newRemoveTimer;
     }
 
-    public void RefreshTimerOnRemoveModifier<T>(T modifierToRefreshTimerFor, float newTimer) where T : Modifier
+    ///-///////////////////////////////////////////////////////////
+    /// Stop an existing timer for removing a modifier, and replace it with a new timer.
+    /// 
+    public void RefreshRemoveModifierTimer<T>(T modifierToRefreshTimerFor, float newTimer) where T : Modifier
     {
         if (_removeTimers.TryGetValue(modifierToRefreshTimerFor, out Coroutine existingTimer))
         {
             Debug.Log("Refreshing cooldown for: " + modifierToRefreshTimerFor);
+            
             // Stop the existing timer
             StopCoroutine(existingTimer);
             
@@ -111,7 +115,6 @@ public class ModifierManager : MonoBehaviour
         
             _removeTimers[modifierToRefreshTimerFor] = newRemoveTimer;
         }
-        
         
     }
 

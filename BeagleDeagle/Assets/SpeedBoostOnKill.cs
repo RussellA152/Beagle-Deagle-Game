@@ -81,7 +81,7 @@ public class SpeedBoostOnKill : PassiveAbility, IHasCooldown
             else
             {
                 _cooldownSystem.RefreshCooldown(Id);
-                _modifierManager.RefreshTimerOnRemoveModifier(movementSpeedBoostData.movementSpeedModifier, movementSpeedBoostDuration);
+                _modifierManager.RefreshRemoveModifierTimer(movementSpeedBoostData.movementSpeedModifier, movementSpeedBoostDuration);
             }
             
             
@@ -93,6 +93,7 @@ public class SpeedBoostOnKill : PassiveAbility, IHasCooldown
         if (Id != id) return;
 
         _enemyKillCount = 0;
+        
         Debug.Log("Enemies killed was reset. Enemies killed: " + _enemyKillCount);
     }
 
@@ -109,7 +110,6 @@ public class SpeedBoostOnKill : PassiveAbility, IHasCooldown
             
             Debug.Log("Speed boost on kill was removed!");
         }
-            
     }
 
     public int Id { get; set; }

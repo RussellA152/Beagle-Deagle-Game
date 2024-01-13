@@ -2,11 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Serialization;
 
 public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: StatusEffectData
 {
-    private StatusEffectTypes _statusEffectTypes;
+    [SerializeField] private StatusEffectTypes statusEffectTypes;
+    
     protected T StatusEffectData;
+
+    private void Awake()
+    {
+        // Give any starting status effects to this gameObject 
+        if(statusEffectTypes != null)
+            UpdateWeaponType(statusEffectTypes);
+    }
 
     ///-///////////////////////////////////////////////////////////
     /// Apply an effect to the object that was hit by the status effect.
@@ -42,10 +51,10 @@ public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: St
 
     public void UpdateWeaponType(StatusEffectTypes statusEffectTypesScriptableObject)
     {
-        _statusEffectTypes = statusEffectTypesScriptableObject;
+        statusEffectTypes = statusEffectTypesScriptableObject;
         
         // Retrieve status effect data from explosive type
         // Examples: StunData, DamageOverTimeData, SlowData, HealData
-        StatusEffectData = _statusEffectTypes.GetStatusEffectData<T>();
+        StatusEffectData = statusEffectTypes.GetStatusEffectData<T>();
     }
 }

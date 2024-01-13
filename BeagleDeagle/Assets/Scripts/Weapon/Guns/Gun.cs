@@ -126,7 +126,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
         _bulletsShot = 0;
         
         _bulletPoolKey = _weaponData.bulletPrefab.GetComponent<IPoolable>().PoolKey;
-        
+
         muzzleFlash.gameObject.SetActive(false);
 
     }
