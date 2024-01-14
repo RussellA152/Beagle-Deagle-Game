@@ -44,4 +44,17 @@ public class CooldownData
     {
         RemainingTime = 0f;
     }
+
+    public void ChangeRemainingTime(float newTime)
+    {
+        if (newTime > 0)
+        {
+            RemainingTime = newTime;
+        }
+            
+        else
+        {
+            Debug.Log("New timer for cooldown data was invalid!");
+        }
+    }
 }

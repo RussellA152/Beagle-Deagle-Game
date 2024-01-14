@@ -116,6 +116,11 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
         _bonusUltimateCooldown += (_bonusUltimateCooldown * modifierToAdd.bonusUltimateCooldown);
         
         CooldownDuration = UltimateAbilityData.cooldown * _bonusUltimateCooldown;
+        
+        if (_cooldownSystem.IsOnCooldown(Id))
+        {
+            _cooldownSystem.ChangeOngoingCooldownTime(Id, CooldownDuration);
+        }
     }
 
     public void RemoveUltimateCooldownModifier(UltimateCooldownModifier modifierToRemove)

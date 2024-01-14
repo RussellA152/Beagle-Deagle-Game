@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-public class ConsumablePickUp : MonoBehaviour, IHasCooldown
+public abstract class PowerUp : MonoBehaviour, IHasCooldown
 {
-    [SerializeField] private LayerMask whoCanPickup;
+    [SerializeField] private PlayerEvents playerEvents;
 
     private CooldownSystem _cooldownSystem;
     
@@ -18,16 +18,14 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
 
     [SerializeField, Range(0.1f, 1f)] private float volume;
     
-
     [SerializeField, Range(1f, 60f)] 
     // How long will this pick up remain on the ground?
     private float pickUpDuration = 30f;
-    
+
+    [TextArea(2,3)]
+    public string pickUpDescription;
     public event Action onPickUpDespawn;
     
-    // What does this food do to who ever picked it up?
-    public UnityEvent<GameObject> onPickUp;
-
     private void Awake()
     {
         _cooldownSystem = GetComponent<CooldownSystem>();
@@ -63,22 +61,26 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Activate all effects on food pickup
-        if ((whoCanPickup.value & (1 << other.gameObject.layer)) > 0)
+        if (other.gameObject.CompareTag("Player"))
         {
-            onPickUp?.Invoke(other.gameObject);
-            
             _audioClipPlayer.PlayGeneralAudioClip(pickUpSound, volume);
+        
+            // Display the description of what this pick up should do (if it has one)
+            if(pickUpDescription != string.Empty)
+                playerEvents.InvokeShowPickUpDescription(pickUpDescription);
+
+            OnPickUp(other.gameObject);
             
             Despawn(Id);
         }
     }
 
+    protected abstract void OnPickUp(GameObject receiverGameObject);
+    
     private void Despawn(int id)
     {
         if (Id != id) return;
-        
-        Debug.Log("Despawn pickup! " + gameObject.name);
-        
+
         onPickUpDespawn?.Invoke();
         
         gameObject.SetActive(false);

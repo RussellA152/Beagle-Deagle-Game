@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crateGameObject: {fileID: 591967951598839352}
   healItemGameObject: {fileID: 591967952262205656}
-  restoreTimer: 5
+  restoreTimer: 60
 --- !u!114 &591967951886694132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,13 +198,12 @@ GameObject:
   m_Component:
   - component: {fileID: 591967952262205657}
   - component: {fileID: 591967952262205607}
-  - component: {fileID: 591967952262205605}
-  - component: {fileID: 591967952262205606}
+  - component: {fileID: 2247926642046640616}
   - component: {fileID: 1188136507351754812}
   - component: {fileID: 591967952262205602}
   - component: {fileID: 591967952262205604}
   m_Layer: 0
-  m_Name: Heal Item
+  m_Name: Heal Power Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -277,7 +276,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &591967952262205605
+--- !u!114 &2247926642046640616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -286,43 +285,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 591967952262205656}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17e77522968503e41a80bdf891897df8, type: 3}
+  m_Script: {fileID: 11500000, guid: dbe4b14c1164bf043b762f1ad08fb8d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whoCanPickup:
-    serializedVersion: 2
-    m_Bits: 128
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   pickUpSound: {fileID: 8300000, guid: 6d68951eb1ce59c45b15c3faa065aa8e, type: 3}
   volume: 0.5
   pickUpDuration: 30
-  onPickUp:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 591967952262205606}
-        m_TargetAssemblyTypeName: HealOnCollision, Assembly-CSharp
-        m_MethodName: ApplyEffect
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &591967952262205606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 591967952262205656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3841b85e7c9ddf14fb042de93d84e212, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statusEffectTypes: {fileID: 11400000, guid: 18f8e406d93585f43bcc4618e55f954c, type: 2}
+  pickUpDescription: 
+  healEffectData: {fileID: 11400000, guid: b46bd4324c68e8e4bb1a32d8ced22f9d, type: 2}
 --- !u!114 &1188136507351754812
 MonoBehaviour:
   m_ObjectHideFlags: 0

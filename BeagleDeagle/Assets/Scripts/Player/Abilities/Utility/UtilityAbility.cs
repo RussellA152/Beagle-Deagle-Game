@@ -186,6 +186,11 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         
         CooldownDuration = UtilityData.cooldown * _bonusUtilityCooldown;
 
+        if (_cooldownSystem.IsOnCooldown(Id))
+        {
+            _cooldownSystem.ChangeOngoingCooldownTime(Id, CooldownDuration);
+        }
+
     }
 
     public void RemoveUtilityCooldownModifier(UtilityCooldownModifier modifierToRemove)
@@ -196,6 +201,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         _bonusUtilityCooldown /= (1 + modifierToRemove.bonusUtilityCooldown);
         
         CooldownDuration = UtilityData.cooldown * _bonusUtilityCooldown;
+        
     }
 
     public void AddUtilityUsesModifier(UtilityUsesModifier modifierToAdd)

@@ -10,7 +10,7 @@ public class HealCrate : MonoBehaviour, IHasCooldown
     [SerializeField] private GameObject healItemGameObject;
 
     private ObjectHealth _healthScript;
-    private ConsumablePickUp _consumablePickUp;
+    private PowerUp _powerUp;
 
     private CooldownSystem _cooldownSystem;
     
@@ -20,7 +20,7 @@ public class HealCrate : MonoBehaviour, IHasCooldown
     private void Awake()
     {
         _healthScript = crateGameObject.GetComponent<ObjectHealth>();
-        _consumablePickUp = healItemGameObject.GetComponent<ConsumablePickUp>();
+        _powerUp = healItemGameObject.GetComponent<PowerUp>();
         _cooldownSystem = GetComponent<CooldownSystem>();
         
     }
@@ -37,14 +37,14 @@ public class HealCrate : MonoBehaviour, IHasCooldown
     private void OnEnable()
     {
         _healthScript.onDeath += SpawnCrate;
-        _consumablePickUp.onPickUpDespawn += StartCooldown;
+        _powerUp.onPickUpDespawn += StartCooldown;
         _cooldownSystem.OnCooldownEnded += RestoreCrate;
     }
 
     private void OnDisable()
     {
         _healthScript.onDeath -= SpawnCrate;
-        _consumablePickUp.onPickUpDespawn -= StartCooldown;
+        _powerUp.onPickUpDespawn -= StartCooldown;
         _cooldownSystem.OnCooldownEnded -= RestoreCrate;
     }
 

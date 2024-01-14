@@ -44,7 +44,7 @@ public class CooldownSystem : MonoBehaviour
     {
         float deltaTime = Time.deltaTime;
 
-        //Loop backwards not forward, removing backwards will prevent it from shifting (prevents out of range error)
+        // Loop backwards not forward, removing backwards will prevent it from shifting (prevents out of range error)
         for (int i = _cooldowns.Count - 1; i >= 0; i--)
         {
             //Decrement cooldown, if its 0, remove it 
@@ -99,6 +99,20 @@ public class CooldownSystem : MonoBehaviour
             _cooldowns.RemoveAt(i);
         }
         
+    }
+
+    public void ChangeOngoingCooldownTime(int id, float newCooldownTime)
+    {
+        foreach (CooldownData cooldown in _cooldowns)
+        {
+            if (cooldown.Id != id)
+            {
+                continue;
+            }
+
+            cooldown.ChangeRemainingTime(newCooldownTime);
+
+        }
     }
 
     public void RefreshCooldown(int id)

@@ -67,6 +67,8 @@ public class PlayerEvents : ScriptableObject
 
     public event Action<Sprite> displayBuffOnHud;
     public event Action<Sprite> removeBuffFromHud;
+
+    public event Action<string> displayPlayerPickUpDescription;
     
     // Give references to the player's specific cooldown IDs (these are needed by the Cooldown UI script)
     public event Action<int> givePlayerReloadCooldownId;
@@ -208,6 +210,12 @@ public class PlayerEvents : ScriptableObject
     {
         removeBuffFromHud?.Invoke(buffImageToRemove);
     }
+
+    public void InvokeShowPickUpDescription(string pickUpDescription)
+    {
+        displayPlayerPickUpDescription?.Invoke(pickUpDescription);
+    }
+    
     // When the player uses a utility ability, invoke this function.
     // This should pass around the current number of uses that the player's currently utility has (ex. HUD needs to update utility uses display)
     public void InvokeUtilityUsesUpdatedEvent(int uses)

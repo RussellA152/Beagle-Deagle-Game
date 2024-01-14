@@ -3,7 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public class DamageModifier: Modifier
 {
-    [Range(-1f, 1f)]
+    [Range(-5f, 5f)]
     public float bonusDamage;
 
     ///-///////////////////////////////////////////////////////////

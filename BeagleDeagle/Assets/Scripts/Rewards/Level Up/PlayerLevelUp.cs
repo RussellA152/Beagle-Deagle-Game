@@ -55,7 +55,7 @@ public class PlayerLevelUp : MonoBehaviour
         int xpRequiredForRankUp = playerData.xpNeededPerLevel[_currentLevel - 1];
         
         // If the player has more than enough xp needed to level up and still has levels left to reach, then reset their xp and add any difference
-        if (_currentLevel < playerData.xpNeededPerLevel.Length && _currentXpUntilNextLevel >= xpRequiredForRankUp)
+        while (_currentLevel < playerData.xpNeededPerLevel.Length && _currentXpUntilNextLevel >= xpRequiredForRankUp)
         {
             _currentXpUntilNextLevel -= xpRequiredForRankUp;
             
