@@ -29,7 +29,7 @@ public class RewardSelectionUI : MonoBehaviour
     
 
     private List<Button> _allButtons = new List<Button>();
-    private Queue<List<LevelUpReward>> _rewardQueue = new Queue<List<LevelUpReward>>();
+    private Queue<List<LevelUpReward>> _optionalRewardQueue = new Queue<List<LevelUpReward>>();
 
     // Need access to player to give them reward
     private GameObject _playerGameObject;
@@ -44,8 +44,10 @@ public class RewardSelectionUI : MonoBehaviour
     // Did the player pick a reward? If so, don't allow any other choices
     private bool _rewardWasChosen;
     
-    // Is there currently a reward being displayed on screen? If so, wait until that one goes away for another to appear
-    private bool _rewardIsBeingDisplayed;
+    // Is there currently a set of optional reward being displayed on screen? If so, wait until that one goes away for another to appear
+    private bool _optionalRewardIsBeingDisplayed;
+    // Is there currently a mandatory reward description being displayed on screen? If so, other mandatory rewards must wait for that one to go away
+    private bool _mandatoryRewardIsBeingDisplayed;
 
     private void Awake()
     {
@@ -54,7 +56,7 @@ public class RewardSelectionUI : MonoBehaviour
 
     private void OnEnable()
     {
-        _rewardQueue.Clear();
+        _optionalRewardQueue.Clear();
         
         playerEvents.givePlayerGameObject += FindPlayer;
 
@@ -77,7 +79,8 @@ public class RewardSelectionUI : MonoBehaviour
         optionalRewardPanel.enabled = false;
         
         _rewardWasChosen = false;
-        _rewardIsBeingDisplayed = false;
+        _optionalRewardIsBeingDisplayed = false;
+        _mandatoryRewardIsBeingDisplayed = false;
     }
 
     private void FindPlayer(GameObject pGameObject)
@@ -88,16 +91,16 @@ public class RewardSelectionUI : MonoBehaviour
     public void AddChoiceButton(List<LevelUpReward> rewardChoices)
     {
         // Add any rewards from a level to a queue (prevents multiple rewards from differing levels from appearing at once)
-        _rewardQueue.Enqueue(rewardChoices);
+        _optionalRewardQueue.Enqueue(rewardChoices);
         
         // Don't display more than one set of rewards at a time
-        if(!_rewardIsBeingDisplayed)
+        if(!_optionalRewardIsBeingDisplayed)
             AddChoices(rewardChoices);
     }
 
     private void AddChoices(List<LevelUpReward> rewardChoices)
     {
-        _rewardIsBeingDisplayed = true;
+        _optionalRewardIsBeingDisplayed = true;
         
         gamePauser.PauseGameAutomatically();
         
@@ -135,10 +138,10 @@ public class RewardSelectionUI : MonoBehaviour
 
         _rewardWasChosen = true;
         
-        _rewardIsBeingDisplayed = false;
+        _optionalRewardIsBeingDisplayed = false;
         
         // Remove the current set of rewards from the queue, because the player has made their choice
-        _rewardQueue.Dequeue();
+        _optionalRewardQueue.Dequeue();
         
         // Have reward give its data to the player
         chosenLevelUpReward.GiveDataToPlayer(_playerGameObject);
@@ -146,8 +149,8 @@ public class RewardSelectionUI : MonoBehaviour
         RemoveAllButtons();
         
         // If there are still other rewards to be chosen, then display them to the player
-        if(_rewardQueue.Count > 0)
-            AddChoices(_rewardQueue.Peek());
+        if(_optionalRewardQueue.Count > 0)
+            AddChoices(_optionalRewardQueue.Peek());
         
     }
     
@@ -187,15 +190,22 @@ public class RewardSelectionUI : MonoBehaviour
     /// a text box will appear above the player's head with the description of the reward. Shortly after, it will disappear again.
     private IEnumerator RemoveDescriptionAfterTime(LevelUpReward mandatoryLevelUpReward)
     {
+        while (_mandatoryRewardIsBeingDisplayed)
+            yield return null;
+        
         // Change text
         mandatoryRewardDescription.gameObject.SetActive(true);
         mandatoryRewardDescription.text = mandatoryLevelUpReward.GetDescription();
+
+        _mandatoryRewardIsBeingDisplayed = true;
         
         yield return new WaitForSeconds(rewardDescriptionDisplayTime);
         
         // Remove text,then disable text object
         mandatoryRewardDescription.text = string.Empty;
         mandatoryRewardDescription.gameObject.SetActive(false);
+
+        _mandatoryRewardIsBeingDisplayed = false;
     }
     
 }
