@@ -40,7 +40,12 @@ public class EnemyData : ScriptableObject
     
     public LayerMask chaseLayer; // What kind of layer does this enemy follow? (ex. Player)
 
+    [Header("Rewards")]
     // How much money or xp does this enemy give on death?
     public CurrencyReward currencyRewardOnDeath;
+
+    [Range(0.01f, 1f)]
+    public float powerUpDropChance = 0.01f;
+    public List<GameObject> powerUpDropTable;
 
 }

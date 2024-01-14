@@ -5,28 +5,24 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-[RequireComponent(typeof(HealOnCollision))]
 public class ConsumablePickUp : MonoBehaviour, IHasCooldown
 {
     [SerializeField] private LayerMask whoCanPickup;
 
-    //private IStatusEffect[] _statusEffects;
-    //[SerializeField] private StatusEffectTypes statusEffectData;
-    
     private CooldownSystem _cooldownSystem;
-
+    
+    // Can play sounds on pick up
+    private AudioClipPlayer _audioClipPlayer;
+    
     [SerializeField] private AudioClip pickUpSound;
 
     [SerializeField, Range(0.1f, 1f)] private float volume;
     
-    // Can play sounds on pick up
-    private AudioClipPlayer _audioClipPlayer;
 
     [SerializeField, Range(1f, 60f)] 
     // How long will this pick up remain on the ground?
     private float pickUpDuration = 30f;
     
-
     public event Action onPickUpDespawn;
     
     // What does this food do to who ever picked it up?
@@ -34,28 +30,19 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
 
     private void Awake()
     {
-       // _statusEffects = GetComponents<IStatusEffect>();
-       
         _cooldownSystem = GetComponent<CooldownSystem>();
         _audioClipPlayer = GetComponent<AudioClipPlayer>();
         
-    }
-
-    private void Start()
-    {
-        Id = _cooldownSystem.GetAssignableId();
         CooldownDuration = pickUpDuration;
-        
-        // foreach (IStatusEffect statusEffect in _statusEffects)
-        // {
-        //     statusEffect.UpdateWeaponType(statusEffectData);
-        // }
     }
 
     private void OnEnable()
     {
         _cooldownSystem.OnCooldownEnded += Despawn;
         
+        Id = _cooldownSystem.GetAssignableId();
+        CooldownDuration = pickUpDuration;
+
         // Start timer until disappear
         if (!_cooldownSystem.IsOnCooldown(Id))
         {
@@ -65,15 +52,13 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
         {
             _cooldownSystem.RefreshCooldown(Id);
         }
-            
-        
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         _cooldownSystem.OnCooldownEnded -= Despawn;
-
     }
+    
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -85,19 +70,20 @@ public class ConsumablePickUp : MonoBehaviour, IHasCooldown
             _audioClipPlayer.PlayGeneralAudioClip(pickUpSound, volume);
             
             Despawn(Id);
-            
-            gameObject.SetActive(false);
         }
     }
 
     private void Despawn(int id)
     {
         if (Id != id) return;
+        
+        Debug.Log("Despawn pickup! " + gameObject.name);
+        
         onPickUpDespawn?.Invoke();
         
         gameObject.SetActive(false);
     }
-
+    
     public int Id { get; set; }
     public float CooldownDuration { get; set; }
 }

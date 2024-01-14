@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 604fe214ac366304f82e8b167817756f, type: 3}
-  m_Name: slow_smokeGrenade
+  m_Name: speed_powerUp
   m_EditorClassIdentifier: 
   whatStatusEffectHits:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 128
   movementSpeedEffect:
-    modifierName: Slow Smoke
-    particleEffect: {fileID: 3084706840994566313, guid: c0a56add2938172458a8dca155e4d161, type: 3}
-    bonusMovementSpeed: -0.7
+    modifierName: Speed Power Up
+    particleEffect: {fileID: 0}
+    bonusMovementSpeed: 0.3
   attackSpeedEffect:
-    modifierName: Slow Smoke
+    modifierName: Speed Power Up
     particleEffect: {fileID: 0}
     bonusAttackSpeed: -0.3
-  lingerDuration: 1
-  lingerDurationType: 1
+  lingerDuration: 5
+  lingerDurationType: 0
