@@ -10,11 +10,14 @@ public class BuffBarUI : MonoBehaviour
 
     [SerializeField] private GameObject buffIconPrefab;
 
-    private Dictionary<Sprite, Image> _passiveBuffIcons = new Dictionary<Sprite, Image>();
+    private Dictionary<Sprite, BuffIconUI> _passiveBuffIcons = new Dictionary<Sprite, BuffIconUI>();
+    
+    //public List<>
 
     private void OnEnable()
     {
         playerEvents.displayBuffOnHud += AddBuffImage;
+        playerEvents.displayBuffWithDurationOnHud += AddBuffImageWithDuration;
         playerEvents.removeBuffFromHud += RemoveBuffImage;
     }
     
@@ -22,8 +25,10 @@ public class BuffBarUI : MonoBehaviour
     private void OnDisable()
     {
         playerEvents.displayBuffOnHud -= AddBuffImage;
+        playerEvents.displayBuffWithDurationOnHud -= AddBuffImageWithDuration;
         playerEvents.removeBuffFromHud -= RemoveBuffImage;
     }
+    
 
     ///-///////////////////////////////////////////////////////////
     /// When the player receives a new passive ability, add its icon to the buff bar
@@ -36,14 +41,24 @@ public class BuffBarUI : MonoBehaviour
             // Spawn a child gameObject of the icon, a grid layout will place it automatically
             GameObject newBuffIcon = Instantiate(buffIconPrefab, transform);
 
-            _passiveBuffIcons[spriteToDisplay] = newBuffIcon.GetComponent<Image>();
+            _passiveBuffIcons[spriteToDisplay] = newBuffIcon.GetComponent<BuffIconUI>();
 
-            _passiveBuffIcons[spriteToDisplay].sprite = spriteToDisplay;
+            _passiveBuffIcons[spriteToDisplay].UpdateIcon(spriteToDisplay);
+  
         }
         
         _passiveBuffIcons[spriteToDisplay].gameObject.SetActive(true);
         
     }
+    
+    private void AddBuffImageWithDuration(Sprite spriteToDisplay, float displayDuration)
+    {
+        AddBuffImage(spriteToDisplay);
+        
+        _passiveBuffIcons[spriteToDisplay].SetBuffTimer(displayDuration);
+        
+    }
+
 
     ///-///////////////////////////////////////////////////////////
     /// When a passive was disabled or removed, take its icon off the buff bar

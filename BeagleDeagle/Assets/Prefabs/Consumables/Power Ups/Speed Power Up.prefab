@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2008914779257792910}
   - component: {fileID: 2008914779257792915}
   - component: {fileID: 2008914779257792916}
+  - component: {fileID: 4871258305412120700}
   - component: {fileID: 2008914779257792913}
   - component: {fileID: 2008914779257792912}
   - component: {fileID: 2008914779257792911}
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.82659805, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -105,9 +106,29 @@ MonoBehaviour:
   volume: 0.5
   pickUpDuration: 5
   pickUpDescription: Increased Movement and Attack Speed!
-  movementSpeedBoostData: {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}
-  attackSpeedBoostData: {fileID: 11400000, guid: aaa9f67a7d7e0ef47a1f7099260dec69, type: 2}
-  speedBuffDuration: 3
+  movementSpeedModifier:
+    modifierName: Speed Power Up
+    particleEffect: {fileID: 0}
+    bonusMovementSpeed: 0.3
+  attackSpeedModifier:
+    modifierName: Speed Power Up
+    particleEffect: {fileID: 0}
+    bonusAttackSpeed: -0.3
+  speedBuffDuration: 10
+  icon: {fileID: 21300000, guid: 7ddc8a69ef7c65542ba8d09d49d357af, type: 3}
+--- !u!114 &4871258305412120700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008914779257792909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a48beed534b54244a83363cbf07e671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
 --- !u!114 &2008914779257792913
 MonoBehaviour:
   m_ObjectHideFlags: 0

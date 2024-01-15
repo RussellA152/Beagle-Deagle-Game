@@ -13,7 +13,7 @@ public class HealthBoost : PassiveAbility
         // Increases player's max health
         playerHealth.AddModifier(healthBoostData.maxHealthModifier);
 
-        DisplayPassiveOnBuffBar();
+        ShowOnBuffBar.ShowBuffPermanently();
     }
 
     protected override void RemovePassive()
@@ -24,6 +24,5 @@ public class HealthBoost : PassiveAbility
         // Increases player's max health
         playerHealth.RemoveModifier(healthBoostData.maxHealthModifier);
         
-        RemovePassiveFromBuffBar();
     }
 }

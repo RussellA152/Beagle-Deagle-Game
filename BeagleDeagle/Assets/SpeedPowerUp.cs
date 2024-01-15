@@ -5,17 +5,40 @@ using UnityEngine.Serialization;
 
 public class SpeedPowerUp : PowerUp
 {
-    [SerializeField] private MovementSpeedBoostData movementSpeedBoostData;
-    [SerializeField] private AttackSpeedBoostData attackSpeedBoostData;
+    private ShowOnBuffBar _showOnBuffBar;
+    private ModifierManager _modifierManager;
+    
+    [SerializeField] private MovementSpeedModifier movementSpeedModifier;
+    [SerializeField] private AttackSpeedModifier attackSpeedModifier;
     
     [Range(0.1f, 60f)]
     [SerializeField] private float speedBuffDuration;
+
+    [SerializeField] private Sprite icon;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        _showOnBuffBar = GetComponent<ShowOnBuffBar>();
+        
+        _showOnBuffBar.SetBuffIcon(icon);
+        _showOnBuffBar.SetBuffModifier(movementSpeedModifier);
+    }
+
     protected override void OnPickUp(GameObject receiverGameObject)
     {
-        ModifierManager modifierManager = receiverGameObject.GetComponent<ModifierManager>();
+        _modifierManager = receiverGameObject.GetComponent<ModifierManager>();
         
-        modifierManager.AddModifierOnlyForDuration(movementSpeedBoostData.movementSpeedModifier, speedBuffDuration);
-        modifierManager.AddModifierOnlyForDuration(attackSpeedBoostData.attackSpeedModifier, speedBuffDuration);
+        _showOnBuffBar.SetModifierManager(_modifierManager);
+        
+        _modifierManager.AddModifierOnlyForDuration(movementSpeedModifier, speedBuffDuration);
+        _modifierManager.AddModifierOnlyForDuration(attackSpeedModifier, speedBuffDuration);
+        
+        
+        _showOnBuffBar.ShowBuffIconWithDuration(speedBuffDuration);
+        
         
     }
+
 }

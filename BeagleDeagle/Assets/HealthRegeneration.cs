@@ -28,14 +28,14 @@ public class HealthRegeneration : PassiveAbility
     protected override void ActivatePassive()
     {
         _allowRegeneration = true;
-        DisplayPassiveOnBuffBar();
+        ShowOnBuffBar.ShowBuffPermanently();
     }
     
     protected override void RemovePassive()
     {
         _allowRegeneration = false;
         
-        RemovePassiveFromBuffBar();
+        ShowOnBuffBar.RemoveIconFromBuffBar();
     }
 
 }

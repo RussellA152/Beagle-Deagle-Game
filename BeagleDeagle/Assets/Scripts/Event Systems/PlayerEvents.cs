@@ -64,8 +64,15 @@ public class PlayerEvents : ScriptableObject
     
     // Pass a reference to the player's current ultimate data (ex. player is currently using Nuke)
     public event Action<UltimateAbilityData> onPlayerObtainedNewUltimate;
+    
+    // Call this function when the player's ultimate ability concluded
+    public event Action onPlayerUltimateEnded;
+    
+    
 
+    /* Player UI Events */
     public event Action<Sprite> displayBuffOnHud;
+    public event Action<Sprite, float> displayBuffWithDurationOnHud;
     public event Action<Sprite> removeBuffFromHud;
 
     public event Action<string> displayPlayerPickUpDescription;
@@ -75,9 +82,7 @@ public class PlayerEvents : ScriptableObject
     public event Action<int> givePlayerRollCooldownId; 
     public event Action<int> giveUtilityCooldownId; 
     public event Action<int> giveUltimateCooldownId; 
-
-    // Call this function when the player's ultimate ability concluded
-    public event Action onPlayerUltimateEnded;
+    
 
     ///-///////////////////////////////////////////////////////////
     /// In the PlayerController, pass a reference to the gameObject of the player. We use this instead
@@ -204,6 +209,11 @@ public class PlayerEvents : ScriptableObject
     public void InvokePassiveActivated(Sprite buffImageToDisplay)
     {
         displayBuffOnHud?.Invoke(buffImageToDisplay);
+    }
+    
+    public void InvokePassiveWithDurationActivated(Sprite buffImageToDisplay, float displayDuration)
+    {
+        displayBuffWithDurationOnHud?.Invoke(buffImageToDisplay, displayDuration);
     }
     
     public void InvokePassiveDeactivated(Sprite buffImageToRemove)

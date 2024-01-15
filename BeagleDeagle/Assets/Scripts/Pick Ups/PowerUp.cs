@@ -7,10 +7,10 @@ using UnityEngine.Serialization;
 
 public abstract class PowerUp : MonoBehaviour, IHasCooldown
 {
-    [SerializeField] private PlayerEvents playerEvents;
+    [SerializeField] protected PlayerEvents playerEvents;
 
     private CooldownSystem _cooldownSystem;
-    
+
     // Can play sounds on pick up
     private AudioClipPlayer _audioClipPlayer;
     
@@ -26,7 +26,7 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
     public string pickUpDescription;
     public event Action onPickUpDespawn;
     
-    private void Awake()
+    protected virtual void Awake()
     {
         _cooldownSystem = GetComponent<CooldownSystem>();
         _audioClipPlayer = GetComponent<AudioClipPlayer>();

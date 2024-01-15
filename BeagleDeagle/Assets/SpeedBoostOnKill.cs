@@ -27,6 +27,9 @@ public class SpeedBoostOnKill : PassiveAbility, IHasCooldown
     {
         _cooldownSystem = Player.GetComponent<CooldownSystem>();
         _modifierManager = Player.GetComponent<ModifierManager>();
+        
+        ShowOnBuffBar.SetModifierManager(_modifierManager);
+        ShowOnBuffBar.SetBuffModifier(movementSpeedBoostData.movementSpeedModifier);
     }
 
     protected override void ActivatePassive()
@@ -74,8 +77,7 @@ public class SpeedBoostOnKill : PassiveAbility, IHasCooldown
             {
                 _modifierManager.AddModifierOnlyForDuration(movementSpeedBoostData.movementSpeedModifier, movementSpeedBoostDuration);
                 _playerHasSpeedBoost = true;
-            
-                DisplayPassiveOnBuffBar();
+                
             }
             // If player already has the speed boost and meets kill requirements again, then refresh the timer on their movement speed boost
             else
@@ -84,7 +86,7 @@ public class SpeedBoostOnKill : PassiveAbility, IHasCooldown
                 _modifierManager.RefreshRemoveModifierTimer(movementSpeedBoostData.movementSpeedModifier, movementSpeedBoostDuration);
             }
             
-            
+            ShowOnBuffBar.ShowBuffIconWithDuration(movementSpeedBoostDuration);
         }
     }
 
@@ -106,8 +108,7 @@ public class SpeedBoostOnKill : PassiveAbility, IHasCooldown
         if (modifierRemoved == movementSpeedBoostData.movementSpeedModifier)
         {
             _playerHasSpeedBoost = false;
-            RemovePassiveFromBuffBar();
-            
+
             Debug.Log("Speed boost on kill was removed!");
         }
     }

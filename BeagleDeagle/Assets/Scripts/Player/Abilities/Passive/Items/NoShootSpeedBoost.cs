@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 public class NoShootSpeedBoost : PassiveAbility
 {
     [SerializeField] private MovementSpeedBoostData movementSpeedBoost;
+
+    private ModifierManager _modifierManager;
     
     // How long must the player not attack for, to receive a speed boost?
     [Range(0f, 10f)]
@@ -16,8 +18,6 @@ public class NoShootSpeedBoost : PassiveAbility
     
     private Gun _gunScript;
 
-    private ModifierManager _modifierManager;
-    
     protected override void OnEnable()
     {
         // Fetch gun script from the gun gameObject
@@ -25,6 +25,9 @@ public class NoShootSpeedBoost : PassiveAbility
         
         _modifierManager = Player.GetComponent<ModifierManager>();
         
+        ShowOnBuffBar.SetBuffModifier(movementSpeedBoost.movementSpeedModifier);
+        ShowOnBuffBar.SetModifierManager(_modifierManager);
+
         base.OnEnable();
         
     }
@@ -56,7 +59,7 @@ public class NoShootSpeedBoost : PassiveAbility
 
                 _modifierManager.AddModifier(movementSpeedBoost.movementSpeedModifier);
                 
-                DisplayPassiveOnBuffBar();
+                ShowOnBuffBar.ShowBuffIconWithoutDuration();
                 
            
             }
@@ -66,7 +69,8 @@ public class NoShootSpeedBoost : PassiveAbility
 
                 _modifierManager.RemoveModifier(movementSpeedBoost.movementSpeedModifier);
                 
-                RemovePassiveFromBuffBar();
+                ShowOnBuffBar.RemoveIconFromBuffBar();
+                
             }
             yield return null;
         }

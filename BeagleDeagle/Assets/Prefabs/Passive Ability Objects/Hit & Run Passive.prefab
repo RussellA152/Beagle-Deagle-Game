@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8960436445765275904}
   - component: {fileID: 8960436445765275905}
+  - component: {fileID: 8919109580684068463}
   m_Layer: 0
   m_Name: Hit & Run Passive
   m_TagString: Untagged
@@ -50,3 +51,16 @@ MonoBehaviour:
   killsRequired: 3
   resetKillCountTimer: 5
   movementSpeedBoostDuration: 6
+--- !u!114 &8919109580684068463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8960436445765275906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a48beed534b54244a83363cbf07e671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}

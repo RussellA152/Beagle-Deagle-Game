@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 239182395596861639}
   - component: {fileID: -2562529841962014862}
+  - component: {fileID: 4712864421109044599}
   m_Layer: 0
   m_Name: Health Boost Passive
   m_TagString: Untagged
@@ -47,3 +48,16 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   passiveAbilityData: {fileID: 11400000, guid: 7654338b5d8bcaf47a42c1f6ab6e3cfb, type: 2}
   healthBoostData: {fileID: 11400000, guid: 05c221c08f911334ba6af2abfddb31cb, type: 2}
+--- !u!114 &4712864421109044599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3929045018532200188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a48beed534b54244a83363cbf07e671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}

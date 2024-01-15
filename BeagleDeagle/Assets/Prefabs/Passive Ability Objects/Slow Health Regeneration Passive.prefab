@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3584761115948552337}
   - component: {fileID: 3584761115948552336}
+  - component: {fileID: -5159513134554072256}
   m_Layer: 0
   m_Name: Slow Health Regeneration Passive
   m_TagString: Untagged
@@ -47,3 +48,16 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   passiveAbilityData: {fileID: 11400000, guid: 6d6d2d92bb04b594697cd86b4525d065, type: 2}
   healthRegenData: {fileID: 11400000, guid: 015a7c8f074e2a14baf2103805e0294d, type: 2}
+--- !u!114 &-5159513134554072256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3584761115948552367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a48beed534b54244a83363cbf07e671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}

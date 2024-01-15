@@ -11,10 +11,16 @@ public abstract class PassiveAbility: MonoBehaviour
     
     [SerializeField] protected PassiveAbilityData passiveAbilityData;
 
+    protected ShowOnBuffBar ShowOnBuffBar;
+
     protected virtual void Awake()
     {
         // Passive ability scripts have another parent, so the parent.parent would be the Player gameObject with all the components attached
         Player = transform.parent.parent.gameObject;
+        
+        ShowOnBuffBar = GetComponent<ShowOnBuffBar>();
+        
+        ShowOnBuffBar.SetBuffIcon(passiveAbilityData.abilityIcon);
     }
 
     protected virtual void OnEnable()
@@ -35,18 +41,5 @@ public abstract class PassiveAbility: MonoBehaviour
     protected abstract void ActivatePassive();
 
     protected abstract void RemovePassive();
-
-    // Show the ability icon of this passive on the hud's buff bar 
-    protected void DisplayPassiveOnBuffBar()
-    {
-        playerEvents.InvokePassiveActivated(passiveAbilityData.abilityIcon);
-    }
-
-    // Hide the ability icon of this passive on the hud's buff bar 
-    protected void RemovePassiveFromBuffBar()
-    {
-        playerEvents.InvokePassiveDeactivated(passiveAbilityData.abilityIcon);
-    }
-    
     
 }
