@@ -53,6 +53,8 @@ public class ShowOnBuffBar : MonoBehaviour
     {
         if (modifierRemoved != _buffModifier) return;
         
+        Debug.Log("Remove my icon! From: " + gameObject.name);
+        
         playerEvents.InvokePassiveDeactivated(_buffIcon);
         _modifierManager.onModifierWasRemoved -= RemoveIconFromBuffBar;
         

@@ -17431,7 +17431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2008914779257792909, guid: b8d215f9c86db2043a6db303a5ed9fbf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2008914779257792910, guid: b8d215f9c86db2043a6db303a5ed9fbf, type: 3}
       propertyPath: m_RootOrder
@@ -17580,7 +17580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8590283920421078042, guid: a9d1ec2acd8e99e49a1d71fbd0e14e72, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8590283920686809482, guid: a9d1ec2acd8e99e49a1d71fbd0e14e72, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17617,7 +17617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621178, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -49.97
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621178, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_LocalPosition.z
@@ -76598,7 +76598,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2008914779257792909, guid: c4cfb4b54ae454849b0d2415d4054555, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2008914779257792910, guid: c4cfb4b54ae454849b0d2415d4054555, type: 3}
       propertyPath: m_RootOrder
@@ -76644,6 +76644,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8316733104684278827, guid: c4cfb4b54ae454849b0d2415d4054555, type: 3}
+      propertyPath: offScreenScaleWithRange
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4cfb4b54ae454849b0d2415d4054555, type: 3}
 --- !u!114 &2055773075 stripped
@@ -76670,7 +76674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2008914779257792909, guid: 8b05be34a437b0a4ead00c425c32f8ec, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2008914779257792910, guid: 8b05be34a437b0a4ead00c425c32f8ec, type: 3}
       propertyPath: m_RootOrder
@@ -76981,13 +76985,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4121654802188712902, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: distCalTargetTag
+      value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: -4121654802188712902, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: enableGameObject
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4121654802188712902, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: toggleDiameterOptions
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4121654802188712902, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: enableCenteredTracking
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4121654802188712902, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: offScreenScaleWithRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4121654802188712902, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: onScreenSpriteScaleWithRange
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2008914779257792909, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
       propertyPath: m_Name
       value: Speed Power Up
       objectReference: {fileID: 0}
     - target: {fileID: 2008914779257792909, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2008914779257792910, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
       propertyPath: m_RootOrder

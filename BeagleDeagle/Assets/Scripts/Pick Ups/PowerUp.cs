@@ -89,6 +89,7 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
 
         onPickUpDespawn?.Invoke();
         
+        //Destroy(gameObject);
         gameObject.SetActive(false);
     }
     

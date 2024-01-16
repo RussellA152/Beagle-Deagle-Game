@@ -131,7 +131,7 @@ MonoBehaviour:
   enableSprite: 1
   spriteDepth: 0
   offScreenSpriteRotates: 1
-  onScreenSprite: {fileID: 21300000, guid: 4a365ce3526ec5f48b8e98dca582d055, type: 3}
+  onScreenSprite: {fileID: 21300000, guid: f682d924929cb584d8c97b5802d72610, type: 3}
   onScreenSpriteColor: {r: 1, g: 0.82094824, b: 0, a: 1}
   onScreenSpriteSize: 0.35
   onScreenSpriteOffset: {x: 0, y: 50}
