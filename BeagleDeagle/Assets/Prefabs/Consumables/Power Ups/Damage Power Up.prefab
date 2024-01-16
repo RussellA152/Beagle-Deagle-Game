@@ -105,12 +105,9 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   pickUpSound: {fileID: 0}
   volume: 0.5
-  pickUpDuration: 30
+  pickUpDuration: 15
   pickUpDescription: 300% Increased Damage!
-  damageModifier:
-    modifierName: Damage Power Up
-    particleEffect: {fileID: 0}
-    bonusDamage: 3
+  damageModifierData: {fileID: 11400000, guid: 23be81aebcaa7e74493b67d88775bb41, type: 2}
   damageBuffDuration: 10
   icon: {fileID: 21300000, guid: ea4a216567f6d1a4d80600f64b92545a, type: 3}
 --- !u!114 &2766293433492388235

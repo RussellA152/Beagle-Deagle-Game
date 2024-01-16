@@ -181,6 +181,8 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
     public void AddUtilityCooldownModifier(UtilityCooldownModifier modifierToAdd)
     {
+        if (utilityCooldownModifiers.Contains(modifierToAdd)) return;
+            
         utilityCooldownModifiers.Add(modifierToAdd);
         _bonusUtilityCooldown += (_bonusUtilityCooldown * modifierToAdd.bonusUtilityCooldown);
         
@@ -206,6 +208,8 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
     public void AddUtilityUsesModifier(UtilityUsesModifier modifierToAdd)
     {
+        if (utilityUsesModifiers.Contains(modifierToAdd)) return;
+            
         utilityUsesModifiers.Add(modifierToAdd);
         _bonusUtilityUses += modifierToAdd.bonusUtilityUses;
         

@@ -30,6 +30,8 @@ public class MiscellaneousModifierList : MonoBehaviour, IRegisterModifierMethods
 
     public void AddExplosiveRadiusModifier(ExplosiveRadiusModifier modifierToAdd)
     {
+        if (explosiveRadiusModifiers.Contains(modifierToAdd)) return;
+        
         explosiveRadiusModifiers.Add(modifierToAdd);
         BonusExplosiveRadius += modifierToAdd.bonusRadius;
         

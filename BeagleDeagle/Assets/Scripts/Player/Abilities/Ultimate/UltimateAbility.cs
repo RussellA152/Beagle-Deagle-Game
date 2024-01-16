@@ -112,6 +112,8 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
 
     public void AddUltimateCooldownModifier(UltimateCooldownModifier modifierToAdd)
     {
+        if (ultimateCooldownModifiers.Contains(modifierToAdd)) return;
+        
         ultimateCooldownModifiers.Add(modifierToAdd);
         _bonusUltimateCooldown += (_bonusUltimateCooldown * modifierToAdd.bonusUltimateCooldown);
         

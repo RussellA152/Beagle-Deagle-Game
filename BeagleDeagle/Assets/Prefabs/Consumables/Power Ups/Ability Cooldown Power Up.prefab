@@ -105,16 +105,9 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   pickUpSound: {fileID: 0}
   volume: 0.5
-  pickUpDuration: 30
+  pickUpDuration: 15
   pickUpDescription: 75% Reduced Ability Cooldown!
-  utilityCooldownModifier:
-    modifierName: Ability Cooldown Power Up
-    particleEffect: {fileID: 0}
-    bonusUtilityCooldown: -0.75
-  ultimateCooldownModifier:
-    modifierName: Ability Cooldown Power Up
-    particleEffect: {fileID: 0}
-    bonusUltimateCooldown: -0.75
+  abilityCooldownModifierData: {fileID: 11400000, guid: 0399e068e3737184e931c7d8ec2a9712, type: 2}
   cooldownBuffDuration: 10
   icon: {fileID: 21300000, guid: c59a090df5180304bbf7970b454f4b4e, type: 3}
 --- !u!114 &4534634665306612673

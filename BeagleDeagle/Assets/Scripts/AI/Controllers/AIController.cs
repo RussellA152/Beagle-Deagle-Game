@@ -285,11 +285,11 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     {
         // Remove all movement modifiers inside of movement script
         MovementScript.RevertAllModifiers();
-        
-        // Remove all health modifiers inside of health script
+        //
+        // // Remove all health modifiers inside of health script
         HealthScript.RevertAllModifiers();
-
-        // Remove all modifiers that affect attack stats within the attack script
+        //
+        // // Remove all modifiers that affect attack stats within the attack script
         AttackScript.RevertAllModifiers();
 
         // Remove all damage over time effects that the enemy may contain

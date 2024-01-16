@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -125,6 +126,8 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
     #region AttackModifiers
     public void AddDamageModifier(DamageModifier modifierToAdd)
     {
+        if (damageModifiers.Contains(modifierToAdd)) return;
+        
         damageModifiers.Add(modifierToAdd);
         _bonusDamage += (_bonusDamage * modifierToAdd.bonusDamage);
     }
@@ -139,6 +142,8 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
 
     public void AddAttackSpeedModifier(AttackSpeedModifier modifierToAdd)
     {
+        if (attackSpeedModifiers.Contains(modifierToAdd)) return;
+        
         attackSpeedModifiers.Add(modifierToAdd);
         _bonusAttackSpeed += (_bonusAttackSpeed * modifierToAdd.bonusAttackSpeed);
         

@@ -496,6 +496,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
     #region StatModifiers
     public void AddDamageModifier(DamageModifier modifierToAdd)
     {
+        if (damageModifiers.Contains(modifierToAdd)) return;
+        
         damageModifiers.Add(modifierToAdd);
         _bonusDamage += (_bonusDamage * modifierToAdd.bonusDamage);
     }
@@ -511,6 +513,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
 
     public void AddPenetrationModifier(PenetrationModifier modifierToAdd)
     {
+        if (penetrationModifiers.Contains(modifierToAdd)) return;
+        
         penetrationModifiers.Add(modifierToAdd);
         _bonusPenetration += modifierToAdd.bonusPenetration;
     }
@@ -525,6 +529,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
 
     public void AddSpreadModifier(SpreadModifier modifierToAdd)
     {
+        if (spreadModifiers.Contains(modifierToAdd)) return;
+        
         spreadModifiers.Add(modifierToAdd);
         _bonusSpread += (_bonusSpread * modifierToAdd.bonusSpread);
     }
@@ -539,6 +545,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
 
     public void AddAttackSpeedModifier(AttackSpeedModifier modifierToAdd)
     {
+        if (fireRateModifiers.Contains(modifierToAdd)) return;
+        
         fireRateModifiers.Add(modifierToAdd);
         _bonusFireRate += (_bonusFireRate * modifierToAdd.bonusAttackSpeed);
     }
@@ -554,6 +562,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
 
     public void AddReloadSpeedModifier(ReloadSpeedModifier modifierToAdd)
     {
+        if (reloadSpeedModifiers.Contains(modifierToAdd)) return;
+        
         reloadSpeedModifiers.Add(modifierToAdd);
         _bonusReloadSpeed += (_bonusReloadSpeed * modifierToAdd.bonusReloadSpeed);
         
@@ -573,6 +583,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
 
     public void AddAmmoLoadModifier(AmmoLoadModifier modifierToAdd)
     {
+        if (ammoLoadModifiers.Contains(modifierToAdd)) return;
+        
         ammoLoadModifiers.Add(modifierToAdd);
         _bonusAmmoLoad += (_bonusAmmoLoad * modifierToAdd.bonusAmmoLoad);
         
@@ -599,6 +611,8 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
     }
     public void AddCriticalHitChanceModifier(CriticalChanceModifier modifierToAdd)
     {
+        if (criticalChanceModifiers.Contains(modifierToAdd)) return;
+        
         criticalChanceModifiers.Add(modifierToAdd);
         _bonusCriticalChance += (_bonusFireRate * modifierToAdd.bonusCriticalChance);
     }

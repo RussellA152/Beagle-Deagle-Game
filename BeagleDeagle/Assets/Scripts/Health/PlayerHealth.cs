@@ -141,6 +141,8 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
     #region HealthModifiers
     public void AddMaxHealthModifier(MaxHealthModifier modifierToAdd)
     {
+        if (maxHealthModifiers.Contains(modifierToAdd)) return;
+        
         maxHealthModifiers.Add(modifierToAdd);
         _bonusMaxHealth += modifierToAdd.bonusMaxHealth;
 

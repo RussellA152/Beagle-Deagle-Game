@@ -173,6 +173,8 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     #region MovementModifiers
     public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
     {
+        if (movementSpeedModifiers.Contains(modifierToAdd)) return;
+        
         movementSpeedModifiers.Add(modifierToAdd);
         _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;

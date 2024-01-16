@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewAbilityStats", menuName = "ScriptableObjects/Stat Modifiers/Ability")]
+[CreateAssetMenu(fileName = "NewAbilityStats", menuName = "ScriptableObjects/Stat Modifiers/All Ability Stats")]
 public class AbilityStatModifierData : ScriptableObject, IHasDescription
 {
     [Header("Utility Modifiers")]

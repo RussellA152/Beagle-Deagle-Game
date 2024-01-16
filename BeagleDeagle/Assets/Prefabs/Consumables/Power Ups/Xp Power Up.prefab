@@ -104,7 +104,7 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   pickUpSound: {fileID: 0}
   volume: 0.5
-  pickUpDuration: 30
+  pickUpDuration: 15
   pickUpDescription: Bonus XP!
   currencyEvents: {fileID: 11400000, guid: 0129d1f239c35cc4ab9e40307e69b1b0, type: 2}
   currencyReward:

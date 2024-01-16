@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,12 +18,16 @@ public class ModifierManager : MonoBehaviour
 
     private Dictionary<Modifier, Coroutine> _removeTimers = new Dictionary<Modifier, Coroutine>();
 
+    private HashSet<Modifier> _allModifiers = new HashSet<Modifier>();
+
     // When the entity had a modifier removed, return it to any listeners
     public event Action<Modifier> onModifierWasRemoved;
 
     private void OnDisable()
     {
+        
         StopAllCoroutines();
+        
         _removeTimers.Clear();
     }
 
@@ -39,11 +44,15 @@ public class ModifierManager : MonoBehaviour
     public void AddModifier<T>(T modifierToAdd) where T : Modifier
     {
         Type type = typeof(T);
-        
+
+        // Do not add duplicate modifiers (stacking)
+        if (_allModifiers.Contains(modifierToAdd)) return;
+
         // Check and see if an add method was registered with this manager, if not then return false
         if (_addMethods.TryGetValue(type, out Action<Modifier> removeMethod))
         {
             removeMethod.Invoke(modifierToAdd);
+            _allModifiers.Add(modifierToAdd);
         }
         else
         {
@@ -73,12 +82,14 @@ public class ModifierManager : MonoBehaviour
     {
         // Find and invoke the remove method for the type T
         Type type = typeof(T);
-        
+
         // Check and see if a remove method was registered with this manager, if not then return false
         if (_removeMethods.TryGetValue(type, out Action<Modifier> removeMethod))
         {
             removeMethod.Invoke(modifierToRemove);
             
+            _allModifiers.Remove(modifierToRemove);
+
             // Tell any listeners which modifier got removed
             onModifierWasRemoved?.Invoke(modifierToRemove);
         }
@@ -116,6 +127,11 @@ public class ModifierManager : MonoBehaviour
             _removeTimers[modifierToRefreshTimerFor] = newRemoveTimer;
         }
         
+    }
+
+    public bool DoesEntityContainModifier<T>(T modifier) where T : Modifier
+    {
+        return _allModifiers.Contains(modifier);
     }
 
     // Wait a few seconds before removing the modifier from the gameObject

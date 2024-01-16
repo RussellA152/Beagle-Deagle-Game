@@ -208,6 +208,8 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     #region MovementModifiers
     public void AddMovementSpeedModifier(MovementSpeedModifier modifierToAdd)
     {
+        if (movementSpeedModifiers.Contains(modifierToAdd)) return;
+        
         movementSpeedModifiers.Add(modifierToAdd);
         _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
 

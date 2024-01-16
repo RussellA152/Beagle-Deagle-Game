@@ -8,8 +8,8 @@ public class SpeedPowerUp : PowerUp
     private ShowOnBuffBar _showOnBuffBar;
     private ModifierManager _modifierManager;
     
-    [SerializeField] private MovementSpeedModifier movementSpeedModifier;
-    [SerializeField] private AttackSpeedModifier attackSpeedModifier;
+    [SerializeField] private MovementSpeedBoostData movementSpeedBoostData;
+    [SerializeField] private AttackSpeedBoostData attackSpeedBoostData;
     
     [Range(0.1f, 60f)]
     [SerializeField] private float speedBuffDuration;
@@ -23,21 +23,32 @@ public class SpeedPowerUp : PowerUp
         _showOnBuffBar = GetComponent<ShowOnBuffBar>();
         
         _showOnBuffBar.SetBuffIcon(icon);
-        _showOnBuffBar.SetBuffModifier(movementSpeedModifier);
+        _showOnBuffBar.SetBuffModifier(movementSpeedBoostData.movementSpeedModifier);
     }
 
     protected override void OnPickUp(GameObject receiverGameObject)
     {
         _modifierManager = receiverGameObject.GetComponent<ModifierManager>();
-        
+
         _showOnBuffBar.SetModifierManager(_modifierManager);
         
-        _modifierManager.AddModifierOnlyForDuration(movementSpeedModifier, speedBuffDuration);
-        _modifierManager.AddModifierOnlyForDuration(attackSpeedModifier, speedBuffDuration);
-        
+        // If player already has power up, refresh the timer
+        if (_modifierManager.DoesEntityContainModifier(movementSpeedBoostData.movementSpeedModifier) ||
+            _modifierManager.DoesEntityContainModifier(attackSpeedBoostData.attackSpeedModifier))
+        {
+            _modifierManager.RefreshRemoveModifierTimer(movementSpeedBoostData.movementSpeedModifier, speedBuffDuration);
+            _modifierManager.RefreshRemoveModifierTimer(attackSpeedBoostData.attackSpeedModifier, speedBuffDuration);
+        }
+        // Otherwise, give them buff for the first time
+        else
+        {
+            _modifierManager.AddModifierOnlyForDuration(movementSpeedBoostData.movementSpeedModifier, speedBuffDuration);
+            _modifierManager.AddModifierOnlyForDuration(attackSpeedBoostData.attackSpeedModifier, speedBuffDuration);
+            
+
+        }
         
         _showOnBuffBar.ShowBuffIconWithDuration(speedBuffDuration);
-        
         
     }
 
