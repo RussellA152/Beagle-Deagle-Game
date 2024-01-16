@@ -13,6 +13,10 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
 
     // Can play sounds on pick up
     private AudioClipPlayer _audioClipPlayer;
+
+    private Collider2D _collider2D;
+    private SpriteRenderer _spriteRenderer;
+    private Waypoint_Indicator _waypointIndicator;
     
     [SerializeField] private AudioClip pickUpSound;
 
@@ -24,13 +28,17 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
 
     [TextArea(2,3)]
     public string pickUpDescription;
-    public event Action onPickUpDespawn;
+    public event Action onPickUpDeactivate;
     
     protected virtual void Awake()
     {
         _cooldownSystem = GetComponent<CooldownSystem>();
         _audioClipPlayer = GetComponent<AudioClipPlayer>();
+        _collider2D = GetComponent<Collider2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
 
+        _waypointIndicator = GetComponent<Waypoint_Indicator>();
+        
         CooldownDuration = pickUpDuration;
     }
 
@@ -54,6 +62,11 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
 
     public void ActivatePowerUp()
     {
+        _collider2D.enabled = true;
+        _spriteRenderer.enabled = true;
+
+        _waypointIndicator.enabled = true;
+        
         // Start timer until disappear
         if (!_cooldownSystem.IsOnCooldown(Id))
         {
@@ -74,10 +87,11 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
             // Display the description of what this pick up should do (if it has one)
             if(pickUpDescription != string.Empty)
                 playerEvents.InvokeShowPickUpDescription(pickUpDescription);
-
+            
+            HidePowerUp();
+            
             OnPickUp(other.gameObject);
             
-            Despawn(Id);
         }
     }
 
@@ -86,11 +100,23 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
     private void Despawn(int id)
     {
         if (Id != id) return;
-
-        onPickUpDespawn?.Invoke();
         
-        //Destroy(gameObject);
-        gameObject.SetActive(false);
+        Deactivate();
+    }
+
+    private void HidePowerUp()
+    {
+        _collider2D.enabled = false;
+        _spriteRenderer.enabled = false;
+            
+        _waypointIndicator.enabled = false;
+    }
+
+    protected virtual void Deactivate()
+    {
+        onPickUpDeactivate?.Invoke();
+
+        Destroy(gameObject);
     }
     
     public int Id { get; set; }

@@ -24,6 +24,7 @@ public class DamagePowerUp : PowerUp
         _showOnBuffBar.SetBuffIcon(icon);
         _showOnBuffBar.SetBuffModifier(damageModifierData.damageModifier);
         
+        _showOnBuffBar.onRemovedFromBuffBar += Deactivate;
     }
     
     protected override void OnPickUp(GameObject receiverGameObject)
@@ -45,6 +46,13 @@ public class DamagePowerUp : PowerUp
 
         }
         _showOnBuffBar.ShowBuffIconWithDuration(damageBuffDuration);
+    }
+    
+    protected override void Deactivate()
+    {
+        base.Deactivate();
+        
+        _showOnBuffBar.onRemovedFromBuffBar -= Deactivate;
     }
     
 }

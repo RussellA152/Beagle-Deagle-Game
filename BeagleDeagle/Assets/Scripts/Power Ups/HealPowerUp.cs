@@ -9,5 +9,7 @@ public class HealPowerUp : PowerUp
     {
         // Heal the object when they collide with this object
         receiverGameObject.GetComponent<IHealth>().ModifyHealth(healEffectData.healAmount);
+        
+        Deactivate();
     }
 }

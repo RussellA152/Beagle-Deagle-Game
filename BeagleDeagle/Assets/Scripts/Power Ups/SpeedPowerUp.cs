@@ -24,6 +24,8 @@ public class SpeedPowerUp : PowerUp
         
         _showOnBuffBar.SetBuffIcon(icon);
         _showOnBuffBar.SetBuffModifier(movementSpeedBoostData.movementSpeedModifier);
+        
+        _showOnBuffBar.onRemovedFromBuffBar += Deactivate;
     }
 
     protected override void OnPickUp(GameObject receiverGameObject)
@@ -50,6 +52,13 @@ public class SpeedPowerUp : PowerUp
         
         _showOnBuffBar.ShowBuffIconWithDuration(speedBuffDuration);
         
+    }
+    
+    protected override void Deactivate()
+    {
+        base.Deactivate();
+        
+        _showOnBuffBar.onRemovedFromBuffBar -= Deactivate;
     }
 
 }

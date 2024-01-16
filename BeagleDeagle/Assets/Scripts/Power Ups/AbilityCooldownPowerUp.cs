@@ -22,6 +22,8 @@ public class AbilityCooldownPowerUp : PowerUp
         
         _showOnBuffBar.SetBuffIcon(icon);
         _showOnBuffBar.SetBuffModifier(abilityCooldownModifierData.utilityCooldownModifier);
+
+        _showOnBuffBar.onRemovedFromBuffBar += Deactivate;
     }
 
     protected override void OnPickUp(GameObject receiverGameObject)
@@ -45,6 +47,11 @@ public class AbilityCooldownPowerUp : PowerUp
         _showOnBuffBar.ShowBuffIconWithDuration(cooldownBuffDuration);
         
     }
-    
-    
+
+    protected override void Deactivate()
+    {
+        base.Deactivate();
+        
+        _showOnBuffBar.onRemovedFromBuffBar -= Deactivate;
+    }
 }

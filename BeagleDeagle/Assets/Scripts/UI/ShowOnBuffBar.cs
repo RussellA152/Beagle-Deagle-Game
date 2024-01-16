@@ -11,6 +11,8 @@ public class ShowOnBuffBar : MonoBehaviour
     private Modifier _buffModifier;
     private Sprite _buffIcon;
 
+    public event Action onRemovedFromBuffBar;
+
     public void SetBuffIcon(Sprite buffIcon)
     {
         _buffIcon = buffIcon;
@@ -57,6 +59,9 @@ public class ShowOnBuffBar : MonoBehaviour
         
         playerEvents.InvokePassiveDeactivated(_buffIcon);
         _modifierManager.onModifierWasRemoved -= RemoveIconFromBuffBar;
+        
+        // Do something when this buff has been removed from display
+        onRemovedFromBuffBar?.Invoke();
         
     }
 }

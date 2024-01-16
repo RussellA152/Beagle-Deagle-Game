@@ -10,5 +10,7 @@ public class XpPowerUp : PowerUp
     protected override void OnPickUp(GameObject receiverGameObject)
     {
         currencyEvents.InvokeGiveXp(currencyReward.xpAmount);
+        
+        Deactivate();
     }
 }
