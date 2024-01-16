@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 ///-///////////////////////////////////////////////////////////
 /// Responsible for executing code based on enemy states. States include: Idle, Chasing, Attack, Stunned, and Death.
@@ -263,9 +264,18 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
             particleUsed.PlayAllParticles(1f);
         }
         
+        DropRandomPowerUp();
         
         gameObject.SetActive(false);
 
+    }
+
+    private void DropRandomPowerUp()
+    {
+        if (Random.value < enemyScriptableObject.powerUpDropChance)
+        {
+            Debug.Log(gameObject.name + " has dropped a random power up");
+        }
     }
     
     ///-///////////////////////////////////////////////////////////

@@ -30,6 +30,8 @@ MonoBehaviour:
   currencyRewardOnDeath:
     xpAmount: 100
     moneyAmount: 0
+  powerUpDropChance: 0.01
+  powerUpDropTable: []
   whatHitBoxDamages:
     serializedVersion: 2
     m_Bits: 16512

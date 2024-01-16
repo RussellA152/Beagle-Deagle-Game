@@ -56,6 +56,8 @@ public class HealCrate : MonoBehaviour, IHasCooldown
     {
         crateGameObject.SetActive(false);
         healItemGameObject.SetActive(true);
+        
+        _powerUp.ActivatePowerUp();
     }
 
     private void StartCooldown()

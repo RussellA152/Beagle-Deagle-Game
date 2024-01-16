@@ -11,7 +11,7 @@ public class CooldownSystem : MonoBehaviour
 
     /* A hash set of id's that are ready to be assigned to any monobehaviours that need one
      This removes the need of having to make sure two monobehaviours don't accidentally have the same cooldown ID*/
-    private HashSet<int> _assignedIds;
+    private HashSet<int> _assignedIds = new HashSet<int>();
     
     [SerializeField, Range(1, 50)] 
     private int assignableIdCount = 20; // How many ID's are needed for this cooldown system?
@@ -20,9 +20,6 @@ public class CooldownSystem : MonoBehaviour
 
     private void Awake()
     {
-        // Initialize the assigned IDs HashSet
-        _assignedIds = new HashSet<int>();
-
         // Assign unique IDs to the HashSet (starts at 1...this can break for some gameObjects if Ids are set to 0 for some reason?)
         for (int i = 1; i < assignableIdCount + 1; i++)
         {
@@ -147,6 +144,10 @@ public class CooldownSystem : MonoBehaviour
         return false;
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// Get an unique int value needed to start a cooldown instance.
+    /// Call this in Start.
+    /// 
     public int GetAssignableId()
     {
         if (_assignedIds.Count > 0)
@@ -156,9 +157,7 @@ public class CooldownSystem : MonoBehaviour
             
             // Remove the assigned ID from the HashSet
             _assignedIds.Remove(id);
-            
-            //Debug.Log("fetched " + id + " for " + gameObject.name);
-            
+
             return id;
         }
         

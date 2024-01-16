@@ -17,7 +17,7 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
     [SerializeField] private AudioClip pickUpSound;
 
     [SerializeField, Range(0.1f, 1f)] private float volume;
-    
+
     [SerializeField, Range(1f, 60f)] 
     // How long will this pick up remain on the ground?
     private float pickUpDuration = 30f;
@@ -30,7 +30,7 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
     {
         _cooldownSystem = GetComponent<CooldownSystem>();
         _audioClipPlayer = GetComponent<AudioClipPlayer>();
-        
+
         CooldownDuration = pickUpDuration;
     }
 
@@ -38,9 +38,22 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
     {
         _cooldownSystem.OnCooldownEnded += Despawn;
         
-        Id = _cooldownSystem.GetAssignableId();
-        CooldownDuration = pickUpDuration;
+    }
 
+    private void OnDisable()
+    {
+        _cooldownSystem.OnCooldownEnded -= Despawn;
+    }
+
+    private void Start()
+    {
+        Id = _cooldownSystem.GetAssignableId();
+        
+        
+    }
+
+    public void ActivatePowerUp()
+    {
         // Start timer until disappear
         if (!_cooldownSystem.IsOnCooldown(Id))
         {
@@ -51,13 +64,6 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
             _cooldownSystem.RefreshCooldown(Id);
         }
     }
-
-    private void OnDestroy()
-    {
-        _cooldownSystem.OnCooldownEnded -= Despawn;
-    }
-    
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Activate all effects on food pickup
