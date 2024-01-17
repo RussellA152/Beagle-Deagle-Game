@@ -44,7 +44,7 @@ public class EnemyData : ScriptableObject
     // How much money or xp does this enemy give on death?
     public CurrencyReward currencyRewardOnDeath;
 
-    [Range(0.01f, 1f)]
+    [Range(0.001f, 1f)]
     public float powerUpDropChance = 0.01f;
     public List<GameObject> powerUpDropTable;
 

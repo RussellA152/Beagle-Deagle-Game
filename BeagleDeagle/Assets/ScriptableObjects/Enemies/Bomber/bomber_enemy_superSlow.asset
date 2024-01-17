@@ -30,6 +30,12 @@ MonoBehaviour:
   currencyRewardOnDeath:
     xpAmount: 300
     moneyAmount: 0
+  powerUpDropChance: 0.01
+  powerUpDropTable:
+  - {fileID: 2008914779257792909, guid: b8d215f9c86db2043a6db303a5ed9fbf, type: 3}
+  - {fileID: 2008914779257792909, guid: c4cfb4b54ae454849b0d2415d4054555, type: 3}
+  - {fileID: 2008914779257792909, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+  - {fileID: 2008914779257792909, guid: 8b05be34a437b0a4ead00c425c32f8ec, type: 3}
   explosivePrefab: {fileID: 8164879991046117895, guid: 7b69bf609bb9e114aa6b929f6eb799c8, type: 3}
   explosiveData: {fileID: 11400000, guid: a1523f9a3c64eba46882b5c4c9c13480, type: 2}
   statusEffects: {fileID: 0}

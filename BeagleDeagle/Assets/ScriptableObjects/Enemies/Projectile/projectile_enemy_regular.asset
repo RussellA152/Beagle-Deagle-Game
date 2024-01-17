@@ -30,6 +30,12 @@ MonoBehaviour:
   currencyRewardOnDeath:
     xpAmount: 150
     moneyAmount: 0
+  powerUpDropChance: 0.01
+  powerUpDropTable:
+  - {fileID: 2008914779257792909, guid: b8d215f9c86db2043a6db303a5ed9fbf, type: 3}
+  - {fileID: 2008914779257792909, guid: c4cfb4b54ae454849b0d2415d4054555, type: 3}
+  - {fileID: 2008914779257792909, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+  - {fileID: 2008914779257792909, guid: 8b05be34a437b0a4ead00c425c32f8ec, type: 3}
   bulletPrefab: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
   bulletData: {fileID: 11400000, guid: be1d615a5892cc443a06ea3aed7be291, type: 2}
   statusEffects: {fileID: 0}

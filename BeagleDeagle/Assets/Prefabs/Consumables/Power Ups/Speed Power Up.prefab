@@ -107,7 +107,7 @@ MonoBehaviour:
   volume: 0.5
   pickUpDuration: 15
   pickUpDescription: Increased Movement and Attack Speed!
-  movementSpeedBoostData: {fileID: 11400000, guid: 659e5ee9385bb354ab0a8e71e4734533, type: 2}
+  movementSpeedBoostData: {fileID: 11400000, guid: 56988f848b13e5d4dbc4c03d9ed06356, type: 2}
   attackSpeedBoostData: {fileID: 11400000, guid: 30d61baa259c45f4bbff0687d7b01c62, type: 2}
   speedBuffDuration: 10
   icon: {fileID: 21300000, guid: 7ddc8a69ef7c65542ba8d09d49d357af, type: 3}

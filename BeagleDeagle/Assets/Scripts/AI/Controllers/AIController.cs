@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -270,11 +271,17 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
 
     }
 
+    ///-///////////////////////////////////////////////////////////
+    /// On enemy death, there is a small chance for a random power up to drop on top of the enemy.
+    /// 
     private void DropRandomPowerUp()
     {
         if (Random.value < enemyScriptableObject.powerUpDropChance)
         {
-            Debug.Log(gameObject.name + " has dropped a random power up");
+            int randomIndex = Random.Range(0, enemyScriptableObject.powerUpDropTable.Count);
+
+            // Spawn power up on top of enemy
+            Instantiate(enemyScriptableObject.powerUpDropTable[randomIndex], transform.position, Quaternion.identity);
         }
     }
     

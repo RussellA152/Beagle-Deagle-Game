@@ -15,8 +15,8 @@ MonoBehaviour:
   utilityCooldownModifier:
     modifierName: Ability Cooldown Power Up
     particleEffect: {fileID: 0}
-    bonusUtilityCooldown: -0.75
+    bonusUtilityCooldown: -0.85
   ultimateCooldownModifier:
     modifierName: Ability Cooldown Power Up
     particleEffect: {fileID: 0}
-    bonusUltimateCooldown: -0.75
+    bonusUltimateCooldown: -0.85
