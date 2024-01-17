@@ -105,7 +105,7 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   pickUpSound: {fileID: 0}
   volume: 0.5
-  pickUpDuration: 15
+  pickUpDuration: 20
   pickUpDescription: Increased Movement and Attack Speed!
   movementSpeedBoostData: {fileID: 11400000, guid: 56988f848b13e5d4dbc4c03d9ed06356, type: 2}
   attackSpeedBoostData: {fileID: 11400000, guid: 30d61baa259c45f4bbff0687d7b01c62, type: 2}

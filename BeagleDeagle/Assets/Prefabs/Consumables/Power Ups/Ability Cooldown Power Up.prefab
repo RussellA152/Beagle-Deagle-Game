@@ -105,7 +105,7 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   pickUpSound: {fileID: 0}
   volume: 0.5
-  pickUpDuration: 15
+  pickUpDuration: 20
   pickUpDescription: 85% Reduced Ability Cooldown!
   abilityCooldownModifierData: {fileID: 11400000, guid: 0399e068e3737184e931c7d8ec2a9712, type: 2}
   cooldownBuffDuration: 10
