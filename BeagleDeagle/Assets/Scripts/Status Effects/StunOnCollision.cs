@@ -8,8 +8,9 @@ public class StunOnCollision : StatusEffect<StunEffectData>
     {
         if (DoesThisAffectTarget(objectHit))
         {
+            Debug.Log("Attempt to stun!");
             // Attempt to stun the enemy for a certain amount of seconds
-            objectHit.GetComponent<ModifierManager>().AddModifier(StatusEffectData.stunEffect);
+            objectHit.GetComponent<ModifierManager>().AddModifierOnlyForDuration(StatusEffectData.stunEffect, StatusEffectData.stunEffect.stunDuration);
             
         }
 

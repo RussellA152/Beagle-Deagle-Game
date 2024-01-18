@@ -18,7 +18,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
 
     [Header("Required Scripts")]
     private ZombieAnimationHandler _animationScript;
-    
+
     [Header("Modifiers")]
     [SerializeField, NonReorderable] private List<MovementSpeedModifier> movementSpeedModifiers = new List<MovementSpeedModifier>(); // a list of modifiers being applied to this enemy's movement speed 
     private float _bonusSpeed = 1f; // Speed multiplier on the movement speed of this enemy
@@ -108,30 +108,28 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     /// 
     public void GetStunned(StunModifier stunModifier)
     {
-        if (!IsStunned)
-        {
-            StartCoroutine(RemoveStunCoroutine(stunModifier));
-        }
-            
+        IsStunned = true;
+
+    }
+    
+    public void RemoveStun(StunModifier stunModifier)
+    {
+        IsStunned = false;
     }
     
     ///-///////////////////////////////////////////////////////////
     /// Wait some time, then remove stun from enemy
     /// 
-    public IEnumerator RemoveStunCoroutine(StunModifier stunModifier)
-    {
-        IsStunned = true;
-
-        yield return new WaitForSeconds(stunModifier.stunDuration);
-        
-        RemoveStun(stunModifier);
-
-    }
-
-    public void RemoveStun(StunModifier stunModifier)
-    {
-        IsStunned = false;
-    }
+    // public IEnumerator RemoveStunCoroutine(StunModifier stunModifier)
+    // {
+    //     IsStunned = true;
+    //
+    //     yield return new WaitForSeconds(stunModifier.stunDuration);
+    //     
+    //     RemoveStun(stunModifier);
+    //
+    // }
+    
     
     #endregion
 
