@@ -59,7 +59,7 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
         // Take away health while the dot still has ticks and is active
         while (ticks > 0)
         {
-            _modifierParticleEffectHandler.StartPlayingParticle(dot, false);
+            _modifierParticleEffectHandler.StartPlayingParticle(dot, dot.StickToGameObject);
             
             // TODO: THIS ASSUMES WE ALWAYS DO DAMAGE!
             _healthScript.ModifyHealth(-1f * dot.damage);

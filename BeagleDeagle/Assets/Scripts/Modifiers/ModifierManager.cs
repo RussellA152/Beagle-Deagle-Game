@@ -10,6 +10,8 @@ using UnityEngine.Serialization;
 /// Ex. Removing an AttackSpeedModifier after 3 seconds after an enemy exits a slow field.
 public class ModifierManager : MonoBehaviour
 {
+    private ModifierParticleEffectHandler _modifierParticleEffectHandler;
+    
     // Dictionary to store the add modifier methods
     private Dictionary<Type, Action<Modifier>> _addMethods = new Dictionary<Type, Action<Modifier>>(); 
     
@@ -22,6 +24,11 @@ public class ModifierManager : MonoBehaviour
 
     // When the entity had a modifier removed, return it to any listeners
     public event Action<Modifier> onModifierWasRemoved;
+
+    private void Awake()
+    {
+        _modifierParticleEffectHandler = GetComponent<ModifierParticleEffectHandler>();
+    }
 
     private void OnDisable()
     {
@@ -53,6 +60,10 @@ public class ModifierManager : MonoBehaviour
         {
             removeMethod.Invoke(modifierToAdd);
             _allModifiers.Add(modifierToAdd);
+            
+            if(modifierToAdd.PlayOnModifierApplied && modifierToAdd.particleEffect != null)
+                _modifierParticleEffectHandler.StartPlayingParticle(modifierToAdd, modifierToAdd.StickToGameObject);
+            
         }
         else
         {
@@ -89,6 +100,9 @@ public class ModifierManager : MonoBehaviour
             removeMethod.Invoke(modifierToRemove);
             
             _allModifiers.Remove(modifierToRemove);
+            
+            if(modifierToRemove.particleEffect != null)
+                _modifierParticleEffectHandler.StopSpecificParticle(modifierToRemove);
 
             // Tell any listeners which modifier got removed
             onModifierWasRemoved?.Invoke(modifierToRemove);

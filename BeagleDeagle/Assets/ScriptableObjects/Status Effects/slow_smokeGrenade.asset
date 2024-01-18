@@ -18,10 +18,13 @@ MonoBehaviour:
   movementSpeedEffect:
     modifierName: Slow Smoke
     particleEffect: {fileID: 3084706840994566313, guid: c0a56add2938172458a8dca155e4d161, type: 3}
+    StickToGameObject: 1
+    PlayOnModifierApplied: 1
     bonusMovementSpeed: -0.7
   attackSpeedEffect:
     modifierName: Slow Smoke
     particleEffect: {fileID: 0}
+    StickToGameObject: 1
+    PlayOnModifierApplied: 1
     bonusAttackSpeed: -0.3
   lingerDuration: 1
-  lingerDurationType: 1

@@ -18,4 +18,6 @@ MonoBehaviour:
   stunEffect:
     modifierName: Mighty Foot With DOT Stun
     particleEffect: {fileID: 275455557154390672, guid: c4f63367812a5a644872682e95289609, type: 3}
+    StickToGameObject: 1
+    PlayOnModifierApplied: 1
     stunDuration: 4.5

@@ -110,9 +110,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     {
         if (!IsStunned)
         {
-            _modifierParticleEffectHandler.StartPlayingParticle(stunModifier, true);
             StartCoroutine(RemoveStunCoroutine(stunModifier));
-            
         }
             
     }
@@ -126,11 +124,15 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
 
         yield return new WaitForSeconds(stunModifier.stunDuration);
         
-        IsStunned = false;
-        
-        _modifierParticleEffectHandler.StopSpecificParticle(stunModifier);
-        
+        RemoveStun(stunModifier);
+
     }
+
+    public void RemoveStun(StunModifier stunModifier)
+    {
+        IsStunned = false;
+    }
+    
     #endregion
 
     #region Knockback
@@ -179,7 +181,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
         _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
         
-        _modifierParticleEffectHandler.StartPlayingParticle(modifierToAdd, true);
+        //_modifierParticleEffectHandler.StartPlayingParticle(modifierToAdd, true);
         
         // Increase or decrease the animation speed of the movement animation
         _animationScript.SetMovementAnimationSpeed(modifierToAdd.bonusMovementSpeed);
@@ -190,7 +192,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     {
         if (!movementSpeedModifiers.Contains(modifierToRemove)) return;
         
-        _modifierParticleEffectHandler.StopSpecificParticle(modifierToRemove);
+       // _modifierParticleEffectHandler.StopSpecificParticle(modifierToRemove);
         
         movementSpeedModifiers.Remove(modifierToRemove);
         _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
@@ -233,10 +235,12 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     public void RegisterAllAddModifierMethods()
     {
         _modifierManager.RegisterAddMethod<MovementSpeedModifier>(AddMovementSpeedModifier);
+        _modifierManager.RegisterAddMethod<StunModifier>(GetStunned);
     }
 
     public void RegisterAllRemoveModifierMethods()
     {
         _modifierManager.RegisterRemoveMethod<MovementSpeedModifier>(RemoveMovementSpeedModifier);
+        _modifierManager.RegisterRemoveMethod<StunModifier>(RemoveStun);
     }
 }

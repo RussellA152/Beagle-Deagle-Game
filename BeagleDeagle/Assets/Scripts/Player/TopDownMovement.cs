@@ -213,14 +213,14 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         movementSpeedModifiers.Add(modifierToAdd);
         _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
 
-        _modifierParticleEffectHandler.StartPlayingParticle(modifierToAdd, true);
+        //_modifierParticleEffectHandler.StartPlayingParticle(modifierToAdd, true);
     }
 
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
         if (!movementSpeedModifiers.Contains(modifierToRemove)) return;
         
-        _modifierParticleEffectHandler.StopSpecificParticle(modifierToRemove);
+        //_modifierParticleEffectHandler.StopSpecificParticle(modifierToRemove);
         
         movementSpeedModifiers.Remove(modifierToRemove);
 

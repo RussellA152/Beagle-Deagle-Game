@@ -18,6 +18,8 @@ MonoBehaviour:
   damageOverTime:
     modifierName: Mighty Foot Fire
     particleEffect: {fileID: 1688976237673181899, guid: 97d7d94ed58b9be4d8cbff990df23596, type: 3}
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
     damage: 15
     ticks: 5
     tickInterval: 1
