@@ -191,12 +191,12 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         // then turn their head to the left
         if (direction.x <= 0f && !IsRolling)
         {
-            headSr.flipX = true;
+            headSr.flipX = false;
         }
         // Otherwise, turn their head to the right
         else if(!IsRolling)
         {
-            headSr.flipX = false;
+            headSr.flipX = true;
         }
     }
     

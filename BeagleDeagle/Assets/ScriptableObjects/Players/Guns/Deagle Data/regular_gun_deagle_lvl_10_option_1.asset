@@ -21,7 +21,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8164879991046117895, guid: 385590d839a20bd45bbdf3a92ebef177, type: 3}
   bulletData: {fileID: 11400000, guid: a392a7d906fe7254c8e35f4b3e34add5, type: 2}
   statusEffects: {fileID: 0}
-  bulletSpawnLocation: {x: 1.6, y: 0.312}
+  bulletSpawnLocation: {x: 1.215, y: 0.234}
   bulletSpread: 2
   penetrationCount: 1
+  criticalChance: 0
+  criticalHitMultiplier: 2
   damagePerHit: 150
