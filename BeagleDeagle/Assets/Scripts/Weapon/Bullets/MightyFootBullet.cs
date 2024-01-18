@@ -9,6 +9,8 @@ public class MightyFootBullet : Bullet<MightyFootBulletData>
     private CheckObstruction _obstructionScript;
     private CameraShaker _cameraShaker;
 
+    [SerializeField] private GameObject mightyFootParticle;
+
     protected override void Awake()
     {
         base.Awake();
@@ -17,6 +19,22 @@ public class MightyFootBullet : Bullet<MightyFootBulletData>
         
         _wallLayerMask = LayerMask.GetMask("Wall");
     }
+
+    protected override void OnDisable()
+    {
+        // Spawn a destroy particle
+        if (mightyFootParticle != null)
+        {
+            GameObject particleEffect =  Instantiate(mightyFootParticle);
+            particleEffect.transform.position = transform.position;
+            particleEffect.gameObject.SetActive(true);
+
+        }
+        
+        
+        base.OnDisable();
+    }
+
 
     protected override void DamageOnHit(GameObject objectHit)
     {
