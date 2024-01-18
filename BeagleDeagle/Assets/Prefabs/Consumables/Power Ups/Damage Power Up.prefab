@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  waypointIndicator: {fileID: 8316733104684278827}
   pickUpSound: {fileID: 0}
   volume: 0.5
   pickUpDuration: 10
