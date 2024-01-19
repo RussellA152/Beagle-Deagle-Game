@@ -105,8 +105,10 @@ MonoBehaviour:
   waypointIndicator: {fileID: -3954540913561466520}
   pickUpSound: {fileID: 0}
   volume: 0.5
-  pickUpDuration: 15
+  pickUpDuration: 10
   pickUpDescription: Bonus XP!
+  destroyOnDeactivation: 1
+  activateOnStart: 1
   currencyEvents: {fileID: 11400000, guid: 0129d1f239c35cc4ab9e40307e69b1b0, type: 2}
   currencyReward:
     xpAmount: 2000

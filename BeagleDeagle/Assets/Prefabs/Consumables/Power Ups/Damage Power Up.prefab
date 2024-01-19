@@ -108,6 +108,8 @@ MonoBehaviour:
   volume: 0.5
   pickUpDuration: 10
   pickUpDescription: 300% Increased Damage!
+  destroyOnDeactivation: 1
+  activateOnStart: 1
   damageModifierData: {fileID: 11400000, guid: 23be81aebcaa7e74493b67d88775bb41, type: 2}
   damageBuffDuration: 10
   icon: {fileID: 21300000, guid: ea4a216567f6d1a4d80600f64b92545a, type: 3}

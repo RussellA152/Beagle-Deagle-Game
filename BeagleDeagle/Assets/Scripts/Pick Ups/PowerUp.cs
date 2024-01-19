@@ -28,6 +28,10 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
 
     [TextArea(2,3)]
     public string pickUpDescription;
+
+    [SerializeField]
+    private bool destroyOnDeactivation;
+    [SerializeField] private bool activateOnStart;
     public event Action onPickUpDeactivate;
     
     protected virtual void Awake()
@@ -37,31 +41,23 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
         _collider2D = GetComponent<Collider2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
-        waypointIndicator = GetComponent<Waypoint_Indicator>();
-        
         CooldownDuration = pickUpDuration;
-    }
-
-    private void OnEnable()
-    {
-        _cooldownSystem.OnCooldownEnded += Despawn;
-        
-    }
-
-    private void OnDisable()
-    {
-        _cooldownSystem.OnCooldownEnded -= Despawn;
     }
 
     private void Start()
     {
         Id = _cooldownSystem.GetAssignableId();
-        
-        
+
+        if (activateOnStart)
+        {
+            ActivatePowerUp();
+        }
     }
 
     public void ActivatePowerUp()
     {
+        _cooldownSystem.OnCooldownEnded += Despawn;
+        
         _collider2D.enabled = true;
         _spriteRenderer.enabled = true;
 
@@ -114,9 +110,14 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
 
     protected virtual void Deactivate()
     {
+        _cooldownSystem.OnCooldownEnded -= Despawn;
+        
         onPickUpDeactivate?.Invoke();
 
-        Destroy(gameObject);
+        if(destroyOnDeactivation)
+            Destroy(gameObject);
+        else
+            gameObject.SetActive(false);
     }
     
     public int Id { get; set; }

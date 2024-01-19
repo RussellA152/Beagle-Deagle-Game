@@ -282,6 +282,9 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
 
             // Spawn power up on top of enemy
             Instantiate(enemyScriptableObject.powerUpDropTable[randomIndex], transform.position, Quaternion.identity);
+            
+           // newPowerUp.GetComponent<PowerUp>().ActivatePowerUp();
+            
         }
     }
     
