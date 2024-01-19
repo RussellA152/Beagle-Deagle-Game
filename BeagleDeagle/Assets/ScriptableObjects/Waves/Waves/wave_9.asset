@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 466630de2a48cd543815a39cea832634, type: 3}
-  m_Name: wave_8
+  m_Name: wave_9
   m_EditorClassIdentifier: 
   waveName: Wave 8
   duration: 150
@@ -18,7 +18,8 @@ MonoBehaviour:
   miniWaves:
   - {fileID: 11400000, guid: dabf5eaf2b7beb24c83ff12d958fd8f1, type: 2}
   - {fileID: 11400000, guid: af25e1232453b2d4688fd4554d364f88, type: 2}
-  - {fileID: 11400000, guid: c7aba37ec7770d143af32536d01f72c6, type: 2}
+  - {fileID: 11400000, guid: 76b203046932139428df59138d9803b7, type: 2}
   - {fileID: 11400000, guid: 694f91c39c510aa4499568f546fb8784, type: 2}
   - {fileID: 11400000, guid: 2118705b6deab434e99149fb4bc770c2, type: 2}
   - {fileID: 11400000, guid: 8f9bb39399a6f7c48b26c865dcb1edbb, type: 2}
+  - {fileID: 11400000, guid: 6029683db9039aa4d84462f329e6a70a, type: 2}

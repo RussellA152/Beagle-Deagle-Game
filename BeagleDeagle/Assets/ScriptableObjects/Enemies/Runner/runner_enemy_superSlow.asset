@@ -30,7 +30,7 @@ MonoBehaviour:
   currencyRewardOnDeath:
     xpAmount: 250
     moneyAmount: 0
-  powerUpDropChance: 0.01
+  powerUpDropChance: 0.008
   powerUpDropTable:
   - {fileID: 2008914779257792909, guid: b8d215f9c86db2043a6db303a5ed9fbf, type: 3}
   - {fileID: 2008914779257792909, guid: c4cfb4b54ae454849b0d2415d4054555, type: 3}

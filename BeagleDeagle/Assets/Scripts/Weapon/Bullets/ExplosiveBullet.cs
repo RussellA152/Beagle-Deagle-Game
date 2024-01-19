@@ -59,7 +59,7 @@ public class ExplosiveBullet : Bullet<ExplosiveBulletData>, IHasMiscellaneousMod
         {
             IHealth healthScript = targetCollider.gameObject.GetComponent<IHealth>();
 
-            healthScript?.ModifyHealth(-1f * bulletData.explosiveDamage);
+            healthScript?.ModifyHealth(-1f * (DamagePerHit));
         }
     }
 

@@ -110,7 +110,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   timeToFailWhenFarAway: 10
-  startingRange: 10
+  startingRange: 15
   exitingRange: 20
   completionReward:
     xpAmount: 1000

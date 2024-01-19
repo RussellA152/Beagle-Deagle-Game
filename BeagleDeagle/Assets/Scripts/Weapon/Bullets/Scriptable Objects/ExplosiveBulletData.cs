@@ -7,9 +7,6 @@ public class ExplosiveBulletData : BulletData
 {
     // Explosive stats for the bullet's explosion
     public ExplosiveData explosiveData;
-    
-    [Range(0, 1000f)]
-    public float explosiveDamage;
 
     // When this bullet expires, should it explode?
     public bool explodeOnExpiration;

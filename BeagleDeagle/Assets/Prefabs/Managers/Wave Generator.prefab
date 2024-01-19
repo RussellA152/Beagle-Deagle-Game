@@ -46,10 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offScreenSpawnerScript: {fileID: 0}
   difficultyFactor: 1
-  waves:
-  - {fileID: 11400000, guid: 18c489f5e4bc62842ac5bcb57ab3b81c, type: 2}
-  - {fileID: 11400000, guid: 1b012fd009e204f49b9d25f24d502a4e, type: 2}
-  - {fileID: 11400000, guid: c2e9bbb8fada51a43a27f243c0c68737, type: 2}
-  - {fileID: 11400000, guid: c0870fb65c7aef4479433c9d5a294add, type: 2}
-  - {fileID: 11400000, guid: 5d71b7a7e0523d94f9f57dcea23ee1c7, type: 2}
-  - {fileID: 11400000, guid: a04539acda9e00d4ca4d674c6691196b, type: 2}
+  waves: []
