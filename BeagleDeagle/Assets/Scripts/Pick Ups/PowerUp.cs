@@ -88,6 +88,8 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
             
             OnPickUp(other.gameObject);
             
+            _cooldownSystem.RemoveCooldown(Id);
+            
         }
     }
 
