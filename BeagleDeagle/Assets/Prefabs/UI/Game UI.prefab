@@ -6731,7 +6731,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: efe4a6f8609377e4eb66b6ea5cb6dc40, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bc716e7fceed63445b0d7aaae29db271, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6753,7 +6753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87285ef470290e94bacd4252be13b862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyboardSprite: {fileID: 21300000, guid: efe4a6f8609377e4eb66b6ea5cb6dc40, type: 3}
+  keyboardSprite: {fileID: 21300000, guid: bc716e7fceed63445b0d7aaae29db271, type: 3}
   xboxSprite: {fileID: 21300000, guid: e07269f0f979b5a4cb24d46101004fff, type: 3}
   playstationSprite: {fileID: 21300000, guid: de1f9bae09a025642bba8edc0f0af379, type: 3}
 --- !u!1 &4071664043437471101
