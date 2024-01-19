@@ -224,6 +224,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CFXR4 _STUNED
       objectReference: {fileID: 0}
+    - target: {fileID: 1897458573441195173, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 1909306840859797615, guid: 675704702169728458f4cba8c6df77d2, type: 3}
       propertyPath: m_SortingOrder
       value: 20
@@ -232,9 +236,29 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 2347614857548627438, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2563022648916031131, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905010113968707081, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116556131884924926, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 3922641230791759449, guid: 675704702169728458f4cba8c6df77d2, type: 3}
       propertyPath: m_SortingOrder
-      value: 20
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418912566900235282, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 6329406418562793389, guid: 675704702169728458f4cba8c6df77d2, type: 3}
       propertyPath: m_SortingOrder
