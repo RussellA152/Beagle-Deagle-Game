@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlayerDataUpdatable, IHasCooldown, IRegisterModifierMethods
@@ -144,7 +145,7 @@ public class PlayerHealth : MonoBehaviour, IHealth, IHealthWithModifiers, IPlaye
         if (maxHealthModifiers.Contains(modifierToAdd)) return;
         
         maxHealthModifiers.Add(modifierToAdd);
-        _bonusMaxHealth += modifierToAdd.bonusMaxHealth;
+        _bonusMaxHealth += _bonusMaxHealth * modifierToAdd.bonusMaxHealth;
 
         _currentHealth = playerData.maxHealth * _bonusMaxHealth;
         

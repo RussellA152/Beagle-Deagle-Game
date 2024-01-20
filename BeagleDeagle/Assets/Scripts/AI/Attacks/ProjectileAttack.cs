@@ -38,7 +38,7 @@ public class ProjectileAttack : AIAttack<ProjectileEnemyData>
                 foreach (IStatusEffect statusEffect in newBullet.GetComponents<IStatusEffect>())
                 {
                     Debug.Log("update!");
-                    statusEffect.UpdateWeaponType(enemyScriptableObject.statusEffects);
+                    statusEffect.UpdateStatusDataTypes(enemyScriptableObject.statusEffects);
                 }
             }
 

@@ -40,7 +40,7 @@ public class MiscellaneousModifierList : MonoBehaviour, IRegisterModifierMethods
         if (explosiveRadiusModifiers.Contains(modifierToAdd)) return;
         
         explosiveRadiusModifiers.Add(modifierToAdd);
-        BonusExplosiveRadius += modifierToAdd.bonusRadius;
+        BonusExplosiveRadius += BonusExplosiveRadius * modifierToAdd.bonusRadius;
         
     }
 
@@ -58,7 +58,7 @@ public class MiscellaneousModifierList : MonoBehaviour, IRegisterModifierMethods
         if (aoeRadiusModifiers.Contains(modifierToAdd)) return;
         
         aoeRadiusModifiers.Add(modifierToAdd);
-        BonusAoeRadius += modifierToAdd.bonusRadius;
+        BonusAoeRadius += BonusAoeRadius *  modifierToAdd.bonusRadius;
     }
     
     public void RemoveAoeRadiusModifier(AreaOfEffectRadiusModifier modifierToRemove)
@@ -74,7 +74,7 @@ public class MiscellaneousModifierList : MonoBehaviour, IRegisterModifierMethods
         if (dotDamageModifier.Contains(modifierToAdd)) return;
         
         dotDamageModifier.Add(modifierToAdd);
-        BonusDotDamage += modifierToAdd.bonusDamage;
+        BonusDotDamage += BonusDotDamage * modifierToAdd.bonusDamage;
     }
     
     public void RemoveDotDamageModifier(DamageOverTimeDamageModifier modifierToRemove)

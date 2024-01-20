@@ -187,7 +187,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         if (utilityCooldownModifiers.Contains(modifierToAdd)) return;
             
         utilityCooldownModifiers.Add(modifierToAdd);
-        _bonusUtilityCooldown += (_bonusUtilityCooldown * modifierToAdd.bonusUtilityCooldown);
+        _bonusUtilityCooldown += _bonusUtilityCooldown * modifierToAdd.bonusUtilityCooldown;
         
         CooldownDuration = UtilityData.cooldown * _bonusUtilityCooldown;
 
@@ -236,7 +236,7 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
         if (utilityDamageModifiers.Contains(modifierToAdd)) return;
         
         utilityDamageModifiers.Add(modifierToAdd);
-        BonusUtilityDamage += modifierToAdd.bonusUtilityDamage;
+        BonusUtilityDamage += BonusUtilityDamage * modifierToAdd.bonusUtilityDamage;
 
     }
 

@@ -28,19 +28,21 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
     ///-///////////////////////////////////////////////////////////
     /// Add a new DamageOverTime effect to this target,
     /// then start a coroutine that will wait some time to remove it.
-    public void AddDamageOverTime(DamageOverTime dotToAdd)
+    public void AddDamageOverTime(DamageOverTime dotToAdd, float bonusDamage)
     {
         damageOverTimeEffects.Add(dotToAdd);
 
-        StartCoroutine(TakeDamageOverTime(dotToAdd);
+        StartCoroutine(TakeDamageOverTime(dotToAdd, bonusDamage));
 
     }
+
+
 
     ///-///////////////////////////////////////////////////////////
     /// Make the target take damage (or heal) every "tickInterval" seconds for a 
     /// "tick" amount of times.
     /// 
-    public IEnumerator TakeDamageOverTime(DamageOverTime dot)
+    public IEnumerator TakeDamageOverTime(DamageOverTime dot, float bonusDamage)
     {
         float ticks = dot.ticks;
 
@@ -50,7 +52,7 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
             _modifierParticleEffectHandler.StartPlayingParticle(dot, dot.StickToGameObject);
             
             // TODO: THIS ASSUMES WE ALWAYS DO DAMAGE!
-            _healthScript.ModifyHealth((-1f * dot.damage) );
+            _healthScript.ModifyHealth((-1f * dot.damage) * bonusDamage);
 
             yield return new WaitForSeconds(dot.tickInterval);
 
@@ -59,9 +61,8 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
 
         if (CheckIfCanReapply(dot))
         {
-            StartCoroutine(TakeDamageOverTime(dot));
+            StartCoroutine(TakeDamageOverTime(dot, bonusDamage));
         }
-        //RemoveDamageOverTime(dot);
     }
 
     ///-///////////////////////////////////////////////////////////

@@ -142,7 +142,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
         if (ultimateDamageModifiers.Contains(modifierToAdd)) return;
         
         ultimateDamageModifiers.Add(modifierToAdd);
-        BonusUltimateDamage += modifierToAdd.bonusUltimateDamage;
+        BonusUltimateDamage += BonusUltimateDamage * modifierToAdd.bonusUltimateDamage;
     }
 
     public virtual void RemoveUltimateDamageModifier(UltimateDamageModifier modifierToRemove)

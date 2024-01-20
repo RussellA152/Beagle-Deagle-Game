@@ -31,6 +31,11 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
             hasMiscellaneousModifier.GiveMiscellaneousModifierList(MiscellaneousModifierList);
         }
         
+        foreach (IApplyDamageOverTime applyDamageOverTime in grenade.GetComponents<IApplyDamageOverTime>())
+        {
+            applyDamageOverTime.GiveBonusDamage(BonusUtilityDamage);
+        }
+        
         areaGrenadeComponent.SetDamage(UtilityData.abilityDamage * BonusUtilityDamage);
         areaGrenadeComponent.SetDuration(UtilityData.duration);
 
@@ -41,7 +46,7 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
 
         foreach (IStatusEffect statusEffect in grenade.GetComponents<IStatusEffect>())
         {
-            statusEffect.UpdateWeaponType(UtilityData.statusEffects);
+            statusEffect.UpdateStatusDataTypes(UtilityData.statusEffects);
         }
         
         areaGrenadeComponent.UpdateScriptableObject(UtilityData.smokeGrenadeData);

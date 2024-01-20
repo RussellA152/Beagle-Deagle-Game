@@ -24,7 +24,12 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
 
         foreach (IStatusEffect statusEffect in nuclearBomb.GetComponents<IStatusEffect>())
         {
-            statusEffect.UpdateWeaponType(UltimateAbilityData.statusEffects);
+            statusEffect.UpdateStatusDataTypes(UltimateAbilityData.statusEffects);
+        }
+
+        foreach (IApplyDamageOverTime applyDamageOverTime in nuclearBomb.GetComponents<IApplyDamageOverTime>())
+        {
+            applyDamageOverTime.GiveBonusDamage(BonusUltimateDamage);
         }
         
         // Give nuke any extra modifiers (ex. giving a nuke "bonusExplosiveRadius")

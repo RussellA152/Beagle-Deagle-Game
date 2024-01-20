@@ -288,7 +288,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
             {
                 foreach (IStatusEffect statusEffect in newBullet.GetComponents<IStatusEffect>())
                 {
-                    statusEffect.UpdateWeaponType(_weaponData.statusEffects);
+                    statusEffect.UpdateStatusDataTypes(_weaponData.statusEffects);
                 }
             }
 
@@ -296,6 +296,12 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
             foreach (IHasMiscellaneousModifier hasMiscellaneousModifier in newBullet.GetComponents<IHasMiscellaneousModifier>())
             {
                 hasMiscellaneousModifier.GiveMiscellaneousModifierList(_miscellaneousModifierList);
+            }
+            
+            // Increase dot damage, if this gun deals more damage.
+            foreach (IApplyDamageOverTime applyDamageOverTime in newBullet.GetComponents<IApplyDamageOverTime>())
+            {
+                applyDamageOverTime.GiveBonusDamage(_bonusDamage);
             }
 
             projectile.UpdateScriptableObject(_weaponData.bulletData);
@@ -505,7 +511,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
         if (damageModifiers.Contains(modifierToAdd)) return;
         
         damageModifiers.Add(modifierToAdd);
-        _bonusDamage += (_bonusDamage * modifierToAdd.bonusDamage);
+        _bonusDamage += _bonusDamage * modifierToAdd.bonusDamage;
     }
 
     public void RemoveDamageModifier(DamageModifier modifierToRemove)
@@ -538,7 +544,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
         if (spreadModifiers.Contains(modifierToAdd)) return;
         
         spreadModifiers.Add(modifierToAdd);
-        _bonusSpread += (_bonusSpread * modifierToAdd.bonusSpread);
+        _bonusSpread += _bonusSpread * modifierToAdd.bonusSpread;
     }
 
     public void RemoveSpreadModifier(SpreadModifier modifierToRemove)
@@ -554,7 +560,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
         if (fireRateModifiers.Contains(modifierToAdd)) return;
         
         fireRateModifiers.Add(modifierToAdd);
-        _bonusFireRate += (_bonusFireRate * modifierToAdd.bonusAttackSpeed);
+        _bonusFireRate += _bonusFireRate * modifierToAdd.bonusAttackSpeed;
     }
 
     public void RemoveAttackSpeedModifier(AttackSpeedModifier modifierToRemove)
@@ -571,7 +577,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
         if (reloadSpeedModifiers.Contains(modifierToAdd)) return;
         
         reloadSpeedModifiers.Add(modifierToAdd);
-        _bonusReloadSpeed += (_bonusReloadSpeed * modifierToAdd.bonusReloadSpeed);
+        _bonusReloadSpeed += _bonusReloadSpeed * modifierToAdd.bonusReloadSpeed;
         
         CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
     }
@@ -592,7 +598,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
         if (ammoLoadModifiers.Contains(modifierToAdd)) return;
         
         ammoLoadModifiers.Add(modifierToAdd);
-        _bonusAmmoLoad += (_bonusAmmoLoad * modifierToAdd.bonusAmmoLoad);
+        _bonusAmmoLoad += _bonusAmmoLoad * modifierToAdd.bonusAmmoLoad;
         
         // Give player's weapon this bonus ammo load (this is because bulletsLoaded is only inside of the SO)
         // Refill the player's weapon before applying new ammo load

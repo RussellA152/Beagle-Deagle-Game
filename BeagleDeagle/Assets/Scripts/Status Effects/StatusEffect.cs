@@ -14,7 +14,12 @@ public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: St
     {
         // Give any starting status effects to this gameObject 
         if(statusEffectTypes != null)
-            UpdateWeaponType(statusEffectTypes);
+            UpdateStatusDataTypes(statusEffectTypes);
+    }
+
+    protected virtual void OnDisable()
+    {
+        
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -49,7 +54,7 @@ public abstract class StatusEffect<T> : MonoBehaviour, IStatusEffect where T: St
         }
     }
 
-    public void UpdateWeaponType(StatusEffectTypes statusEffectTypesScriptableObject)
+    public void UpdateStatusDataTypes(StatusEffectTypes statusEffectTypesScriptableObject)
     {
         statusEffectTypes = statusEffectTypesScriptableObject;
         

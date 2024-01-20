@@ -32,7 +32,12 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
         // Add stats to any status effects that the MightyFoot needs
         foreach (IStatusEffect statusEffect in bulletComponent.GetComponents<IStatusEffect>())
         {
-            statusEffect.UpdateWeaponType(UtilityData.statusEffects);
+            statusEffect.UpdateStatusDataTypes(UtilityData.statusEffects);
+        }
+        
+        foreach (IApplyDamageOverTime applyDamageOverTime in bulletComponent.GetComponents<IApplyDamageOverTime>())
+        {
+            applyDamageOverTime.GiveBonusDamage(BonusUtilityDamage);
         }
         
         // Give mighty foot any extra modifiers (ex. giving mighty foot "bonusStunDuration")

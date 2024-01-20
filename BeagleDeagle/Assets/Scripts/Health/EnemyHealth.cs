@@ -109,7 +109,7 @@ public class EnemyHealth : MonoBehaviour, IHealth, IHealthWithModifiers,IEnemyDa
         if (maxHealthModifiers.Contains(modifierToAdd)) return;
         
         maxHealthModifiers.Add(modifierToAdd);
-        _bonusMaxHealth += modifierToAdd.bonusMaxHealth;
+        _bonusMaxHealth += _bonusMaxHealth * modifierToAdd.bonusMaxHealth;
     }
 
     public void RemoveMaxHealthModifier(MaxHealthModifier modifierToRemove)

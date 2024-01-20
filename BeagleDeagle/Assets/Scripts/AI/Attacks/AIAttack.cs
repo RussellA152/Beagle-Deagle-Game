@@ -145,7 +145,7 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         if (attackSpeedModifiers.Contains(modifierToAdd)) return;
         
         attackSpeedModifiers.Add(modifierToAdd);
-        _bonusAttackSpeed += (_bonusAttackSpeed * modifierToAdd.bonusAttackSpeed);
+        _bonusAttackSpeed += _bonusAttackSpeed * modifierToAdd.bonusAttackSpeed;
         
         // Increase or decrease the animation speed of the movement animation
         _animationScript.SetAttackAnimationSpeed(modifierToAdd.bonusAttackSpeed);
