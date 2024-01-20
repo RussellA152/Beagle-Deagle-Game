@@ -50,8 +50,6 @@ MonoBehaviour:
   particleSystemGameObjects:
   - {fileID: 4604700919623299103}
   - {fileID: 6732159567425388751}
-  staticRotationParticles:
-  - {fileID: 4604700919623299103}
 --- !u!1001 &3084706840762296274
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -209,6 +207,14 @@ PrefabInstance:
     - target: {fileID: 1524533970525000387, guid: 1aba7178fb669cb4d93174e8dd19fb80, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524533970525000387, guid: 1aba7178fb669cb4d93174e8dd19fb80, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524533970525000387, guid: 1aba7178fb669cb4d93174e8dd19fb80, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1524533970525000387, guid: 1aba7178fb669cb4d93174e8dd19fb80, type: 3}
       propertyPath: m_LocalPosition.x

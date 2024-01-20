@@ -44,8 +44,9 @@ public class ProjectileAttack : AIAttack<ProjectileEnemyData>
 
             // Pass in the damage and penetration values of this gun, to the bullet being shot
             // Also account for any modifications to the gun damage and penetration (e.g, an item purchased by trader that increases player gun damage)
-            projectile.UpdateDamageAndPenetrationValues(enemyScriptableObject.attackDamage, enemyScriptableObject.bulletPenetration);
-            
+            projectile.UpdateDamage(enemyScriptableObject.attackDamage);
+            projectile.UpdatePenetration(enemyScriptableObject.bulletPenetration);
+
             projectile.UpdateWhoShotThisBullet(transform);
 
             // Set the position to be at the barrel of the gun

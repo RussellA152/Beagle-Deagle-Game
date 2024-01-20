@@ -45,7 +45,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 
         _playerGunScript.UpdateScriptableObject(UltimateAbilityData.awpGunData);
 
-        AddAllDamageBonuses();
+        AddDamageBonusOnActivation();
 
         _playerGunScript.AllowWeaponReceive(false);
         // Don't allow player to reload when activating AWP
@@ -92,7 +92,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
             // * Without this, the ammo display will show 0 current ammo because we shot the weapon and tried to give a new gun to the player *
             yield return new WaitForSeconds(_returnOriginalWeaponDelay);
             
-            RemoveAllDamageBonuses();
+            RemoveDamageBonusOnDeactivation();
             
             // Give back the player their gun before they received the AWP sniper
             _playerGunScript.AllowWeaponReceive(true);
@@ -133,6 +133,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 
         _awpDamageModifiers[modifierToAdd] = gunDamageModifier;
         
+        // Apply bonus if the awp is already active
         if(_isActive)
             ModifierManager.AddModifier(gunDamageModifier);
     }
@@ -141,19 +142,21 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
     {
         base.RemoveUltimateDamageModifier(modifierToRemove);
         
+        // Remove modifier if the awp is already active
         if(_isActive)
             ModifierManager.RemoveModifier(_awpDamageModifiers[modifierToRemove]);
     }
 
-    private void AddAllDamageBonuses()
+    private void AddDamageBonusOnActivation()
     {
         foreach (DamageModifier gunDamageModifier in _awpDamageModifiers.Values)
         {
             ModifierManager.AddModifier(gunDamageModifier);
         }
+        
     }
 
-    private void RemoveAllDamageBonuses()
+    private void RemoveDamageBonusOnDeactivation()
     {
         foreach (DamageModifier gunDamageModifier in _awpDamageModifiers.Values)
         {

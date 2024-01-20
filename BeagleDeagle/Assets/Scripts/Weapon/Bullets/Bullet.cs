@@ -29,6 +29,8 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
     protected float DamagePerHit; // The damage of the player's gun or enemy that shot this bullet
 
+    private bool _isCritical; // Will this bullet going to apply critical damage?
+
     [Header("Penetration")]
     private int _penetrationCount; // The amount of penetration of the player's gun or enemy that shot this bullet
     private int _amountPenetrated; // How many enemies has this bullet penetrated through?
@@ -40,7 +42,9 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
     private int _inanimateHitParticlePoolKey;
     [SerializeField] private LayerMask _enemyParticleLayerMask; // When hitting a player or enemy, instantiate a particle effect on them (typically a blood particle effect)
     [SerializeField] private GameObject enemyHitParticleEffect;
+    [SerializeField] private GameObject critHitParticleEffect;
     private int _enemyHitParticlePoolKey;
+    private int _critHitParticlePoolKey;
 
     protected AudioClipPlayer AudioClipPlayer;
     
@@ -58,9 +62,13 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         
         if(enemyHitParticleEffect != null)
             _enemyHitParticlePoolKey = enemyHitParticleEffect.GetComponent<IPoolable>().PoolKey;
+
+        if (critHitParticleEffect != null)
+            _critHitParticlePoolKey = critHitParticleEffect.GetComponent<IPoolable>().PoolKey;
         
         if(inanimateObjectHitParticleEffect != null)
             _inanimateHitParticlePoolKey = inanimateObjectHitParticleEffect.GetComponent<IPoolable>().PoolKey;
+        
     }
 
     protected virtual void OnEnable()
@@ -86,6 +94,8 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
 
         // Reset damage
         DamagePerHit = 0;
+
+        _isCritical = false;
 
         // Stop all coroutines when this bullet has been disabled
         StopAllCoroutines();
@@ -192,6 +202,15 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
             particleUsed.PlaceParticleOnTransform(objectHit.transform);
             
             particleUsed.PlayAllParticles(1f);
+
+            if (_isCritical)
+            {
+                GameObject critParticleEffect = ObjectPooler.Instance.GetPooledObject(_critHitParticlePoolKey);
+                PoolableParticle critParticleUsed = critParticleEffect.GetComponent<PoolableParticle>();
+                critParticleUsed.PlaceParticleOnTransform(objectHit.transform);
+                critParticleUsed.PlayAllParticles(1f);
+                
+            }
         }
         else if((_inanimateParticleLayerMask.value & (1 << objectHit.layer)) > 0)
         {
@@ -243,13 +262,20 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         transform.localScale = new Vector2(bulletData.sizeX, bulletData.sizeY);
     }
     
-    // Update the damage and penetration values
-    public void UpdateDamageAndPenetrationValues(float damage, int penetration)
+
+    public void UpdateDamage(float damage)
     {
         DamagePerHit += damage;
+    }
 
-        _penetrationCount += penetration;
-        
+    public void UpdatePenetration(int penetrationCount)
+    {
+        _penetrationCount += penetrationCount;
+    }
+
+    public void SetIsCrit(bool boolean)
+    {
+        _isCritical = boolean;
     }
 
     public void UpdateWhoShotThisBullet(Transform shooter)

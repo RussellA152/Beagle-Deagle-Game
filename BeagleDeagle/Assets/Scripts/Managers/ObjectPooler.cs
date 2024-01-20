@@ -59,15 +59,10 @@ public class ObjectPooler : MonoBehaviour
             for (int i = 0; i < item.amountToPool; i++)
             {
                 // Create the new object
-                GameObject obj = Instantiate(item.objectToPool);
+                GameObject obj = Instantiate(item.objectToPool, item.container, true);
 
                 obj.name = obj.name + " " + i;
-
-                // Set its parent to a container (if it exists)
-                if (item.container != null)
-                {
-                    obj.transform.SetParent(item.container);
-                }
+                
 
                 obj.SetActive(false);
                 item.pooled.Add(obj);
@@ -141,7 +136,7 @@ public class ObjectPooler : MonoBehaviour
 
                 if (itemRequested.shouldExpand)
                 {
-                    GameObject obj = Instantiate(itemRequested.objectToPool);
+                    GameObject obj = Instantiate(itemRequested.objectToPool, itemRequested.container, true);
                     obj.SetActive(false);
                     itemRequested.pooled.Add(obj);
                     return obj;

@@ -181,6 +181,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1524533970525000387, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524533970525000387, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524533970525000387, guid: 675704702169728458f4cba8c6df77d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -222,7 +230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524533970525000399, guid: 675704702169728458f4cba8c6df77d2, type: 3}
       propertyPath: m_Name
-      value: CFXR4 _STUNED
+      value: CFXR4 _STUNNED
       objectReference: {fileID: 0}
     - target: {fileID: 1897458573441195173, guid: 675704702169728458f4cba8c6df77d2, type: 3}
       propertyPath: m_SortingOrder

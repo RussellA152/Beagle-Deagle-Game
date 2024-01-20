@@ -114,6 +114,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   enemyHitParticleEffect: {fileID: 1688976237673181899, guid: 97d7d94ed58b9be4d8cbff990df23596, type: 3}
+  critHitParticleEffect: {fileID: 2784073531821371558, guid: 640b3431f21d61e4c90fce8280630099, type: 3}
   onBulletHit:
     m_PersistentCalls:
       m_Calls: []
