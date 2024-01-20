@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicsMaterial: {fileID: 0}
   hitThroughWalls: 0
-  explosiveRadius: 0
+  explosiveRadius: 7
   whatDoesExplosionHit:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   detonationTime: 0.4
   aoeData: {fileID: 11400000, guid: be83e45970c94bd41812d461c92d3c5a, type: 2}
   screenShakeData: {fileID: 0}

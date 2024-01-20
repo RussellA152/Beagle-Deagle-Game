@@ -14,6 +14,9 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 
     private float _returnOriginalWeaponDelay = 0.5f;
 
+    private Dictionary<UltimateDamageModifier, DamageModifier> _awpDamageModifiers =
+        new Dictionary<UltimateDamageModifier, DamageModifier>();
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -116,7 +119,25 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         }
 
     }
-    
+    public override void AddUltimateDamageModifier(UltimateDamageModifier modifierToAdd)
+    {
+        base.AddUltimateDamageModifier(modifierToAdd);
+
+        DamageModifier gunDamageModifier =
+            new DamageModifier(modifierToAdd.modifierName, modifierToAdd.bonusUltimateDamage);
+
+        _awpDamageModifiers[modifierToAdd] = gunDamageModifier;
+        
+        ModifierManager.AddModifier(gunDamageModifier);
+    }
+
+    public override void RemoveUltimateDamageModifier(UltimateDamageModifier modifierToRemove)
+    {
+        base.RemoveUltimateDamageModifier(modifierToRemove);
+        
+        ModifierManager.RemoveModifier(_awpDamageModifiers[modifierToRemove]);
+    }
+
 }
     
     
