@@ -33,12 +33,15 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     [Header("Modifiers")]
     [SerializeField, NonReorderable] private List<UtilityCooldownModifier> utilityCooldownModifiers = new List<UtilityCooldownModifier>();
     [SerializeField, NonReorderable] private List<UtilityUsesModifier> utilityUsesModifiers = new List<UtilityUsesModifier>();
+    [SerializeField, NonReorderable] private List<UtilityDamageModifier> utilityDamageModifiers = new List<UtilityDamageModifier>();
     
 
     private int _utilityUses;
     private int _bonusUtilityUses = 0;
 
     private float _bonusUtilityCooldown = 1f;
+    
+    protected float BonusUtilityDamage = 1f;
 
     private void Awake()
     {
@@ -228,6 +231,23 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
 
     }
 
+    public void AddUtilityDamageModifier(UtilityDamageModifier modifierToAdd)
+    {
+        if (utilityDamageModifiers.Contains(modifierToAdd)) return;
+        
+        utilityDamageModifiers.Add(modifierToAdd);
+        BonusUtilityDamage += modifierToAdd.bonusUtilityDamage;
+
+    }
+
+    public void RemoveUtilityDamageModifier(UtilityDamageModifier modifierToRemove)
+    {
+        if (!utilityDamageModifiers.Contains(modifierToRemove)) return;
+        
+        utilityDamageModifiers.Remove(modifierToRemove);
+        BonusUtilityDamage /= (1 + modifierToRemove.bonusUtilityDamage);
+    }
+
     #endregion
     
     public int Id { get; set; }
@@ -248,11 +268,13 @@ public abstract class UtilityAbility<T> : MonoBehaviour, IUtilityUpdatable, IHas
     {
         _modifierManager.RegisterAddMethod<UtilityCooldownModifier>(AddUtilityCooldownModifier);
         _modifierManager.RegisterAddMethod<UtilityUsesModifier>(AddUtilityUsesModifier);
+        _modifierManager.RegisterAddMethod<UtilityDamageModifier>(AddUtilityDamageModifier);
     }
 
     public void RegisterAllRemoveModifierMethods()
     {
         _modifierManager.RegisterRemoveMethod<UtilityCooldownModifier>(RemoveUtilityCooldownModifier);
         _modifierManager.RegisterRemoveMethod<UtilityUsesModifier>(RemoveUtilityUsesModifier);
+        _modifierManager.RegisterRemoveMethod<UtilityDamageModifier>(RemoveUtilityDamageModifier);
     }
 }

@@ -10,7 +10,7 @@ public class RegularGunData : GunData
     [SerializeField]
     private float damagePerHit;
 
-    public override float GetDamage()
+    public override float GetBaseDamage()
     {
         return damagePerHit;
     }

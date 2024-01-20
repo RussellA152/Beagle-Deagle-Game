@@ -9,24 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abb5d0f679654e743a2009fbb67c583d, type: 3}
-  m_Name: damage_powerUp
+  m_Script: {fileID: 11500000, guid: 7bc32cc670779a447be22e64d78f46f3, type: 3}
+  m_Name: misc_reward_tBone_lvl_
   m_EditorClassIdentifier: 
-  damageModifier:
-    modifierName: Damage Power Up
+  explosiveRadiusModifier:
+    modifierName: 
     particleEffect: {fileID: 0}
     StickToGameObject: 0
     PlayOnModifierApplied: 0
-    bonusDamage: 1.5
-  ultimateDamageModifier:
-    modifierName: Damage Power Up
+    bonusRadius: 0
+  aoeRadiusModifier:
+    modifierName: Level X
     particleEffect: {fileID: 0}
     StickToGameObject: 0
     PlayOnModifierApplied: 0
-    bonusUltimateDamage: 1.5
-  utilityDamageModifier:
-    modifierName: Damage Power Up
-    particleEffect: {fileID: 0}
-    StickToGameObject: 0
-    PlayOnModifierApplied: 0
-    bonusUtilityDamage: 1.5
+    bonusRadius: 0.25
+  description: +25% AOE Radius.

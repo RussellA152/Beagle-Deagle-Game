@@ -15,4 +15,7 @@ public interface IUtilityUpdatable: IDataUpdatable<UtilityAbilityData>
 
     public void AddUtilityUsesModifier(UtilityUsesModifier modifierToAdd);
     public void RemoveUtilityUsesModifier(UtilityUsesModifier modifierToRemove);
+    
+    public void AddUtilityDamageModifier(UtilityDamageModifier modifierToAdd);
+    public void RemoveUtilityDamageModifier(UtilityDamageModifier modifierToRemove);
 }

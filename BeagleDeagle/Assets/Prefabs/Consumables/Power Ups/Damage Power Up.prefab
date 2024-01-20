@@ -107,7 +107,7 @@ MonoBehaviour:
   pickUpSound: {fileID: 0}
   volume: 0.5
   pickUpDuration: 10
-  pickUpDescription: 300% Increased Gun Damage!
+  pickUpDescription: 150% Increased Gun and Ability Damage!
   destroyOnDeactivation: 1
   activateOnStart: 1
   damageModifierData: {fileID: 11400000, guid: 23be81aebcaa7e74493b67d88775bb41, type: 2}

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-public class AreaOfEffect : MonoBehaviour
+public class AreaOfEffect : MonoBehaviour, IHasMiscellaneousModifier
 {
     protected AreaOfEffectData areaOfEffectData;
 
@@ -23,6 +23,8 @@ public class AreaOfEffect : MonoBehaviour
     private Outliner _outliner;
     
     private CapsuleCollider2D _triggerCollider;
+
+    private float _bonusAoeSize = 1f;
     
     
     // The layer mask for walls
@@ -66,7 +68,9 @@ public class AreaOfEffect : MonoBehaviour
         {
             _particleUsed.StopAllParticles();
         }
-            
+
+        ResetMiscellaneousBonuses();
+
     }
 
     private void OnDestroy()
@@ -135,7 +139,7 @@ public class AreaOfEffect : MonoBehaviour
         
             _particleUsed.PlaceParticleOnTransform(transform);
 
-            _particleUsed.PlayAllParticles(areaOfEffectData.aoeSpreadSize.x);
+            _particleUsed.PlayAllParticles(areaOfEffectData.aoeSpreadSize.x * _bonusAoeSize);
         }
         
     }
@@ -157,8 +161,18 @@ public class AreaOfEffect : MonoBehaviour
         
         AreaOfEffectManager.Instance.AddNewAreaOfEffect(areaOfEffectData);
         
-        transform.localScale = areaOfEffectData.aoeSpreadSize;
+        transform.localScale = areaOfEffectData.aoeSpreadSize * _bonusAoeSize;
         
     }
-    
+
+    public void GiveMiscellaneousModifierList(MiscellaneousModifierList miscellaneousModifierList)
+    {
+        Debug.Log("Give a bonus for: " + miscellaneousModifierList.BonusAoeRadius);
+        _bonusAoeSize = miscellaneousModifierList.BonusAoeRadius;
+    }
+
+    public void ResetMiscellaneousBonuses()
+    {
+        _bonusAoeSize = 1f;
+    }
 }

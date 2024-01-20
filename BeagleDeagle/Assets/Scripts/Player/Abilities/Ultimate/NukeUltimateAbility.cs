@@ -19,7 +19,7 @@ public class NukeUltimateAbility : UltimateAbility<NukeUltimateData>
         explosiveScript.UpdateScriptableObject(UltimateAbilityData.nukeData);
         
         // Set the damage of the nuke blast and the duration the nuke lingers for
-        explosiveScript.SetDamage(UltimateAbilityData.abilityDamage);
+        explosiveScript.SetDamage(UltimateAbilityData.abilityDamage * BonusUltimateDamage);
         explosiveScript.SetDuration(UltimateAbilityData.duration);
 
         foreach (IStatusEffect statusEffect in nuclearBomb.GetComponents<IStatusEffect>())

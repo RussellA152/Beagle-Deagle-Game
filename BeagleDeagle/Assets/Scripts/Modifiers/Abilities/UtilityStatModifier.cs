@@ -32,3 +32,19 @@ public class UtilityCooldownModifier: Modifier
         bonusUtilityCooldown = cooldown;
     }
 }
+
+[System.Serializable]
+public class UtilityDamageModifier : Modifier
+{
+    [Range(-3f, 3f)]
+    public float bonusUtilityDamage;
+
+    ///-///////////////////////////////////////////////////////////
+    /// An increase or decrease applied to an utility ability's damage amount.
+    /// 
+    public UtilityDamageModifier(string name, float damage)
+    {
+        modifierName = name;
+        bonusUtilityDamage = damage;
+    }
+}

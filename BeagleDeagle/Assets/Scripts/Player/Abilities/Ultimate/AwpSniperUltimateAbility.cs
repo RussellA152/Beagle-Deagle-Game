@@ -13,7 +13,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
     private Coroutine _durationCoroutine;
 
     private float _returnOriginalWeaponDelay = 0.5f;
-    
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -116,7 +116,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         }
 
     }
-
+    
 }
     
     

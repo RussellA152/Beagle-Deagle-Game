@@ -7,6 +7,8 @@ public class MiscellaneousModifierData : ScriptableObject, IHasDescription
 {
     public ExplosiveRadiusModifier explosiveRadiusModifier;
 
+    public AreaOfEffectRadiusModifier aoeRadiusModifier;
+
     [SerializeField, Space(10), TextArea(2,3)] 
     private string description;
     

@@ -37,14 +37,17 @@ public class DamagePowerUp : PowerUp
         if (_modifierManager.DoesEntityContainModifier(damageModifierData.damageModifier))
         {
             _modifierManager.RefreshRemoveModifierTimer(damageModifierData.damageModifier, damageBuffDuration);
+            _modifierManager.RefreshRemoveModifierTimer(damageModifierData.utilityDamageModifier, damageBuffDuration);
+            _modifierManager.RefreshRemoveModifierTimer(damageModifierData.ultimateDamageModifier, damageBuffDuration);
         }
         // Otherwise, give them buff for the first time
         else
         {
             _modifierManager.AddModifierOnlyForDuration(damageModifierData.damageModifier, damageBuffDuration);
-
-
+            _modifierManager.AddModifierOnlyForDuration(damageModifierData.utilityDamageModifier, damageBuffDuration);
+            _modifierManager.AddModifierOnlyForDuration(damageModifierData.ultimateDamageModifier, damageBuffDuration);
         }
+        
         _showOnBuffBar.ShowBuffIconWithDuration(damageBuffDuration);
     }
     

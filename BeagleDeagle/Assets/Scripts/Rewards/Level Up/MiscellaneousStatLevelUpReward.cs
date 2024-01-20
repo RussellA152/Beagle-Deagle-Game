@@ -26,6 +26,9 @@ public class MiscellaneousStatLevelUpReward: LevelUpReward
         if(miscellaneousModifierData.explosiveRadiusModifier.IsModifierNameValid())
             miscellaneousModifierList.AddModifier(miscellaneousModifierData.explosiveRadiusModifier);
         
+        if(miscellaneousModifierData.aoeRadiusModifier.IsModifierNameValid())
+            miscellaneousModifierList.AddModifier(miscellaneousModifierData.aoeRadiusModifier);
+        
         Debug.Log($"{recipientGameObject.name} was given {miscellaneousModifierData}");
     }
     

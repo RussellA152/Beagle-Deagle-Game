@@ -8,12 +8,14 @@ public class MiscellaneousModifierList : MonoBehaviour, IRegisterModifierMethods
 {
     private ModifierManager _modifierManager;
 
-    [Header("Modifiers")]
+    [Header("Modifiers")] [SerializeField, NonReorderable]
+    private List<ExplosiveRadiusModifier> explosiveRadiusModifiers = new List<ExplosiveRadiusModifier>();
 
-    [SerializeField, NonReorderable]
-    private List<ExplosiveRadiusModifier> explosiveRadiusModifiers = new List<ExplosiveRadiusModifier>(); // display all modifiers applied to the explosives (for debugging mainly)
+    [SerializeField, NonReorderable, Space(10)]
+    private List<AreaOfEffectRadiusModifier> aoeRadiusModifiers = new List<AreaOfEffectRadiusModifier>();
     
     public float BonusExplosiveRadius { get; private set; } = 1f;
+    public float BonusAoeRadius { get; private set; } = 1f;
 
     private void Awake()
     {
@@ -46,13 +48,32 @@ public class MiscellaneousModifierList : MonoBehaviour, IRegisterModifierMethods
         
     }
 
+    public void AddAoeRadiusModifier(AreaOfEffectRadiusModifier modifierToAdd)
+    {
+        if (aoeRadiusModifiers.Contains(modifierToAdd)) return;
+        
+        aoeRadiusModifiers.Add(modifierToAdd);
+        BonusAoeRadius += modifierToAdd.bonusRadius;
+    }
+    
+    public void RemoveAoeRadiusModifier(AreaOfEffectRadiusModifier modifierToRemove)
+    {
+        if (!aoeRadiusModifiers.Contains(modifierToRemove)) return;
+        
+        aoeRadiusModifiers.Remove(modifierToRemove);
+        BonusAoeRadius /= (1 + modifierToRemove.bonusRadius);
+    }
+    
+
     public void RegisterAllAddModifierMethods()
     {
         _modifierManager.RegisterAddMethod<ExplosiveRadiusModifier>(AddExplosiveRadiusModifier);
+        _modifierManager.RegisterAddMethod<AreaOfEffectRadiusModifier>(AddAoeRadiusModifier);
     }
 
     public void RegisterAllRemoveModifierMethods()
     {
         _modifierManager.RegisterRemoveMethod<ExplosiveRadiusModifier>(RemoveExplosiveRadiusModifier);
+        _modifierManager.RegisterRemoveMethod<AreaOfEffectRadiusModifier>(RemoveAoeRadiusModifier);
     }
 }

@@ -41,7 +41,7 @@ public class MightyFootUtility : UtilityAbility<MightyFootUtilityData>
             hasMiscellaneousModifier.GiveMiscellaneousModifierList(MiscellaneousModifierList);
         }
         
-        bulletComponent.UpdateDamageAndPenetrationValues(UtilityData.abilityDamage, UtilityData.mightyFootData.numberOfEnemiesCanHit);
+        bulletComponent.UpdateDamageAndPenetrationValues(UtilityData.abilityDamage * BonusUtilityDamage, UtilityData.mightyFootData.numberOfEnemiesCanHit);
         
         // Tell the bullet that the player is the transform that shot it
         bulletComponent.UpdateWhoShotThisBullet(transform);

@@ -6,11 +6,15 @@ using UnityEngine;
 public class AbilityStatModifierData : ScriptableObject, IHasDescription
 {
     [Header("Utility Modifiers")]
+    public UtilityDamageModifier utilityDamageModifier;
+    
     public UtilityUsesModifier UtilityUsesModifier;
 
     public UtilityCooldownModifier UtilityCooldownModifier;
 
-    [Header("Ultimate Modifiers")]
+    [Header("Ultimate Modifiers")] 
+    public UltimateDamageModifier ultimateDamageModifier;
+    
     public UltimateCooldownModifier UltimateCooldownModifier;
     
 

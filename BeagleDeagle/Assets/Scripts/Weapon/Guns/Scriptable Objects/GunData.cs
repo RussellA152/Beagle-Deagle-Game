@@ -54,7 +54,7 @@ public abstract class GunData : ScriptableObject, IHasDescription
     ///-///////////////////////////////////////////////////////////
     /// Return the damage of this weapon.
     /// 
-    public abstract float GetDamage();
+    public abstract float GetBaseDamage();
 
     public string GetDescription()
     {

@@ -17,3 +17,19 @@ public class UltimateCooldownModifier: Modifier
     }
 }
 
+[System.Serializable]
+public class UltimateDamageModifier : Modifier
+{
+    [Range(-3f, 3f)]
+    public float bonusUltimateDamage;
+
+    ///-///////////////////////////////////////////////////////////
+    /// An increase or decrease applied to an ultimate ability's damage amount.
+    /// 
+    public UltimateDamageModifier(string name, float damage)
+    {
+        modifierName = name;
+        bonusUltimateDamage = damage;
+    }
+}
+

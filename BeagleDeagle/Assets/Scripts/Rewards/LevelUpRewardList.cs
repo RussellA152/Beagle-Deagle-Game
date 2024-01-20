@@ -7,13 +7,13 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "NewLevelUpReward", menuName = "ScriptableObjects/Rewards/LevelUpReward")]
 public class LevelUpRewardList : ScriptableObject
 {
-    [SerializeField, NonReorderable]
+    [SerializeField, NonReorderable, Space(20)]
     private List<NewGunLevelUpReward> gunRewards = new List<NewGunLevelUpReward>();
     
-    [SerializeField, NonReorderable]
+    [SerializeField, NonReorderable, Space(20)]
     private List<WeaponStatLevelUpReward> weaponStatRewards = new List<WeaponStatLevelUpReward>();
     
-    [SerializeField, NonReorderable]
+    [SerializeField, NonReorderable, Space(20)]
     private List<PassiveLevelUpReward> passiveRewards = new List<PassiveLevelUpReward>();
     
     [SerializeField, NonReorderable, Space(20)]
@@ -22,7 +22,7 @@ public class LevelUpRewardList : ScriptableObject
     [SerializeField, NonReorderable, Space(20)]
     private List<UltimateLevelUpReward> ultimateRewards = new List<UltimateLevelUpReward>();
     
-    [SerializeField, NonReorderable]
+    [SerializeField, NonReorderable, Space(20)]
     private List<AbilityStatLevelUpReward> abilityStatRewards = new List<AbilityStatLevelUpReward>();
     
     [SerializeField, NonReorderable]

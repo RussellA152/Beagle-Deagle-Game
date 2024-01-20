@@ -6,4 +6,8 @@ using UnityEngine;
 public class DamageModifierData : ScriptableObject
 {
     public DamageModifier damageModifier;
+
+    public UltimateDamageModifier ultimateDamageModifier;
+
+    public UtilityDamageModifier utilityDamageModifier;
 }

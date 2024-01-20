@@ -31,8 +31,8 @@ public class SmokeGrenadeUtility : UtilityAbility<SmokeGrenadeUtilityData>
             hasMiscellaneousModifier.GiveMiscellaneousModifierList(MiscellaneousModifierList);
         }
         
-        areaGrenadeComponent.SetDamage(UtilityData.abilityDamage);
-        areaGrenadeComponent.SetDuration(UtilityData.duration); ;
+        areaGrenadeComponent.SetDamage(UtilityData.abilityDamage * BonusUtilityDamage);
+        areaGrenadeComponent.SetDuration(UtilityData.duration);
 
         // Make grenade spawn at player's position
         grenade.transform.position = gameObject.transform.position;

@@ -22,7 +22,7 @@ public abstract class LevelUpReward: IHasDescription
 
     public abstract string GetRewardName();
     public abstract void GiveDataToPlayer(GameObject recipientGameObject);
-
+    
     public abstract string GetDescription();
 
 }

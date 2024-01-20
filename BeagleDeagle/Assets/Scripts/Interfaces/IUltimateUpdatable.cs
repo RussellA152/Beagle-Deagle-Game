@@ -13,4 +13,9 @@ public interface IUltimateUpdatable: IDataUpdatable<UltimateAbilityData>
 
     public void RemoveUltimateCooldownModifier(UltimateCooldownModifier modifierToRemove);
     
+    public void AddUltimateDamageModifier(UltimateDamageModifier modifierToAdd);
+
+    public void RemoveUltimateDamageModifier(UltimateDamageModifier modifierToRemove);
+
+    
 }

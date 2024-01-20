@@ -15,7 +15,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
 
     private CooldownSystem _cooldownSystem;
     protected MiscellaneousModifierList MiscellaneousModifierList;
-    private ModifierManager _modifierManager;
+    protected ModifierManager ModifierManager;
     
     private PlayerInput _playerInput;
 
@@ -25,8 +25,10 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
     
     [Header("Modifiers")]
     [SerializeField, NonReorderable] private List<UltimateCooldownModifier> ultimateCooldownModifiers = new List<UltimateCooldownModifier>();
+    [SerializeField, NonReorderable] private List<UltimateDamageModifier> ultimateDamageModifiers = new List<UltimateDamageModifier>();
 
     private float _bonusUltimateCooldown = 1f;
+    protected float BonusUltimateDamage = 1f;
 
     private void Awake()
     {
@@ -35,7 +37,7 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
         AudioClipPlayer = GetComponent<AudioClipPlayer>();
         MiscellaneousModifierList = GetComponent<MiscellaneousModifierList>();
 
-        _modifierManager = GetComponent<ModifierManager>();
+        ModifierManager = GetComponent<ModifierManager>();
         
         _ultimateInputAction = _playerInput.currentActionMap.FindAction("Ultimate");
         
@@ -135,6 +137,22 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
         CooldownDuration = UltimateAbilityData.cooldown * _bonusUltimateCooldown;
     }
 
+    public virtual void AddUltimateDamageModifier(UltimateDamageModifier modifierToAdd)
+    {
+        if (ultimateDamageModifiers.Contains(modifierToAdd)) return;
+        
+        ultimateDamageModifiers.Add(modifierToAdd);
+        BonusUltimateDamage += modifierToAdd.bonusUltimateDamage;
+    }
+
+    public virtual void RemoveUltimateDamageModifier(UltimateDamageModifier modifierToRemove)
+    {
+        if (!ultimateDamageModifiers.Contains(modifierToRemove)) return;
+        
+        ultimateDamageModifiers.Remove(modifierToRemove);
+        BonusUltimateDamage /= (1 + modifierToRemove.bonusUltimateDamage);
+    }
+
     public virtual void UpdateScriptableObject(UltimateAbilityData scriptableObject)
     {
         if (scriptableObject is T)
@@ -164,12 +182,14 @@ public abstract class UltimateAbility<T> : MonoBehaviour, IUltimateUpdatable, IH
 
     public void RegisterAllAddModifierMethods()
     {
-        _modifierManager.RegisterAddMethod<UltimateCooldownModifier>(AddUltimateCooldownModifier);
+        ModifierManager.RegisterAddMethod<UltimateCooldownModifier>(AddUltimateCooldownModifier);
+        ModifierManager.RegisterAddMethod<UltimateDamageModifier>(AddUltimateDamageModifier);
     }
 
     public void RegisterAllRemoveModifierMethods()
     {
-        _modifierManager.RegisterRemoveMethod<UltimateCooldownModifier>(RemoveUltimateCooldownModifier);
+        ModifierManager.RegisterRemoveMethod<UltimateCooldownModifier>(RemoveUltimateCooldownModifier);
+        ModifierManager.RegisterRemoveMethod<UltimateDamageModifier>(RemoveUltimateDamageModifier);
     }
 }
 

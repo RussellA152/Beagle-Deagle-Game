@@ -364,7 +364,7 @@ public class Gun : MonoBehaviour, IGunDataUpdatable, IHasCooldown, IHasInput, IR
     /// 
     private float CalculateDamage()
     {
-        float damageToDeal = _weaponData.GetDamage() * _bonusDamage;
+        float damageToDeal = _weaponData.GetBaseDamage() * _bonusDamage;
         
         if (Random.value < _weaponData.criticalChance + _bonusCriticalChance)
             return damageToDeal * _weaponData.criticalHitMultiplier;

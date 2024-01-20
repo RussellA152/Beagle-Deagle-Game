@@ -16,6 +16,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   hitThroughWalls: 0
-  aoeSpreadSize: {x: 13, y: 13, z: 13}
+  aoeSpreadSize: {x: 18, y: 18, z: 18}
   activationSound: {fileID: 8300000, guid: def541e0a32c6d149bf216dfd1daedf8, type: 3}
   activationSoundVolume: 0.5

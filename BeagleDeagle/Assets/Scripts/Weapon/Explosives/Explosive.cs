@@ -28,6 +28,8 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable,
 
     [Header("Required Scripts")]
     protected AreaOfEffect AreaOfEffectScript;
+
+    private IHasMiscellaneousModifier _aoeMiscScript;
     protected CheckObstruction ObstructionScript;
     private CameraShaker _cameraShaker;
     protected AudioClipPlayer AudioClipPlayer;
@@ -46,8 +48,11 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable,
     protected virtual void Awake()
     {
         ObstructionScript = GetComponentInParent<CheckObstruction>();
+        
         AreaOfEffectScript =
             GetComponentInChildren<AreaOfEffect>();
+        if(AreaOfEffectScript != null)
+            _aoeMiscScript = AreaOfEffectScript.GetComponent<IHasMiscellaneousModifier>();
 
         _cameraShaker = GetComponent<CameraShaker>();
         AudioClipPlayer = GetComponent<AudioClipPlayer>();
@@ -203,6 +208,8 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable,
     public void GiveMiscellaneousModifierList(MiscellaneousModifierList miscellaneousModifierList)
     {
         _bonusExplosiveRadius = miscellaneousModifierList.BonusExplosiveRadius;
+        
+        _aoeMiscScript.GiveMiscellaneousModifierList(miscellaneousModifierList);
     }
 
     public void ResetMiscellaneousBonuses()
