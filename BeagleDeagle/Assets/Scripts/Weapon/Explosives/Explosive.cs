@@ -208,8 +208,8 @@ public abstract class Explosive : MonoBehaviour, IExplosiveUpdatable, IPoolable,
     public void GiveMiscellaneousModifierList(MiscellaneousModifierList miscellaneousModifierList)
     {
         _bonusExplosiveRadius = miscellaneousModifierList.BonusExplosiveRadius;
-        
-        _aoeMiscScript.GiveMiscellaneousModifierList(miscellaneousModifierList);
+
+        _aoeMiscScript?.GiveMiscellaneousModifierList(miscellaneousModifierList);
     }
 
     public void ResetMiscellaneousBonuses()

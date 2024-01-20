@@ -45,6 +45,8 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 
         _playerGunScript.UpdateScriptableObject(UltimateAbilityData.awpGunData);
 
+        AddAllDamageBonuses();
+
         _playerGunScript.AllowWeaponReceive(false);
         // Don't allow player to reload when activating AWP
         _playerGunScript.AllowReload(false);
@@ -72,6 +74,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
     private void UpdateCurrentWeapon(List<GunData> allPreviousWeapons)
     {
         GunData mostRecentWeapon = allPreviousWeapons[allPreviousWeapons.Count - 1];
+        
         // Check the current weapon that the player has
         // Don't update this value if the player received an AWP sniper
         if(mostRecentWeapon != UltimateAbilityData.awpGunData)
@@ -88,6 +91,8 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
             // Wait a little before giving the player their original weapon back
             // * Without this, the ammo display will show 0 current ammo because we shot the weapon and tried to give a new gun to the player *
             yield return new WaitForSeconds(_returnOriginalWeaponDelay);
+            
+            RemoveAllDamageBonuses();
             
             // Give back the player their gun before they received the AWP sniper
             _playerGunScript.AllowWeaponReceive(true);
@@ -128,14 +133,32 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 
         _awpDamageModifiers[modifierToAdd] = gunDamageModifier;
         
-        ModifierManager.AddModifier(gunDamageModifier);
+        if(_isActive)
+            ModifierManager.AddModifier(gunDamageModifier);
     }
 
     public override void RemoveUltimateDamageModifier(UltimateDamageModifier modifierToRemove)
     {
         base.RemoveUltimateDamageModifier(modifierToRemove);
         
-        ModifierManager.RemoveModifier(_awpDamageModifiers[modifierToRemove]);
+        if(_isActive)
+            ModifierManager.RemoveModifier(_awpDamageModifiers[modifierToRemove]);
+    }
+
+    private void AddAllDamageBonuses()
+    {
+        foreach (DamageModifier gunDamageModifier in _awpDamageModifiers.Values)
+        {
+            ModifierManager.AddModifier(gunDamageModifier);
+        }
+    }
+
+    private void RemoveAllDamageBonuses()
+    {
+        foreach (DamageModifier gunDamageModifier in _awpDamageModifiers.Values)
+        {
+            ModifierManager.RemoveModifier(gunDamageModifier);
+        }
     }
 
 }
