@@ -14,8 +14,13 @@ public class MiscellaneousModifierList : MonoBehaviour, IRegisterModifierMethods
     [SerializeField, NonReorderable, Space(10)]
     private List<AreaOfEffectRadiusModifier> aoeRadiusModifiers = new List<AreaOfEffectRadiusModifier>();
     
+    [SerializeField, NonReorderable, Space(10)]
+    private List<DamageOverTimeDamageModifier> dotDamageModifier = new List<DamageOverTimeDamageModifier>();
+    
     public float BonusExplosiveRadius { get; private set; } = 1f;
     public float BonusAoeRadius { get; private set; } = 1f;
+    
+    public float BonusDotDamage { get; private set; } = 1f;
 
     private void Awake()
     {
@@ -64,16 +69,34 @@ public class MiscellaneousModifierList : MonoBehaviour, IRegisterModifierMethods
         BonusAoeRadius /= (1 + modifierToRemove.bonusRadius);
     }
     
+    public void AddDotDamageModifier(DamageOverTimeDamageModifier modifierToAdd)
+    {
+        if (dotDamageModifier.Contains(modifierToAdd)) return;
+        
+        dotDamageModifier.Add(modifierToAdd);
+        BonusDotDamage += modifierToAdd.bonusDamage;
+    }
+    
+    public void RemoveDotDamageModifier(DamageOverTimeDamageModifier modifierToRemove)
+    {
+        if (!dotDamageModifier.Contains(modifierToRemove)) return;
+        
+        dotDamageModifier.Remove(modifierToRemove);
+        BonusAoeRadius /= (1 + modifierToRemove.bonusDamage);
+    }
+    
 
     public void RegisterAllAddModifierMethods()
     {
         _modifierManager.RegisterAddMethod<ExplosiveRadiusModifier>(AddExplosiveRadiusModifier);
         _modifierManager.RegisterAddMethod<AreaOfEffectRadiusModifier>(AddAoeRadiusModifier);
+        _modifierManager.RegisterAddMethod<DamageOverTimeDamageModifier>(AddDotDamageModifier);
     }
 
     public void RegisterAllRemoveModifierMethods()
     {
         _modifierManager.RegisterRemoveMethod<ExplosiveRadiusModifier>(RemoveExplosiveRadiusModifier);
         _modifierManager.RegisterRemoveMethod<AreaOfEffectRadiusModifier>(RemoveAoeRadiusModifier);
+        _modifierManager.RegisterRemoveMethod<DamageOverTimeDamageModifier>(RemoveDotDamageModifier);
     }
 }

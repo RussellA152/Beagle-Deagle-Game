@@ -13,11 +13,9 @@ public interface IDamageOverTimeHandler
     ///-///////////////////////////////////////////////////////////
     /// Remove the DamageOverTime effect from this target, then check 
     /// if it needs to be reapplied.
-    public void RemoveDamageOverTime(DamageOverTime dotToRemove);
+    //public void RemoveDamageOverTime(DamageOverTime dotToRemove);
 
-    ///-///////////////////////////////////////////////////////////
-    /// Make the target take damage (or heal) every "tickInterval" seconds for a 
-    /// "tick" amount of times.
-    public IEnumerator TakeDamageOverTime(DamageOverTime dot);
+    //public void ReapplyDot();
+
 
 }

@@ -287,15 +287,15 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         Vector2 originalWeaponScale = weaponAimTransform.localScale;
         if (MovementInput.x >= 0f)
         {
-            headSr.flipX = false;
-            bodySr.flipX = false;
+            headSr.flipX = true;
+            bodySr.flipX = true;
             weaponAimTransform.localScale = new Vector3(1f, 1f, 1f);
 
         }
         else
         {
-            headSr.flipX = true;
-            bodySr.flipX = true;
+            headSr.flipX = false;
+            bodySr.flipX = false;
             weaponAimTransform.localScale = new Vector3(1f, -1f, 1f);
             
         }

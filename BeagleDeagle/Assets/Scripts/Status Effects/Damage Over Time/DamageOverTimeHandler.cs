@@ -32,26 +32,14 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
     {
         damageOverTimeEffects.Add(dotToAdd);
 
-        StartCoroutine(TakeDamageOverTime(dotToAdd));
+        StartCoroutine(TakeDamageOverTime(dotToAdd);
 
-    }
-
-    ///-///////////////////////////////////////////////////////////
-    /// Remove the DamageOverTime effect from this target, then check 
-    /// if it needs to be reapplied.
-    public void RemoveDamageOverTime(DamageOverTime dotToRemove)
-    {
-        damageOverTimeEffects.Remove(dotToRemove);
-
-        // Check if we need to reapply the DOT
-        ReapplyDot(dotToRemove);
-
-        
     }
 
     ///-///////////////////////////////////////////////////////////
     /// Make the target take damage (or heal) every "tickInterval" seconds for a 
     /// "tick" amount of times.
+    /// 
     public IEnumerator TakeDamageOverTime(DamageOverTime dot)
     {
         float ticks = dot.ticks;
@@ -62,21 +50,25 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
             _modifierParticleEffectHandler.StartPlayingParticle(dot, dot.StickToGameObject);
             
             // TODO: THIS ASSUMES WE ALWAYS DO DAMAGE!
-            _healthScript.ModifyHealth(-1f * dot.damage);
+            _healthScript.ModifyHealth((-1f * dot.damage) );
 
             yield return new WaitForSeconds(dot.tickInterval);
 
             ticks--;
         }
 
-        RemoveDamageOverTime(dot);
+        if (CheckIfCanReapply(dot))
+        {
+            StartCoroutine(TakeDamageOverTime(dot));
+        }
+        //RemoveDamageOverTime(dot);
     }
 
     ///-///////////////////////////////////////////////////////////
     /// Reapply the expired DOT to this target, if they are still colliding with the
     /// AOE that originally applied it.
     ///
-    private void ReapplyDot(DamageOverTime dotExpired)
+    private bool CheckIfCanReapply(DamageOverTime dotExpired)
     {
         AreaOfEffectData sourceOfDot = dotExpired.source;
 
@@ -84,21 +76,20 @@ public class DamageOverTimeHandler : MonoBehaviour, IDamageOverTimeHandler
         if (AreaOfEffectManager.Instance.IsTargetOverlappingAreaOfEffect(sourceOfDot, gameObject))
         {
             AreaOfEffectManager.Instance.TryAddAffectedTarget(sourceOfDot, gameObject);
-
-            // Add the DOT to this target again
-            AddDamageOverTime(dotExpired);
-
-        }
-        else
-        {
-            // Remove the DOT from the target
-            AreaOfEffectManager.Instance.RemoveTargetFromAffectedHashSet(sourceOfDot, gameObject);
             
-            _modifierParticleEffectHandler.StopSpecificParticle(dotExpired);
+            return true;
 
         }
+        // Otherwise, don't reapply the DOT and remove it entirely.
 
+        AreaOfEffectManager.Instance.RemoveTargetFromAffectedHashSet(sourceOfDot, gameObject);
+
+        _modifierParticleEffectHandler.StopSpecificParticle(dotExpired);
+
+        damageOverTimeEffects.Remove(dotExpired);
+
+        return false;
     }
-    
+
 }
     
