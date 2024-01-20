@@ -28,7 +28,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16512
   currencyRewardOnDeath:
-    xpAmount: 250
+    xpAmount: 300
     moneyAmount: 0
   powerUpDropChance: 0.005
   powerUpDropTable:
