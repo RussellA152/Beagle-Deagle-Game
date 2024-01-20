@@ -41,6 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4077318060314352050}
   - component: {fileID: 4077318060314352052}
+  - component: {fileID: 7788672771976349535}
+  - component: {fileID: 4974992389187840550}
   - component: {fileID: -33890835238402537}
   - component: {fileID: 4238771051001645393}
   m_Layer: 0
@@ -80,16 +82,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf595dbafa854b0498949f5c14f31bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpawnPoint: {fileID: 4077318059066061062}
-  muzzleFlash: {fileID: 4292387438089670892}
   spriteRenderer: {fileID: 3251468746963247202}
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerData: {fileID: 0}
   _previousWeaponDatas: []
+--- !u!114 &7788672771976349535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4077318060314352049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fe2eb929ffa9541bcb049f0ee3649c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  bulletSpawnPoint: {fileID: 0}
+  muzzleFlash: {fileID: 0}
   damageModifiers: []
+  criticalChanceModifiers: []
   penetrationModifiers: []
   spreadModifiers: []
   fireRateModifiers: []
+--- !u!114 &4974992389187840550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4077318060314352049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbb3a70f278e7f40acb07dc341daad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   reloadSpeedModifiers: []
   ammoLoadModifiers: []
 --- !u!114 &-33890835238402537

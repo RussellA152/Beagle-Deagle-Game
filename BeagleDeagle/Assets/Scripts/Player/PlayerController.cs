@@ -19,7 +19,11 @@ public class PlayerController : MonoBehaviour
     private TopDownMovement _movementScript;
     private PlayerHealth _healthScript;
     private PlayerAnimationHandler _animationHandlerScript;
-    private Gun _gunScript;
+
+    private Gun _gun;
+    private GunShooting _gunShooting;
+    private GunReload _gunReload;
+    
     private IUtilityUpdatable _utilityScript;
     private IUltimateUpdatable _ultimateScript;
     private IHasInput[] _allInputScripts;
@@ -51,8 +55,11 @@ public class PlayerController : MonoBehaviour
         _movementScript = GetComponent<TopDownMovement>();
         _healthScript = GetComponent<PlayerHealth>();
         _animationHandlerScript = GetComponent<PlayerAnimationHandler>();
-        _gunScript = GetComponentInChildren<Gun>();
-
+        
+        _gun = GetComponentInChildren<Gun>();
+        _gunShooting = GetComponentInChildren<GunShooting>();
+        _gunReload = GetComponentInChildren<GunReload>();
+        
         _utilityScript = GetComponent<IUtilityUpdatable>();
         _ultimateScript = GetComponent<IUltimateUpdatable>();
 
@@ -62,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        if(_gunScript == null)
+        if(_gunShooting == null)
         {
             Debug.Log("WEAPON MISSING!");
         }
@@ -90,9 +97,9 @@ public class PlayerController : MonoBehaviour
         // Allow player to do all their abilities at the start of the game
         _movementScript.AllowMovement(true);
         _movementScript.AllowRotation(true);
-        _gunScript.AllowShoot(true);
-        _gunScript.AllowReload(true);
-        _gunScript.AllowWeaponReceive(true);
+        _gunShooting.AllowShoot(true);
+        _gunReload.AllowReload(true);
+        _gun.AllowWeaponReceive(true);
         _utilityScript.AllowUtility(true);
         _ultimateScript.AllowUltimate(true);
     }
@@ -112,7 +119,7 @@ public class PlayerController : MonoBehaviour
                 // Allow all movement and attacks
                 _movementScript.AllowMovement(true);
                 _movementScript.AllowRotation(true);
-                _gunScript.AllowShoot(true);
+                _gunShooting.AllowShoot(true);
                 _utilityScript.AllowUtility(true);
                 _ultimateScript.AllowUltimate(true);
                 
@@ -132,7 +139,7 @@ public class PlayerController : MonoBehaviour
                 // Allow all movement and attacks
                 _movementScript.AllowMovement(true);
                 _movementScript.AllowRotation(true);
-                _gunScript.AllowShoot(true);
+                _gunShooting.AllowShoot(true);
                 _utilityScript.AllowUtility(true);
                 _ultimateScript.AllowUltimate(true);
                 
@@ -153,7 +160,7 @@ public class PlayerController : MonoBehaviour
                 // Don't allow player to rotate weapon or body
 
                 // Don't allow any abilities or attacks
-                _gunScript.AllowShoot(false);
+                _gunShooting.AllowShoot(false);
                 _utilityScript.AllowUtility(false);
                 _ultimateScript.AllowUltimate(false);
                 
@@ -172,7 +179,7 @@ public class PlayerController : MonoBehaviour
                 // Allow all movement and attacks
                 _movementScript.AllowMovement(true);
                 _movementScript.AllowRotation(true);
-                _gunScript.AllowShoot(true);
+                _gunShooting.AllowShoot(true);
                 _utilityScript.AllowUtility(true);
                 _ultimateScript.AllowUltimate(true);
                 
@@ -190,8 +197,8 @@ public class PlayerController : MonoBehaviour
                 _movementScript.AllowMovement(false);
                 _movementScript.AllowRotation(false);
                 _movementScript.AllowRoll(false);
-                _gunScript.AllowReload(false);
-                _gunScript.AllowShoot(false);
+                _gunReload.AllowReload(false);
+                _gunShooting.AllowShoot(false);
                 _utilityScript.AllowUtility(false);
                 _ultimateScript.AllowUltimate(false);
                 _animationHandlerScript.PlayDeathAnimation();
@@ -220,7 +227,7 @@ public class PlayerController : MonoBehaviour
     private bool CheckIfAttacking()
     {
         // Checking if the player is attacking with their weapon
-        return _gunScript.ActuallyShooting;
+        return _gunShooting.ActuallyShooting;
         
     }
 

@@ -16,12 +16,12 @@ public class NoShootSpeedBoost : PassiveAbility
     
     private bool _speedIncreased = false;
     
-    private Gun _gunScript;
+    private GunShooting _gunShooting;
 
     protected override void OnEnable()
     {
         // Fetch gun script from the gun gameObject
-        _gunScript = Player.GetComponentInChildren<Gun>();
+        _gunShooting = Player.GetComponentInChildren<GunShooting>();
         
         _modifierManager = Player.GetComponent<ModifierManager>();
         
@@ -53,7 +53,7 @@ public class NoShootSpeedBoost : PassiveAbility
     {
         while (true)
         {
-            if (!_speedIncreased && _gunScript.ReturnLastTimeShot() >= minimumTimeRequired)
+            if (!_speedIncreased && _gunShooting.ReturnLastTimeShot() >= minimumTimeRequired)
             {
                 _speedIncreased = true;
 
@@ -63,7 +63,7 @@ public class NoShootSpeedBoost : PassiveAbility
                 
            
             }
-            else if (_speedIncreased && _gunScript.ReturnLastTimeShot() < minimumTimeRequired)
+            else if (_speedIncreased && _gunShooting.ReturnLastTimeShot() < minimumTimeRequired)
             {
                 _speedIncreased = false;
 

@@ -313,6 +313,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 163d48e5d642a0b4a83d98a8f66383f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &324172714
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2008914779257792909, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: m_Name
+      value: Speed Power Up
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008914779257792910, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: m_RootOrder
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008914779257792910, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.170395
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008914779257792910, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6.0881333
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008914779257792910, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008914779257792910, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008914779257792910, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008914779257792910, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008914779257792910, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008914779257792910, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008914779257792910, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008914779257792910, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3b0a9a198765be148a772ab2beb3667c, type: 3}
 --- !u!1001 &333202728
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17426,6 +17483,10 @@ PrefabInstance:
     - target: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
       propertyPath: m_Name
       value: Base Zombie Runner
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db6f5aea36871fc469d511640f83157f, type: 3}

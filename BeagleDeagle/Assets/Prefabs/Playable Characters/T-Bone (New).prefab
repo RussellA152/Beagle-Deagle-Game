@@ -393,6 +393,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosiveRadiusModifiers: []
+  aoeRadiusModifiers: []
+  dotDamageModifier: []
 --- !u!114 &6218275219637812029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,6 +461,7 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   utilityCooldownModifiers: []
   utilityUsesModifiers: []
+  utilityDamageModifiers: []
 --- !u!114 &504447593957459383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,6 +477,7 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   ultimateCooldownModifiers: []
+  ultimateDamageModifiers: []
   _previousWeaponData: {fileID: 0}
 --- !u!50 &1777428645584621179
 Rigidbody2D:
@@ -1021,6 +1025,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7788672771976349535, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+      propertyPath: muzzleFlash
+      value: 
+      objectReference: {fileID: 850277743391399313}
+    - target: {fileID: 7788672771976349535, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+      propertyPath: bulletSpawnPoint
+      value: 
+      objectReference: {fileID: 633001575736294523}
     - target: {fileID: 8149329883705481477, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1030,5 +1042,15 @@ PrefabInstance:
 --- !u!4 &633001574926292175 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4077318060314352050, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+  m_PrefabInstance: {fileID: 3485034837028162941}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &633001575736294523 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4077318059066061062, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+  m_PrefabInstance: {fileID: 3485034837028162941}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &850277743391399313 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4292387438089670892, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
   m_PrefabInstance: {fileID: 3485034837028162941}
   m_PrefabAsset: {fileID: 0}

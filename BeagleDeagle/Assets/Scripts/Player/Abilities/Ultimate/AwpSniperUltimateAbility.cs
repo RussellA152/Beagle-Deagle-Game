@@ -5,6 +5,7 @@ using UnityEngine;
 public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 {
     private Gun _playerGunScript;
+    private GunReload _gunReload;
     
     [SerializeField] private GunData _previousWeaponData;
     
@@ -22,6 +23,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         base.OnEnable();
         
         _playerGunScript = GetComponentInChildren<Gun>();
+        _gunReload = GetComponentInChildren<GunReload>();
 
 
         playerEvents.getAllWeaponDataUpdates += UpdateCurrentWeapon;
@@ -49,7 +51,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 
         _playerGunScript.AllowWeaponReceive(false);
         // Don't allow player to reload when activating AWP
-        _playerGunScript.AllowReload(false);
+        _gunReload.AllowReload(false);
 
         _durationCoroutine = StartCoroutine(WeaponDuration());
 
@@ -105,7 +107,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
             _isActive = false;
             
             // Allow the player to reload again
-            _playerGunScript.AllowReload(true);
+            _gunReload.AllowReload(true);
 
         }
     }
