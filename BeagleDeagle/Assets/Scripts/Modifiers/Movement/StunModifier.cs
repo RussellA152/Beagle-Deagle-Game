@@ -9,11 +9,27 @@ public class StunModifier : Modifier
     public float stunDuration;
 
     ///-///////////////////////////////////////////////////////////
-    /// An increase or decrease applied to a entity's movement speed.
+    /// Stop an entity's movement for some time.
     /// 
     public StunModifier(string name, float duration)
     {
         modifierName = name;
         stunDuration = duration;
+    }
+}
+
+[System.Serializable]
+public class StunDurationModifier : Modifier
+{
+    [Range(0.1f, 30f)]
+    public float bonusDuration;
+
+    ///-///////////////////////////////////////////////////////////
+    /// An increase or decrease applied to the timer of a stun.
+    /// 
+    public StunDurationModifier(string name, float duration)
+    {
+        modifierName = name;
+        bonusDuration = duration;
     }
 }

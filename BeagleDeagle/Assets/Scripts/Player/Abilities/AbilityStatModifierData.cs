@@ -8,14 +8,14 @@ public class AbilityStatModifierData : ScriptableObject, IHasDescription
     [Header("Utility Modifiers")]
     public UtilityDamageModifier utilityDamageModifier;
     
-    public UtilityUsesModifier UtilityUsesModifier;
+    public UtilityUsesModifier utilityUsesModifier;
 
-    public UtilityCooldownModifier UtilityCooldownModifier;
+    public UtilityCooldownModifier utilityCooldownModifier;
 
     [Header("Ultimate Modifiers")] 
     public UltimateDamageModifier ultimateDamageModifier;
     
-    public UltimateCooldownModifier UltimateCooldownModifier;
+    public UltimateCooldownModifier ultimateCooldownModifier;
     
 
     [SerializeField, Space(10), TextArea(2,3)] 

@@ -11,6 +11,7 @@ public class HealCrate : MonoBehaviour, IHasCooldown
 
     private ObjectHealth _healthScript;
     private PowerUp _powerUp;
+    private Waypoint_Indicator _waypointIndicator;
 
     private CooldownSystem _cooldownSystem;
     
@@ -22,7 +23,8 @@ public class HealCrate : MonoBehaviour, IHasCooldown
         _healthScript = crateGameObject.GetComponent<ObjectHealth>();
         _powerUp = healItemGameObject.GetComponent<PowerUp>();
         _cooldownSystem = GetComponent<CooldownSystem>();
-        
+        _waypointIndicator = GetComponent<Waypoint_Indicator>();
+
     }
 
     private void Start()
@@ -32,6 +34,8 @@ public class HealCrate : MonoBehaviour, IHasCooldown
         
         crateGameObject.SetActive(true);
         healItemGameObject.SetActive(false);
+        
+        _waypointIndicator.enabled = true;
     }
 
     private void OnEnable()
@@ -63,6 +67,8 @@ public class HealCrate : MonoBehaviour, IHasCooldown
     private void StartCooldown()
     {
         _cooldownSystem.PutOnCooldown(this);
+        
+        _waypointIndicator.enabled = false;
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -72,6 +78,7 @@ public class HealCrate : MonoBehaviour, IHasCooldown
     {
         if (Id != id) return;
         
+        _waypointIndicator.enabled = true;
         crateGameObject.SetActive(true);
         healItemGameObject.SetActive(false);
     }

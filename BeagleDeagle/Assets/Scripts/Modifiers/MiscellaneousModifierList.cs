@@ -14,11 +14,16 @@ public class MiscellaneousModifierList : MonoBehaviour, IRegisterModifierMethods
     [SerializeField, NonReorderable, Space(10)]
     private List<AreaOfEffectRadiusModifier> aoeRadiusModifiers = new List<AreaOfEffectRadiusModifier>();
     
+    //[SerializeField, NonReorderable, Space(10)]
+    //private List<StunDurationModifier> stunDurationModifiers = new List<StunDurationModifier>();
+    
     [SerializeField, NonReorderable, Space(10)]
     private List<DamageOverTimeDamageModifier> dotDamageModifier = new List<DamageOverTimeDamageModifier>();
     
     public float BonusExplosiveRadius { get; private set; } = 1f;
     public float BonusAoeRadius { get; private set; } = 1f;
+    
+    //public float BonusStunDuration { get; private set; } = 1f;
     
     public float BonusDotDamage { get; private set; } = 1f;
 
@@ -68,6 +73,21 @@ public class MiscellaneousModifierList : MonoBehaviour, IRegisterModifierMethods
         aoeRadiusModifiers.Remove(modifierToRemove);
         BonusAoeRadius /= (1 + modifierToRemove.bonusRadius);
     }
+    // public void AddStunDurationModifier(StunDurationModifier modifierToAdd)
+    // {
+    //     if (stunDurationModifiers.Contains(modifierToAdd)) return;
+    //     
+    //     stunDurationModifiers.Add(modifierToAdd);
+    //     BonusStunDuration += BonusStunDuration * modifierToAdd.bonusDuration;
+    // }
+    //
+    // public void RemoveStunDurationModifier(StunDurationModifier modifierToRemove)
+    // {
+    //     if (!stunDurationModifiers.Contains(modifierToRemove)) return;
+    //     
+    //     stunDurationModifiers.Remove(modifierToRemove);
+    //     BonusStunDuration /= (1 + modifierToRemove.bonusDuration);
+    // }
     
     public void AddDotDamageModifier(DamageOverTimeDamageModifier modifierToAdd)
     {

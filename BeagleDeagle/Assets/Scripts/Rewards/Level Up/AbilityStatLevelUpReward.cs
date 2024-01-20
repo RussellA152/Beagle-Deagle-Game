@@ -26,17 +26,17 @@ public class AbilityStatLevelUpReward : LevelUpReward
         if(abilityStatModifierData.utilityDamageModifier.IsModifierNameValid())
             modifierManager.AddModifier(abilityStatModifierData.utilityDamageModifier);
         
-        if(abilityStatModifierData.UtilityUsesModifier.IsModifierNameValid())
-            modifierManager.AddModifier(abilityStatModifierData.UtilityUsesModifier);
+        if(abilityStatModifierData.utilityUsesModifier.IsModifierNameValid())
+            modifierManager.AddModifier(abilityStatModifierData.utilityUsesModifier);
         
-        if(abilityStatModifierData.UtilityCooldownModifier.IsModifierNameValid())
-            modifierManager.AddModifier(abilityStatModifierData.UtilityCooldownModifier);
+        if(abilityStatModifierData.utilityCooldownModifier.IsModifierNameValid())
+            modifierManager.AddModifier(abilityStatModifierData.utilityCooldownModifier);
         
         if(abilityStatModifierData.ultimateDamageModifier.IsModifierNameValid())
             modifierManager.AddModifier(abilityStatModifierData.ultimateDamageModifier);
         
-        if(abilityStatModifierData.UltimateCooldownModifier.IsModifierNameValid())
-            modifierManager.AddModifier(abilityStatModifierData.UltimateCooldownModifier);
+        if(abilityStatModifierData.ultimateCooldownModifier.IsModifierNameValid())
+            modifierManager.AddModifier(abilityStatModifierData.ultimateCooldownModifier);
         
         
         Debug.Log($"{recipientGameObject.name} was given {abilityStatModifierData}");

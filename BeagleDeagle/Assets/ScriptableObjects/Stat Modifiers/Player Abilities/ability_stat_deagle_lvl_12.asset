@@ -12,16 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c186b2f299cdd0e44ba9de5d6c294b68, type: 3}
   m_Name: ability_stat_deagle_lvl_12
   m_EditorClassIdentifier: 
-  UtilityUsesModifier:
-    modifierName: Level 12 Reward
+  utilityDamageModifier:
+    modifierName: 
     particleEffect: {fileID: 0}
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
+    bonusUtilityDamage: 0
+  utilityUsesModifier:
+    modifierName: Deagle Beagle Level 12
+    particleEffect: {fileID: 0}
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
     bonusUtilityUses: 1
-  UtilityCooldownModifier:
+  utilityCooldownModifier:
     modifierName: 
     particleEffect: {fileID: 0}
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
     bonusUtilityCooldown: 0
-  UltimateCooldownModifier:
+  ultimateDamageModifier:
     modifierName: 
     particleEffect: {fileID: 0}
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
+    bonusUltimateDamage: 0
+  ultimateCooldownModifier:
+    modifierName: 
+    particleEffect: {fileID: 0}
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
     bonusUltimateCooldown: 0
   description: +1 Utility Use

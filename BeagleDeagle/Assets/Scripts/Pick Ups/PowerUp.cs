@@ -16,8 +16,7 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
 
     private Collider2D _collider2D;
     private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Waypoint_Indicator waypointIndicator;
-    
+
     [SerializeField] private AudioClip pickUpSound;
 
     [SerializeField, Range(0.1f, 1f)] private float volume;
@@ -61,8 +60,6 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
         _collider2D.enabled = true;
         _spriteRenderer.enabled = true;
 
-        waypointIndicator.enabled = true;
-        
         // Start timer until disappear
         if (!_cooldownSystem.IsOnCooldown(Id))
         {
@@ -84,8 +81,6 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
             if(pickUpDescription != string.Empty)
                 playerEvents.InvokeShowPickUpDescription(pickUpDescription);
             
-            HidePowerUp();
-            
             OnPickUp(other.gameObject);
             
             _cooldownSystem.RemoveCooldown(Id);
@@ -101,17 +96,13 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
         
         Deactivate();
     }
-
-    private void HidePowerUp()
-    {
-        _collider2D.enabled = false;
-        _spriteRenderer.enabled = false;
-            
-        waypointIndicator.enabled = false;
-    }
+    
 
     protected virtual void Deactivate()
     {
+        _collider2D.enabled = false;
+        _spriteRenderer.enabled = false;
+
         _cooldownSystem.OnCooldownEnded -= Despawn;
         
         onPickUpDeactivate?.Invoke();

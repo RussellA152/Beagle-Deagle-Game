@@ -19,7 +19,7 @@ MonoBehaviour:
     PlayOnModifierApplied: 0
     bonusRadius: 0
   aoeRadiusModifier:
-    modifierName: Level X
+    modifierName: T-Bone Level 13
     particleEffect: {fileID: 0}
     StickToGameObject: 0
     PlayOnModifierApplied: 0
