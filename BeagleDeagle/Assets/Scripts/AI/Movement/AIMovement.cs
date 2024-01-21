@@ -31,7 +31,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     private Transform _target;
     
     // The x scale that the enemy was instantiated with
-    private float _originalTransformScaleX;
+    //private float _originalTransformScaleX;
 
     private void Awake()
     {
@@ -49,12 +49,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
         RegisterAllAddModifierMethods();
         RegisterAllRemoveModifierMethods();
     }
-
-    private void Start()
-    {
-        // Save the value of the x scale so that the enemy knows their original orientation
-        _originalTransformScaleX = transform.localScale.x;
-    }
+    
 
     private void OnEnable()
     {
@@ -84,9 +79,9 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
         if (_canFlip)
         {
             if (_target.position.x < transform.position.x)
-                transform.localScale = new Vector3(-1f * _originalTransformScaleX, transform.localScale.y, transform.localScale.z);
+                transform.localScale = new Vector3(-1f * enemyScriptableObject.scaleSize.x, transform.localScale.y, transform.localScale.z);
             else
-                transform.localScale = new Vector3(_originalTransformScaleX, transform.localScale.y, transform.localScale.z);
+                transform.localScale = new Vector3(enemyScriptableObject.scaleSize.x, transform.localScale.y, transform.localScale.z);
         }
     }
 

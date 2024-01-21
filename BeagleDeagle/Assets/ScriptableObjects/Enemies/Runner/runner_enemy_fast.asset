@@ -15,6 +15,7 @@ MonoBehaviour:
   characterName: Runner
   animatorController: {fileID: 9100000, guid: 8e94e09a0d339a447a28fad4a00ccb89, type: 2}
   spriteColor: {r: 1, g: 0.1764706, b: 0.6156863, a: 1}
+  scaleSize: {x: 0.75, y: 0.75}
   maxHealth: 125
   movementSpeed: 6.5
   attackDamage: 100

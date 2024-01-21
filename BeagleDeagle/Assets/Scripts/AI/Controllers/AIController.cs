@@ -262,7 +262,9 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
             PoolableParticle particleUsed = particleEffect.GetComponent<PoolableParticle>();
         
             particleUsed.PlaceParticleOnTransform(transform);
-            particleUsed.PlayAllParticles(1f);
+            
+            // Explosion particle scales with enemy's y scale
+            particleUsed.PlayAllParticles(transform.localScale.y);
         }
         
         DropRandomPowerUp();
@@ -311,6 +313,8 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
         if (scriptableObject is T)
         {
             enemyScriptableObject = scriptableObject as T;
+
+            transform.localScale = enemyScriptableObject.scaleSize;
         }
         else
         {

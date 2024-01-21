@@ -14,6 +14,8 @@ public class EnemyData : ScriptableObject
     public RuntimeAnimatorController animatorController;
     public Color spriteColor;
 
+    public Vector2 scaleSize = Vector2.one;
+
     [Header("Health")]
     [Range(1f, 2500f)]
     public float maxHealth;
