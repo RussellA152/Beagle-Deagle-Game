@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 using static UnityEngine.InputSystem.InputAction;
 using Random = UnityEngine.Random;
 
-public class Gun : MonoBehaviour//, IGunDataUpdatable//, IHasCooldown IHasInput, IRegisterModifierMethods
+public class GunManager : MonoBehaviour//, IGunDataUpdatable//, IHasCooldown IHasInput, IRegisterModifierMethods
 {
     // The sprite is a child gameObject of the weapon
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -99,9 +99,7 @@ public class Gun : MonoBehaviour//, IGunDataUpdatable//, IHasCooldown IHasInput,
         // _miscellaneousModifierList = GetComponentInParent<MiscellaneousModifierList>();
         
         _weaponData = playerData.gunData;
-        
-        UpdateScriptableObject(_weaponData);
-        
+
 
         // _shootInputAction = _playerInput.currentActionMap.FindAction("Fire");
         // _reloadInputAction = _playerInput.currentActionMap.FindAction("Reload");
@@ -115,6 +113,11 @@ public class Gun : MonoBehaviour//, IGunDataUpdatable//, IHasCooldown IHasInput,
 
     private void Start()
     {
+        UpdateScriptableObject(_weaponData);
+        
+        _gunReload.SetUp();
+        _gunShooting.SetUp();
+        
         // Id = _cooldownSystem.GetAssignableId();
         // CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
         

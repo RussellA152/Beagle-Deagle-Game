@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private PlayerHealth _healthScript;
     private PlayerAnimationHandler _animationHandlerScript;
 
-    private Gun _gun;
+    private GunManager _gunManager;
     private GunShooting _gunShooting;
     private GunReload _gunReload;
     
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         _healthScript = GetComponent<PlayerHealth>();
         _animationHandlerScript = GetComponent<PlayerAnimationHandler>();
         
-        _gun = GetComponentInChildren<Gun>();
+        _gunManager = GetComponentInChildren<GunManager>();
         _gunShooting = GetComponentInChildren<GunShooting>();
         _gunReload = GetComponentInChildren<GunReload>();
         
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
         _movementScript.AllowRotation(true);
         _gunShooting.AllowShoot(true);
         _gunReload.AllowReload(true);
-        _gun.AllowWeaponReceive(true);
+        _gunManager.AllowWeaponReceive(true);
         _utilityScript.AllowUtility(true);
         _ultimateScript.AllowUltimate(true);
     }

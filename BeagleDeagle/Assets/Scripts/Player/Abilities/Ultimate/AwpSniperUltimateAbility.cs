@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
 {
-    private Gun _playerGunScript;
+    private GunManager _playerGunManagerScript;
     private GunReload _gunReload;
     
     [SerializeField] private GunData _previousWeaponData;
@@ -22,7 +22,7 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
     {
         base.OnEnable();
         
-        _playerGunScript = GetComponentInChildren<Gun>();
+        _playerGunManagerScript = GetComponentInChildren<GunManager>();
         _gunReload = GetComponentInChildren<GunReload>();
 
 
@@ -45,11 +45,11 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
         // Give the player an AWP Sniper as their new gun
         _isActive = true;
 
-        _playerGunScript.UpdateScriptableObject(UltimateAbilityData.awpGunData);
+        _playerGunManagerScript.UpdateScriptableObject(UltimateAbilityData.awpGunData);
 
         AddDamageBonusOnActivation();
 
-        _playerGunScript.AllowWeaponReceive(false);
+        _playerGunManagerScript.AllowWeaponReceive(false);
         // Don't allow player to reload when activating AWP
         _gunReload.AllowReload(false);
 
@@ -97,8 +97,8 @@ public class AwpSniperUltimateAbility : UltimateAbility<AwpSniperUltimateData>
             RemoveDamageBonusOnDeactivation();
             
             // Give back the player their gun before they received the AWP sniper
-            _playerGunScript.AllowWeaponReceive(true);
-            _playerGunScript.UpdateScriptableObject(_previousWeaponData);
+            _playerGunManagerScript.AllowWeaponReceive(true);
+            _playerGunManagerScript.UpdateScriptableObject(_previousWeaponData);
             
             
             // Activate cooldown

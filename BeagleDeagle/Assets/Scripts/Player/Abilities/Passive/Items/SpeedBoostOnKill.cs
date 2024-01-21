@@ -64,7 +64,7 @@ public class SpeedBoostOnKill : PassiveAbility, IHasCooldown
         
         CheckIfPlayerMetKillRequirement();
         
-        Debug.Log("Enemies killed so far: " + _enemyKillCount);
+        //Debug.Log("Enemies killed so far: " + _enemyKillCount);
     }
 
     private void CheckIfPlayerMetKillRequirement()

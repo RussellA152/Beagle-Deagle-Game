@@ -9,6 +9,7 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
 {
     [SerializeField] protected PlayerEvents playerEvents;
 
+    [SerializeField] private Waypoint_Indicator waypointIndicator;
     private CooldownSystem _cooldownSystem;
 
     // Can play sounds on pick up
@@ -42,6 +43,7 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
 
         CooldownDuration = pickUpDuration;
     }
+    
 
     private void Start()
     {
@@ -57,8 +59,7 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
     {
         _cooldownSystem.OnCooldownEnded += Despawn;
         
-        _collider2D.enabled = true;
-        _spriteRenderer.enabled = true;
+        ShowPowerUp();
 
         // Start timer until disappear
         if (!_cooldownSystem.IsOnCooldown(Id))
@@ -82,6 +83,8 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
                 playerEvents.InvokeShowPickUpDescription(pickUpDescription);
             
             OnPickUp(other.gameObject);
+
+            HidePowerUp();
             
             _cooldownSystem.RemoveCooldown(Id);
             
@@ -96,13 +99,25 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
         
         Deactivate();
     }
-    
+
+    private void ShowPowerUp()
+    {
+        waypointIndicator.enabled = true;
+        _collider2D.enabled = true;
+        _spriteRenderer.enabled = true;
+    }
+
+    private void HidePowerUp()
+    {
+        waypointIndicator.enabled = false;
+        _collider2D.enabled = false;
+        _spriteRenderer.enabled = false;
+    }
 
     protected virtual void Deactivate()
     {
-        _collider2D.enabled = false;
-        _spriteRenderer.enabled = false;
-
+        HidePowerUp();
+        
         _cooldownSystem.OnCooldownEnded -= Despawn;
         
         onPickUpDeactivate?.Invoke();

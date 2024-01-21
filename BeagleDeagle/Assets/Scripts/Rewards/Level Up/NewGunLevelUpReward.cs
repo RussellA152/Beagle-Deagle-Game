@@ -20,7 +20,7 @@ public class NewGunLevelUpReward: LevelUpReward
 
     public override void GiveDataToPlayer(GameObject recipientGameObject)
     {
-        recipientGameObject.GetComponentInChildren<Gun>().UpdateScriptableObject(gunData);
+        recipientGameObject.GetComponentInChildren<GunManager>().UpdateScriptableObject(gunData);
         Debug.Log($"{recipientGameObject.name} was given {gunData}");
     }
 

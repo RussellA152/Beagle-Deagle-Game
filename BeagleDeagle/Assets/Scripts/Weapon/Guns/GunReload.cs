@@ -35,8 +35,9 @@ public class GunReload : MonoBehaviour, IRegisterModifierMethods,IHasCooldown, I
     
     private float _bonusReloadSpeed = 1f;
     private float _bonusAmmoLoad = 1f;
+    
 
-    private void Awake()
+    public void SetUp()
     {
         // PlayerInput component is located in parent gameObject (the Player)
         _playerInput = GetComponentInParent<PlayerInput>();
@@ -56,30 +57,24 @@ public class GunReload : MonoBehaviour, IRegisterModifierMethods,IHasCooldown, I
         
         RegisterAllAddModifierMethods();
         RegisterAllRemoveModifierMethods();
-    }
-
-    private void Start()
-    {
+        
         Id = _cooldownSystem.GetAssignableId();
         CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
         
-        UpdateScriptableObject(_weaponData);
+        //UpdateScriptableObject(_weaponData);
         
         _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
         
         playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
+        playerEvents.InvokeUpdateMaxAmmoLoadedText(_bulletsLoaded);
         
         playerEvents.InvokeReloadCooldown(Id);
         
         _bulletsShot = 0;
         
+        _cooldownSystem.OnCooldownEnded += OnReloadFinish;
     }
     
-    private void OnEnable()
-    {
-        _cooldownSystem.OnCooldownEnded += OnReloadFinish;
-
-    }
     
     private void OnDisable()
     {
@@ -96,7 +91,6 @@ public class GunReload : MonoBehaviour, IRegisterModifierMethods,IHasCooldown, I
         if (_bulletsLoaded <= 0f && !_cooldownSystem.IsOnCooldown(Id) && _reloadInputAction.enabled)
         {
             PerformReload();
-            return;
         }
     }
     
@@ -168,6 +162,8 @@ public class GunReload : MonoBehaviour, IRegisterModifierMethods,IHasCooldown, I
     {
         _bulletsLoaded = Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad);
         _bulletsShot = 0;
+
+        playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
     }
     
     public void AllowReload(bool boolean)
@@ -231,10 +227,9 @@ public class GunReload : MonoBehaviour, IRegisterModifierMethods,IHasCooldown, I
         // Give player's weapon this bonus ammo load (this is because bulletsLoaded is only inside of the SO)
         // Refill the player's weapon before applying new ammo load
         RefillAmmoCompletely();
-
-        playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
-        playerEvents.InvokeUpdateMaxAmmoLoadedText(Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad));
         
+        playerEvents.InvokeUpdateMaxAmmoLoadedText(Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad));
+
     }
 
     public void RemoveAmmoLoadModifier(AmmoLoadModifier modifierToRemove)
@@ -244,10 +239,10 @@ public class GunReload : MonoBehaviour, IRegisterModifierMethods,IHasCooldown, I
         ammoLoadModifiers.Remove(modifierToRemove);
         _bonusAmmoLoad /= (1 + modifierToRemove.bonusAmmoLoad);
         
-        _bulletsLoaded = Mathf.RoundToInt(_bulletsLoaded * _bonusAmmoLoad);
+        RefillAmmoCompletely();
         
-        playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
         playerEvents.InvokeUpdateMaxAmmoLoadedText(Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad));
+        
     }
     
     public void AllowInput(bool boolean)
@@ -269,13 +264,16 @@ public class GunReload : MonoBehaviour, IRegisterModifierMethods,IHasCooldown, I
         // Refill all ammo after receiving new weapon
         RefillAmmoCompletely();
         
-        // Stop reloading if player switched to a new gun (ammo will refill anyways)
-        _cooldownSystem.EndCooldown(Id);
+        if (_cooldownSystem != null)
+        {
+            // Stop reloading if player switched to a new gun (ammo will refill anyways)
+            _cooldownSystem.EndCooldown(Id);
         
-        CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
+            CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
+        }
         
-        playerEvents.InvokeUpdateAmmoLoadedText(_bulletsLoaded);
         playerEvents.InvokeUpdateMaxAmmoLoadedText(Mathf.RoundToInt(_weaponData.magazineSize * _bonusAmmoLoad));
+        
     }
 
     public GunData GetCurrentData()

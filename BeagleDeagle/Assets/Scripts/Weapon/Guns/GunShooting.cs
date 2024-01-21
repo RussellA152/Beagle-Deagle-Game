@@ -55,8 +55,8 @@ public class GunShooting : MonoBehaviour, IRegisterModifierMethods, IHasInput, I
     private float _bonusSpread = 1f;
     private float _bonusFireRate = 1f;
     private float _bonusCriticalChance = 0f;
-
-    private void Awake()
+    
+    public void SetUp()
     {
         // PlayerInput component is located in parent gameObject (the Player)
         _playerInput = GetComponentInParent<PlayerInput>();
@@ -74,10 +74,7 @@ public class GunShooting : MonoBehaviour, IRegisterModifierMethods, IHasInput, I
         
         RegisterAllAddModifierMethods();
         RegisterAllRemoveModifierMethods();
-    }
-
-    private void Start()
-    {
+        
         _lastTimeShot = 0f;
         _timeElapsedSinceShot = 0f;
         
