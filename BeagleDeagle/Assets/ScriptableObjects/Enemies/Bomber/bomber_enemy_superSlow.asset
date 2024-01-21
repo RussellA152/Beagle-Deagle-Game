@@ -15,9 +15,10 @@ MonoBehaviour:
   characterName: Bomber Zombie
   animatorController: {fileID: 9100000, guid: c448c9f56ba351b44b689c6933277582, type: 2}
   spriteColor: {r: 0, g: 0.61087227, b: 1, a: 1}
+  scaleSize: {x: 1.5, y: 1.5}
   maxHealth: 200
   movementSpeed: 4
-  attackDamage: 200
+  attackDamage: 225
   attackCooldown: 0.5
   attackRange: 3.5
   chaseRange: 150

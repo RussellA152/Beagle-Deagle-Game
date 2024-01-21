@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfa26e7f451ca241b6fc7b668a57934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 80
 --- !u!61 &591967951598839303
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -417,6 +417,7 @@ MonoBehaviour:
   volume: 0.5
   pickUpDuration: 30
   pickUpDescription: 
+  destroyOnDeactivation: 0
   activateOnStart: 0
   healEffectData: {fileID: 11400000, guid: b46bd4324c68e8e4bb1a32d8ced22f9d, type: 2}
 --- !u!114 &1188136507351754812
