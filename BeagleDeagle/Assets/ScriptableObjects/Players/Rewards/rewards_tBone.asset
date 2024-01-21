@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: rewards_tBone
   m_EditorClassIdentifier: 
   gunRewards:
-  - LevelGiven: 2
+  - LevelGiven: 10
     IsChosen: 1
     Icon: {fileID: 0}
     gunData: {fileID: 11400000, guid: 8dca16d094096ee43bc4171f1206bd80, type: 2}

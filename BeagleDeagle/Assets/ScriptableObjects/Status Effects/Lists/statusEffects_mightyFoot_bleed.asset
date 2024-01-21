@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb2bc520727d1fb409bc67799e9881b8, type: 3}
-  m_Name: statusEffects_mightyFoot_fire
+  m_Name: statusEffects_mightyFoot_bleed
   m_EditorClassIdentifier: 
   statusEffects:
   - {fileID: 11400000, guid: f99b7cfa7568bb84dab1dca6fc954872, type: 2}

@@ -6,20 +6,22 @@ using UnityEngine.UI;
 
 public class FullScreenModeButton : MonoBehaviour
 {
-    [SerializeField] private Button fullScreenButton;
+    //[SerializeField] private Button fullScreenButton;
     [SerializeField] private Button borderlessButton;
     [SerializeField] private Button windowedButton;
     
     private void OnEnable()
     {
-        fullScreenButton.onClick.AddListener(SetFullScreen);
+        //fullScreenButton.onClick.AddListener(SetFullScreen);
+        
         borderlessButton.onClick.AddListener(SetBorderlessWindowed);
         windowedButton.onClick.AddListener(SetWindowed);
     }
 
     private void OnDisable()
     {
-        fullScreenButton.onClick.RemoveListener(SetFullScreen);
+        //fullScreenButton.onClick.RemoveListener(SetFullScreen);
+        
         borderlessButton.onClick.RemoveListener(SetBorderlessWindowed);
         windowedButton.onClick.RemoveListener(SetWindowed);
     }
