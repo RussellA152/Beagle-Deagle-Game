@@ -55,10 +55,9 @@ public class GunShooting : MonoBehaviour, IRegisterModifierMethods, IHasInput, I
     private float _bonusSpread = 1f;
     private float _bonusFireRate = 1f;
     private float _bonusCriticalChance = 0f;
-    
-    public void SetUp()
+
+    private void Awake()
     {
-        // PlayerInput component is located in parent gameObject (the Player)
         _playerInput = GetComponentInParent<PlayerInput>();
         
         _audioClipPlayer = GetComponentInParent<AudioClipPlayer>();
@@ -69,6 +68,12 @@ public class GunShooting : MonoBehaviour, IRegisterModifierMethods, IHasInput, I
         _miscellaneousModifierList = GetComponentInParent<MiscellaneousModifierList>();
 
         _gunReload = GetComponent<GunReload>();
+    }
+
+    public void SetUp()
+    {
+        // PlayerInput component is located in parent gameObject (the Player)
+        
         
         _shootInputAction = _playerInput.currentActionMap.FindAction("Fire");
         

@@ -36,8 +36,7 @@ public class GunReload : MonoBehaviour, IRegisterModifierMethods,IHasCooldown, I
     private float _bonusReloadSpeed = 1f;
     private float _bonusAmmoLoad = 1f;
     
-
-    public void SetUp()
+    private void Awake()
     {
         // PlayerInput component is located in parent gameObject (the Player)
         _playerInput = GetComponentInParent<PlayerInput>();
@@ -50,7 +49,11 @@ public class GunReload : MonoBehaviour, IRegisterModifierMethods,IHasCooldown, I
         _modifierManager = GetComponentInParent<ModifierManager>();
 
         _gunShooting = GetComponent<GunShooting>();
-        
+    }
+
+    public void SetUp()
+    {
+
         _reloadInputAction = _playerInput.currentActionMap.FindAction("Reload");
         
         _reloadInputAction.performed += OnReload;

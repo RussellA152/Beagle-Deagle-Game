@@ -117,7 +117,7 @@ public class GunManager : MonoBehaviour//, IGunDataUpdatable//, IHasCooldown IHa
         
         _gunReload.SetUp();
         _gunShooting.SetUp();
-        
+
         // Id = _cooldownSystem.GetAssignableId();
         // CooldownDuration = _weaponData.totalReloadTime * _bonusReloadSpeed;
         
