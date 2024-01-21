@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AreaOfEffectManager : MonoBehaviour
@@ -93,10 +94,7 @@ public class AreaOfEffectManager : MonoBehaviour
     /// Remove them from the affectedTargets hashset
     public void RemoveTargetFromAffectedHashSet(AreaOfEffectData areaOfEffect, GameObject target)
     {
-        HashSet<GameObject> affectedTargetsHashSet = _affectedTargets[areaOfEffect];
-        
-        affectedTargetsHashSet.Remove(target);
-
+        _affectedTargets[areaOfEffect].Remove(target);
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -104,14 +102,14 @@ public class AreaOfEffectManager : MonoBehaviour
     /// 
     public bool CheckIfTargetIsAffected(AreaOfEffectData areaOfEffect, GameObject target)
     {
-        HashSet<GameObject> affectedTargetsHashSet = _affectedTargets[areaOfEffect];
-
-        return affectedTargetsHashSet.Contains(target);
+        return _affectedTargets[areaOfEffect].Contains(target);
     }
 
     public void TryAddAffectedTarget(AreaOfEffectData areaOfEffect, GameObject target)
     {
         HashSet<GameObject> affectedTargetsHashSet = _affectedTargets[areaOfEffect];
+
+        if (!_areaOfEffectOverlappingTargets[areaOfEffect].ContainsKey(target)) return;
         
         bool canBeAffected = IsTargetOverlappingSingleAreaOfEffect(areaOfEffect, target) &&
                              !affectedTargetsHashSet.Contains(target);

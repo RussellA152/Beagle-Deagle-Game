@@ -142,11 +142,8 @@ public class PlayerStatsUI : MonoBehaviour
     private void UpdateMaxAmmoText(int maxAmmoLoaded)
     {
         _maxAmmoCount = maxAmmoLoaded;
-     
-        Debug.Log("max ammo is: " + maxAmmoLoaded);
-        maxAmmoMagText.text = maxAmmoLoaded.ToString();
         
-        Debug.Log("max ammo text: " + maxAmmoMagText.text);
+        maxAmmoMagText.text = maxAmmoLoaded.ToString();
     }
 
     private void UpdateXpImage(float xpNeededLeft)

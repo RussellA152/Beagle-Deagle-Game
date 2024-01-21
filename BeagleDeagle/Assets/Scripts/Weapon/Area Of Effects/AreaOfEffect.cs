@@ -109,6 +109,7 @@ public class AreaOfEffect : MonoBehaviour, IHasMiscellaneousModifier
                 onAreaExit.Invoke(collision.gameObject);
 
                 AreaOfEffectManager.Instance.RemoveTargetFromAffectedHashSet(areaOfEffectData, collision.gameObject);
+                
             }
         }
     }
