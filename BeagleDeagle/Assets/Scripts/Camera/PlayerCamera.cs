@@ -59,8 +59,8 @@ public class PlayerCamera : MonoBehaviour
         _impulseDefinition.m_ImpulseDuration = screenShakeData.impactTime;
         
         // Get a random velocity
-        float randomX = Random.Range(screenShakeData.minVelocityX, screenShakeData.maxVelocityX);
-        float randomY = Random.Range(screenShakeData.minVelocityY, screenShakeData.maxVelocityY);
+        float randomX = GetRandomShakeValue(screenShakeData.minVelocityX, screenShakeData.maxVelocityX);
+        float randomY = GetRandomShakeValue(screenShakeData.minVelocityY, screenShakeData.maxVelocityY);
         
         impulseSource.m_DefaultVelocity = new Vector3(randomX, randomY, 0f);
         
@@ -70,6 +70,14 @@ public class PlayerCamera : MonoBehaviour
         _impulseListener.m_ReactionSettings.m_AmplitudeGain = screenShakeData.listenerAmplitude;
         _impulseListener.m_ReactionSettings.m_FrequencyGain = screenShakeData.listenerFrequency;
         _impulseListener.m_ReactionSettings.m_Duration = screenShakeData.listenerDuration;
+    }
+
+    ///-///////////////////////////////////////////////////////////
+    /// Return either the minvalue or maxValue, no in betweens
+    /// 
+    private float GetRandomShakeValue(float minValue, float maxValue)
+    {
+        return Random.Range(0, 2) * (maxValue - minValue + 1) + minValue;
     }
 
     public bool IsTransformOffCameraView(Transform transform)
