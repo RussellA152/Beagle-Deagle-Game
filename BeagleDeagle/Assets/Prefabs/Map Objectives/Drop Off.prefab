@@ -126,7 +126,7 @@ MonoBehaviour:
   boundaryBoxColor: {r: 1, g: 1, b: 0.4, a: 1}
   parentSize: {x: 150, y: 150}
   displayRangeMin: 0
-  displayRangeMax: 500
+  displayRangeMax: 1000
   raycastTarget: 0
   enableSprite: 1
   spriteDepth: 0
@@ -218,7 +218,7 @@ MonoBehaviour:
   radiusGizmoColor: {r: 0, g: 0, b: 0, a: 1}
   radiusGizmoSize: 50
   toggleSetupOptions: 1
-  toggleParentOptions: 0
+  toggleParentOptions: 1
   toggleSpriteOptions: 1
   toggleGameObjectOptions: 0
   toggleTextOptions: 1

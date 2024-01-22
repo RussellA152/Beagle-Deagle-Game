@@ -46,8 +46,10 @@ public class CooldownUI : MonoBehaviour
     // Use mouse position by default
     private bool _useMousePosition = true;
 
+    private bool _reloadFillIsOccurring;
+    
     // If the game is paused, don't show reload fill on mouse cursor
-    private bool _gamePaused;
+    private bool _showReloadFill = true;
 
     private void Awake()
     {
@@ -63,11 +65,10 @@ public class CooldownUI : MonoBehaviour
         playerEvents.onPlayerUtilityUsesUpdated += ModifyUtilityUses;
 
         playerEvents.givePlayerGameObject += GetPlayerCooldownSystem;
+        
 
-        gameEvents.onGamePause += () => _gamePaused = true;
-        gameEvents.onGameResumeAfterPause += () => _gamePaused = false;
-
-
+        gameEvents.onGamePause += HideReloadFill;
+        gameEvents.onGameResumeAfterPause += AllowReloadFill;
     }
 
     private void OnDisable()
@@ -78,9 +79,9 @@ public class CooldownUI : MonoBehaviour
         playerEvents.giveUltimateCooldownId -= SetUltimateCooldownId;
         
         playerEvents.givePlayerGameObject -= GetPlayerCooldownSystem;
-        
-        gameEvents.onGamePause -= () => _gamePaused = true;
-        gameEvents.onGameResumeAfterPause -= () => _gamePaused = false;
+
+        gameEvents.onGamePause -= HideReloadFill;
+        gameEvents.onGameResumeAfterPause -= AllowReloadFill;
     }
 
     private void Start()
@@ -138,9 +139,11 @@ public class CooldownUI : MonoBehaviour
 
     private void ShowReloadFillOnCursor()
     {
+        if (!_showReloadFill) return;
+        
         if (_playerCooldownSystem.IsOnCooldown(_reloadCooldownId))
         {
-            if (_useMousePosition && !_gamePaused)
+            if (_useMousePosition)
             {
                 Vector2 mousePosition = Mouse.current.position.ReadValue();
                 Vector2 uiPosition;
@@ -159,8 +162,10 @@ public class CooldownUI : MonoBehaviour
             {
                 reloadFillRecTransform.localPosition = reloadOnGamepadPosition.localPosition;
             }
+
+            _reloadFillIsOccurring = true;
         }
-        else if(_useMousePosition)
+        else
         {
             Cursor.visible = true;
         }
@@ -168,7 +173,9 @@ public class CooldownUI : MonoBehaviour
     }
     private void ReloadFill()
     {
-        if (_playerCooldownSystem.IsOnCooldown(_reloadCooldownId) && !_gamePaused)
+        if (!_showReloadFill) return;
+        
+        if (_playerCooldownSystem.IsOnCooldown(_reloadCooldownId))
         {
             reloadFillRecTransform.gameObject.SetActive(true);
             float reloadCooldownTime = _playerCooldownSystem.GetRemainingDuration(_reloadCooldownId) /
@@ -184,6 +191,26 @@ public class CooldownUI : MonoBehaviour
             reloadFillRecTransform.gameObject.SetActive(false);
             reloadFillImage.fillAmount = 0f;
         }
+    }
+
+    private void AllowReloadFill()
+    {
+        _showReloadFill = true;
+
+        if (_reloadFillIsOccurring && _useMousePosition)
+        {
+            Cursor.visible = false;
+            //reloadFillRecTransform.gameObject.SetActive(true);
+        }
+        
+    }
+
+    private void HideReloadFill()
+    {
+        _showReloadFill = false;
+        
+        if (_reloadFillIsOccurring)
+            reloadFillRecTransform.gameObject.SetActive(false);
     }
 
     private void SetReloadCooldownId(int id)

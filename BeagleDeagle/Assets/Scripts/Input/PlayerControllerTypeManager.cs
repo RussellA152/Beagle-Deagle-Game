@@ -11,6 +11,8 @@ public class PlayerControllerTypeManager : MonoBehaviour
 
     public PlayerEvents playerEvents;
     
+    [SerializeField] private GameEvents gameEvents;
+
     private PlayerInput _playerInput;
 
     private ControllerType _currentControllerType;
@@ -36,12 +38,15 @@ public class PlayerControllerTypeManager : MonoBehaviour
     private void OnEnable()
     {
         playerEvents.givePlayerInput += FindPlayerInput;
+        gameEvents.onGamePause += ShowMouseCursorOnPause;
     }
 
     private void OnDisable()
     {
         if(_playerInput != null)
             _playerInput.onControlsChanged -= ControlsChanged;
+        
+        gameEvents.onGamePause -= ShowMouseCursorOnPause;
     }
     
 
@@ -65,6 +70,12 @@ public class PlayerControllerTypeManager : MonoBehaviour
         Keyboard,
         Xbox,
         Playstation
+    }
+
+    private void ShowMouseCursorOnPause()
+    {
+        if (_currentControllerType == ControllerType.Keyboard)
+            Cursor.visible = true;
     }
 
     ///-///////////////////////////////////////////////////////////
