@@ -15,7 +15,8 @@ MonoBehaviour:
   characterName: Projectile Enemy
   animatorController: {fileID: 9100000, guid: 7ec07fe532d25ee48843c2c0f4b1a230, type: 2}
   spriteColor: {r: 1, g: 0.5843237, b: 0, a: 1}
-  maxHealth: 100
+  scaleSize: {x: 1, y: 1}
+  maxHealth: 200
   movementSpeed: 5
   attackDamage: 100
   attackCooldown: 2.5
@@ -28,7 +29,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16512
   currencyRewardOnDeath:
-    xpAmount: 400
+    xpAmount: 300
     moneyAmount: 0
   powerUpDropChance: 0.01
   powerUpDropTable:

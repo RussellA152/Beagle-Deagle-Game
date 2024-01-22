@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityName: Flashbang
   description: Smoke grenade now damages and stuns on detonation.
   abilitySprite: {fileID: 21300000, guid: 0e070a402f896ad4d8253bb6d4617414, type: 3}
-  abilityDamage: 100
+  abilityDamage: 75
   cooldown: 10
   duration: 5
   activationSound: {fileID: 8300000, guid: 705d9285ed4fbf44bb8de3b4f75ff969, type: 3}

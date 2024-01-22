@@ -10,7 +10,8 @@ public class SpeedPowerUp : PowerUp
     
     [SerializeField] private MovementSpeedBoostData movementSpeedBoostData;
     [SerializeField] private AttackSpeedBoostData attackSpeedBoostData;
-    
+    [SerializeField] private ReloadSpeedBoostData reloadSpeedBoostData;
+
     [Range(0.1f, 60f)]
     [SerializeField] private float speedBuffDuration;
 
@@ -36,18 +37,18 @@ public class SpeedPowerUp : PowerUp
         
         // If player already has power up, refresh the timer
         if (_modifierManager.DoesEntityContainModifier(movementSpeedBoostData.movementSpeedModifier) ||
-            _modifierManager.DoesEntityContainModifier(attackSpeedBoostData.attackSpeedModifier))
+            _modifierManager.DoesEntityContainModifier(attackSpeedBoostData.attackSpeedModifier) || _modifierManager.DoesEntityContainModifier(reloadSpeedBoostData.reloadSpeedModifier))
         {
             _modifierManager.RefreshRemoveModifierTimer(movementSpeedBoostData.movementSpeedModifier, speedBuffDuration);
             _modifierManager.RefreshRemoveModifierTimer(attackSpeedBoostData.attackSpeedModifier, speedBuffDuration);
+            _modifierManager.RefreshRemoveModifierTimer(reloadSpeedBoostData.reloadSpeedModifier, speedBuffDuration);
         }
         // Otherwise, give them buff for the first time
         else
         {
             _modifierManager.AddModifierOnlyForDuration(movementSpeedBoostData.movementSpeedModifier, speedBuffDuration);
             _modifierManager.AddModifierOnlyForDuration(attackSpeedBoostData.attackSpeedModifier, speedBuffDuration);
-            
-
+            _modifierManager.AddModifierOnlyForDuration(reloadSpeedBoostData.reloadSpeedModifier, speedBuffDuration);
         }
         
         _showOnBuffBar.ShowBuffIconWithDuration(speedBuffDuration);
