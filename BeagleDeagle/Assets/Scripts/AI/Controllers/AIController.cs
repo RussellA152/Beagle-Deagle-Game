@@ -90,18 +90,21 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
         EnemyManager.Instance.RegisterNewEnemy(gameObject);
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         // When enemy spawns in, they start as Idle
         state = EnemyState.Idle;
         
         // Re-enable the enemy's body collider (we disable it when they die)
         _bodyCollider.enabled = true;
+        
+        // Allow navmesh agent to follow target again
+        _agent.enabled = true;
 
         HealthScript.onDeath += OnDeath;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         HealthScript.onDeath -= OnDeath;
     }
@@ -235,6 +238,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     {
         state = EnemyState.Death;
         
+        
         // Don't let enemy to move
         MovementScript.SetCanFlip(false);
         MovementScript.AllowMovement(false);
@@ -243,6 +247,9 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
         
         // Turn off collider upon death
         _bodyCollider.enabled = false;
+        
+        // Don't let navmesh try to follow anymore
+        _agent.enabled = false;
         
         // Remove all modifiers placed on the enemy
         RevertAllModifiersOnEnemy();
@@ -253,7 +260,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
     /// An animation event will call this function to
     /// disable this enemy's corpse after their death animation has finished
     /// 
-    public void DisableCorpse()
+    public virtual void DisableCorpse()
     {
         GameObject particleEffect = ObjectPooler.Instance.GetPooledObject(_deathParticleEffectPoolKey);
 

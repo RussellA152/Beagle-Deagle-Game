@@ -16,6 +16,9 @@ public class BomberEnemyData : EnemyData
     
     public StatusEffectTypes statusEffects;
 
+    // On death, how long does it take for this bomber to explode?
+    [Range(0.1f, 10f)] public float explosionOnDeathDelay = 1f;
+
     // How long will the explosive gameObject remain (meant for explosives with AOEs)
     [Range(0.1f, 30f)] public float explosiveDuration;
 }

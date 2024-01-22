@@ -90,6 +90,11 @@ public abstract class AIAttack<T> : MonoBehaviour, IEnemyDataUpdatable, IDamager
         
     }
 
+    public bool AttackIsOnCooldown()
+    {
+        return _cooldownSystem.IsOnCooldown(Id);
+    }
+
     ///-///////////////////////////////////////////////////////////
     /// Allow the enemy to attack again when the attack cooldown finishes
     /// 

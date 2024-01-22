@@ -134,6 +134,8 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     /// 
     public void ApplyKnockBack(Vector2 force, Vector2 direction)
     {
+        if (!_agent.enabled) return;
+        
         // Prevent enemy from moving
         // Also, this enemy will not be able to flip their sprite because they are stopped
         _agent.isStopped = true;
@@ -159,7 +161,8 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
         }
 
         // Allow enemy to move again
-        _agent.isStopped = false;
+        if(_agent.enabled)
+            _agent.isStopped = false;
     }
     
 
@@ -209,6 +212,8 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     
     public void AllowMovement(bool boolean)
     {
+        if (!_agent.enabled) return;
+        
         if (boolean)
         {
             _agent.isStopped = false;

@@ -23,6 +23,9 @@ public class GameOverScreen : MonoBehaviour
     // The button to be selected when the victory screen appears
     [SerializeField] private GameObject continueButtonGameObject;
 
+    // Allow the player to win unless they died
+    private bool _allowVictory = true;
+
     [SerializeField, Range(1f, 5f)] private float delayUntilGameOver;
 
     private void Start()
@@ -50,14 +53,21 @@ public class GameOverScreen : MonoBehaviour
     {
         menuTitle.text = "You Died!";
 
+        _allowVictory = false;
+
         StartCoroutine(DelayUntilGameOverScreen());
     }
 
     private void VictoryScreen()
     {
-        menuTitle.text = "You Win!";
+        /* Allow the player to win only if they did not die. This should prevent the player from winning if they died at the same time as the game timer concluding. */
+        if (_allowVictory)
+        {
+            menuTitle.text = "You Win!";
         
-        ShowScreen();
+            ShowScreen();
+        }
+        
     }
 
     private IEnumerator DelayUntilGameOverScreen()
