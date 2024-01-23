@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a0137b2e36069d4eb08be6ca2a0fe05, type: 3}
   m_Name: shake_explosive_nuke
   m_EditorClassIdentifier: 
-  impactTime: 2
-  impactForce: 3
+  impactTime: 1.5
+  impactForce: 2.5
   minVelocityX: -0.5
   maxVelocityX: 0.5
   minVelocityY: -0.5

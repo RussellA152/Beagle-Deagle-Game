@@ -10,11 +10,13 @@ public class PlayerCamera : MonoBehaviour
     public static PlayerCamera Instance;
     [SerializeField] private PlayerEvents playerEvents;
 
-    private Camera mainCamera;
+    private Camera _mainCamera;
 
     private CinemachineVirtualCamera _cinemachineVirtualCamera;
     private CinemachineImpulseListener _impulseListener;
     private CinemachineImpulseDefinition _impulseDefinition;
+
+    private int _activeScreenShakes = 0;
     
     private void Awake()
     {
@@ -24,8 +26,8 @@ public class PlayerCamera : MonoBehaviour
         if (Instance == null)
             Instance = this;
         
-        mainCamera = Camera.main;
-        
+        _mainCamera = Camera.main;
+
     }
 
     private void OnEnable()
@@ -43,10 +45,11 @@ public class PlayerCamera : MonoBehaviour
     {
         // Apply settings
         SetupScreenShakeSettings(screenShakeData, impulseSource);
-        
         // Screen shake
         impulseSource.GenerateImpulseWithForce(screenShakeData.impactForce);
+
     }
+    
 
     private void SetupScreenShakeSettings(ScreenShakeData screenShakeData, CinemachineImpulseSource impulseSource)
     {
@@ -56,8 +59,8 @@ public class PlayerCamera : MonoBehaviour
         _impulseDefinition.m_ImpulseDuration = screenShakeData.impactTime;
         
         // Get a random velocity
-        float randomX = Random.Range(screenShakeData.minVelocityX, screenShakeData.maxVelocityX);
-        float randomY = Random.Range(screenShakeData.minVelocityY, screenShakeData.maxVelocityY);
+        float randomX = GetRandomShakeValue(screenShakeData.minVelocityX, screenShakeData.maxVelocityX);
+        float randomY = GetRandomShakeValue(screenShakeData.minVelocityY, screenShakeData.maxVelocityY);
         
         impulseSource.m_DefaultVelocity = new Vector3(randomX, randomY, 0f);
         
@@ -68,10 +71,18 @@ public class PlayerCamera : MonoBehaviour
         _impulseListener.m_ReactionSettings.m_FrequencyGain = screenShakeData.listenerFrequency;
         _impulseListener.m_ReactionSettings.m_Duration = screenShakeData.listenerDuration;
     }
+    
+    ///-///////////////////////////////////////////////////////////
+    /// Return either the minvalue or maxValue, no in between.
+    /// 
+    private float GetRandomShakeValue(float minValue, float maxValue)
+    {
+        return Random.Range(0, 2) * (maxValue - minValue + 1) + minValue;
+    }
 
     public bool IsTransformOffCameraView(Transform transform)
     {
-        Vector3 viewPos = mainCamera.WorldToViewportPoint(transform.position);
+        Vector3 viewPos = _mainCamera.WorldToViewportPoint(transform.position);
         
         if ((viewPos.x < 0 || viewPos.x > 1 || viewPos.y < 0 || viewPos.y > 1))
         {
@@ -89,7 +100,7 @@ public class PlayerCamera : MonoBehaviour
 
     public Camera GetMainCamera()
     {
-        return mainCamera;
+        return _mainCamera;
     }
 
     ///-///////////////////////////////////////////////////////////

@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   impactTime: 0.35
   impactForce: 0.2
-  minVelocityX: -0.5
-  maxVelocityX: 0.5
-  minVelocityY: -0.5
-  maxVelocityY: -0.5
+  minVelocityX: -0.3
+  maxVelocityX: 0.3
+  minVelocityY: -0.3
+  maxVelocityY: -0.3
   impulseCurve:
     serializedVersion: 2
     m_Curve:
