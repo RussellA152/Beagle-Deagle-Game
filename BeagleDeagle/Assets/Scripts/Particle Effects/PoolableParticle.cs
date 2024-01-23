@@ -19,10 +19,10 @@ public class PoolableParticle : MonoBehaviour, IPoolable
 
     /* Set this true if the particle effect should be backwards when sticking to another transform
      Use this for any particles that have text.*/
-    //[SerializeField] private bool alwaysPositiveScaleOnStick;
+    [SerializeField] private bool alwaysPositiveScaleOnStick;
 
     // The movement script of whoever this particle is stuck to
-    //private IMovable _stuckToMovableScript;
+    private IMovable _stuckToMovableScript;
 
     private void Awake()
     {
@@ -41,7 +41,7 @@ public class PoolableParticle : MonoBehaviour, IPoolable
 
     private void OnDisable()
     {
-        if (_originalParent != null)
+        if (_originalParent != null && gameObject.activeInHierarchy)
         {
             transform.SetParent(_originalParent);
         }
@@ -52,8 +52,8 @@ public class PoolableParticle : MonoBehaviour, IPoolable
             particleSys.transform.localScale = _originalSize;
         }
         
-        // if(_stuckToMovableScript != null)
-        //     _stuckToMovableScript.entityStartedFacingRight -= FixRotation;
+        if(_stuckToMovableScript != null)
+            _stuckToMovableScript.entityStartedFacingRight -= FixRotation;
 
     }
 
@@ -115,39 +115,38 @@ public class PoolableParticle : MonoBehaviour, IPoolable
         transformComponent.SetParent(transformToStickTo);
         _currentParent = transformComponent.parent;
         
+        FixRotation(transformToStickTo.localScale.x > 0);
         
     }
 
-    // public void ChangeRotationDynamically(IMovable movableScript)
-    // {
-    //     _stuckToMovableScript = movableScript;
-    //     
-    //     _stuckToMovableScript.entityStartedFacingRight += FixRotation;
-    // }
+    public void ChangeRotationDynamically(IMovable movableScript)
+    {
+        _stuckToMovableScript = movableScript;
+        
+        _stuckToMovableScript.entityStartedFacingRight += FixRotation;
+    }
 
-    // private void FixRotation(bool parentTransformFacingRight)
-    // {
-    //     if (alwaysPositiveScaleOnStick)
-    //     {
-    //         Vector3 localScale = transform.localScale;
-    //
-    //         //bool parentTransformFacingRight = transformToStickTo.localScale.x > 0;
-    //         
-    //         if (parentTransformFacingRight)
-    //         {
-    //             localScale.x = Mathf.Abs(localScale.x);
-    //         }
-    //         else
-    //         {
-    //             localScale.x = Mathf.Abs(localScale.x) * -1f;
-    //         }
-    //         
-    //         localScale.y = Mathf.Abs(localScale.y);
-    //         localScale.z = Mathf.Abs(localScale.z);
-    //
-    //         transform.localScale = localScale;
-    //     }
-    // }
+    private void FixRotation(bool parentTransformFacingRight)
+    {
+        if (alwaysPositiveScaleOnStick)
+        {
+            Vector3 localScale = transform.localScale;
+            
+            if (parentTransformFacingRight)
+            {
+                localScale.x = Mathf.Abs(localScale.x);
+            }
+            else
+            {
+                localScale.x = Mathf.Abs(localScale.x) * -1f;
+            }
+            
+            localScale.y = Mathf.Abs(localScale.y);
+            localScale.z = Mathf.Abs(localScale.z);
+
+            transform.localScale = localScale;
+        }
+    }
     
 
 

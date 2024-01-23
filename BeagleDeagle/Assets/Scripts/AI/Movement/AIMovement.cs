@@ -32,9 +32,8 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     private bool _facingRight = true;
     
     public event Action<bool> entityStartedFacingRight;
-    
-    // The x scale that the enemy was instantiated with
-    //private float _originalTransformScaleX;
+
+    private StunModifier _currentStunModifier;
 
     private void Awake()
     {
@@ -54,9 +53,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     private void OnEnable()
     {
         _facingRight = transform.localScale.x > 0;
-        
-        IsStunned = false;
-        
+
         // Set the speed of the enemy
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
     }
@@ -64,6 +61,9 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     private void OnDisable()
     {
         StopAllCoroutines();
+        
+        if(_currentStunModifier != null)
+            _modifierManager.RemoveModifier(_currentStunModifier);
     }
 
     private void Update()
@@ -119,7 +119,8 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     public void GetStunned(StunModifier stunModifier)
     {
         IsStunned = true;
-
+        
+        _currentStunModifier = stunModifier;
     }
     
     public void RemoveStun(StunModifier stunModifier)
@@ -191,9 +192,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
         movementSpeedModifiers.Add(modifierToAdd);
         _bonusSpeed += _bonusSpeed * modifierToAdd.bonusMovementSpeed;
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;
-        
-        //_modifierParticleEffectHandler.StartPlayingParticle(modifierToAdd, true);
-        
+
         // Increase or decrease the animation speed of the movement animation
         _animationScript.SetMovementAnimationSpeed(modifierToAdd.bonusMovementSpeed);
         
@@ -202,9 +201,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     public void RemoveMovementSpeedModifier(MovementSpeedModifier modifierToRemove)
     {
         if (!movementSpeedModifiers.Contains(modifierToRemove)) return;
-        
-       // _modifierParticleEffectHandler.StopSpecificParticle(modifierToRemove);
-        
+
         movementSpeedModifiers.Remove(modifierToRemove);
         _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
         _agent.speed = enemyScriptableObject.movementSpeed * _bonusSpeed;

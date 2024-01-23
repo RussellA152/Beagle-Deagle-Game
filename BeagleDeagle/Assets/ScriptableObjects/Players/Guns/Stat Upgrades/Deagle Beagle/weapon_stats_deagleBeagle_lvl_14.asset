@@ -15,25 +15,43 @@ MonoBehaviour:
   DamageModifier:
     modifierName: 
     particleEffect: {fileID: 0}
-    bonusDamage: 0.25
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
+    bonusDamage: 0
   PenetrationModifier:
     modifierName: 
     particleEffect: {fileID: 0}
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
     bonusPenetration: 0
   SpreadModifier:
     modifierName: 
     particleEffect: {fileID: 0}
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
     bonusSpread: 0
   ReloadSpeedModifier:
     modifierName: 
     particleEffect: {fileID: 0}
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
     bonusReloadSpeed: 0
   AttackSpeedModifier:
     modifierName: Deagle Beagle Level 14
     particleEffect: {fileID: 0}
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
     bonusAttackSpeed: 0.2
   AmmoLoadModifier:
     modifierName: 
     particleEffect: {fileID: 0}
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
     bonusAmmoLoad: 0
+  CriticalChanceModifier:
+    modifierName: 
+    particleEffect: {fileID: 0}
+    StickToGameObject: 0
+    PlayOnModifierApplied: 0
+    bonusCriticalChance: 0
   description: +20% Fire Rate!

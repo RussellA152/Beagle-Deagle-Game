@@ -42,7 +42,7 @@ public class ModifierParticleEffectHandler : MonoBehaviour
                 if (stickToObject)
                 {
                     particleToPlay.StickParticleToTransform(transform);
-                    //particleToPlay.ChangeRotationDynamically(_movementScript);
+                    particleToPlay.ChangeRotationDynamically(_movementScript);
                 }
                 else
                 {

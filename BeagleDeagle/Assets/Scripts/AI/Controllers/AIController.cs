@@ -219,7 +219,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
         MovementScript.AllowMovement(true);
 
         // If there's a target, then move towards them
-        if (_target != null)
+        if (_target != null && _agent.enabled)
             _agent.SetDestination(_target.position);
     }
 
