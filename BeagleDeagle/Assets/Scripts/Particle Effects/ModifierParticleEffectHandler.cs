@@ -11,6 +11,13 @@ public class ModifierParticleEffectHandler : MonoBehaviour
     // All modifiers currently playing on this object
     private Dictionary<Modifier, PoolableParticle> _activeModifierParticles = new Dictionary<Modifier, PoolableParticle>();
 
+    private IMovable _movementScript;
+
+    private void Awake()
+    {
+        _movementScript = GetComponent<IMovable>();
+    }
+
     private void OnDisable()
     {
         _activeModifierParticles.Clear();
@@ -32,11 +39,16 @@ public class ModifierParticleEffectHandler : MonoBehaviour
         
                 // Stick the particle to this transform (set particle's parent to this transform),
                 // otherwise just move it to the transform's position.
-                if(stickToObject)
+                if (stickToObject)
+                {
                     particleToPlay.StickParticleToTransform(transform);
+                    //particleToPlay.ChangeRotationDynamically(_movementScript);
+                }
                 else
+                {
                     particleToPlay.PlaceParticleOnTransform(transform);
-            
+                }
+
                 // Particle effects that play on transforms will * probably * only need a size of 1
                 particleToPlay.PlayAllParticles(1f);
             }

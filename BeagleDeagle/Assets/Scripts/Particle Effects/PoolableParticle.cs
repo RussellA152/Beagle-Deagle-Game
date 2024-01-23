@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CartoonFX;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PoolableParticle : MonoBehaviour, IPoolable
 {
@@ -10,11 +11,18 @@ public class PoolableParticle : MonoBehaviour, IPoolable
     public int PoolKey => poolKey;
 
     public ParticleSystem[] particleSystemGameObjects;
-
+    
     private Vector3 _originalSize;
 
     private Transform _originalParent;
     private Transform _currentParent;
+
+    /* Set this true if the particle effect should be backwards when sticking to another transform
+     Use this for any particles that have text.*/
+    //[SerializeField] private bool alwaysPositiveScaleOnStick;
+
+    // The movement script of whoever this particle is stuck to
+    //private IMovable _stuckToMovableScript;
 
     private void Awake()
     {
@@ -22,7 +30,7 @@ public class PoolableParticle : MonoBehaviour, IPoolable
         {
             particleSys.gameObject.SetActive(false);
         }
-
+        
         _originalSize = particleSystemGameObjects[0].transform.localScale;
     }
 
@@ -44,6 +52,9 @@ public class PoolableParticle : MonoBehaviour, IPoolable
             particleSys.transform.localScale = _originalSize;
         }
         
+        // if(_stuckToMovableScript != null)
+        //     _stuckToMovableScript.entityStartedFacingRight -= FixRotation;
+
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -98,35 +109,46 @@ public class PoolableParticle : MonoBehaviour, IPoolable
     public void StickParticleToTransform(Transform transformToStickTo)
     {
         Transform transformComponent = transform;
-        
-        transformComponent.position = transformToStickTo.position;
 
+        transformComponent.position = transformToStickTo.position;
         gameObject.SetActive(true);
-        
         transformComponent.SetParent(transformToStickTo);
-        
         _currentParent = transformComponent.parent;
         
-        //FixParticleRotation();
+        
     }
 
-    ///-///////////////////////////////////////////////////////////
-    /// Don't let particle systems face the wrong direction (if they are in the staticRotationParticles array)
-    /// 
-    // private void FixParticleRotation()
+    // public void ChangeRotationDynamically(IMovable movableScript)
     // {
-    //     foreach (ParticleSystem particleSystem in staticRotationParticles)
+    //     _stuckToMovableScript = movableScript;
+    //     
+    //     _stuckToMovableScript.entityStartedFacingRight += FixRotation;
+    // }
+
+    // private void FixRotation(bool parentTransformFacingRight)
+    // {
+    //     if (alwaysPositiveScaleOnStick)
     //     {
-    //         // If the parent gameObject of the particle effect is flipped, then un-flip these particle systems
-    //         if (_currentParent.localScale.x < 1f)
+    //         Vector3 localScale = transform.localScale;
+    //
+    //         //bool parentTransformFacingRight = transformToStickTo.localScale.x > 0;
+    //         
+    //         if (parentTransformFacingRight)
     //         {
-    //             var localScale = particleSystem.transform.localScale;
-    //             localScale = new Vector3(-1f * localScale.x,
-    //                 localScale.y, localScale.z);
-    //             
-    //             particleSystem.transform.localScale = localScale;
+    //             localScale.x = Mathf.Abs(localScale.x);
     //         }
+    //         else
+    //         {
+    //             localScale.x = Mathf.Abs(localScale.x) * -1f;
+    //         }
+    //         
+    //         localScale.y = Mathf.Abs(localScale.y);
+    //         localScale.z = Mathf.Abs(localScale.z);
+    //
+    //         transform.localScale = localScale;
     //     }
     // }
     
+
+
 }

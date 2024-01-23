@@ -12,7 +12,6 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     [Header("Required Components")]
     private NavMeshAgent _agent;
     private Rigidbody2D _rb;
-    private SpriteRenderer _spriteRenderer;
     private ModifierManager _modifierManager;
     private ModifierParticleEffectHandler _modifierParticleEffectHandler;
 
@@ -29,6 +28,10 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     private bool _canFlip = true;
     
     private Transform _target;
+
+    private bool _facingRight = true;
+    
+    public event Action<bool> entityStartedFacingRight;
     
     // The x scale that the enemy was instantiated with
     //private float _originalTransformScaleX;
@@ -37,10 +40,7 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     {
         _agent = GetComponent<NavMeshAgent>();
         _rb = GetComponent<Rigidbody2D>();
-        
-        // Sprite renderer is on a child gameObject on the player
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        
+
         _animationScript = GetComponent<ZombieAnimationHandler>();
         _modifierManager = GetComponent<ModifierManager>();
 
@@ -53,6 +53,8 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
 
     private void OnEnable()
     {
+        _facingRight = transform.localScale.x > 0;
+        
         IsStunned = false;
         
         // Set the speed of the enemy
@@ -72,16 +74,29 @@ public class AIMovement : MonoBehaviour, IMovable, IStunnable, IKnockbackable, I
     
     ///-///////////////////////////////////////////////////////////
     /// When this enemy's target is to their left, flip their sprite to the left.
-    /// Otherwise, keep their sprite facing right.
+    /// Otherwise, keep their sprite facing right. Only flip when necessary.
     /// 
     private void FlipSprite()
     {
+        bool targetIsLeft = _target.position.x < transform.position.x;
+        
         if (_canFlip)
         {
-            if (_target.position.x < transform.position.x)
+            if (targetIsLeft && _facingRight)
+            {
                 transform.localScale = new Vector3(-1f * enemyScriptableObject.scaleSize.x, transform.localScale.y, transform.localScale.z);
-            else
+                _facingRight = false;
+                entityStartedFacingRight?.Invoke(false);
+                
+            }
+                
+            else if (!targetIsLeft && !_facingRight)
+            {
                 transform.localScale = new Vector3(enemyScriptableObject.scaleSize.x, transform.localScale.y, transform.localScale.z);
+                _facingRight = true;
+                entityStartedFacingRight?.Invoke(true);
+            }
+                
         }
     }
 

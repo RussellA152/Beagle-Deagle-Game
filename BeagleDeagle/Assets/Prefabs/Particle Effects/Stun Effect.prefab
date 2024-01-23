@@ -50,6 +50,7 @@ MonoBehaviour:
   particleSystemGameObjects:
   - {fileID: 1655819222667347796}
   - {fileID: 6939982945536340919}
+  alwaysPositiveScaleOnStick: 1
 --- !u!1001 &275455557258559901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -232,6 +233,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CFXR4 _STUNNED
       objectReference: {fileID: 0}
+    - target: {fileID: 1616812709853553891, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 1897458573441195173, guid: 675704702169728458f4cba8c6df77d2, type: 3}
       propertyPath: m_SortingOrder
       value: 21
@@ -264,13 +269,33 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 21
       objectReference: {fileID: 0}
+    - target: {fileID: 4267744976598410037, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 4418912566900235282, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 5225074270859350382, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 5979686317806940511, guid: 675704702169728458f4cba8c6df77d2, type: 3}
       propertyPath: m_SortingOrder
       value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 6329406418562793389, guid: 675704702169728458f4cba8c6df77d2, type: 3}
       propertyPath: m_SortingOrder
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6361521325061710971, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 7652647368888333183, guid: 675704702169728458f4cba8c6df77d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 7822391943884434194, guid: 675704702169728458f4cba8c6df77d2, type: 3}
       propertyPath: m_SortingOrder

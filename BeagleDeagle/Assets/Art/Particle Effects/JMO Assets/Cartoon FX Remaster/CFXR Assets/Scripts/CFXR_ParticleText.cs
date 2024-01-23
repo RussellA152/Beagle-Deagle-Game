@@ -99,19 +99,7 @@ namespace CartoonFX
 
             InitializeFirstParticle();
         }
-
-        private void OnEnable()
-        {
-            // I added this:
-            // Always make sure the text is not facing backwards
-            // if (neverRotate)
-            // {
-            //     var localScale = transform.localScale;
-            //     localScale = new Vector3(Mathf.Abs(localScale.x),Mathf.Abs(localScale.y),Mathf.Abs(localScale.z));
-            //     transform.localScale = localScale;
-            // }
-            
-        }
+        
 
         float baseLifetime;
         float baseScaleX;

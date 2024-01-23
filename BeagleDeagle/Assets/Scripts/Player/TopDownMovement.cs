@@ -28,12 +28,13 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     // Input from user for movement and rotation
     public Vector2 MovementInput { get; private set; }
     private bool _canMove = true;
+    private bool _facingRight = true;
     private Vector2 _rotationInput;
     private bool _canRotate = true;
     public bool IsRolling { get; private set; }
     private bool _canRoll = true;
     
-    
+    public event Action<bool> entityStartedFacingRight;
     
     [Header("Required Components")]
     private Rigidbody2D _rb;
@@ -167,17 +168,18 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
     /// 
     private void FlipSpritesWithMovement(Vector2 input)
     {
-        if (input.x > 0f && !IsRolling)
+        if (input.x > 0f && !IsRolling && !_facingRight)
         {
             bodySr.flipX = false;
+            _facingRight = true;
             
-
+            entityStartedFacingRight?.Invoke(true);
         }
-        else if (input.x < 0f && !IsRolling)
+        else if (input.x < 0f && !IsRolling && _facingRight)
         {
             bodySr.flipX = true;
-
-
+            _facingRight = false;
+            entityStartedFacingRight?.Invoke(false);
         }
     }
 
@@ -227,7 +229,6 @@ public class TopDownMovement : MonoBehaviour, IPlayerDataUpdatable, IMovable, IH
         _bonusSpeed /= (1 + modifierToRemove.bonusMovementSpeed);
 
     }
-    
 
     #endregion
     

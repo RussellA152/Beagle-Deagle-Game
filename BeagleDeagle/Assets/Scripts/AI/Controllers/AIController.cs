@@ -25,6 +25,7 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
 
     [Header("Required Components")]
     private NavMeshAgent _agent;
+    private SpriteRenderer _spriteRenderer;
     private Collider2D _bodyCollider;
     [SerializeField] private GameObject deathParticleEffect;
     private int _deathParticleEffectPoolKey;
@@ -51,6 +52,9 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
         _agent.updateUpAxis = false;
         
         _bodyCollider = GetComponent<Collider2D>();
+        
+        // Sprite renderer is on a child gameObject on the enemy
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         
         AttackScript = GetComponent<AIAttack<T>>();
         MovementScript = GetComponent<AIMovement>();
@@ -102,6 +106,9 @@ public abstract class AIController<T> : MonoBehaviour, IPoolable, IHasTarget, IE
         _agent.enabled = true;
 
         HealthScript.onDeath += OnDeath;
+        
+        // Reset sprite size in case it changes during gameplay (mainly for bombers)
+        _spriteRenderer.transform.localScale = Vector3.one;
     }
 
     protected virtual void OnDisable()
