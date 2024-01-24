@@ -10,6 +10,7 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
     [SerializeField] protected PlayerEvents playerEvents;
 
     [SerializeField] private Waypoint_Indicator waypointIndicator;
+    [SerializeField] private GameObject particleEffect;
     private CooldownSystem _cooldownSystem;
 
     // Can play sounds on pick up
@@ -105,6 +106,7 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
         waypointIndicator.enabled = true;
         _collider2D.enabled = true;
         _spriteRenderer.enabled = true;
+        particleEffect.SetActive(true);
     }
 
     private void HidePowerUp()
@@ -112,6 +114,7 @@ public abstract class PowerUp : MonoBehaviour, IHasCooldown
         waypointIndicator.enabled = false;
         _collider2D.enabled = false;
         _spriteRenderer.enabled = false;
+        particleEffect.SetActive(false);
     }
 
     protected virtual void Deactivate()
