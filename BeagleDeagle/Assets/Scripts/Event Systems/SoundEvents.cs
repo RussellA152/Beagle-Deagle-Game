@@ -9,11 +9,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameEvent/SoundEvents")]
 public class SoundEvents : ScriptableObject
 {
+    public event Action<AudioClip, float> onBackgroundMusicPlay; 
     public event Action<AudioClip, float> onGeneralSoundPlay;
     public event Action<AudioClip, float> onUISoundPlay;
 
     public event Action<AudioClip, float, float> onDurationSoundPlay; 
 
+    public void InvokeBackgroundMusicPlay(AudioClip musicClip, float volumeOfMusic)
+    {
+        onBackgroundMusicPlay?.Invoke(musicClip, volumeOfMusic);
+    }
+    
     public void InvokeGeneralSoundPlay(AudioClip clip, float volumeOfClip)
     {
         onGeneralSoundPlay?.Invoke(clip, volumeOfClip);

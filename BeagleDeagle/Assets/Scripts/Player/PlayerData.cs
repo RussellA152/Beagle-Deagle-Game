@@ -40,4 +40,12 @@ public class PlayerData : ScriptableObject
     [Space(20)] 
     // How much xp does the player require at each level? (Ex. Level 2 requires 'x' amount of xp)
     public int[] xpNeededPerLevel;
+
+    [Header("Theme Music")]
+    // What music plays when this character loads into a level?
+    public AudioClip characterTheme;
+
+    [Range(0.05f, 1f)]
+    public float themeVolume;
+
 }

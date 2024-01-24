@@ -301,6 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   gameEvents: {fileID: 11400000, guid: 4314cd15feeb5de469dda4a888348c8a, type: 2}
   currentPlayerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
 --- !u!114 &3378843165075915667
@@ -393,6 +394,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosiveRadiusModifiers: []
+  aoeRadiusModifiers: []
+  dotDamageModifier: []
 --- !u!114 &6218275219637812029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,6 +462,7 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   utilityCooldownModifiers: []
   utilityUsesModifiers: []
+  utilityDamageModifiers: []
 --- !u!114 &504447593957459383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,6 +478,7 @@ MonoBehaviour:
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
   playerData: {fileID: 11400000, guid: 3184b145a49b8914f94aa5c1ee590387, type: 2}
   ultimateCooldownModifiers: []
+  ultimateDamageModifiers: []
   _previousWeaponData: {fileID: 0}
 --- !u!50 &1777428645584621179
 Rigidbody2D:

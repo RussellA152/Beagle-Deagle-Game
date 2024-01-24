@@ -388,6 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   playerEvents: {fileID: 11400000, guid: e11547a49bdb986499b1a03d0550d42e, type: 2}
+  soundEvents: {fileID: 11400000, guid: 5dc82e6642568b748a236280a7818b70, type: 2}
   gameEvents: {fileID: 11400000, guid: 4314cd15feeb5de469dda4a888348c8a, type: 2}
   currentPlayerData: {fileID: 11400000, guid: fc89fa8cd87318243a912eadebf749b9, type: 2}
 --- !u!114 &5089700233368072394

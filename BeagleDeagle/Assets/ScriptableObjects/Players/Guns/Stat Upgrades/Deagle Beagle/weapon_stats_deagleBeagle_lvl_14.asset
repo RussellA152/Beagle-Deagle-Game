@@ -41,7 +41,7 @@ MonoBehaviour:
     particleEffect: {fileID: 0}
     StickToGameObject: 0
     PlayOnModifierApplied: 0
-    bonusAttackSpeed: 0.2
+    bonusAttackSpeed: -0.2
   AmmoLoadModifier:
     modifierName: 
     particleEffect: {fileID: 0}

@@ -8,13 +8,14 @@ public class SoundManager : MonoBehaviour
 {
     [SerializeField] private GameEvents gameEvents;
     [SerializeField] private SoundEvents soundEvents;
-    
+
     [Header("Audio Sources Used")] 
+    [SerializeField] private AudioSource backgroundMusicAudioSource;
     [SerializeField] private AudioSource generalSoundAudioSource;
     [SerializeField] private AudioSource uiAudioSource;
 
     [SerializeField] private GameObject audioSourcePooledItem;
-    [SerializeField, Range(5, 30)] 
+    [SerializeField, Range(1, 30)] 
     private int amountToPool = 20;
 
     // Key: AudioSource, Value: inUse (playing audio)
@@ -38,8 +39,8 @@ public class SoundManager : MonoBehaviour
             gameEvents.onGamePause += PauseAllSoundsWithDuration;
             gameEvents.onGameResumeAfterPause += ResumeAllSoundsWithDuration; 
         }
-        
-        
+
+        soundEvents.onBackgroundMusicPlay += PlayBackgroundMusic;
         soundEvents.onGeneralSoundPlay += PlayGeneralSound;
         soundEvents.onUISoundPlay += PlayUISound;
         soundEvents.onDurationSoundPlay += PlayDurationSound;
@@ -56,6 +57,14 @@ public class SoundManager : MonoBehaviour
         soundEvents.onGeneralSoundPlay -= PlayGeneralSound;
         soundEvents.onUISoundPlay -= PlayUISound;
         soundEvents.onDurationSoundPlay -= PlayDurationSound;
+        soundEvents.onBackgroundMusicPlay -= PlayBackgroundMusic;
+    }
+
+    private void PlayBackgroundMusic(AudioClip musicClip, float volumeOfMusic)
+    {
+        backgroundMusicAudioSource.clip = musicClip;
+        backgroundMusicAudioSource.volume = volumeOfMusic;
+        backgroundMusicAudioSource.Play();
     }
     
     private AudioSource GetAvailableAudioSource()

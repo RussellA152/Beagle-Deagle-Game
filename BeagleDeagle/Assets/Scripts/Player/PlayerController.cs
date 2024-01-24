@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     
     [Header("Event Systems")]
     [SerializeField] private PlayerEvents playerEvents;
+    [SerializeField] private SoundEvents soundEvents;
     [SerializeField] private GameEvents gameEvents;
     
     [Header("Data to Use")]
@@ -69,11 +70,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        if(_gunShooting == null)
-        {
-            Debug.Log("WEAPON MISSING!");
-        }
-
         gameEvents.onGamePause += DisableAllPlayerInput;
         gameEvents.onGameResumeAfterPause += EnableAllPlayerInput;
     }
@@ -102,6 +98,10 @@ public class PlayerController : MonoBehaviour
         _gunManager.AllowWeaponReceive(true);
         _utilityScript.AllowUtility(true);
         _ultimateScript.AllowUltimate(true);
+        
+        // Play character's main theme song
+        if(currentPlayerData.characterTheme != null)
+            soundEvents.InvokeBackgroundMusicPlay(currentPlayerData.characterTheme, currentPlayerData.themeVolume);
     }
 
     private void Update()
