@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ef8290e72c3a04c94af5b08902ea2d, type: 3}
+  m_Name: regular_bullet_deagle_infPierce
+  m_EditorClassIdentifier: 
+  bulletSprite: {fileID: 21300000, guid: b72666ad633a11b438a29b90857a73f4, type: 3}
+  uiSprite: {fileID: 21300000, guid: 52c053ccea2949643bf449827c710fea, type: 3}
+  whatBulletCanPenetrate:
+    serializedVersion: 2
+    m_Bits: 33024
+  whatBulletCanDamage:
+    serializedVersion: 2
+    m_Bits: 33024
+  whatDestroysBullet:
+    serializedVersion: 2
+    m_Bits: 1024
+  knockBackPower: {x: 0, y: 0}
+  bulletSpeed: 70
+  colliderDirection: 1
+  sizeX: 0.7
+  sizeY: 0.7
+  hitBodySounds:
+  - {fileID: 8300000, guid: cc1d5287fd8cfee44ac98f9395405031, type: 3}
+  - {fileID: 8300000, guid: 2e3b1594068f72a41a722551c93e93f4, type: 3}
+  - {fileID: 8300000, guid: 260a9388fa3c28a40a0ef64b008aa939, type: 3}
+  - {fileID: 8300000, guid: 8e56305c9607fac4f8fffc8bb645a82a, type: 3}
+  - {fileID: 8300000, guid: 9a56b7b774dfe374295a18edffe0b37e, type: 3}
+  hitWallSound:
+  - {fileID: 8300000, guid: 2c278f6684af6e2469e755b7ae7da7d1, type: 3}
+  volume: 0.5
+  duration: 3

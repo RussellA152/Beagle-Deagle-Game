@@ -19,7 +19,7 @@ MonoBehaviour:
   magazineSize: 8
   totalReloadTime: 3.5
   bulletPrefab: {fileID: 8164879991046117895, guid: f8ae6192f4efe47498e067b9baa00095, type: 3}
-  bulletData: {fileID: 11400000, guid: 53a677edaa7382d42aa4369f8e9d17c5, type: 2}
+  bulletData: {fileID: 11400000, guid: 3d55c2bb51f273e47bfc00ac95ee742b, type: 2}
   statusEffects: {fileID: 0}
   bulletSpawnLocation: {x: 1.215, y: 0.234}
   bulletSpread: 2
