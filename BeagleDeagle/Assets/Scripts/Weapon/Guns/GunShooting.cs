@@ -23,7 +23,7 @@ public class GunShooting : MonoBehaviour, IRegisterModifierMethods, IHasInput, I
     // Where does this bullet get shot from? (i.e the barrel)
     [SerializeField] private Transform bulletSpawnPoint;
     // Where does the muzzle flash appear at?
-    [SerializeField] private SpriteRenderer muzzleFlash;
+    [SerializeField] private GameObject muzzleFlash;
     
     private InputAction _shootInputAction;
     
@@ -388,8 +388,8 @@ public class GunShooting : MonoBehaviour, IRegisterModifierMethods, IHasInput, I
         
         // Change bulletSpawnPoint's position
         bulletSpawnPoint.localPosition = _weaponData.bulletSpawnLocation;
-        
-        muzzleFlash.sprite = _weaponData.gunEffectsData.muzzleFlashSprite;
+
+        muzzleFlash.transform.localScale = _weaponData.gunEffectsData.muzzleFlashSize;
         muzzleFlash.transform.localPosition = _weaponData.gunEffectsData.muzzleFlashPosition;
     }
 

@@ -905,6 +905,18 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3805959148598198880, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3805959148598198880, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3805959148598198880, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.48
+      objectReference: {fileID: 0}
     - target: {fileID: 4077318059066061062, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.215
@@ -1032,16 +1044,16 @@ PrefabInstance:
     - target: {fileID: 7788672771976349535, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: muzzleFlash
       value: 
-      objectReference: {fileID: 3020163818966979324}
+      objectReference: {fileID: 2785796265763609680}
     - target: {fileID: 7788672771976349535, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: bulletSpawnPoint
       value: 
       objectReference: {fileID: 3093359914702500630}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
---- !u!212 &3020163818966979324 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 4292387438089670892, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+--- !u!1 &2785796265763609680 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3805959148598697536, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
   m_PrefabInstance: {fileID: 1330911958415475216}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &3093359913422740386 stripped

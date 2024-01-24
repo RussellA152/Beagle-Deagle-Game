@@ -12,9 +12,9 @@ public class GunEffectsData : ScriptableObject
     public Vector2 spriteScale;
     // Where should the sprite be positioned relative to the player gameObject?
     public Vector2 spritePosition;
-    
-    [Header("Muzzle Flash")]
-    public Sprite muzzleFlashSprite;
+
+    [Header("Muzzle Flash")] 
+    public Vector2 muzzleFlashSize;
     public Vector2 muzzleFlashPosition;
     [Range(0.01f, 0.25f)] public float muzzleFlashDuration;
 

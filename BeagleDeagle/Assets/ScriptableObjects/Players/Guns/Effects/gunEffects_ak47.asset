@@ -15,8 +15,8 @@ MonoBehaviour:
   weaponSprite: {fileID: 21300000, guid: 6cee5dbd5892fac429e389517b060585, type: 3}
   spriteScale: {x: 0.4, y: 0.4}
   spritePosition: {x: 0, y: 0}
-  muzzleFlashSprite: {fileID: 21300000, guid: 35cd9467eedc6df4e8ba7a1f5aa167a1, type: 3}
-  muzzleFlashPosition: {x: 2.702, y: 0.456}
+  muzzleFlashSize: {x: 0.1, y: 0.1}
+  muzzleFlashPosition: {x: 2.291, y: 0.347}
   muzzleFlashDuration: 0.02
   screenShakeData: {fileID: 11400000, guid: 368799251ded9864585714691c086d2a, type: 2}
   fireClips:

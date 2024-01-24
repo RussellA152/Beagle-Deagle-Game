@@ -906,6 +906,18 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3805959148598198880, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3805959148598198880, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3805959148598198880, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.291
+      objectReference: {fileID: 0}
     - target: {fileID: 4077318059066061062, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.1
@@ -1029,7 +1041,7 @@ PrefabInstance:
     - target: {fileID: 7788672771976349535, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: muzzleFlash
       value: 
-      objectReference: {fileID: 850277743391399313}
+      objectReference: {fileID: 327688644614902589}
     - target: {fileID: 7788672771976349535, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
       propertyPath: bulletSpawnPoint
       value: 
@@ -1040,6 +1052,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+--- !u!1 &327688644614902589 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3805959148598697536, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
+  m_PrefabInstance: {fileID: 3485034837028162941}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &633001574926292175 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4077318060314352050, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
@@ -1048,10 +1065,5 @@ Transform:
 --- !u!4 &633001575736294523 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4077318059066061062, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
-  m_PrefabInstance: {fileID: 3485034837028162941}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &850277743391399313 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 4292387438089670892, guid: 679bf94983b5fab4889b1700950fba1a, type: 3}
   m_PrefabInstance: {fileID: 3485034837028162941}
   m_PrefabAsset: {fileID: 0}

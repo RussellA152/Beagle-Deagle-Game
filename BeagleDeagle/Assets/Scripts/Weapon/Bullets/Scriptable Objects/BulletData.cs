@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 public abstract class BulletData : ScriptableObject
 {
     public Sprite bulletSprite;
+    public Sprite uiSprite; // How bullet will look on the bullet stack on the hud
 
     [Header("Collision Behavior")]
     public LayerMask whatBulletCanPenetrate; // What will this bullet penetrate through (Ex. Bullet penetrates through enemies, or walls to hit enemies as well)

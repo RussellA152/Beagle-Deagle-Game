@@ -57,7 +57,7 @@ public class Bullet<T> : MonoBehaviour, IPoolable, IBulletUpdatable where T: Bul
         // Cache dependencies
         rb = GetComponent<Rigidbody2D>();
         bulletCollider = GetComponent<CapsuleCollider2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         AudioClipPlayer = GetComponent<AudioClipPlayer>();
         
         if(enemyHitParticleEffect != null)

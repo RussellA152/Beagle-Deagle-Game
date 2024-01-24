@@ -170,14 +170,10 @@ public class PlayerStatsUI : MonoBehaviour
 
     private void AddBulletsToHUD(GunData gunData)
     {
-        // Player received new weapon, so update the maximum magazine size text and variable
-        //_maxAmmoCount = gunData.magazineSize;
-        //maxAmmoMagText.text = gunData.magazineSize.ToString();
-
         // Change the weapon image to use the sprite of the player's new gun
         weaponImage.sprite = gunData.gunEffectsData.weaponSprite;
         
-        Sprite bulletSprite = gunData.bulletData.bulletSprite;
+        Sprite bulletSprite = gunData.bulletData.uiSprite;
 
         // Change all bullet images to have a new sprite of the current gun's bullet
         for (int i = 0; i < _bulletImages.Count; i++)

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8164879991046117895
+--- !u!1 &1914250958650588984
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,44 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8164879991046117893}
-  - component: {fileID: 8164879991046117894}
-  - component: {fileID: 459401180472655535}
-  - component: {fileID: 690564877444385247}
-  - component: {fileID: -7221194937510871110}
-  - component: {fileID: 2168462945549124124}
-  - component: {fileID: 1234942202307241706}
-  - component: {fileID: 7698205712678738710}
-  - component: {fileID: 8164879991046117892}
+  - component: {fileID: 4191510013038731720}
+  - component: {fileID: 3832897328272877047}
   m_Layer: 9
-  m_Name: Explosive Bullet
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8164879991046117893
+--- !u!4 &4191510013038731720
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8164879991046117895}
+  m_GameObject: {fileID: 1914250958650588984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 8164879991046117893}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &8164879991046117894
+--- !u!212 &3832897328272877047
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8164879991046117895}
+  m_GameObject: {fileID: 1914250958650588984}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -80,8 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 52c053ccea2949643bf449827c710fea, type: 3}
-  m_Color: {r: 0.6037736, g: 0.3166545, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: cc17f475a1652664d84ef2a05443c5f3, type: 3}
+  m_Color: {r: 1, g: 0.6221208, b: 0.2028302, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -91,6 +84,45 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &8164879991046117895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8164879991046117893}
+  - component: {fileID: 459401180472655535}
+  - component: {fileID: 690564877444385247}
+  - component: {fileID: -7221194937510871110}
+  - component: {fileID: 2168462945549124124}
+  - component: {fileID: 1234942202307241706}
+  - component: {fileID: 7698205712678738710}
+  - component: {fileID: 8164879991046117892}
+  m_Layer: 9
+  m_Name: Explosive Bullet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8164879991046117893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8164879991046117895}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4191510013038731720}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &459401180472655535
 MonoBehaviour:
   m_ObjectHideFlags: 0

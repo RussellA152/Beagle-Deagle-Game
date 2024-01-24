@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ef8290e72c3a04c94af5b08902ea2d, type: 3}
   m_Name: regular_bullet_deagle
   m_EditorClassIdentifier: 
-  bulletSprite: {fileID: 21300000, guid: 52c053ccea2949643bf449827c710fea, type: 3}
+  bulletSprite: {fileID: 21300000, guid: cc17f475a1652664d84ef2a05443c5f3, type: 3}
+  uiSprite: {fileID: 21300000, guid: 52c053ccea2949643bf449827c710fea, type: 3}
   whatBulletCanPenetrate:
     serializedVersion: 2
     m_Bits: 33024
