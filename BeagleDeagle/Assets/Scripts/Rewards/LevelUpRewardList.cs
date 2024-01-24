@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "NewLevelUpReward", menuName = "ScriptableObjects/Rewards/LevelUpReward")]
 public class LevelUpRewardList : ScriptableObject
 {
-    [SerializeField, NonReorderable, Space(20)]
+    [SerializeField, NonReorderable,Space(20)]
     private List<NewGunLevelUpReward> gunRewards = new List<NewGunLevelUpReward>();
     
     [SerializeField, NonReorderable, Space(20)]

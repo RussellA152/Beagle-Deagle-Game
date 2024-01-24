@@ -38,6 +38,10 @@ MonoBehaviour:
     IsChosen: 0
     Icon: {fileID: 0}
     weaponStatModifierData: {fileID: 11400000, guid: 7d10cddf1523aa74f99ba02fce452211, type: 2}
+  - LevelGiven: 7
+    IsChosen: 0
+    Icon: {fileID: 0}
+    weaponStatModifierData: {fileID: 11400000, guid: a3c4eb9760913804780254a31d659f31, type: 2}
   - LevelGiven: 9
     IsChosen: 0
     Icon: {fileID: 0}
@@ -46,10 +50,14 @@ MonoBehaviour:
     IsChosen: 0
     Icon: {fileID: 0}
     weaponStatModifierData: {fileID: 11400000, guid: 35033e5bff7c9b545a5f8c4cdec479ef, type: 2}
-  - LevelGiven: 7
+  - LevelGiven: 13
     IsChosen: 0
     Icon: {fileID: 0}
-    weaponStatModifierData: {fileID: 11400000, guid: a3c4eb9760913804780254a31d659f31, type: 2}
+    weaponStatModifierData: {fileID: 11400000, guid: ab5e4403bc2cde949aeaff0193394aeb, type: 2}
+  - LevelGiven: 14
+    IsChosen: 0
+    Icon: {fileID: 0}
+    weaponStatModifierData: {fileID: 11400000, guid: c59b95f9bfd7e0a488be418a8da1af98, type: 2}
   passiveRewards:
   - LevelGiven: 5
     IsChosen: 1
@@ -74,10 +82,30 @@ MonoBehaviour:
     Icon: {fileID: 0}
     ultimateAbilityData: {fileID: 11400000, guid: f76ad2440b427164fb47bf397b92fef3, type: 2}
   abilityStatRewards:
+  - LevelGiven: 8
+    IsChosen: 0
+    Icon: {fileID: 0}
+    abilityStatModifierData: {fileID: 11400000, guid: 5b180929355bdbc4b8c641a3438c8ced, type: 2}
   - LevelGiven: 12
     IsChosen: 0
     Icon: {fileID: 0}
     abilityStatModifierData: {fileID: 11400000, guid: bffd3a07487080d42af3decaa176e821, type: 2}
+  - LevelGiven: 16
+    IsChosen: 0
+    Icon: {fileID: 0}
+    abilityStatModifierData: {fileID: 11400000, guid: d2cf832093afc7d4ca54d979a64ee26e, type: 2}
+  - LevelGiven: 17
+    IsChosen: 0
+    Icon: {fileID: 0}
+    abilityStatModifierData: {fileID: 11400000, guid: bbf148fc1a2eaa34e843dcd711b9d853, type: 2}
+  - LevelGiven: 18
+    IsChosen: 0
+    Icon: {fileID: 0}
+    abilityStatModifierData: {fileID: 11400000, guid: 9e26226bce1c55d41b66e81eabbebcde, type: 2}
+  - LevelGiven: 19
+    IsChosen: 0
+    Icon: {fileID: 0}
+    abilityStatModifierData: {fileID: 11400000, guid: 9b5179d79ad70ba4dbab5cf77af03b32, type: 2}
   miscellaneousStatRewards:
   - LevelGiven: 5
     IsChosen: 1

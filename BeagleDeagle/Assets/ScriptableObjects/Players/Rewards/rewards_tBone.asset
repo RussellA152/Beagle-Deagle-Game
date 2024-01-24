@@ -30,35 +30,43 @@ MonoBehaviour:
     IsChosen: 0
     Icon: {fileID: 0}
     weaponStatModifierData: {fileID: 11400000, guid: 5716e4debc469d54283e2457387a5397, type: 2}
-  - LevelGiven: 6
-    IsChosen: 0
-    Icon: {fileID: 0}
-    weaponStatModifierData: {fileID: 11400000, guid: 6d7d306b7389bb7468bffc77a9a2ed10, type: 2}
-  - LevelGiven: 12
-    IsChosen: 0
-    Icon: {fileID: 0}
-    weaponStatModifierData: {fileID: 11400000, guid: fe27bdc4c359d284b8cc3bd1d3e353eb, type: 2}
-  - LevelGiven: 8
-    IsChosen: 0
-    Icon: {fileID: 0}
-    weaponStatModifierData: {fileID: 11400000, guid: 78d4991667c92d54dac034de81adb1bf, type: 2}
   - LevelGiven: 5
     IsChosen: 1
     Icon: {fileID: 0}
     weaponStatModifierData: {fileID: 11400000, guid: 86f4c00446ab3bf4db3cf0549227e8ec, type: 2}
+  - LevelGiven: 6
+    IsChosen: 0
+    Icon: {fileID: 0}
+    weaponStatModifierData: {fileID: 11400000, guid: 6d7d306b7389bb7468bffc77a9a2ed10, type: 2}
+  - LevelGiven: 7
+    IsChosen: 0
+    Icon: {fileID: 0}
+    weaponStatModifierData: {fileID: 11400000, guid: 32ebb61ce7727b84cbabfc347c71f961, type: 2}
+  - LevelGiven: 8
+    IsChosen: 0
+    Icon: {fileID: 0}
+    weaponStatModifierData: {fileID: 11400000, guid: 78d4991667c92d54dac034de81adb1bf, type: 2}
   - LevelGiven: 9
     IsChosen: 0
     Icon: {fileID: 0}
     weaponStatModifierData: {fileID: 11400000, guid: 09beed63d24b4a34fa0b67678db0b70a, type: 2}
-  passiveRewards:
-  - LevelGiven: 10
-    IsChosen: 1
+  - LevelGiven: 12
+    IsChosen: 0
     Icon: {fileID: 0}
-    passiveAbilityData: {fileID: 11400000, guid: 2be902dab7442ea4183af0a85dbfca88, type: 2}
+    weaponStatModifierData: {fileID: 11400000, guid: fe27bdc4c359d284b8cc3bd1d3e353eb, type: 2}
+  - LevelGiven: 14
+    IsChosen: 0
+    Icon: {fileID: 0}
+    weaponStatModifierData: {fileID: 11400000, guid: 0236d2c65e465a44f94d6efd07f3a979, type: 2}
+  passiveRewards:
   - LevelGiven: 5
     IsChosen: 1
     Icon: {fileID: 0}
     passiveAbilityData: {fileID: 11400000, guid: 0f523cd3395c86b478d7dfac586b7c28, type: 2}
+  - LevelGiven: 10
+    IsChosen: 1
+    Icon: {fileID: 0}
+    passiveAbilityData: {fileID: 11400000, guid: 2be902dab7442ea4183af0a85dbfca88, type: 2}
   utilityRewards:
   - LevelGiven: 15
     IsChosen: 1
@@ -78,12 +86,32 @@ MonoBehaviour:
     Icon: {fileID: 0}
     ultimateAbilityData: {fileID: 11400000, guid: 0a266fe27a68c0b4fb54f620292b1bfe, type: 2}
   abilityStatRewards:
+  - LevelGiven: 11
+    IsChosen: 0
+    Icon: {fileID: 0}
+    abilityStatModifierData: {fileID: 11400000, guid: 40e767dfccb562a44b843dfd4d1aa686, type: 2}
   - LevelGiven: 12
     IsChosen: 0
     Icon: {fileID: 0}
     abilityStatModifierData: {fileID: 11400000, guid: a22cad94b85511d44b71850df06b2c1e, type: 2}
+  - LevelGiven: 16
+    IsChosen: 0
+    Icon: {fileID: 0}
+    abilityStatModifierData: {fileID: 11400000, guid: 8e03b82c0ecdeac45b373539552a6da8, type: 2}
+  - LevelGiven: 17
+    IsChosen: 0
+    Icon: {fileID: 0}
+    abilityStatModifierData: {fileID: 11400000, guid: 95ae34d66e16982498ee78fb2d2183cb, type: 2}
+  - LevelGiven: 19
+    IsChosen: 0
+    Icon: {fileID: 0}
+    abilityStatModifierData: {fileID: 11400000, guid: c3f1ce4d4a7f0eb4580dd71754ba283b, type: 2}
   miscellaneousStatRewards:
   - LevelGiven: 13
     IsChosen: 0
     Icon: {fileID: 0}
     miscellaneousModifierData: {fileID: 11400000, guid: a798c898319c0d34ca105cbc846e9130, type: 2}
+  - LevelGiven: 18
+    IsChosen: 0
+    Icon: {fileID: 0}
+    miscellaneousModifierData: {fileID: 11400000, guid: ec750cd4326be824097ea3959079f455, type: 2}

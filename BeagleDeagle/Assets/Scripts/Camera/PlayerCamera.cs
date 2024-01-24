@@ -16,8 +16,6 @@ public class PlayerCamera : MonoBehaviour
     private CinemachineImpulseListener _impulseListener;
     private CinemachineImpulseDefinition _impulseDefinition;
 
-    private int _activeScreenShakes = 0;
-    
     private void Awake()
     {
         _cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
