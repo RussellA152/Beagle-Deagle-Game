@@ -17443,7 +17443,7 @@ Transform:
   - {fileID: 438538322}
   - {fileID: 846615043}
   m_Father: {fileID: 0}
-  m_RootOrder: 35
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1098102168
 PrefabInstance:
@@ -17537,67 +17537,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1175294454
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3711592478197892580, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_RootOrder
-      value: 33
-      objectReference: {fileID: 0}
-    - target: {fileID: 3711592478197892580, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 16.552008
-      objectReference: {fileID: 0}
-    - target: {fileID: 3711592478197892580, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.028412819
-      objectReference: {fileID: 0}
-    - target: {fileID: 3711592478197892580, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3711592478197892580, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3711592478197892580, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3711592478197892580, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3711592478197892580, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3711592478197892580, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3711592478197892580, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3711592478197892580, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_Name
-      value: Base Zombie Runner
-      objectReference: {fileID: 0}
-    - target: {fileID: 3711592478197892634, guid: db6f5aea36871fc469d511640f83157f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: db6f5aea36871fc469d511640f83157f, type: 3}
 --- !u!1 &1185188388
 GameObject:
   m_ObjectHideFlags: 0
@@ -17629,7 +17568,7 @@ Transform:
   m_Children:
   - {fileID: 1791262540}
   m_Father: {fileID: 0}
-  m_RootOrder: 34
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1185188390
 MonoBehaviour:
@@ -17775,7 +17714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621176, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1777428645584621178, guid: e56207a7ddfe5bc47aeb365d4de54251, type: 3}
       propertyPath: m_RootOrder
@@ -17847,11 +17786,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2439171421654748757, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -54.68
       objectReference: {fileID: 0}
     - target: {fileID: 2439171421654748757, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 31.82
       objectReference: {fileID: 0}
     - target: {fileID: 2439171421654748757, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17891,7 +17830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2439171421654748759, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53eb7ed3ec8bb2c4f91e40b60dee78ae, type: 3}
@@ -77143,7 +77082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 143017070040165530, guid: 08e21cfba36fa4d4eb7a479c70bceb93, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 143017070040165531, guid: 08e21cfba36fa4d4eb7a479c70bceb93, type: 3}
       propertyPath: m_RootOrder
@@ -77416,6 +77355,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4071664041925536998, guid: 79b2f1c5e5ab4c34299f5da4fd376df2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4071664041932169316, guid: 79b2f1c5e5ab4c34299f5da4fd376df2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -77574,6 +77517,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4071664043051797641, guid: 79b2f1c5e5ab4c34299f5da4fd376df2, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4071664043102794841, guid: 79b2f1c5e5ab4c34299f5da4fd376df2, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4071664043437471098, guid: 79b2f1c5e5ab4c34299f5da4fd376df2, type: 3}
