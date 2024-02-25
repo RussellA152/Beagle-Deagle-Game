@@ -120,7 +120,7 @@ public class RewardSelectionUI : MonoBehaviour
             // Change the name, description, and icon image of the button to whatever the reward uses
             buttonRewardChoiceUIElementScript.SetName(potentialReward.GetRewardName());
             buttonRewardChoiceUIElementScript.SetDescription(potentialReward.GetDescription());
-            buttonRewardChoiceUIElementScript.SetIcon(potentialReward.Icon);
+            buttonRewardChoiceUIElementScript.SetIcon(potentialReward.SpriteIcon);
         
             buttonRewardChoiceUIElementScript.GetButton().onClick.AddListener(() => GiveRewardToPlayerOnClick(potentialReward));
         }

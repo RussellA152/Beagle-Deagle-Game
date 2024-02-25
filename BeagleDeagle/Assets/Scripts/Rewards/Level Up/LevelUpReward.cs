@@ -18,7 +18,7 @@ public abstract class LevelUpReward: IHasDescription
     [Tooltip("Will this reward be one of many other choices when the player reaches the level requirement?")]
     public bool IsChosen;
 
-    public Image Icon;
+    public Sprite SpriteIcon;
 
     public abstract string GetRewardName();
     public abstract void GiveDataToPlayer(GameObject recipientGameObject);

@@ -25,9 +25,9 @@ public class RewardChoiceUIElement : MonoBehaviour
         return _button;
     }
 
-    public void SetIcon(Image rewardImage)
+    public void SetIcon(Sprite rewardSpriteImage)
     {
-        _image = rewardImage;
+        _image.sprite = rewardSpriteImage;
     }
     
     public void SetDescription(string rewardDescription)

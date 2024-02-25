@@ -154,6 +154,10 @@ PrefabInstance:
       propertyPath: clearBehavior
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7177991128484655658, guid: 59a35ab9f68edff40b6e5332bed330f5, type: 3}
+      propertyPath: InitialModule.size3D
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7177991128484655659, guid: 59a35ab9f68edff40b6e5332bed330f5, type: 3}
       propertyPath: m_Name
       value: CFXR Flash

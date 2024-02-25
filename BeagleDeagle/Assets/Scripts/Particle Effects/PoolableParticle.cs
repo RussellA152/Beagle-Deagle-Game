@@ -12,7 +12,8 @@ public class PoolableParticle : MonoBehaviour, IPoolable
 
     public ParticleSystem[] particleSystemGameObjects;
     
-    private Vector3 _originalSize;
+    //private Vector3[] _originalSizes;
+    private Dictionary<Transform, Vector3> _originalSizes = new Dictionary<Transform, Vector3>();
 
     private Transform _originalParent;
     private Transform _currentParent;
@@ -26,12 +27,12 @@ public class PoolableParticle : MonoBehaviour, IPoolable
 
     private void Awake()
     {
-        foreach (ParticleSystem particleSys in particleSystemGameObjects)
+        for (int i = 0; i < particleSystemGameObjects.Length; i++)
         {
-            particleSys.gameObject.SetActive(false);
+            Transform currentTransform = particleSystemGameObjects[i].transform;
+            _originalSizes[currentTransform] = currentTransform.localScale;
+            particleSystemGameObjects[i].gameObject.SetActive(false);
         }
-        
-        _originalSize = particleSystemGameObjects[0].transform.localScale;
     }
 
     private void OnEnable()
@@ -46,15 +47,16 @@ public class PoolableParticle : MonoBehaviour, IPoolable
             transform.SetParent(_originalParent);
         }
         
-        foreach (ParticleSystem particleSys in particleSystemGameObjects)
+        // Set particle effects back to their original sizes
+        for (int i = 0; i < particleSystemGameObjects.Length; i++)
         {
-            particleSys.gameObject.SetActive(false);
-            particleSys.transform.localScale = _originalSize;
+            Transform currentTransform = particleSystemGameObjects[i].transform;
+            currentTransform.localScale = _originalSizes[currentTransform];
+            particleSystemGameObjects[i].gameObject.SetActive(false);
         }
         
         if(_stuckToMovableScript != null)
             _stuckToMovableScript.entityStartedFacingRight -= FixRotation;
-
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -73,8 +75,6 @@ public class PoolableParticle : MonoBehaviour, IPoolable
             
             particleSys.gameObject.SetActive(true);
         }
-        
-
     }
 
     ///-///////////////////////////////////////////////////////////
@@ -90,7 +90,6 @@ public class PoolableParticle : MonoBehaviour, IPoolable
             
             if(effect != null)
                 effect.DisableParticle();
-
         }
     }
 
@@ -114,9 +113,8 @@ public class PoolableParticle : MonoBehaviour, IPoolable
         gameObject.SetActive(true);
         transformComponent.SetParent(transformToStickTo);
         _currentParent = transformComponent.parent;
-        
+
         FixRotation(transformToStickTo.localScale.x > 0);
-        
     }
 
     public void ChangeRotationDynamically(IMovable movableScript)
@@ -131,7 +129,7 @@ public class PoolableParticle : MonoBehaviour, IPoolable
         if (alwaysPositiveScaleOnStick)
         {
             Vector3 localScale = transform.localScale;
-            
+
             if (parentTransformFacingRight)
             {
                 localScale.x = Mathf.Abs(localScale.x);
@@ -140,14 +138,11 @@ public class PoolableParticle : MonoBehaviour, IPoolable
             {
                 localScale.x = Mathf.Abs(localScale.x) * -1f;
             }
-            
+
             localScale.y = Mathf.Abs(localScale.y);
             localScale.z = Mathf.Abs(localScale.z);
 
             transform.localScale = localScale;
         }
     }
-    
-
-
 }
